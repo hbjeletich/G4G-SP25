@@ -32,6 +32,8 @@ namespace Captury
 		public string[] blendShapeNames;
 		public float[] blendShapeActivations;
 
+		public event Action<CapturySkeleton> OnSkeletonSetupComplete;
+
 		public int scalingProgress = 100; // [0 .. 100]
 		public int trackingQuality = 100; // [0 .. 100]
 
@@ -90,6 +92,8 @@ namespace Captury
 					targetSkeleton.transform.localScale = new Vector3(scale, scale, scale);
 				}
 			}
+
+			OnSkeletonSetupComplete?.Invoke(this);
 		}
 
 		public void SetTargetSkeleton(GameObject targetSkel, Avatar avatar, float avatarBackLength)
@@ -913,7 +917,11 @@ namespace Captury
 									continue;
 
 								if (SkeletonFound != null)
+								{
+									Debug.Log("Skeleton Found: " + skeleton.name);
 									SkeletonFound(skeleton);
+								}
+
 
 								//  and add it to the list of actors we are processing, making sure this is secured by the mutex
 								communicationMutex.WaitOne();
