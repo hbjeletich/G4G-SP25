@@ -2279,7 +2279,7 @@ Transform:
   m_GameObject: {fileID: 1819977826}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -7.9, z: 0}
+  m_LocalPosition: {x: 0, y: -13.4, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children:
@@ -2344,52 +2344,6 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 2026463715}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &2003899380
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2003899382}
-  - component: {fileID: 2003899381}
-  m_Layer: 0
-  m_Name: FootTrackingInputTest
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &2003899381
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2003899380}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 689dda174ac252a4f90d031c60cec226, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  inputActions: {fileID: -944628639613478452, guid: 788d0aee30682674880f11ca6a0b3013,
-    type: 3}
---- !u!4 &2003899382
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2003899380}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.1550708, y: 0.015809715, z: -0.12269616}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &2026463715
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2839,5 +2793,4 @@ SceneRoots:
   - {fileID: 1743671417}
   - {fileID: 894272536}
   - {fileID: 1916071115}
-  - {fileID: 2003899382}
   - {fileID: 1819977827}

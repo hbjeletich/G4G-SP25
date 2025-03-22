@@ -14,18 +14,16 @@ public class FootTracking : MonoBehaviour
     private CapturyInput capturyInput;
     private bool isFootRaised = false;
 
-    [SerializeField] private string leftAnkleName = "Dan:LeftFoot";
-    [SerializeField] private string rightAnkleName = "Dan:RightFoot";
+    [SerializeField] private string leftAnkleName = "LeftFoot";
+    [SerializeField] private string rightAnkleName = "RightFoot";
 
     private void Awake()
     {
-        // Register the device layout
-        CapturyInput.Register();
+        //CapturyInput.Register();
     }
 
     private void Start()
     {
-        // Create and add the device to the system
         capturyInput = InputSystem.AddDevice<CapturyInput>();
 
         if (capturyInput == null)
@@ -34,12 +32,12 @@ public class FootTracking : MonoBehaviour
             return;
         }
 
-        Debug.Log($"CapturyInput device created with ID: {capturyInput.deviceId}");
+        //Debug.Log($"CapturyInput device created with ID: {capturyInput.deviceId}");
 
         CapturyNetworkPlugin networkPlugin = FindObjectOfType<CapturyNetworkPlugin>();
         if (networkPlugin != null)
         {
-            Debug.Log("FootTracking: Subscribing to CapturyNetworkPlugin.SkeletonFound...");
+            //Debug.Log("FootTracking: Subscribing to CapturyNetworkPlugin.SkeletonFound...");
             networkPlugin.SkeletonFound -= OnSkeletonFound;
             networkPlugin.SkeletonFound += OnSkeletonFound;
         }
@@ -51,7 +49,6 @@ public class FootTracking : MonoBehaviour
 
     private void OnDestroy()
     {
-        // Remove the device when this script is destroyed
         if (capturyInput != null)
         {
             InputSystem.RemoveDevice(capturyInput);
@@ -66,15 +63,14 @@ public class FootTracking : MonoBehaviour
 
     private void OnSkeletonFound(CapturySkeleton skeleton)
     {
-        Debug.Log("FootTracking received Skeleton: " + skeleton.name);
+        //Debug.Log("FootTracking received Skeleton: " + skeleton.name);
 
-        // Wait until SetTargetSkeleton() finishes
         skeleton.OnSkeletonSetupComplete += OnSkeletonSetupComplete;
     }
 
     private void OnSkeletonSetupComplete(CapturySkeleton skeleton)
     {
-        Debug.Log("Skeleton setup complete. Now tracking ankles!");
+        //Debug.Log("Skeleton setup complete. Now tracking ankles!");
 
         leftAnkle = FindJointByExactName(skeleton, leftAnkleName);
         rightAnkle = FindJointByExactName(skeleton, rightAnkleName);
@@ -107,10 +103,9 @@ public class FootTracking : MonoBehaviour
     {
         if (leftAnkle == null || rightAnkle == null || capturyInput == null) return;
 
-        // Get the height difference between ankles
+        // height difference between ankles
         float footHeight = Mathf.Abs(leftAnkle.position.y - rightAnkle.position.y);
 
-        // Create an input state to send
         var state = new CapturyInputState
         {
             footHeight = footHeight,
@@ -118,17 +113,10 @@ public class FootTracking : MonoBehaviour
             footLower = isFootRaised ? (footHeight < raiseThreshold ? 1.0f : 0.0f) : 0.0f
         };
 
-        // Update foot raised state for the next frame
+        // update foot raised state for the next frame
         bool wasFootRaised = isFootRaised;
         isFootRaised = footHeight > raiseThreshold;
 
-        // Log state changes for debugging
-        if (wasFootRaised != isFootRaised)
-        {
-            Debug.Log($"Foot state changed: {(isFootRaised ? "Raised" : "Lowered")} - Height: {footHeight}");
-        }
-
-        // Queue the entire state at once
         InputSystem.QueueStateEvent(capturyInput, state);
     }
 }
