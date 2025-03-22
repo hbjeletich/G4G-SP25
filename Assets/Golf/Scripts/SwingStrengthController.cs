@@ -12,6 +12,7 @@ public class SwingStrengthController : MonoBehaviour
     private float targetStrength;
     private float currStrengthGoal = 1;
     private float barRate = 10f;
+    private float strengthMultiplier = 1.2f;
 
     // singleton set up
     public static SwingStrengthController instance { get; private set; }
@@ -49,5 +50,9 @@ public class SwingStrengthController : MonoBehaviour
 
     public void deactiveSelf(){
         this.gameObject.SetActive(false);
+    }
+
+    public float getSwingStrength(){
+        return swingStrength * strengthMultiplier;
     }
 }

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum GolfState { SWINGBACK, ASSESSSTRENGTH, SWING, HIT, FOLLOW}
+public enum GolfState { SWINGBACK, ASSESSSTRENGTH, SWING, HIT, FOLLOW, END }
 
 public class GolfSystem : MonoBehaviour
 {
@@ -14,6 +14,7 @@ public class GolfSystem : MonoBehaviour
     public GolfBallController golfBallController;
     public GolfCameraController cameraController;
     
+    public GameObject balancePrompt; //temp before implementing balance controls. Once balance controllers are implemented, best to make a class for assesing balance which works with strength controller
     
     // Start is called before the first frame update
     void Start()
@@ -39,11 +40,13 @@ public class GolfSystem : MonoBehaviour
     IEnumerator assesStrength(){
         //promp the player to hold an exercise for an amount of time in order to increase the strength of their golf hit
         SwingStrengthController.instance.gameObject.SetActive(true);
+        balancePrompt.SetActive(true); //temp
 
         while(Input.GetMouseButtonDown(0) != true){ //temp mouse controls before implementing balance controls. Simulates when the player stops holding an exercise
             yield return null;
         }
-        
+
+        balancePrompt.SetActive(false); //temp
         state = GolfState.SWING;
         StartCoroutine(swing());
     }
@@ -51,7 +54,7 @@ public class GolfSystem : MonoBehaviour
     IEnumerator swing(){
         clubController.swingForward();
     
-        float swingStrength = SwingStrengthController.instance.swingStrength;
+        float swingStrength = SwingStrengthController.instance.getSwingStrength();
         SwingStrengthController.instance.stopMeasuring();
     
         yield return new WaitForSeconds(.5f); //wait for golf club to connect with golf ball
@@ -66,11 +69,25 @@ public class GolfSystem : MonoBehaviour
         yield return new WaitForSeconds(1f); //give a second to view the impact of the golf ball hit
 
         state = GolfState.FOLLOW;
+        stateUpdate = followUpdate;
         StartCoroutine(followGolfBall());
     }
 
     IEnumerator followGolfBall(){
-        stateUpdate = followUpdate;
+        yield return new WaitForSeconds(1f);
+
+        while(golfBallController.isMoving() == true){ //temp mouse controls before implementing balance controls. Simulates when the player stops holding an exercise
+            yield return null;
+        }
+
+        state = GolfState.END;
+        stateUpdate = nullUpdate;
+        StartCoroutine(endGolfSequence());
+    }
+
+    IEnumerator endGolfSequence(){
+        golfBallController.disableTrail();
+        Debug.Log("golf sequence done!");
         yield return new WaitForSeconds(1f);
     }
 

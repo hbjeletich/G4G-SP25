@@ -8,10 +8,10 @@ public class GolfCameraController : MonoBehaviour
 
     public bool isChasingBall = false;
     private float offsetYFromBall = 10f;
-    private float offsetZFromBall = -15f;
-    private float offsetXFromBall = 5f;
+    private float offsetZFromBall = -10f;
+    private float offsetXFromBall = 15f;
 
-    private float smoothTime = 1f;
+    private float smoothTime = .3f;
     private Vector3 _velocity = Vector3.zero;
 
     public Transform ballTransform;

@@ -24,4 +24,13 @@ public class GolfBallController : MonoBehaviour
     public float getDistanceFromStart(){
         return transform.position.z - startingPos.z;
     }
+
+    public bool isMoving(){
+        if (rb.velocity.magnitude <= 0){return false;}
+        return true;
+    }
+
+    public void disableTrail(){
+        trail.enabled = false;
+    }
 }
