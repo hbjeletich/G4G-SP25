@@ -17,8 +17,25 @@ public class FootTracking : MonoBehaviour
     [SerializeField] private string leftAnkleName = "Dan:LeftFoot";
     [SerializeField] private string rightAnkleName = "Dan:RightFoot";
 
+    private void Awake()
+    {
+        // Register the device layout
+        CapturyInput.Register();
+    }
+
     private void Start()
     {
+        // Create and add the device to the system
+        capturyInput = InputSystem.AddDevice<CapturyInput>();
+
+        if (capturyInput == null)
+        {
+            Debug.LogError("Failed to create CapturyInput device!");
+            return;
+        }
+
+        Debug.Log($"CapturyInput device created with ID: {capturyInput.deviceId}");
+
         CapturyNetworkPlugin networkPlugin = FindObjectOfType<CapturyNetworkPlugin>();
         if (networkPlugin != null)
         {
@@ -30,16 +47,16 @@ public class FootTracking : MonoBehaviour
         {
             Debug.LogError("FootTracking: Could not find CapturyNetworkPlugin!");
         }
-
-        if (capturyInput == null)
-        {
-            capturyInput = InputSystem.AddDevice<CapturyInput>();
-            Debug.Log("CapturyInput device created!");
-        }
     }
 
     private void OnDestroy()
     {
+        // Remove the device when this script is destroyed
+        if (capturyInput != null)
+        {
+            InputSystem.RemoveDevice(capturyInput);
+        }
+
         CapturyNetworkPlugin networkPlugin = FindObjectOfType<CapturyNetworkPlugin>();
         if (networkPlugin != null)
         {
@@ -72,16 +89,13 @@ public class FootTracking : MonoBehaviour
         }
     }
 
-
     private Transform FindJointByExactName(CapturySkeleton skeleton, string jointName)
     {
         foreach (var joint in skeleton.joints)
         {
-            //Debug.Log("Joint Name: " + joint.name + " looking for " + jointName);
             if (joint.name == jointName)
             {
-                Debug.Log("Match found!");
-                Debug.Log(joint.transform);
+                Debug.Log("Match found: " + joint.name);
                 return joint.transform;
             }
         }
@@ -93,36 +107,28 @@ public class FootTracking : MonoBehaviour
     {
         if (leftAnkle == null || rightAnkle == null || capturyInput == null) return;
 
-        if (capturyInput.footHeight == null || capturyInput.footRaise == null || capturyInput.footLower == null)
-        {
-            Debug.LogError("CapturyInput controls are not assigned. Ensure `FinishSetup()` runs correctly.");
-            return;
-        }
-
+        // Get the height difference between ankles
         float footHeight = Mathf.Abs(leftAnkle.position.y - rightAnkle.position.y);
-        InputSystem.QueueDeltaStateEvent(capturyInput.footHeight, footHeight);
 
-        Debug.Log($"Foot Height: {footHeight}");
-
-        using (var eventPtr = StateEvent.From(capturyInput, out InputEventPtr eventRef))
+        // Create an input state to send
+        var state = new CapturyInputState
         {
-            if (footHeight > raiseThreshold && !isFootRaised)
-            {
-                isFootRaised = true;
-                capturyInput.footRaise.WriteValueIntoEvent(1.0f, eventRef);
-                capturyInput.footLower.WriteValueIntoEvent(0.0f, eventRef);
-                Debug.Log("Foot Raised");
-            }
+            footHeight = footHeight,
+            footRaise = isFootRaised ? 0.0f : (footHeight > raiseThreshold ? 1.0f : 0.0f),
+            footLower = isFootRaised ? (footHeight < raiseThreshold ? 1.0f : 0.0f) : 0.0f
+        };
 
-            if (footHeight < raiseThreshold && isFootRaised)
-            {
-                isFootRaised = false;
-                capturyInput.footLower.WriteValueIntoEvent(1.0f, eventRef);
-                capturyInput.footRaise.WriteValueIntoEvent(0.0f, eventRef);
-                Debug.Log("Foot Lowered");
-            }
+        // Update foot raised state for the next frame
+        bool wasFootRaised = isFootRaised;
+        isFootRaised = footHeight > raiseThreshold;
 
-            InputSystem.QueueEvent(eventRef); // Manually queue the event
+        // Log state changes for debugging
+        if (wasFootRaised != isFootRaised)
+        {
+            Debug.Log($"Foot state changed: {(isFootRaised ? "Raised" : "Lowered")} - Height: {footHeight}");
         }
+
+        // Queue the entire state at once
+        InputSystem.QueueStateEvent(capturyInput, state);
     }
 }
