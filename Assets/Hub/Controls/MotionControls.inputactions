@@ -1,0 +1,74 @@
+{
+    "name": "MotionControls",
+    "maps": [
+        {
+            "name": "MotionTracking",
+            "id": "62189d91-533b-485b-a732-75da432b9b50",
+            "actions": [
+                {
+                    "name": "FootRaise",
+                    "type": "Button",
+                    "id": "b397b7a3-ade3-40ea-bdd3-41804734f245",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "FootLower",
+                    "type": "Button",
+                    "id": "ad06f6e7-0c37-48f5-a221-eaf455501166",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "FootHeight",
+                    "type": "Value",
+                    "id": "a2342602-806a-4f36-9dca-0e589404f95d",
+                    "expectedControlType": "Axis",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "2effb81d-5aee-4a98-bdb5-4aad9a95dd71",
+                    "path": "<CapturyInput>/footRaise",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "FootRaise",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "6464aa00-795c-468d-b25c-83698546f8e5",
+                    "path": "<CapturyInput>/footLower",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "FootLower",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "22109154-dded-4791-a29b-3e1b2891670a",
+                    "path": "<CapturyInput>/footHeight",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "FootHeight",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}
