@@ -53,6 +53,33 @@ public partial class @MotionControls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""WeightShiftX"",
+                    ""type"": ""Value"",
+                    ""id"": ""4b1c3c3c-8751-4fb3-8759-5c1b549effea"",
+                    ""expectedControlType"": ""Axis"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""WeightShiftLeft"",
+                    ""type"": ""Button"",
+                    ""id"": ""9feb59db-cf14-4a38-a64d-fd5200a068f9"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""WeightShiftRight"",
+                    ""type"": ""Button"",
+                    ""id"": ""9c3b3fb7-832a-486f-a864-9bec6f6a0daa"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -88,6 +115,39 @@ public partial class @MotionControls: IInputActionCollection2, IDisposable
                     ""action"": ""FootHeight"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b89e1a6d-f59b-4d0b-aee3-c7cd968b1e88"",
+                    ""path"": ""<CapturyInput>/weightShiftX"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""WeightShiftX"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""134c641a-f7ed-4b33-88dc-3bb6de3fef30"",
+                    ""path"": ""<CapturyInput>/weightShiftLeft"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""WeightShiftLeft"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""03541db4-12eb-464c-842a-af1885380534"",
+                    ""path"": ""<CapturyInput>/weightShiftRight"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""WeightShiftRight"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -99,6 +159,9 @@ public partial class @MotionControls: IInputActionCollection2, IDisposable
         m_MotionTracking_FootRaise = m_MotionTracking.FindAction("FootRaise", throwIfNotFound: true);
         m_MotionTracking_FootLower = m_MotionTracking.FindAction("FootLower", throwIfNotFound: true);
         m_MotionTracking_FootHeight = m_MotionTracking.FindAction("FootHeight", throwIfNotFound: true);
+        m_MotionTracking_WeightShiftX = m_MotionTracking.FindAction("WeightShiftX", throwIfNotFound: true);
+        m_MotionTracking_WeightShiftLeft = m_MotionTracking.FindAction("WeightShiftLeft", throwIfNotFound: true);
+        m_MotionTracking_WeightShiftRight = m_MotionTracking.FindAction("WeightShiftRight", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -163,6 +226,9 @@ public partial class @MotionControls: IInputActionCollection2, IDisposable
     private readonly InputAction m_MotionTracking_FootRaise;
     private readonly InputAction m_MotionTracking_FootLower;
     private readonly InputAction m_MotionTracking_FootHeight;
+    private readonly InputAction m_MotionTracking_WeightShiftX;
+    private readonly InputAction m_MotionTracking_WeightShiftLeft;
+    private readonly InputAction m_MotionTracking_WeightShiftRight;
     public struct MotionTrackingActions
     {
         private @MotionControls m_Wrapper;
@@ -170,6 +236,9 @@ public partial class @MotionControls: IInputActionCollection2, IDisposable
         public InputAction @FootRaise => m_Wrapper.m_MotionTracking_FootRaise;
         public InputAction @FootLower => m_Wrapper.m_MotionTracking_FootLower;
         public InputAction @FootHeight => m_Wrapper.m_MotionTracking_FootHeight;
+        public InputAction @WeightShiftX => m_Wrapper.m_MotionTracking_WeightShiftX;
+        public InputAction @WeightShiftLeft => m_Wrapper.m_MotionTracking_WeightShiftLeft;
+        public InputAction @WeightShiftRight => m_Wrapper.m_MotionTracking_WeightShiftRight;
         public InputActionMap Get() { return m_Wrapper.m_MotionTracking; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -188,6 +257,15 @@ public partial class @MotionControls: IInputActionCollection2, IDisposable
             @FootHeight.started += instance.OnFootHeight;
             @FootHeight.performed += instance.OnFootHeight;
             @FootHeight.canceled += instance.OnFootHeight;
+            @WeightShiftX.started += instance.OnWeightShiftX;
+            @WeightShiftX.performed += instance.OnWeightShiftX;
+            @WeightShiftX.canceled += instance.OnWeightShiftX;
+            @WeightShiftLeft.started += instance.OnWeightShiftLeft;
+            @WeightShiftLeft.performed += instance.OnWeightShiftLeft;
+            @WeightShiftLeft.canceled += instance.OnWeightShiftLeft;
+            @WeightShiftRight.started += instance.OnWeightShiftRight;
+            @WeightShiftRight.performed += instance.OnWeightShiftRight;
+            @WeightShiftRight.canceled += instance.OnWeightShiftRight;
         }
 
         private void UnregisterCallbacks(IMotionTrackingActions instance)
@@ -201,6 +279,15 @@ public partial class @MotionControls: IInputActionCollection2, IDisposable
             @FootHeight.started -= instance.OnFootHeight;
             @FootHeight.performed -= instance.OnFootHeight;
             @FootHeight.canceled -= instance.OnFootHeight;
+            @WeightShiftX.started -= instance.OnWeightShiftX;
+            @WeightShiftX.performed -= instance.OnWeightShiftX;
+            @WeightShiftX.canceled -= instance.OnWeightShiftX;
+            @WeightShiftLeft.started -= instance.OnWeightShiftLeft;
+            @WeightShiftLeft.performed -= instance.OnWeightShiftLeft;
+            @WeightShiftLeft.canceled -= instance.OnWeightShiftLeft;
+            @WeightShiftRight.started -= instance.OnWeightShiftRight;
+            @WeightShiftRight.performed -= instance.OnWeightShiftRight;
+            @WeightShiftRight.canceled -= instance.OnWeightShiftRight;
         }
 
         public void RemoveCallbacks(IMotionTrackingActions instance)
@@ -223,5 +310,8 @@ public partial class @MotionControls: IInputActionCollection2, IDisposable
         void OnFootRaise(InputAction.CallbackContext context);
         void OnFootLower(InputAction.CallbackContext context);
         void OnFootHeight(InputAction.CallbackContext context);
+        void OnWeightShiftX(InputAction.CallbackContext context);
+        void OnWeightShiftLeft(InputAction.CallbackContext context);
+        void OnWeightShiftRight(InputAction.CallbackContext context);
     }
 }
