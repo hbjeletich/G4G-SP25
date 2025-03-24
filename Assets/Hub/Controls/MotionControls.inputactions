@@ -1,0 +1,134 @@
+{
+    "name": "MotionControls",
+    "maps": [
+        {
+            "name": "MotionTracking",
+            "id": "62189d91-533b-485b-a732-75da432b9b50",
+            "actions": [
+                {
+                    "name": "FootRaise",
+                    "type": "Button",
+                    "id": "b397b7a3-ade3-40ea-bdd3-41804734f245",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "FootLower",
+                    "type": "Button",
+                    "id": "ad06f6e7-0c37-48f5-a221-eaf455501166",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "FootHeight",
+                    "type": "Value",
+                    "id": "a2342602-806a-4f36-9dca-0e589404f95d",
+                    "expectedControlType": "Axis",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "WeightShiftX",
+                    "type": "Value",
+                    "id": "4b1c3c3c-8751-4fb3-8759-5c1b549effea",
+                    "expectedControlType": "Axis",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "WeightShiftLeft",
+                    "type": "Button",
+                    "id": "9feb59db-cf14-4a38-a64d-fd5200a068f9",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "WeightShiftRight",
+                    "type": "Button",
+                    "id": "9c3b3fb7-832a-486f-a864-9bec6f6a0daa",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "2effb81d-5aee-4a98-bdb5-4aad9a95dd71",
+                    "path": "<CapturyInput>/footRaise",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "FootRaise",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "6464aa00-795c-468d-b25c-83698546f8e5",
+                    "path": "<CapturyInput>/footLower",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "FootLower",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "22109154-dded-4791-a29b-3e1b2891670a",
+                    "path": "<CapturyInput>/footHeight",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "FootHeight",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "b89e1a6d-f59b-4d0b-aee3-c7cd968b1e88",
+                    "path": "<CapturyInput>/weightShiftX",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "WeightShiftX",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "134c641a-f7ed-4b33-88dc-3bb6de3fef30",
+                    "path": "<CapturyInput>/weightShiftLeft",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "WeightShiftLeft",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "03541db4-12eb-464c-842a-af1885380534",
+                    "path": "<CapturyInput>/weightShiftRight",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "WeightShiftRight",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}
