@@ -142,7 +142,7 @@ public class WeightShiftTracking : MonoBehaviour
         // debug info
         if (debugMode && Time.frameCount % 30 == 0)
         {
-            Debug.Log($"Weight shift: {shiftAmount:F3}m from neutral");
+            //Debug.Log($"Weight shift: {shiftAmount:F3}m from neutral");
         }
 
         CapturyInputState state = new CapturyInputState();
