@@ -13,8 +13,9 @@ public class FishObject : MonoBehaviour
     public float minWidthFactor = 0.8f; // Thinnest fish
     public float maxWidthFactor = 1.5f; // Fattest fish
 
-    [Header("Tail Wag Pivot Offset")]
-    public Vector3 tailPivotOffset = new Vector3(0, -1f, 0); // Offset from fish center
+    [Header("Avoidance Settings")]
+    public float avoidanceRadius = 1f; // Radius to detect nearby fish for avoidance
+    public float avoidanceStrength = 1f; // How much to steer away from nearby fish
 
     [Header("Fish Behavior Settings By Rarity")]
     [Header("★")]
@@ -106,6 +107,7 @@ public class FishObject : MonoBehaviour
 
         if (isMoving && !isDecelerating)
         {
+            AvoidNearbyFish();
             currentSpeed = Mathf.MoveTowards(currentSpeed, targetSpeed, accelerationRate * Time.deltaTime);
             MoveForward();
         }
@@ -122,6 +124,11 @@ public class FishObject : MonoBehaviour
         
         TailWag();
     }
+
+    // void OnCollisionEnter2D(Collision2D collision)
+    // {
+    //     Debug.Log("Fish collided with: " + collision.gameObject.name);
+    // }
 
     private void MoveForward()
     {
@@ -151,21 +158,102 @@ public class FishObject : MonoBehaviour
 
     private void TailWag()
     {
-        float wagAngle = Mathf.Sin(Time.time * tailWagSpeed) * 5f;
-        transform.RotateAround(transform.position + tailPivotOffset, Vector3.forward, wagAngle * Time.deltaTime * 3f);
+        float wagAngle = Mathf.Sin(Time.time * tailWagSpeed) * 7f;
+        transform.RotateAround(transform.position, Vector3.forward, wagAngle * Time.deltaTime * 3f);
     }
 
     private IEnumerator RotateRandomly()
     {
         isTurning = true;
 
-        // Pick a random new angle to turn to
-        float newAngle = Random.Range(0f, 360f);
+        // Randomly rotate to a new direction
+        float newAngle = transform.eulerAngles.z + Random.Range(90f, 180f);
         targetRotation = Quaternion.Euler(0, 0, newAngle);
 
-        // Wait until rotation completes before moving
         while (isTurning)
             yield return null;
+    }
+
+    private void AvoidNearbyFish()
+    {
+        float dynamicAvoidanceRadius = Mathf.Lerp(0.8f, 1.5f, currentSpeed / moveSpeed);
+        Collider2D[] nearbyColliders = Physics2D.OverlapCapsuleAll(
+            transform.position, 
+            new Vector2(dynamicAvoidanceRadius, dynamicAvoidanceRadius * 2f),
+            CapsuleDirection2D.Vertical, 0f
+        );
+
+        Vector2 avoidanceForce = Vector2.zero;
+        int numAvoiding = 0;
+
+        foreach (var col in nearbyColliders)
+        {
+            if (col.gameObject == gameObject) continue; // Ignore self
+
+            Vector2 awayFromObject = (Vector2)transform.position - col.ClosestPoint(transform.position);
+            float distance = awayFromObject.magnitude;
+
+            if (distance > 0)
+            {
+                avoidanceForce += awayFromObject.normalized / distance;
+                numAvoiding++;
+            }
+        }
+
+        if (numAvoiding > 0)
+        {
+            avoidanceForce /= numAvoiding;
+            SteerAway(avoidanceForce * 1.5f); // Increase force slightly to help fish move away
+        }
+    }
+
+    private void SteerAway(Vector2 avoidanceForce)
+    {
+        Vector2 newDirection = ((Vector2)(-transform.up) + avoidanceForce * avoidanceStrength).normalized;
+
+        float angle = Mathf.Atan2(newDirection.y, newDirection.x) * Mathf.Rad2Deg;
+        targetRotation = Quaternion.Euler(0, 0, angle + 90f); // Rotate smoothly
+        isTurning = true;
+    }
+
+   private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Wall"))
+        {
+            StopAndTurn();
+
+            // Get the closest point on the wall collider
+            Vector2 closestPoint = collision.collider.ClosestPoint(transform.position);
+            Vector2 wallNormal = (Vector2)transform.position - closestPoint;
+
+            // Instead of teleporting, steer the fish away from the wall smoothly
+            SteerAway(wallNormal.normalized * 2f); // Apply steering force
+        }
+    }
+
+    private void StopAndTurn()
+    {
+        isMoving = false; 
+        isDecelerating = true; 
+        StartCoroutine(WaitAndTurn());
+    }
+
+    private IEnumerator WaitAndTurn()
+    {
+        yield return new WaitUntil(() => currentSpeed == 0); // Ensure fish fully stops
+
+        float waitTime = Random.Range(1f, 3f); // Random wait before turning
+        yield return new WaitForSeconds(waitTime);
+
+        yield return RotateRandomly(); // Rotate to a new direction
+
+        isMoving = true; // Resume movement
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, avoidanceRadius);
     }
 
     private void AssignRandomSize()
@@ -174,11 +262,11 @@ public class FishObject : MonoBehaviour
         float widthFactor = Random.Range(minWidthFactor, maxWidthFactor);
         transform.localScale = new Vector3(height * widthFactor, height, 1);
 
-        // Adjust collider size proportionally
-        if (capsuleCollider)
-        {
-            capsuleCollider.size = new Vector2(capsuleCollider.size.x * height * widthFactor, capsuleCollider.size.y * height);
-        }
+        // // Adjust collider size proportionally
+        // if (capsuleCollider)
+        // {
+        //     capsuleCollider.size = new Vector2(capsuleCollider.size.x * height * widthFactor, capsuleCollider.size.y * height);
+        // }
         Debug.Log($"{fishData.fishName} spawned with size Scale({height}h, {widthFactor}w)");
     }
 
