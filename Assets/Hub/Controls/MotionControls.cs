@@ -80,6 +80,96 @@ public partial class @MotionControls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""QuadrantOne"",
+                    ""type"": ""Button"",
+                    ""id"": ""feb0c326-c82e-463c-ad9e-572723b81e5a"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""QuadrantTwo"",
+                    ""type"": ""Button"",
+                    ""id"": ""2bba24b5-d6c5-4bde-b59a-ac0999963df9"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""QuadrantThree"",
+                    ""type"": ""Button"",
+                    ""id"": ""6f3b03d7-5dff-4994-a77d-70bd7ff4f7a4"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""QuadrantFour"",
+                    ""type"": ""Button"",
+                    ""id"": ""e6db2df5-31db-4d36-85e6-238c5b7b98ab"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""AllQuadrantsComplete"",
+                    ""type"": ""Button"",
+                    ""id"": ""7517b4b8-e667-4e0c-8416-a232f7a7ec62"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""LeftHipAbducted"",
+                    ""type"": ""Button"",
+                    ""id"": ""ec65b7ba-9a97-4a08-ae5d-105762d76435"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""RightHipAbducted"",
+                    ""type"": ""Button"",
+                    ""id"": ""adca42d7-40b5-4287-9c62-ebb7b50c6dca"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""AbductionDistance"",
+                    ""type"": ""Button"",
+                    ""id"": ""1e53e15a-bb70-47c4-b000-9eddc9c76e65"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""LeftFootHeight"",
+                    ""type"": ""Button"",
+                    ""id"": ""f6c204b5-125a-42a3-b105-df1ba90186f3"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""RightFootHeight"",
+                    ""type"": ""Button"",
+                    ""id"": ""08acf6f5-bbdb-4fac-81fc-20576118c02d"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -148,6 +238,116 @@ public partial class @MotionControls: IInputActionCollection2, IDisposable
                     ""action"": ""WeightShiftRight"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""52e7ac5d-9974-4987-90ff-901804514525"",
+                    ""path"": ""<CapturyInput>/quadrantOne"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""QuadrantOne"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""50069315-de8c-4aa7-ae92-14f639d2b45f"",
+                    ""path"": ""<CapturyInput>/quadrantTwo"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""QuadrantTwo"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f3229b75-3f88-4e72-9c4d-94e7480d6691"",
+                    ""path"": ""<CapturyInput>/quadrantThree"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""QuadrantThree"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""64dfef6d-167f-4d63-82b9-3586f4790fda"",
+                    ""path"": ""<CapturyInput>/quadrantFour"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""QuadrantFour"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""4e480004-4549-4d55-97d7-7f18c0620304"",
+                    ""path"": ""<CapturyInput>/allQuadrantsComplete"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""AllQuadrantsComplete"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""100b2eaf-392a-4fe9-91b3-c6e946e7efb9"",
+                    ""path"": ""<CapturyInput>/leftHipAbducted"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""LeftHipAbducted"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""57cc526d-097a-49da-9bd3-21f2b5072b2c"",
+                    ""path"": ""<CapturyInput>/rightHipAbducted"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""RightHipAbducted"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""138b2756-c59c-4060-ae60-7a6ef06630f7"",
+                    ""path"": ""<CapturyInput>/abductionDistance"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""AbductionDistance"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""662167a0-7834-4b2a-ab6e-2485e41b8bb5"",
+                    ""path"": ""<CapturyInput>/leftFootHeight"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""LeftFootHeight"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""592d549f-6364-41d7-b14e-1451df7f155c"",
+                    ""path"": ""<CapturyInput>/rightFootHeight"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""RightFootHeight"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -162,6 +362,16 @@ public partial class @MotionControls: IInputActionCollection2, IDisposable
         m_MotionTracking_WeightShiftX = m_MotionTracking.FindAction("WeightShiftX", throwIfNotFound: true);
         m_MotionTracking_WeightShiftLeft = m_MotionTracking.FindAction("WeightShiftLeft", throwIfNotFound: true);
         m_MotionTracking_WeightShiftRight = m_MotionTracking.FindAction("WeightShiftRight", throwIfNotFound: true);
+        m_MotionTracking_QuadrantOne = m_MotionTracking.FindAction("QuadrantOne", throwIfNotFound: true);
+        m_MotionTracking_QuadrantTwo = m_MotionTracking.FindAction("QuadrantTwo", throwIfNotFound: true);
+        m_MotionTracking_QuadrantThree = m_MotionTracking.FindAction("QuadrantThree", throwIfNotFound: true);
+        m_MotionTracking_QuadrantFour = m_MotionTracking.FindAction("QuadrantFour", throwIfNotFound: true);
+        m_MotionTracking_AllQuadrantsComplete = m_MotionTracking.FindAction("AllQuadrantsComplete", throwIfNotFound: true);
+        m_MotionTracking_LeftHipAbducted = m_MotionTracking.FindAction("LeftHipAbducted", throwIfNotFound: true);
+        m_MotionTracking_RightHipAbducted = m_MotionTracking.FindAction("RightHipAbducted", throwIfNotFound: true);
+        m_MotionTracking_AbductionDistance = m_MotionTracking.FindAction("AbductionDistance", throwIfNotFound: true);
+        m_MotionTracking_LeftFootHeight = m_MotionTracking.FindAction("LeftFootHeight", throwIfNotFound: true);
+        m_MotionTracking_RightFootHeight = m_MotionTracking.FindAction("RightFootHeight", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -229,6 +439,16 @@ public partial class @MotionControls: IInputActionCollection2, IDisposable
     private readonly InputAction m_MotionTracking_WeightShiftX;
     private readonly InputAction m_MotionTracking_WeightShiftLeft;
     private readonly InputAction m_MotionTracking_WeightShiftRight;
+    private readonly InputAction m_MotionTracking_QuadrantOne;
+    private readonly InputAction m_MotionTracking_QuadrantTwo;
+    private readonly InputAction m_MotionTracking_QuadrantThree;
+    private readonly InputAction m_MotionTracking_QuadrantFour;
+    private readonly InputAction m_MotionTracking_AllQuadrantsComplete;
+    private readonly InputAction m_MotionTracking_LeftHipAbducted;
+    private readonly InputAction m_MotionTracking_RightHipAbducted;
+    private readonly InputAction m_MotionTracking_AbductionDistance;
+    private readonly InputAction m_MotionTracking_LeftFootHeight;
+    private readonly InputAction m_MotionTracking_RightFootHeight;
     public struct MotionTrackingActions
     {
         private @MotionControls m_Wrapper;
@@ -239,6 +459,16 @@ public partial class @MotionControls: IInputActionCollection2, IDisposable
         public InputAction @WeightShiftX => m_Wrapper.m_MotionTracking_WeightShiftX;
         public InputAction @WeightShiftLeft => m_Wrapper.m_MotionTracking_WeightShiftLeft;
         public InputAction @WeightShiftRight => m_Wrapper.m_MotionTracking_WeightShiftRight;
+        public InputAction @QuadrantOne => m_Wrapper.m_MotionTracking_QuadrantOne;
+        public InputAction @QuadrantTwo => m_Wrapper.m_MotionTracking_QuadrantTwo;
+        public InputAction @QuadrantThree => m_Wrapper.m_MotionTracking_QuadrantThree;
+        public InputAction @QuadrantFour => m_Wrapper.m_MotionTracking_QuadrantFour;
+        public InputAction @AllQuadrantsComplete => m_Wrapper.m_MotionTracking_AllQuadrantsComplete;
+        public InputAction @LeftHipAbducted => m_Wrapper.m_MotionTracking_LeftHipAbducted;
+        public InputAction @RightHipAbducted => m_Wrapper.m_MotionTracking_RightHipAbducted;
+        public InputAction @AbductionDistance => m_Wrapper.m_MotionTracking_AbductionDistance;
+        public InputAction @LeftFootHeight => m_Wrapper.m_MotionTracking_LeftFootHeight;
+        public InputAction @RightFootHeight => m_Wrapper.m_MotionTracking_RightFootHeight;
         public InputActionMap Get() { return m_Wrapper.m_MotionTracking; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -266,6 +496,36 @@ public partial class @MotionControls: IInputActionCollection2, IDisposable
             @WeightShiftRight.started += instance.OnWeightShiftRight;
             @WeightShiftRight.performed += instance.OnWeightShiftRight;
             @WeightShiftRight.canceled += instance.OnWeightShiftRight;
+            @QuadrantOne.started += instance.OnQuadrantOne;
+            @QuadrantOne.performed += instance.OnQuadrantOne;
+            @QuadrantOne.canceled += instance.OnQuadrantOne;
+            @QuadrantTwo.started += instance.OnQuadrantTwo;
+            @QuadrantTwo.performed += instance.OnQuadrantTwo;
+            @QuadrantTwo.canceled += instance.OnQuadrantTwo;
+            @QuadrantThree.started += instance.OnQuadrantThree;
+            @QuadrantThree.performed += instance.OnQuadrantThree;
+            @QuadrantThree.canceled += instance.OnQuadrantThree;
+            @QuadrantFour.started += instance.OnQuadrantFour;
+            @QuadrantFour.performed += instance.OnQuadrantFour;
+            @QuadrantFour.canceled += instance.OnQuadrantFour;
+            @AllQuadrantsComplete.started += instance.OnAllQuadrantsComplete;
+            @AllQuadrantsComplete.performed += instance.OnAllQuadrantsComplete;
+            @AllQuadrantsComplete.canceled += instance.OnAllQuadrantsComplete;
+            @LeftHipAbducted.started += instance.OnLeftHipAbducted;
+            @LeftHipAbducted.performed += instance.OnLeftHipAbducted;
+            @LeftHipAbducted.canceled += instance.OnLeftHipAbducted;
+            @RightHipAbducted.started += instance.OnRightHipAbducted;
+            @RightHipAbducted.performed += instance.OnRightHipAbducted;
+            @RightHipAbducted.canceled += instance.OnRightHipAbducted;
+            @AbductionDistance.started += instance.OnAbductionDistance;
+            @AbductionDistance.performed += instance.OnAbductionDistance;
+            @AbductionDistance.canceled += instance.OnAbductionDistance;
+            @LeftFootHeight.started += instance.OnLeftFootHeight;
+            @LeftFootHeight.performed += instance.OnLeftFootHeight;
+            @LeftFootHeight.canceled += instance.OnLeftFootHeight;
+            @RightFootHeight.started += instance.OnRightFootHeight;
+            @RightFootHeight.performed += instance.OnRightFootHeight;
+            @RightFootHeight.canceled += instance.OnRightFootHeight;
         }
 
         private void UnregisterCallbacks(IMotionTrackingActions instance)
@@ -288,6 +548,36 @@ public partial class @MotionControls: IInputActionCollection2, IDisposable
             @WeightShiftRight.started -= instance.OnWeightShiftRight;
             @WeightShiftRight.performed -= instance.OnWeightShiftRight;
             @WeightShiftRight.canceled -= instance.OnWeightShiftRight;
+            @QuadrantOne.started -= instance.OnQuadrantOne;
+            @QuadrantOne.performed -= instance.OnQuadrantOne;
+            @QuadrantOne.canceled -= instance.OnQuadrantOne;
+            @QuadrantTwo.started -= instance.OnQuadrantTwo;
+            @QuadrantTwo.performed -= instance.OnQuadrantTwo;
+            @QuadrantTwo.canceled -= instance.OnQuadrantTwo;
+            @QuadrantThree.started -= instance.OnQuadrantThree;
+            @QuadrantThree.performed -= instance.OnQuadrantThree;
+            @QuadrantThree.canceled -= instance.OnQuadrantThree;
+            @QuadrantFour.started -= instance.OnQuadrantFour;
+            @QuadrantFour.performed -= instance.OnQuadrantFour;
+            @QuadrantFour.canceled -= instance.OnQuadrantFour;
+            @AllQuadrantsComplete.started -= instance.OnAllQuadrantsComplete;
+            @AllQuadrantsComplete.performed -= instance.OnAllQuadrantsComplete;
+            @AllQuadrantsComplete.canceled -= instance.OnAllQuadrantsComplete;
+            @LeftHipAbducted.started -= instance.OnLeftHipAbducted;
+            @LeftHipAbducted.performed -= instance.OnLeftHipAbducted;
+            @LeftHipAbducted.canceled -= instance.OnLeftHipAbducted;
+            @RightHipAbducted.started -= instance.OnRightHipAbducted;
+            @RightHipAbducted.performed -= instance.OnRightHipAbducted;
+            @RightHipAbducted.canceled -= instance.OnRightHipAbducted;
+            @AbductionDistance.started -= instance.OnAbductionDistance;
+            @AbductionDistance.performed -= instance.OnAbductionDistance;
+            @AbductionDistance.canceled -= instance.OnAbductionDistance;
+            @LeftFootHeight.started -= instance.OnLeftFootHeight;
+            @LeftFootHeight.performed -= instance.OnLeftFootHeight;
+            @LeftFootHeight.canceled -= instance.OnLeftFootHeight;
+            @RightFootHeight.started -= instance.OnRightFootHeight;
+            @RightFootHeight.performed -= instance.OnRightFootHeight;
+            @RightFootHeight.canceled -= instance.OnRightFootHeight;
         }
 
         public void RemoveCallbacks(IMotionTrackingActions instance)
@@ -313,5 +603,15 @@ public partial class @MotionControls: IInputActionCollection2, IDisposable
         void OnWeightShiftX(InputAction.CallbackContext context);
         void OnWeightShiftLeft(InputAction.CallbackContext context);
         void OnWeightShiftRight(InputAction.CallbackContext context);
+        void OnQuadrantOne(InputAction.CallbackContext context);
+        void OnQuadrantTwo(InputAction.CallbackContext context);
+        void OnQuadrantThree(InputAction.CallbackContext context);
+        void OnQuadrantFour(InputAction.CallbackContext context);
+        void OnAllQuadrantsComplete(InputAction.CallbackContext context);
+        void OnLeftHipAbducted(InputAction.CallbackContext context);
+        void OnRightHipAbducted(InputAction.CallbackContext context);
+        void OnAbductionDistance(InputAction.CallbackContext context);
+        void OnLeftFootHeight(InputAction.CallbackContext context);
+        void OnRightFootHeight(InputAction.CallbackContext context);
     }
 }
