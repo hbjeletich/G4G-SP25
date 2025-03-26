@@ -58,6 +58,96 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "QuadrantOne",
+                    "type": "Button",
+                    "id": "feb0c326-c82e-463c-ad9e-572723b81e5a",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "QuadrantTwo",
+                    "type": "Button",
+                    "id": "2bba24b5-d6c5-4bde-b59a-ac0999963df9",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "QuadrantThree",
+                    "type": "Button",
+                    "id": "6f3b03d7-5dff-4994-a77d-70bd7ff4f7a4",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "QuadrantFour",
+                    "type": "Button",
+                    "id": "e6db2df5-31db-4d36-85e6-238c5b7b98ab",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "AllQuadrantsComplete",
+                    "type": "Button",
+                    "id": "7517b4b8-e667-4e0c-8416-a232f7a7ec62",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "LeftHipAbducted",
+                    "type": "Button",
+                    "id": "ec65b7ba-9a97-4a08-ae5d-105762d76435",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "RightHipAbducted",
+                    "type": "Button",
+                    "id": "adca42d7-40b5-4287-9c62-ebb7b50c6dca",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "AbductionDistance",
+                    "type": "Button",
+                    "id": "1e53e15a-bb70-47c4-b000-9eddc9c76e65",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "LeftFootHeight",
+                    "type": "Button",
+                    "id": "f6c204b5-125a-42a3-b105-df1ba90186f3",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "RightFootHeight",
+                    "type": "Button",
+                    "id": "08acf6f5-bbdb-4fac-81fc-20576118c02d",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -124,6 +214,116 @@
                     "processors": "",
                     "groups": "",
                     "action": "WeightShiftRight",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "52e7ac5d-9974-4987-90ff-901804514525",
+                    "path": "<CapturyInput>/quadrantOne",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "QuadrantOne",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "50069315-de8c-4aa7-ae92-14f639d2b45f",
+                    "path": "<CapturyInput>/quadrantTwo",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "QuadrantTwo",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "f3229b75-3f88-4e72-9c4d-94e7480d6691",
+                    "path": "<CapturyInput>/quadrantThree",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "QuadrantThree",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "64dfef6d-167f-4d63-82b9-3586f4790fda",
+                    "path": "<CapturyInput>/quadrantFour",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "QuadrantFour",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "4e480004-4549-4d55-97d7-7f18c0620304",
+                    "path": "<CapturyInput>/allQuadrantsComplete",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "AllQuadrantsComplete",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "100b2eaf-392a-4fe9-91b3-c6e946e7efb9",
+                    "path": "<CapturyInput>/leftHipAbducted",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "LeftHipAbducted",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "57cc526d-097a-49da-9bd3-21f2b5072b2c",
+                    "path": "<CapturyInput>/rightHipAbducted",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "RightHipAbducted",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "138b2756-c59c-4060-ae60-7a6ef06630f7",
+                    "path": "<CapturyInput>/abductionDistance",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "AbductionDistance",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "662167a0-7834-4b2a-ab6e-2485e41b8bb5",
+                    "path": "<CapturyInput>/leftFootHeight",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "LeftFootHeight",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "592d549f-6364-41d7-b14e-1451df7f155c",
+                    "path": "<CapturyInput>/rightFootHeight",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "RightFootHeight",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
