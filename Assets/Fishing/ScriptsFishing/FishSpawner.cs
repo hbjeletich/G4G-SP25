@@ -5,12 +5,12 @@ using UnityEngine;
 public class FishSpawner : MonoBehaviour
 {
     [Header("Fish Spawner Settings")]
-    public float minFishAmount = 5f;
-    public float maxFishAmount = 8f;
+    public int minFishAmount = 5;
+    public int maxFishAmount = 8;
 
     [Header("Components")]
     public GameObject fishPrefab;
-    public FishData[] fishData;           
+    public List<FishData> fishDataList;
 
     private void Start()
     {
@@ -19,12 +19,23 @@ public class FishSpawner : MonoBehaviour
 
     private void SpawnFish()
     {
-        int fishAmount = Random.Range((int)minFishAmount, (int)maxFishAmount);
+        if (fishDataList == null || fishDataList.Count == 0)
+        {
+            Debug.LogError("FishSpawner: No FishData objects assigned! Add FishData to the list.");
+            return;
+        }
+
+        int fishAmount = Random.Range(minFishAmount, maxFishAmount);
         for (int i = 0; i < fishAmount; i++)
         {
-            FishData randomFish = fishData[Random.Range(0, fishData.Length)];
+            FishData randomFish = fishDataList[Random.Range(0, fishDataList.Count)];
             GameObject fish = Instantiate(fishPrefab, transform.position, Quaternion.identity);
-            fish.GetComponent<FishObject>().fishData = randomFish;
+            FishObject fishObject = fish.GetComponent<FishObject>();
+            Debug.Log("Spawning " + randomFish.fishName);
+
+            fishObject.fishData = randomFish;
+            fishObject.AssignBehaviorByRarity();
+
             fish.transform.SetParent(transform);
         }
     }
