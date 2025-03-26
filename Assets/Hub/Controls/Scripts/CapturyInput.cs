@@ -31,6 +31,22 @@ public struct CapturyInputState : IInputStateTypeInfo
 
     [InputControl(layout = "Button")]
     public float weightShiftRight;
+
+    // 4 step quadrant info
+    [InputControl(layout = "Button")]
+    public float quadrantOne;
+
+    [InputControl(layout = "Button")]
+    public float quadrantTwo;
+
+    [InputControl(layout = "Button")]
+    public float quadrantThree;
+
+    [InputControl(layout = "Button")]
+    public float quadrantFour;
+
+    [InputControl(layout = "Button")]
+    public float allQuadrantsComplete;
 }
 
 [InputControlLayout(stateType = typeof(CapturyInputState), displayName = "Captury Input")]
@@ -55,6 +71,22 @@ public class CapturyInput : InputDevice
     [InputControl(layout = "Button", displayName = "Weight Shift Right")]
     public ButtonControl weightShiftRight { get; private set; }
 
+    // 4 steo
+    [InputControl(layout = "Button", displayName = "Quadrant One")]
+    public ButtonControl quadrantOne { get; private set; }
+
+    [InputControl(layout = "Button", displayName = "Quadrant Two")]
+    public ButtonControl quadrantTwo { get; private set; }
+
+    [InputControl(layout = "Button", displayName = "Quadrant Three")]
+    public ButtonControl quadrantThree { get; private set; }
+
+    [InputControl(layout = "Button", displayName = "Quadrant Four")]
+    public ButtonControl quadrantFour { get; private set; }
+
+    [InputControl(layout = "Button", displayName = "All Quadrants Complete")]
+    public ButtonControl allQuadrantsComplete { get; private set; }
+
     protected override void FinishSetup()
     {
         base.FinishSetup(); // Call base.FinishSetup() first
@@ -66,6 +98,12 @@ public class CapturyInput : InputDevice
         weightShiftX = GetChildControl<AxisControl>("weightShiftX");
         weightShiftLeft = GetChildControl<ButtonControl>("weightShiftLeft");
         weightShiftRight = GetChildControl<ButtonControl>("weightShiftRight");
+
+        quadrantOne = GetChildControl<ButtonControl>("quadrantOne");
+        quadrantTwo = GetChildControl<ButtonControl>("quadrantTwo");
+        quadrantThree = GetChildControl<ButtonControl>("quadrantThree");
+        quadrantFour = GetChildControl<ButtonControl>("quadrantFour");
+        allQuadrantsComplete = GetChildControl<ButtonControl>("allQuadrantsComplete");
 
         Debug.Log("CapturyInput setup complete");
     }

@@ -58,6 +58,51 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "QuadrantOne",
+                    "type": "Button",
+                    "id": "feb0c326-c82e-463c-ad9e-572723b81e5a",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "QuadrantTwo",
+                    "type": "Button",
+                    "id": "2bba24b5-d6c5-4bde-b59a-ac0999963df9",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "QuadrantThree",
+                    "type": "Button",
+                    "id": "6f3b03d7-5dff-4994-a77d-70bd7ff4f7a4",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "QuadrantFour",
+                    "type": "Button",
+                    "id": "e6db2df5-31db-4d36-85e6-238c5b7b98ab",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "AllQuadrantsComplete",
+                    "type": "Button",
+                    "id": "7517b4b8-e667-4e0c-8416-a232f7a7ec62",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -124,6 +169,61 @@
                     "processors": "",
                     "groups": "",
                     "action": "WeightShiftRight",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "52e7ac5d-9974-4987-90ff-901804514525",
+                    "path": "<CapturyInput>/quadrantOne",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "QuadrantOne",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "50069315-de8c-4aa7-ae92-14f639d2b45f",
+                    "path": "<CapturyInput>/quadrantTwo",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "QuadrantTwo",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "f3229b75-3f88-4e72-9c4d-94e7480d6691",
+                    "path": "<CapturyInput>/quadrantThree",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "QuadrantThree",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "64dfef6d-167f-4d63-82b9-3586f4790fda",
+                    "path": "<CapturyInput>/quadrantFour",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "QuadrantFour",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "4e480004-4549-4d55-97d7-7f18c0620304",
+                    "path": "<CapturyInput>/allQuadrantsComplete",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "AllQuadrantsComplete",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
