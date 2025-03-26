@@ -47,6 +47,22 @@ public struct CapturyInputState : IInputStateTypeInfo
 
     [InputControl(layout = "Button")]
     public float allQuadrantsComplete;
+
+    // hip abduction controls
+    [InputControl(layout = "Button")]
+    public float leftHipAbducted;
+
+    [InputControl(layout = "Button")]
+    public float rightHipAbducted;
+
+    [InputControl(layout = "Axis")]
+    public float abductionDistance;
+
+    [InputControl(layout = "Axis")]
+    public float leftFootHeight;
+
+    [InputControl(layout = "Axis")]
+    public float rightFootHeight;
 }
 
 [InputControlLayout(stateType = typeof(CapturyInputState), displayName = "Captury Input")]
@@ -87,6 +103,22 @@ public class CapturyInput : InputDevice
     [InputControl(layout = "Button", displayName = "All Quadrants Complete")]
     public ButtonControl allQuadrantsComplete { get; private set; }
 
+    // hip abduction
+    [InputControl(layout = "Button", displayName = "Left Hip Abducted")]
+    public ButtonControl leftHipAbducted { get; private set; }
+
+    [InputControl(layout = "Button", displayName = "Right Hip Abducted")]
+    public ButtonControl rightHipAbducted { get; private set; }
+
+    [InputControl(layout = "Axis", displayName = "Abduction Distance")]
+    public AxisControl abductionDistance { get; private set; }
+
+    [InputControl(layout = "Axis", displayName = "Left Foot Height")]
+    public AxisControl leftFootHeight { get; private set; }
+
+    [InputControl(layout = "Axis", displayName = "Right Foot Height")]
+    public AxisControl rightFootHeight { get; private set; }
+
     protected override void FinishSetup()
     {
         base.FinishSetup(); // Call base.FinishSetup() first
@@ -104,6 +136,12 @@ public class CapturyInput : InputDevice
         quadrantThree = GetChildControl<ButtonControl>("quadrantThree");
         quadrantFour = GetChildControl<ButtonControl>("quadrantFour");
         allQuadrantsComplete = GetChildControl<ButtonControl>("allQuadrantsComplete");
+
+        leftHipAbducted = GetChildControl<ButtonControl>("leftHipAbducted");
+        rightHipAbducted = GetChildControl<ButtonControl>("rightHipAbducted");
+        abductionDistance = GetChildControl<AxisControl>("abductionDistance");
+        leftFootHeight = GetChildControl<AxisControl>("leftFootHeight");
+        rightFootHeight = GetChildControl<AxisControl>("rightFootHeight");
 
         Debug.Log("CapturyInput setup complete");
     }

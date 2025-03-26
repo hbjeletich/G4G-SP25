@@ -103,6 +103,51 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "LeftHipAbducted",
+                    "type": "Button",
+                    "id": "ec65b7ba-9a97-4a08-ae5d-105762d76435",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "RightHipAbducted",
+                    "type": "Button",
+                    "id": "adca42d7-40b5-4287-9c62-ebb7b50c6dca",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "AbductionDistance",
+                    "type": "Button",
+                    "id": "1e53e15a-bb70-47c4-b000-9eddc9c76e65",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "LeftFootHeight",
+                    "type": "Button",
+                    "id": "f6c204b5-125a-42a3-b105-df1ba90186f3",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "RightFootHeight",
+                    "type": "Button",
+                    "id": "08acf6f5-bbdb-4fac-81fc-20576118c02d",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -224,6 +269,61 @@
                     "processors": "",
                     "groups": "",
                     "action": "AllQuadrantsComplete",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "100b2eaf-392a-4fe9-91b3-c6e946e7efb9",
+                    "path": "<CapturyInput>/leftHipAbducted",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "LeftHipAbducted",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "57cc526d-097a-49da-9bd3-21f2b5072b2c",
+                    "path": "<CapturyInput>/rightHipAbducted",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "RightHipAbducted",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "138b2756-c59c-4060-ae60-7a6ef06630f7",
+                    "path": "<CapturyInput>/abductionDistance",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "AbductionDistance",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "662167a0-7834-4b2a-ab6e-2485e41b8bb5",
+                    "path": "<CapturyInput>/leftFootHeight",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "LeftFootHeight",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "592d549f-6364-41d7-b14e-1451df7f155c",
+                    "path": "<CapturyInput>/rightFootHeight",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "RightFootHeight",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
