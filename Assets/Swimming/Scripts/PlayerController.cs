@@ -31,11 +31,18 @@ namespace Swimming
         private InputAction jumpAction;
 
         private Rigidbody2D rigidbody2D;
+        private SpriteRenderer spriteRenderer;
+
+        private bool isFacingRight = true;
+        [SerializeField] private GameObject rightColliders;
+        [SerializeField] private GameObject leftColliders;
 
         private void Awake()
         {        
             rigidbody2D = GetComponent<Rigidbody2D>();
             rigidbody2D.drag = waterDrag; // for underwater feel
+
+            spriteRenderer = GetComponent<SpriteRenderer>();
 
             // set up motion tracking actions
             var motionMap = inputActions.FindActionMap("MotionTracking");
