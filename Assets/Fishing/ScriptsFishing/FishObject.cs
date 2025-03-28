@@ -8,10 +8,13 @@ public class FishObject : MonoBehaviour
     public FishData fishData;  // Assigned by FishSpawner
 
     [Header("Size Scaling (Global for All Fish)")]
-    public float minScale = 0.05f; // Smallest possible fish
-    public float maxScale = 0.12f;  // Largest possible fish
-    public float minWidthFactor = 0.8f; // Thinnest fish
-    public float maxWidthFactor = 1.5f; // Fattest fish
+    public SizeRange tinySize = new SizeRange { min = 0.05f, max = 0.065f };
+    public SizeRange smallSize = new SizeRange { min = 0.065f, max = 0.075f };
+    public SizeRange mediumSize = new SizeRange { min = 0.075f, max = 0.08f };
+    public SizeRange largeSize = new SizeRange { min = 0.08f, max = 0.095f };
+    public SizeRange hugeSize = new SizeRange { min = 0.095f, max = 1.1f };
+    public float minWidthFactor = 0.5f; // Thinnest fish
+    public float maxWidthFactor = 1.1f; // Fattest fish
 
     [Header("Avoidance Settings")]
     public float avoidanceRadius = 1f; // Radius to detect nearby fish for avoidance
@@ -19,44 +22,44 @@ public class FishObject : MonoBehaviour
 
     [Header("Fish Behavior Settings By Rarity")]
     [Header("★")]
-    [Range(0, 10)] public float oneStarMoveSpeed = 1.5f;
-    [Range(0, 10)] public float oneStarMinMoveTime = 3f;
-    [Range(0, 10)] public float oneStarMaxMoveTime = 6f;
-    [Range(0, 10)] public float oneStarMinStopTime = 2f;
-    [Range(0, 10)] public float oneStarMaxStopTime = 4f;
-    [Range(0, 10)] public float oneStarTailWagSpeed = 2f;
+    public float oneStarMoveSpeed = 1.5f;
+    public float oneStarMinMoveTime = 3f;
+    public float oneStarMaxMoveTime = 6f;
+    public float oneStarMinStopTime = 2f;
+    public float oneStarMaxStopTime = 4f;
+    public float oneStarTailWagSpeed = 2f;
 
     [Header("★★")]
-    [Range(0, 10)] public float twoStarMoveSpeed = 2f;
-    [Range(0, 10)] public float twoStarMinMoveTime = 2.5f;
-    [Range(0, 10)] public float twoStarMaxMoveTime = 5f;
-    [Range(0, 10)] public float twoStarMinStopTime = 1.5f;
-    [Range(0, 10)] public float twoStarMaxStopTime = 3f;
-    [Range(0, 10)] public float twoStarTailWagSpeed = 2.5f;
+    public float twoStarMoveSpeed = 2f;
+    public float twoStarMinMoveTime = 2.5f;
+    public float twoStarMaxMoveTime = 5f;
+    public float twoStarMinStopTime = 1.5f;
+    public float twoStarMaxStopTime = 3f;
+    public float twoStarTailWagSpeed = 2.5f;
 
     [Header("★★★")]
-    [Range(0, 10)] public float threeStarMoveSpeed = 2.5f;
-    [Range(0, 10)] public float threeStarMinMoveTime = 2f;
-    [Range(0, 10)] public float threeStarMaxMoveTime = 4f;
-    [Range(0, 10)] public float threeStarMinStopTime = 1f;
-    [Range(0, 10)] public float threeStarMaxStopTime = 2.5f;
-    [Range(0, 10)] public float threeStarTailWagSpeed = 3f;
+    public float threeStarMoveSpeed = 2.5f;
+    public float threeStarMinMoveTime = 2f;
+    public float threeStarMaxMoveTime = 4f;
+    public float threeStarMinStopTime = 1f;
+    public float threeStarMaxStopTime = 2.5f;
+    public float threeStarTailWagSpeed = 3f;
 
     [Header("★★★★")]
-    [Range(0, 10)] public float fourStarMoveSpeed = 3f;
-    [Range(0, 10)] public float fourStarMinMoveTime = 1.5f;
-    [Range(0, 10)] public float fourStarMaxMoveTime = 3.5f;
-    [Range(0, 10)] public float fourStarMinStopTime = 1f;
-    [Range(0, 10)] public float fourStarMaxStopTime = 2f;
-    [Range(0, 10)] public float fourStarTailWagSpeed = 3.5f;
+    public float fourStarMoveSpeed = 3f;
+    public float fourStarMinMoveTime = 1.5f;
+    public float fourStarMaxMoveTime = 3.5f;
+    public float fourStarMinStopTime = 1f;
+    public float fourStarMaxStopTime = 2f;
+    public float fourStarTailWagSpeed = 3.5f;
 
     [Header("★★★★★")]
-    [Range(0, 10)] public float fiveStarMoveSpeed = 3.5f;
-    [Range(0, 10)] public float fiveStarMinMoveTime = 1f;
-    [Range(0, 10)] public float fiveStarMaxMoveTime = 3f;
-    [Range(0, 10)] public float fiveStarMinStopTime = 0.5f;
-    [Range(0, 10)] public float fiveStarMaxStopTime = 1.5f;
-    [Range(0, 10)] public float fiveStarTailWagSpeed = 4f;
+    public float fiveStarMoveSpeed = 3.5f;
+    public float fiveStarMinMoveTime = 1f;
+    public float fiveStarMaxMoveTime = 3f;
+    public float fiveStarMinStopTime = 0.5f;
+    public float fiveStarMaxStopTime = 1.5f;
+    public float fiveStarTailWagSpeed = 4f;
 
     // Components + internal variables
     private SpriteRenderer spriteRenderer;
@@ -83,7 +86,7 @@ public class FishObject : MonoBehaviour
         capsuleCollider = GetComponent<CapsuleCollider2D>();
 
         AssignBehaviorByRarity();
-        AssignRandomSize();
+        AssignFishSize();
         
         StartCoroutine(FishBehaviorLoop());
     }
@@ -256,18 +259,34 @@ public class FishObject : MonoBehaviour
         Gizmos.DrawWireSphere(transform.position, avoidanceRadius);
     }
 
-    private void AssignRandomSize()
+    [System.Serializable]
+    public struct SizeRange
     {
-        float height = Random.Range(minScale, maxScale);
-        float widthFactor = Random.Range(minWidthFactor, maxWidthFactor);
-        transform.localScale = new Vector3(height * widthFactor, height, 1);
+        [Range(0.01f, 1.1f)] public float min;
+        [Range(0.015f, 1.1f)] public float max;
+    }
 
-        // // Adjust collider size proportionally
-        // if (capsuleCollider)
-        // {
-        //     capsuleCollider.size = new Vector2(capsuleCollider.size.x * height * widthFactor, capsuleCollider.size.y * height);
-        // }
-        Debug.Log($"{fishData.fishName} spawned with size Scale({height}h, {widthFactor}w)");
+    private void AssignFishSize()
+    {
+        SizeRange range = GetSizeRange(fishData.size);
+        float finalHeight = Random.Range(range.min, range.max);
+        float widthFactor = Random.Range(minWidthFactor, maxWidthFactor);
+
+        transform.localScale = new Vector3(finalHeight * widthFactor, finalHeight, 1);
+        Debug.Log($"{fishData.fishName} spawned as {fishData.size} with Length {finalHeight} (range: {range.min} - {range.max})");
+    }
+
+    private SizeRange GetSizeRange(FishData.Size size)
+    {
+        return size switch
+        {
+            FishData.Size.Tiny => tinySize,
+            FishData.Size.Small => smallSize,
+            FishData.Size.Medium => mediumSize,
+            FishData.Size.Large => largeSize,
+            FishData.Size.Huge => hugeSize,
+            _ => mediumSize // Default fallback
+        };
     }
 
     public void AssignBehaviorByRarity()

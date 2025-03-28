@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class FishSpawner : MonoBehaviour
 {
@@ -88,20 +89,26 @@ public class FishSpawner : MonoBehaviour
         return GetRandomSpawnPosition(); // If all else fails, spawn somewhere random
     }
 
-
     private FishData GetRandomFishByRarity()
     {
         float totalWeight = oneStarChance + twoStarChance + threeStarChance + fourStarChance + fiveStarChance;
         float randomValue = Random.Range(0, totalWeight);
 
-        if (randomValue < oneStarChance) return fishDataList.Find(f => f.rarity == "★");
-        randomValue -= oneStarChance;
-        if (randomValue < twoStarChance) return fishDataList.Find(f => f.rarity == "★★");
-        randomValue -= twoStarChance;
-        if (randomValue < threeStarChance) return fishDataList.Find(f => f.rarity == "★★★");
-        randomValue -= threeStarChance;
-        if (randomValue < fourStarChance) return fishDataList.Find(f => f.rarity == "★★★★");
-        return fishDataList.Find(f => f.rarity == "★★★★★");
+        List<FishData> possibleFishes;
+
+        if (randomValue < oneStarChance) 
+            possibleFishes = fishDataList.Where(f => f.rarity == "★").ToList();
+        else if ((randomValue -= oneStarChance) < twoStarChance) 
+            possibleFishes = fishDataList.Where(f => f.rarity == "★★").ToList();
+        else if ((randomValue -= twoStarChance) < threeStarChance) 
+            possibleFishes = fishDataList.Where(f => f.rarity == "★★★").ToList();
+        else if ((randomValue -= threeStarChance) < fourStarChance) 
+            possibleFishes = fishDataList.Where(f => f.rarity == "★★★★").ToList();
+        else 
+            possibleFishes = fishDataList.Where(f => f.rarity == "★★★★★").ToList();
+
+        // If we found matching fish, return a random one
+        return (possibleFishes.Count > 0) ? possibleFishes[Random.Range(0, possibleFishes.Count)] : null;
     }
 
     private Vector2 GetRandomSpawnPosition()

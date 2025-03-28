@@ -135,24 +135,37 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fishData: {fileID: 11400000, guid: 6eec74fcd1e445848af9ea5db9369ade, type: 2}
-  minScale: 0.05
-  maxScale: 0.1
+  tinySize:
+    min: 0.04
+    max: 0.06
+  smallSize:
+    min: 0.06
+    max: 0.085
+  mediumSize:
+    min: 0.085
+    max: 0.15
+  largeSize:
+    min: 0.15
+    max: 0.35
+  hugeSize:
+    min: 0.35
+    max: 0.65
   minWidthFactor: 0.5
   maxWidthFactor: 1.1
   avoidanceRadius: 1.2
   avoidanceStrength: 2
-  oneStarMoveSpeed: 1.5
-  oneStarMinMoveTime: 3
-  oneStarMaxMoveTime: 6
-  oneStarMinStopTime: 2
-  oneStarMaxStopTime: 4
-  oneStarTailWagSpeed: 2
-  twoStarMoveSpeed: 2
-  twoStarMinMoveTime: 2.5
-  twoStarMaxMoveTime: 5
-  twoStarMinStopTime: 1.5
-  twoStarMaxStopTime: 3
-  twoStarTailWagSpeed: 2.5
+  oneStarMoveSpeed: 0.3
+  oneStarMinMoveTime: 0.5
+  oneStarMaxMoveTime: 1.5
+  oneStarMinStopTime: 6
+  oneStarMaxStopTime: 11
+  oneStarTailWagSpeed: 1
+  twoStarMoveSpeed: 0.5
+  twoStarMinMoveTime: 1
+  twoStarMaxMoveTime: 2
+  twoStarMinStopTime: 4
+  twoStarMaxStopTime: 9
+  twoStarTailWagSpeed: 1.5
   threeStarMoveSpeed: 2.5
   threeStarMinMoveTime: 2
   threeStarMaxMoveTime: 4
