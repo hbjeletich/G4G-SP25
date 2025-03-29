@@ -1228,27 +1228,27 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: f61dd64501132b242bb5835b156488ae,
         type: 3}
       propertyPath: m_LocalScale.x
-      value: 1.5699999
+      value: 1.7799999
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: f61dd64501132b242bb5835b156488ae,
         type: 3}
       propertyPath: m_LocalScale.y
-      value: 32.431473
+      value: 36.76943
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: f61dd64501132b242bb5835b156488ae,
         type: 3}
       propertyPath: m_LocalScale.z
-      value: 1.5699999
+      value: 1.7799999
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: f61dd64501132b242bb5835b156488ae,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.874
+      value: 0.91
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: f61dd64501132b242bb5835b156488ae,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.69
+      value: -0.383
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: f61dd64501132b242bb5835b156488ae,
         type: 3}
@@ -1322,11 +1322,11 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: f61dd64501132b242bb5835b156488ae,
         type: 3}
       insertIndex: -1
-      addedObject: {fileID: 726175996}
+      addedObject: {fileID: 726176000}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: f61dd64501132b242bb5835b156488ae,
         type: 3}
       insertIndex: -1
-      addedObject: {fileID: 726175995}
+      addedObject: {fileID: 726175999}
   m_SourcePrefab: {fileID: 100100000, guid: f61dd64501132b242bb5835b156488ae, type: 3}
 --- !u!4 &726175991 stripped
 Transform:
@@ -1355,7 +1355,7 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.17536286, y: 0.0035347997, z: 0.028585862}
   m_Center: {x: -0.023604851, y: -0.013106544, z: 0}
---- !u!95 &726175995
+--- !u!95 &726175999
 Animator:
   serializedVersion: 7
   m_ObjectHideFlags: 0
@@ -1377,7 +1377,7 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &726175996
+--- !u!114 &726176000
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1389,7 +1389,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e05ed264310a5dc4ab0ccedf1bdb0aba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  swingAnimator: {fileID: 726175995}
+  swingAnimator: {fileID: 726175999}
 --- !u!1 &760164143
 GameObject:
   m_ObjectHideFlags: 0
@@ -1824,7 +1824,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   state: 0
-  clubController: {fileID: 726175996}
+  clubController: {fileID: 726176000}
   golfBallController: {fileID: 397073995}
   cameraController: {fileID: 1110247330}
   highestScoreIndicator: {fileID: 67967480}
@@ -2871,9 +2871,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1772135118}
-  - component: {fileID: 1772135117}
   - component: {fileID: 1772135116}
   - component: {fileID: 1772135115}
+  - component: {fileID: 1772135119}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -2948,14 +2948,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!33 &1772135117
-MeshFilter:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1772135114}
-  m_Mesh: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!4 &1772135118
 Transform:
   m_ObjectHideFlags: 0
@@ -2965,13 +2957,21 @@ Transform:
   m_GameObject: {fileID: 1772135114}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.44, y: 1.11, z: -4.87}
+  m_LocalPosition: {x: -1.44, y: 0.893, z: -4.87}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 726175991}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!33 &1772135119
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1772135114}
+  m_Mesh: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1001 &1827569465
 PrefabInstance:
   m_ObjectHideFlags: 0
