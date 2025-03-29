@@ -16,7 +16,10 @@ public class GolfSystem : MonoBehaviour
 
     public HighestScoreIndicator highestScoreIndicator;
     
-    public GameObject balancePrompt; //temp before implementing balance controls. Once balance controllers are implemented, best to make a class for assesing balance which works with strength controller
+    public GolfControls golfControls;
+
+    public GameObject initialBalPromp;
+    public GameObject balancePrompt;
 
     public float delayBeforeStarting = 1f;
     
@@ -40,20 +43,38 @@ public class GolfSystem : MonoBehaviour
         clubController.swingBack();
         yield return new WaitForSeconds(1f);  //wait for swing back animation to play
 
+        //show initial balance promp
+        initialBalPromp.SetActive(true);
+
+        //activate golf controls
+        golfControls.gameObject.SetActive(true);
+    
+        while(Input.GetMouseButtonDown(0) != true && golfControls.hasFootRaise == false){ //wait for foot to raise before starting golf power assesment. Mouse controls for testing.
+            yield return null;
+        }
+
+        yield return new WaitForSeconds(.5f); //delay before switching to next state
+        //disable intial balance prompt
+        initialBalPromp.SetActive(false);
+
         state = GolfState.ASSESSSTRENGTH;
         StartCoroutine(assesStrength());
     }
 
     IEnumerator assesStrength(){
+        Debug.Log("assesing strength");
         //promp the player to hold an exercise for an amount of time in order to increase the strength of their golf hit
         SwingStrengthController.instance.gameObject.SetActive(true);
-        balancePrompt.SetActive(true); //temp
+        balancePrompt.SetActive(true);
 
-        while(Input.GetMouseButtonDown(0) != true){ //temp mouse controls before implementing balance controls. Simulates when the player stops holding an exercise
+        while(Input.GetMouseButtonDown(0) != true /*&& golfControls.hasFootRaise == true*/){ //wait for foot to fall before stopping golf power assesment. Mouse controls for testing
             yield return null;
         }
 
-        balancePrompt.SetActive(false); //temp
+        //disable golf controls
+        golfControls.gameObject.SetActive(false);
+
+        balancePrompt.SetActive(false);
         state = GolfState.SWING;
         StartCoroutine(swing());
     }
