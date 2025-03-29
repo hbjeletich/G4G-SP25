@@ -32,6 +32,7 @@ namespace Swimming
 
         private Rigidbody2D rigidbody2D;
         private SpriteRenderer spriteRenderer;
+        private Animator animator;
 
         private bool isFacingRight = true;
         [SerializeField] private GameObject rightColliders;
@@ -43,6 +44,7 @@ namespace Swimming
             rigidbody2D.drag = waterDrag; // for underwater feel
 
             spriteRenderer = GetComponent<SpriteRenderer>();
+            animator = GetComponent<Animator>();
 
             // set up motion tracking actions
             var motionMap = inputActions.FindActionMap("MotionTracking");
@@ -113,6 +115,10 @@ namespace Swimming
             {
                 DoSwimming();
             }
+
+            animator.SetFloat("xVel", rigidbody2D.velocity.x);
+            Debug.Log(rigidbody2D.velocity.x);
+            animator.SetFloat("yVel", rigidbody2D.velocity.y);
         }
 
         private void DoHorizontalMovement(float _input)
@@ -137,6 +143,15 @@ namespace Swimming
         private void StopSwimming()
         {
             isSwimming = false;
+        }
+
+        private void OnTriggerEnter2D(Collider2D collision)
+        {
+            Collectable collectable = collision.gameObject.GetComponent<Collectable>();
+            if (collectable != null)
+            {
+                collectable.OnPickup();
+            }
         }
     }
 }
