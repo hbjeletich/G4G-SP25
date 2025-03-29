@@ -21,12 +21,12 @@ public class GolfBallController : MonoBehaviour
         rb.AddForce(transform.up * hitStrength, ForceMode.Impulse);
     }
 
-    public float getDistanceFromStart(){
-        return transform.position.z - startingPos.z;
+    public int getDistanceFromStart(){
+        return Mathf.RoundToInt(transform.position.z - startingPos.z);
     }
 
     public bool isMoving(){
-        if (rb.velocity.magnitude <= 0){return false;}
+        if (rb.velocity.magnitude <= .1f){return false;}
         return true;
     }
 

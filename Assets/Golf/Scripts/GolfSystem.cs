@@ -13,12 +13,18 @@ public class GolfSystem : MonoBehaviour
     public ClubController clubController;
     public GolfBallController golfBallController;
     public GolfCameraController cameraController;
+
+    public HighestScoreIndicator highestScoreIndicator;
     
     public GameObject balancePrompt; //temp before implementing balance controls. Once balance controllers are implemented, best to make a class for assesing balance which works with strength controller
+
+    public float delayBeforeStarting = 1f;
     
     // Start is called before the first frame update
     void Start()
     {
+        highestScoreIndicator.placeIndicator();
+
         stateUpdate = nullUpdate;
         state = GolfState.SWINGBACK;
         StartCoroutine(swingBack());
@@ -29,6 +35,7 @@ public class GolfSystem : MonoBehaviour
     }
 
     IEnumerator swingBack(){
+        yield return new WaitForSeconds(delayBeforeStarting);
         //swing the golf club back to its starting position. Awaiting to be releases
         clubController.swingBack();
         yield return new WaitForSeconds(1f);  //wait for swing back animation to play
@@ -87,8 +94,12 @@ public class GolfSystem : MonoBehaviour
 
     IEnumerator endGolfSequence(){
         golfBallController.disableTrail();
+
+        //highest score tracking
+        GolfScoreManager.instance.updateHighestScore();
         Debug.Log("golf sequence done!");
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(4f);
+        GolfReloadManager.instance.reloadSceneInBackground();
     }
 
     void nullUpdate(){}

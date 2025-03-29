@@ -31,15 +31,15 @@ public class SwingStrengthController : MonoBehaviour
     {
         swingStrength = 0;
         targetStrength = maxStrength;
-        /*slider for visualizing purpose.
+        //slider for visualizing purpose.
         strengthMeter.value = swingStrength;
-        strengthMeter.maxValue = maxStrength;*/
+        strengthMeter.maxValue = maxStrength;
     }
 
     void Update()
     {
         swingStrength = Mathf.MoveTowards(swingStrength, targetStrength, barRate * Time.deltaTime);
-        //strengthMeter.value = swingStrength; //(Visualizing purposes)
+        strengthMeter.value = swingStrength; //(Visualizing purposes)
     }
 
     public void stopMeasuring(){
