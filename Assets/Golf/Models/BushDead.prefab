@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 894885100820717277}
   - component: {fileID: 4306741791056089464}
   - component: {fileID: 2026735962480616882}
-  - component: {fileID: 7913876501444761867}
+  - component: {fileID: 6951408001437955356}
   m_Layer: 0
   m_Name: BushDead
   m_TagString: Untagged
@@ -86,7 +86,7 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!205 &7913876501444761867
+--- !u!205 &6951408001437955356
 LODGroup:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -103,7 +103,8 @@ LODGroup:
   - screenRelativeHeight: 0.6
     fadeTransitionWidth: 0
     renderers:
-    - renderer: {fileID: 2026735962480616882}
+    - renderer: {fileID: -7511558181221131132, guid: f61dd64501132b242bb5835b156488ae,
+        type: 3}
   - screenRelativeHeight: 0.3
     fadeTransitionWidth: 0
     renderers:
