@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class MoveObject : MonoBehaviour
 {
@@ -16,21 +17,25 @@ public class MoveObject : MonoBehaviour
         animator = GetComponent<Animator>();
      }
     // Update is called once per frame
+    public void ChangeScene(string sceneName) {
+        SceneManager.LoadScene(sceneName);
+    }
     void Update()
     {
         // Check if the player presses A and there are more waypoints to move through
         if (Input.GetKeyDown(KeyCode.A) && currentWaypointIndex < waypoints.Count)
         {
-            currentWaypointIndex++;
             RepOne++;
             animator.SetTrigger("PlayAnimation");
         }
         // Check if the player presses D and there are more waypoints to move through
         else if (Input.GetKeyDown(KeyCode.D) && currentWaypointIndex < waypoints.Count)
         {
-            currentWaypointIndex++;
             RepTwo++;
             animator.SetTrigger("PlayAnimation");
+        }
+        else if (currentWaypointIndex == waypoints.Count) {
+            ChangeScene("3. Sewing");
         }
     }
 
@@ -39,8 +44,12 @@ public class MoveObject : MonoBehaviour
     {
         if (currentWaypointIndex < waypoints.Count)
         {
-            // Move the object to the position of the current waypoint
             transform.position = waypoints[currentWaypointIndex].position;
+             transform.rotation = waypoints[currentWaypointIndex].rotation;
+            
+                currentWaypointIndex++;
+
+            
         }
     }
 }
