@@ -11,6 +11,7 @@ public class MoveObject : MonoBehaviour
     public int RepOne = 0;
     public int RepTwo = 0;
     private Animator animator;
+    private bool movementAvailable = true;
 
     void Start()
      {
@@ -22,21 +23,25 @@ public class MoveObject : MonoBehaviour
     }
     void Update()
     {
+        if (movementAvailable == true) {
         // Check if the player presses A and there are more waypoints to move through
         if (Input.GetKeyDown(KeyCode.A) && currentWaypointIndex < waypoints.Count)
         {
+            movementAvailable = false;
             RepOne++;
             animator.SetTrigger("PlayAnimation");
         }
         // Check if the player presses D and there are more waypoints to move through
         else if (Input.GetKeyDown(KeyCode.D) && currentWaypointIndex < waypoints.Count)
         {
+            movementAvailable = false;
             RepTwo++;
             animator.SetTrigger("PlayAnimation");
         }
         else if (currentWaypointIndex == waypoints.Count) {
-            ChangeScene("3. Sewing");
+            ChangeScene("3. Puzzle");
         }
+    }
     }
 
     // Function to move the object to the current waypoint
@@ -48,7 +53,7 @@ public class MoveObject : MonoBehaviour
              transform.rotation = waypoints[currentWaypointIndex].rotation;
             
                 currentWaypointIndex++;
-
+                movementAvailable = true;
             
         }
     }
