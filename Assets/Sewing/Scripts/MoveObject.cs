@@ -2,9 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.InputSystem;
 
 public class MoveObject : MonoBehaviour
 {
+    [SerializeField] private InputActionAsset inputActions;
     // List to hold waypoints (Empty GameObjects you set up in the scene)
     public List<Transform> waypoints = new List<Transform>();
     private int currentWaypointIndex = 0; // Tracks the current waypoint
@@ -12,10 +14,18 @@ public class MoveObject : MonoBehaviour
     public int RepTwo = 0;
     private Animator animator;
     private bool movementAvailable = true;
+    private InputAction leftHipAction;
+    private InputAction rightHipAction;
 
-    void Start()
+    void Awake()
      {
         animator = GetComponent<Animator>();
+        var actionMap = inputActions.FindActionMap("MotionTracking");
+        leftHipAction = actionMap.FindAction("LeftHipAbducted");
+        rightHipAction = actionMap.FindAction("RightHipAbducted");
+
+        leftHipAction.performed += OnLeftHip;
+        rightHipAction.performed += OnRightHip;
      }
     // Update is called once per frame
     public void ChangeScene(string sceneName) {
@@ -23,27 +33,28 @@ public class MoveObject : MonoBehaviour
     }
     void Update()
     {
-        if (movementAvailable == true) {
-        // Check if the player presses A and there are more waypoints to move through
-        if (Input.GetKeyDown(KeyCode.A) && currentWaypointIndex < waypoints.Count)
+        if (currentWaypointIndex == waypoints.Count) {
+            ChangeScene("3. Puzzle");
+    }
+    }
+    private void OnLeftHip(InputAction.CallbackContext ctx)
+    {
+        if (movementAvailable == true && currentWaypointIndex < waypoints.Count)
         {
             movementAvailable = false;
             RepOne++;
             animator.SetTrigger("PlayAnimation");
         }
-        // Check if the player presses D and there are more waypoints to move through
-        else if (Input.GetKeyDown(KeyCode.D) && currentWaypointIndex < waypoints.Count)
+         }
+    private void OnRightHip(InputAction.CallbackContext ctx){
+
+        if (movementAvailable == true && currentWaypointIndex < waypoints.Count)
         {
             movementAvailable = false;
             RepTwo++;
             animator.SetTrigger("PlayAnimation");
         }
-        else if (currentWaypointIndex == waypoints.Count) {
-            ChangeScene("3. Puzzle");
-        }
     }
-    }
-
     // Function to move the object to the current waypoint
     private void MoveToWaypoint()
     {
