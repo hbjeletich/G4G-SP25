@@ -37,6 +37,18 @@ public class MoveObject : MonoBehaviour
             ChangeScene("3. Puzzle");
     }
     }
+
+    private void OnEnable()
+    {
+        leftHipAction.Enable();
+        rightHipAction.Enable();
+    }
+
+    private void OnDisable()
+    {
+        leftHipAction.Disable();
+        rightHipAction.Disable();
+    }
     private void OnLeftHip(InputAction.CallbackContext ctx)
     {
         if (movementAvailable == true && currentWaypointIndex < waypoints.Count)
