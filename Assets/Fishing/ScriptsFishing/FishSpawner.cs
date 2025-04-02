@@ -120,7 +120,7 @@ public class FishSpawner : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-        Gizmos.color = Color.cyan;
+        Gizmos.color = Color.yellow;
         Vector3 center = transform.position;
         Vector3 size = new Vector3(spawnAreaSize.x, spawnAreaSize.y, 0);
         Gizmos.DrawWireCube(center, size);

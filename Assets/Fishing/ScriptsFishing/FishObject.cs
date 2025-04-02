@@ -266,6 +266,14 @@ public class FishObject : MonoBehaviour
         [Range(0.015f, 1.1f)] public float max;
     }
 
+    // private void AssignFishShadow()
+    // {
+    //     if (fishData != null)
+    //     {
+    //         fishData
+    //     }
+    // }
+
     private void AssignFishSize()
     {
         SizeRange range = GetSizeRange(fishData.size);

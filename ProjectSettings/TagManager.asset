@@ -7,6 +7,8 @@ TagManager:
   - Lake
   - Fish
   - Wall
+  - LeftAnkle
+  - RightAnkle
   layers:
   - Default
   - TransparentFX
@@ -43,6 +45,9 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Lake
+    uniqueID: 869772749
     locked: 0
   - name: Spawner
     uniqueID: 348100921
