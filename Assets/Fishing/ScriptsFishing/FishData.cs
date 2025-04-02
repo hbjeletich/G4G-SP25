@@ -14,6 +14,7 @@ public class FishData : ScriptableObject
 {
     public string fishName;
     public Sprite fishSprite;
+    public Sprite fishShadowSprite;
     public string rarity;
     public enum Size
     {
