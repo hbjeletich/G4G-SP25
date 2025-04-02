@@ -67,6 +67,8 @@ namespace Swimming
             weightShiftLeftAction.Enable();
             weightShiftRightAction.Enable();
             weightShiftXAction.Enable();
+            raiseFootAction.Enable();
+            lowerFootAction.Enable();
 
             moveAction.Enable();
             jumpAction.Enable();
@@ -84,6 +86,8 @@ namespace Swimming
             weightShiftLeftAction.Disable();
             weightShiftRightAction.Disable();
             weightShiftXAction.Disable();
+            raiseFootAction.Disable();
+            lowerFootAction.Disable();
 
             moveAction.Disable();
             jumpAction.Disable();
@@ -117,7 +121,7 @@ namespace Swimming
             }
 
             animator.SetFloat("xVel", rigidbody2D.velocity.x);
-            Debug.Log(rigidbody2D.velocity.x);
+            //Debug.Log(rigidbody2D.velocity.x);
             animator.SetFloat("yVel", rigidbody2D.velocity.y);
         }
 
@@ -137,6 +141,7 @@ namespace Swimming
 
         private void StartSwimming()
         {
+            Debug.Log("Swimming up!");
             isSwimming = true;
         }
 
