@@ -17,7 +17,7 @@ public class FishingPlayerController : MonoBehaviour
 
     // New Input System
     private PlayerInput playerInput; 
-    [HideInInspector] public InputAction moveAction; 
+    [HideInInspector] public InputAction moveAction, leftFootHeight, rightFootHeight; 
     [HideInInspector] public FishingPlayerController instance; // Singleton instance
     private Rigidbody2D rb;
 
@@ -35,47 +35,93 @@ public class FishingPlayerController : MonoBehaviour
             return;
         }
 
+        // Component initialization
         rb = GetComponent<Rigidbody2D>();
-
-        // New Input System setup
         playerInput = GetComponent<PlayerInput>();
+
+        // Input system setup
         moveAction = playerInput.actions["Move"];
-        moveAction.Enable();
+        leftFootHeight = playerInput.actions["LeftFootHeight"]; 
+        rightFootHeight = playerInput.actions["RightFootHeight"];
     }
 
     private void OnEnable()
     {
         moveAction.Enable();
+        leftFootHeight.Enable();    
+        rightFootHeight.Enable();
     }
 
     private void OnDisable()
     {
         moveAction.Disable();
+        leftFootHeight.Disable();
+        rightFootHeight.Disable();
     }
     
     private void FixedUpdate()
     {
-        Move(); 
+        MotionMove(); 
     }
 
-    private void Move()
+     private void MotionMove()
     {
-        moveInput = moveAction.ReadValue<Vector2>(); // Read movement input
+        // Read foot heights
+        float leftFootHeightValue = leftFootHeight.ReadValue<float>();
+        float rightFootHeightValue = rightFootHeight.ReadValue<float>();
 
-        // Target velocity based on input
-        float targetSpeed = moveInput.x * moveSpeed;
-        float newSpeed = Mathf.Lerp(
-            rb.velocity.x, 
-            targetSpeed, 
-            Time.fixedDeltaTime * (moveInput.x != 0 ? acceleration : deceleration)
-        );
-        rb.velocity = new Vector3(newSpeed, rb.velocity.y, 0);
+        // Determine movement direction based on which foot is higher
+        float movementDirection = 0f;
+        if (leftFootHeightValue > rightFootHeightValue + 0.05f) 
+        {
+            movementDirection = -1f; // Move left
+        }
+        else if (rightFootHeightValue > leftFootHeightValue + 0.05f) 
+        {
+            movementDirection = 1f; // Move right
+        }
 
-        // Tilt ship based on movement
-        float targetTilt = moveInput.x * tilt; 
+        // Check if there is input
+        if (movementDirection != 0f)
+        {
+            float targetSpeed = -moveInput.x * moveSpeed;
+            float newSpeed = Mathf.Lerp(
+                rb.velocity.x, 
+                targetSpeed, 
+                Time.fixedDeltaTime * acceleration
+            );
+            rb.velocity = new Vector3(newSpeed, rb.velocity.y, 0);
+        }
+        else
+        {
+            // Decelerate to a stop if no input is given
+            rb.velocity = new Vector3(Mathf.Lerp(rb.velocity.x, 0, Time.fixedDeltaTime * deceleration), rb.velocity.y, 0);
+        }
+
+        // Apply ship tilt when moving
+        float targetTilt = movementDirection * tilt;
         currentTilt = Mathf.Lerp(currentTilt, targetTilt, Time.fixedDeltaTime * 5f);
         rb.MoveRotation(Quaternion.Euler(0, 0, currentTilt));
     }
+
+    // private void Move()
+    // {
+    //     moveInput = moveAction.ReadValue<Vector2>(); // Read movement input
+
+    //     // Target velocity based on input
+    //     float targetSpeed = moveInput.x * moveSpeed;
+    //     float newSpeed = Mathf.Lerp(
+    //         rb.velocity.x, 
+    //         targetSpeed, 
+    //         Time.fixedDeltaTime * (moveInput.x != 0 ? acceleration : deceleration)
+    //     );
+    //     rb.velocity = new Vector3(newSpeed, rb.velocity.y, 0);
+
+    //     // Tilt ship based on movement
+    //     float targetTilt = moveInput.x * tilt; 
+    //     currentTilt = Mathf.Lerp(currentTilt, targetTilt, Time.fixedDeltaTime * 5f);
+    //     rb.MoveRotation(Quaternion.Euler(0, 0, currentTilt));
+    // }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
