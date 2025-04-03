@@ -17,7 +17,7 @@ public class FishingPlayerController : MonoBehaviour
 
     // New Input System
     private PlayerInput playerInput; 
-    [HideInInspector] public InputAction moveAction, leftFootHeight, rightFootHeight; 
+    [HideInInspector] public InputAction moveAction, fishAction, leftFootHeight, rightFootHeight; 
     [HideInInspector] public FishingPlayerController instance; // Singleton instance
     private Rigidbody2D rb;
 
@@ -41,6 +41,7 @@ public class FishingPlayerController : MonoBehaviour
 
         // Input system setup
         moveAction = playerInput.actions["Move"];
+        fishAction = playerInput.actions["Fish"];
         leftFootHeight = playerInput.actions["LeftFootHeight"]; 
         rightFootHeight = playerInput.actions["RightFootHeight"];
     }
@@ -48,6 +49,7 @@ public class FishingPlayerController : MonoBehaviour
     private void OnEnable()
     {
         moveAction.Enable();
+        fishAction.Enable();
         leftFootHeight.Enable();    
         rightFootHeight.Enable();
     }
@@ -55,73 +57,99 @@ public class FishingPlayerController : MonoBehaviour
     private void OnDisable()
     {
         moveAction.Disable();
+        fishAction.Disable();
         leftFootHeight.Disable();
         rightFootHeight.Disable();
     }
     
     private void FixedUpdate()
     {
-        MotionMove(); 
+        Move();
     }
 
-     private void MotionMove()
-    {
-        // Read foot heights
-        float leftFootHeightValue = leftFootHeight.ReadValue<float>();
-        float rightFootHeightValue = rightFootHeight.ReadValue<float>();
-
-        // Determine movement direction based on which foot is higher
-        float movementDirection = 0f;
-        if (leftFootHeightValue > rightFootHeightValue + 0.05f) 
-        {
-            movementDirection = -1f; // Move left
-        }
-        else if (rightFootHeightValue > leftFootHeightValue + 0.05f) 
-        {
-            movementDirection = 1f; // Move right
-        }
-
-        // Check if there is input
-        if (movementDirection != 0f)
-        {
-            float targetSpeed = -moveInput.x * moveSpeed;
-            float newSpeed = Mathf.Lerp(
-                rb.velocity.x, 
-                targetSpeed, 
-                Time.fixedDeltaTime * acceleration
-            );
-            rb.velocity = new Vector3(newSpeed, rb.velocity.y, 0);
-        }
-        else
-        {
-            // Decelerate to a stop if no input is given
-            rb.velocity = new Vector3(Mathf.Lerp(rb.velocity.x, 0, Time.fixedDeltaTime * deceleration), rb.velocity.y, 0);
-        }
-
-        // Apply ship tilt when moving
-        float targetTilt = movementDirection * tilt;
-        currentTilt = Mathf.Lerp(currentTilt, targetTilt, Time.fixedDeltaTime * 5f);
-        rb.MoveRotation(Quaternion.Euler(0, 0, currentTilt));
-    }
-
-    // private void Move()
+    //  private void MotionMove()
     // {
-    //     moveInput = moveAction.ReadValue<Vector2>(); // Read movement input
+    //     // Read foot heights
+    //     float leftFootHeightValue = leftFootHeight.ReadValue<float>();
+    //     float rightFootHeightValue = rightFootHeight.ReadValue<float>();
 
-    //     // Target velocity based on input
-    //     float targetSpeed = moveInput.x * moveSpeed;
-    //     float newSpeed = Mathf.Lerp(
-    //         rb.velocity.x, 
-    //         targetSpeed, 
-    //         Time.fixedDeltaTime * (moveInput.x != 0 ? acceleration : deceleration)
-    //     );
-    //     rb.velocity = new Vector3(newSpeed, rb.velocity.y, 0);
+    //     // Determine movement direction based on which foot is higher
+    //     float movementDirection = 0f;
+    //     if (leftFootHeightValue > rightFootHeightValue + 0.05f) 
+    //     {
+    //         movementDirection = -1f; // Move left
+    //     }
+    //     else if (rightFootHeightValue > leftFootHeightValue + 0.05f) 
+    //     {
+    //         movementDirection = 1f; // Move right
+    //     }
 
-    //     // Tilt ship based on movement
-    //     float targetTilt = moveInput.x * tilt; 
+    //     // Check if there is input
+    //     if (movementDirection != 0f)
+    //     {
+    //         float targetSpeed = -moveInput.x * moveSpeed;
+    //         float newSpeed = Mathf.Lerp(
+    //             rb.velocity.x, 
+    //             targetSpeed, 
+    //             Time.fixedDeltaTime * acceleration
+    //         );
+    //         rb.velocity = new Vector3(newSpeed, rb.velocity.y, 0);
+    //     }
+    //     else
+    //     {
+    //         // Decelerate to a stop if no input is given
+    //         rb.velocity = new Vector3(Mathf.Lerp(rb.velocity.x, 0, Time.fixedDeltaTime * deceleration), rb.velocity.y, 0);
+    //     }
+
+    //     // Apply ship tilt when moving
+    //     float targetTilt = movementDirection * tilt;
     //     currentTilt = Mathf.Lerp(currentTilt, targetTilt, Time.fixedDeltaTime * 5f);
     //     rb.MoveRotation(Quaternion.Euler(0, 0, currentTilt));
     // }
+
+    public void CastHook(float distance)
+    {
+        Debug.Log("Casting hook with distance: " + distance);
+        
+        // Move the hook downward based on the distance
+        StartCoroutine(CastHookRoutine(distance));
+    }
+
+    private IEnumerator CastHookRoutine(float distance)
+    {
+        float elapsedTime = 0f;
+        float castTime = 1.5f; // Time for the hook to reach the max distance
+        Vector3 startPos = transform.position;
+        Vector3 targetPos = startPos + new Vector3(0, -distance, 0);
+
+        while (elapsedTime < castTime)
+        {
+            transform.position = Vector3.Lerp(startPos, targetPos, elapsedTime / castTime);
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+
+        transform.position = targetPos; // Ensure the hook reaches exactly the target
+    }
+
+    private void Move()
+    {
+        moveInput = moveAction.ReadValue<Vector2>(); // Read movement input
+
+        // Target velocity based on input
+        float targetSpeed = moveInput.x * moveSpeed;
+        float newSpeed = Mathf.Lerp(
+            rb.velocity.x, 
+            targetSpeed, 
+            Time.fixedDeltaTime * (moveInput.x != 0 ? acceleration : deceleration)
+        );
+        rb.velocity = new Vector3(newSpeed, rb.velocity.y, 0);
+
+        // Tilt ship based on movement
+        float targetTilt = moveInput.x * tilt; 
+        currentTilt = Mathf.Lerp(currentTilt, targetTilt, Time.fixedDeltaTime * 5f);
+        rb.MoveRotation(Quaternion.Euler(0, 0, currentTilt));
+    }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
