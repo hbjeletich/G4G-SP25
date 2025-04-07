@@ -1066,13 +1066,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1274474472}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0.056945458, w: 0.9983773}
+  m_LocalRotation: {x: 0, y: 0, z: -0.5581507, w: 0.82973963}
   m_LocalPosition: {x: 2.13, y: 3.35, z: -3}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 153774345}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 6.529}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -67.856}
 --- !u!1001 &1288837354
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1541,6 +1541,7 @@ GameObject:
   - component: {fileID: 1591254846}
   - component: {fileID: 1591254848}
   - component: {fileID: 1591254849}
+  - component: {fileID: 1591254850}
   m_Layer: 0
   m_Name: Scissors
   m_TagString: Untagged
@@ -1646,7 +1647,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1591254845}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c36cb91a121ef084595fd5dc8295ada1, type: 3}
   m_Name: 
@@ -1663,6 +1664,32 @@ MonoBehaviour:
   - {fileID: 601263909}
   RepOne: 0
   RepTwo: 0
+  moveSpeed: 3
+  rotationSpeed: 5
+--- !u!114 &1591254850
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1591254845}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eb7e2c3400d1d8443965c423ac889f58, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  waypoints:
+  - {fileID: 792010634}
+  - {fileID: 2127164839}
+  - {fileID: 1274474473}
+  - {fileID: 151418947}
+  - {fileID: 224988204}
+  - {fileID: 238182497}
+  - {fileID: 601263909}
+  RepOne: 0
+  RepTwo: 0
+  moveSpeed: 3
+  rotationSpeed: 5
 --- !u!1 &1861374800
 GameObject:
   m_ObjectHideFlags: 0
