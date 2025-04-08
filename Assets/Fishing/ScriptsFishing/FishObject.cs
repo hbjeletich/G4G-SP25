@@ -281,7 +281,7 @@ public class FishObject : MonoBehaviour
         float widthFactor = Random.Range(minWidthFactor, maxWidthFactor);
 
         transform.localScale = new Vector3(finalHeight * widthFactor, finalHeight, 1);
-        Debug.Log($"{fishData.fishName} spawned as {fishData.size} with Length {finalHeight} (range: {range.min} - {range.max})");
+        // Debug.Log($"{fishData.fishName} spawned as {fishData.size} with Length {finalHeight} (range: {range.min} - {range.max})");
     }
 
     private SizeRange GetSizeRange(FishData.Size size)

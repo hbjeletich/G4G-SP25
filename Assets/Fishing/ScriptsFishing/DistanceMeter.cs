@@ -8,33 +8,32 @@ public class DistanceMeter : MonoBehaviour
 {
     [Header("Distance Meter Settings")]
     public Slider distanceSlider;  
-    public Image fillImage;        
-    public Gradient barColors;   
+    public RectTransform marker;
     public float barSpeed = 0.5f;  
 
-    private bool movingRight = true;
-    private bool isFishing = false;  
+    private float timeCounter = 0f;
+    [HideInInspector] public bool isFishing = false;  
     private PlayerInput playerInput;
     private InputAction fishAction;
     private float selectedDistance = 0f;
+    private bool isMeterActive = false;
 
     [Header("Debug Settings")]
     public Button debugButton; 
 
     private void Awake()
     {
-        playerInput = GetComponent<PlayerInput>();
+        playerInput = FindObjectOfType<PlayerInput>();
+        if (playerInput == null)
+        {
+            Debug.LogError("PlayerInput component not found in the scene.");
+            return;
+        }
         if (playerInput != null)
         {
             fishAction = playerInput.actions["Fish"];
         }
 
-        if (fillImage != null)
-        {
-            fillImage.color = barColors.Evaluate(distanceSlider.value);
-        }
-
-        // Debug Button Setup
         if (debugButton != null)
         {
             debugButton.onClick.AddListener(ToggleFishingDebug);
@@ -61,53 +60,69 @@ public class DistanceMeter : MonoBehaviour
         }
     }
 
-    private void Update()
+   private void Update()
     {
-        if (!isFishing) return;  // Stop updating if not fishing
+        if (!isFishing) return;
 
-        // Move the slider smoothly
-        float newValue = distanceSlider.value;
+        timeCounter += Time.deltaTime * barSpeed;
+        distanceSlider.value = Mathf.PingPong(timeCounter, 1f);
 
-        if (movingRight)
+        UpdateMarkerPosition();
+    }
+
+    private void UpdateMarkerPosition()
+    {
+        if (marker == null || distanceSlider == null) return;
+
+        float sliderWidth = ((RectTransform)distanceSlider.fillRect.parent).rect.width;
+        Vector2 newPos = marker.anchoredPosition;
+        newPos.x = distanceSlider.value * sliderWidth;
+        marker.anchoredPosition = newPos;
+    }
+
+     private void OnFishPressed(InputAction.CallbackContext context)
+    {
+        if (!isMeterActive)
         {
-            newValue += barSpeed * Time.deltaTime;
-            if (newValue >= 1f) // Ensure it reaches max
-            {
-                newValue = 1f;
-                movingRight = false;
-            }
+            isMeterActive = true;
+            RestartMeter();
+            Debug.Log("Meter started.");
         }
         else
         {
-            newValue -= barSpeed * Time.deltaTime;
-            if (newValue <= 0f) // Ensure it reaches min
-            {
-                newValue = 0f;
-                movingRight = true;
-            }
+            isFishing = true;
+            Debug.Log("Started fishing action (charging).");
         }
-
-        distanceSlider.value = Mathf.Clamp01(newValue);
-
-        if (fillImage != null)
-        {
-            fillImage.color = barColors.Evaluate(newValue);
-        }
-    }
-
-
-    private void OnFishPressed(InputAction.CallbackContext context)
-    {
-        isFishing = true;
     }
 
     private void OnFishReleased(InputAction.CallbackContext context)
     {
+        if (!isMeterActive || !isFishing)
+        {
+            Debug.Log("FishReleased ignored: meter not active or not fishing.");
+            return;
+        }
         isFishing = false;
-        selectedDistance = distanceSlider.value; 
-        float castDistance = Mathf.Lerp(5f, 30f, selectedDistance);
+        isMeterActive = false;
+        Debug.Log("Fishing action released.");
 
-        FindObjectOfType<FishingPlayerController>().CastHook(castDistance);
+        selectedDistance = distanceSlider.value;
+
+        FishingPlayerController playerController = FindObjectOfType<FishingPlayerController>();
+        if (playerController != null)
+        {
+            var selectedZone = playerController.DetermineFishingZone(selectedDistance);
+            playerController.CastHook(selectedZone);
+            Debug.Log("Selected distance: " + selectedDistance);
+        }
+    }
+
+    public void RestartMeter()
+    {
+        selectedDistance = 0f;
+        distanceSlider.value = 0f;
+        isFishing = true;
+        timeCounter = 0f;
     }
 
     private void ToggleFishingDebug()

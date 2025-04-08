@@ -10,34 +10,46 @@ public class FishingPlayerController : MonoBehaviour
     [Header("Movement Settings")]
     private Vector2 moveInput;
     public float moveSpeed = 5f; 
+    public float retractSpeed = 5f;
     public float acceleration = 5f; 
     public float deceleration = 5f; 
     public float tilt = 10f; // Tilt angle for hook
     private float currentTilt = 0f;
+    private bool isHookMoving = false;
+
+
+    // Determines how far the hook is sent when cast
+    public enum FishingZone
+    {
+        Closest,
+        Middle,
+        Farthest
+    }
 
     // New Input System
     private PlayerInput playerInput; 
     [HideInInspector] public InputAction moveAction, fishAction, leftFootHeight, rightFootHeight; 
     [HideInInspector] public FishingPlayerController instance; // Singleton instance
     private Rigidbody2D rb;
+    private DistanceMeter distanceMeter; 
 
     private void Awake()
     {
-        // Singleton pattern to ensure only one instance exists
         if (instance == null)
         {
             instance = this;
-            DontDestroyOnLoad(gameObject); // Make persistent
+            DontDestroyOnLoad(gameObject); 
         }
         else if (instance != this)
         {
-            Destroy(gameObject); // Destroy duplicates
+            Destroy(gameObject); 
             return;
         }
 
         // Component initialization
         rb = GetComponent<Rigidbody2D>();
         playerInput = GetComponent<PlayerInput>();
+        distanceMeter = FindObjectOfType<DistanceMeter>();
 
         // Input system setup
         moveAction = playerInput.actions["Move"];
@@ -107,49 +119,111 @@ public class FishingPlayerController : MonoBehaviour
     //     rb.MoveRotation(Quaternion.Euler(0, 0, currentTilt));
     // }
 
-    public void CastHook(float distance)
+    public FishingZone DetermineFishingZone(float value)
     {
-        Debug.Log("Casting hook with distance: " + distance);
-        
-        // Move the hook downward based on the distance
-        StartCoroutine(CastHookRoutine(distance));
+        if (value < 0.33f)
+            return FishingZone.Closest;
+        else if (value < 0.66f)
+            return FishingZone.Middle;
+        else
+            return FishingZone.Farthest;
     }
 
-    private IEnumerator CastHookRoutine(float distance)
+    public void CastHook(FishingZone zone)
     {
-        float elapsedTime = 0f;
-        float castTime = 1.5f; // Time for the hook to reach the max distance
-        Vector3 startPos = transform.position;
-        Vector3 targetPos = startPos + new Vector3(0, -distance, 0);
+        Debug.Log("Casting hook in zone: " + zone);
 
+        float depth = 0f;
+        Vector2 xRange = Vector2.zero;
+
+        switch (zone)
+        {
+            case FishingZone.Closest:
+                depth = 5f;
+                xRange = new Vector2(-3f, 3f);
+                break;
+            case FishingZone.Middle:
+                depth = 15f;
+                xRange = new Vector2(-4f, 4f);
+                break;
+            case FishingZone.Farthest:
+                depth = 25f;
+                xRange = new Vector2(-5f, 5f);
+                break;
+        }
+
+        Vector3 startPos = transform.position;
+        Vector3 targetPos = new Vector3(
+            Random.Range(xRange.x, xRange.y),
+            startPos.y - depth + Random.Range(-1f, 1f),
+            startPos.z
+        );
+        StartCoroutine(CastHookRoutine(targetPos));
+    }
+
+    private IEnumerator CastHookRoutine(Vector3 targetPos)
+    {
+        isHookMoving = true;
+        distanceMeter.isFishing = false;
+
+        float elapsedTime = 0f;
+        float castTime = 1.5f;
+        Vector3 startPos = transform.position;
+
+        // Calc distance to move
         while (elapsedTime < castTime)
         {
-            transform.position = Vector3.Lerp(startPos, targetPos, elapsedTime / castTime);
+            float newY = Mathf.Lerp(startPos.y, targetPos.y, elapsedTime / castTime);
+            rb.position = new Vector2(rb.position.x, newY);
             elapsedTime += Time.deltaTime;
             yield return null;
         }
 
-        transform.position = targetPos; // Ensure the hook reaches exactly the target
+        rb.position = new Vector2(rb.position.x, targetPos.y);
+
+        yield return new WaitForSeconds(2f);  // Allow hook to stay at target position for 2 seconds
+
+        elapsedTime = 0f;
+        float retractDuration = 1f / retractSpeed;
+
+        // Retract hook back
+        while (elapsedTime < retractDuration)
+        {
+            float newY = Mathf.Lerp(targetPos.y, startPos.y, elapsedTime / retractDuration);
+            rb.position = new Vector2(rb.position.x, newY);
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+
+        rb.position = new Vector2(rb.position.x, startPos.y);
+        isHookMoving = false;
+        distanceMeter.isFishing = true; // Allow distance meter to be used again
+
+        // Restart distance meter
+        FindObjectOfType<DistanceMeter>().RestartMeter();
     }
+
 
     private void Move()
     {
         moveInput = moveAction.ReadValue<Vector2>(); // Read movement input
 
-        // Target velocity based on input
-        float targetSpeed = moveInput.x * moveSpeed;
+        float movementBoost = isHookMoving ? 1.2f : 1f; // Boost speed when hook is moving
+        float targetSpeed = moveInput.x * moveSpeed * movementBoost;
+        float dampenFactor = moveInput.x == 0 ? 0.9f : 1f;
         float newSpeed = Mathf.Lerp(
-            rb.velocity.x, 
-            targetSpeed, 
+            rb.velocity.x * dampenFactor,
+            targetSpeed,
             Time.fixedDeltaTime * (moveInput.x != 0 ? acceleration : deceleration)
         );
-        rb.velocity = new Vector3(newSpeed, rb.velocity.y, 0);
+        rb.velocity = new Vector2(newSpeed, rb.velocity.y);
 
-        // Tilt ship based on movement
-        float targetTilt = moveInput.x * tilt; 
+        // Apply tilt 
+        float targetTilt = moveInput.x * tilt;
         currentTilt = Mathf.Lerp(currentTilt, targetTilt, Time.fixedDeltaTime * 5f);
-        rb.MoveRotation(Quaternion.Euler(0, 0, currentTilt));
+        rb.MoveRotation(Quaternion.Euler(0, 0, -currentTilt));
     }
+
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
