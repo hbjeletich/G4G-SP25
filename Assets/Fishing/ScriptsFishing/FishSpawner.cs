@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 
+namespace Fishing
+{
 public class FishSpawner : MonoBehaviour
 {
     [Header("Fish Spawner Settings")]
@@ -125,4 +127,5 @@ public class FishSpawner : MonoBehaviour
         Vector3 size = new Vector3(spawnAreaSize.x, spawnAreaSize.y, 0);
         Gizmos.DrawWireCube(center, size);
     }
+}
 }

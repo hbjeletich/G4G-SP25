@@ -4,10 +4,11 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.InputSystem;
 
+namespace Fishing
+{
 public class DistanceMeter : MonoBehaviour
 {
     [Header("Distance Meter Settings")]
-    public Slider distanceSlider;  
     public RectTransform marker;
     public float barSpeed = 0.5f;  
 
@@ -16,10 +17,8 @@ public class DistanceMeter : MonoBehaviour
     private PlayerInput playerInput;
     private InputAction fishAction;
     private float selectedDistance = 0f;
-    private bool isMeterActive = false;
-
-    [Header("Debug Settings")]
-    public Button debugButton; 
+    private bool meterActive = false;
+    private Slider distanceSlider;  
 
     private void Awake()
     {
@@ -33,11 +32,9 @@ public class DistanceMeter : MonoBehaviour
         {
             fishAction = playerInput.actions["Fish"];
         }
+        distanceSlider = GetComponent<Slider>();
 
-        if (debugButton != null)
-        {
-            debugButton.onClick.AddListener(ToggleFishingDebug);
-        }
+        isFishing = true;
     }
 
     private void OnEnable()
@@ -82,9 +79,16 @@ public class DistanceMeter : MonoBehaviour
 
      private void OnFishPressed(InputAction.CallbackContext context)
     {
-        if (!isMeterActive)
+        FishingPlayerController playerController = FindObjectOfType<FishingPlayerController>();
+        if (playerController != null && playerController.isFishingInProgress)
         {
-            isMeterActive = true;
+            Debug.Log("Input ignored: fishing in progress.");
+            return;
+        }
+        
+        if (!meterActive)
+        {
+            meterActive = true;
             RestartMeter();
             Debug.Log("Meter started.");
         }
@@ -97,18 +101,24 @@ public class DistanceMeter : MonoBehaviour
 
     private void OnFishReleased(InputAction.CallbackContext context)
     {
-        if (!isMeterActive || !isFishing)
+        FishingPlayerController playerController = FindObjectOfType<FishingPlayerController>();
+        if (playerController != null && playerController.isFishingInProgress)
+        {
+            Debug.Log("Input ignored: fishing in progress.");
+            return;
+        }
+        
+        if (!meterActive || !isFishing)
         {
             Debug.Log("FishReleased ignored: meter not active or not fishing.");
             return;
         }
         isFishing = false;
-        isMeterActive = false;
+        meterActive = false;
         Debug.Log("Fishing action released.");
 
-        selectedDistance = distanceSlider.value;
+        selectedDistance = distanceSlider.value;  // Get the selected distance from the slider
 
-        FishingPlayerController playerController = FindObjectOfType<FishingPlayerController>();
         if (playerController != null)
         {
             var selectedZone = playerController.DetermineFishingZone(selectedDistance);
@@ -124,9 +134,5 @@ public class DistanceMeter : MonoBehaviour
         isFishing = true;
         timeCounter = 0f;
     }
-
-    private void ToggleFishingDebug()
-    {
-        isFishing = !isFishing;
-    }
+}
 }

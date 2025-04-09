@@ -1,6 +1,8 @@
 using UnityEngine;
 using UnityEditor;
 
+namespace Fishing
+{
 [InitializeOnLoad]
 public class CameraBoundsDrawer
 {
@@ -33,4 +35,5 @@ public class CameraBoundsDrawer
 
         SceneView.RepaintAll(); // Refresh the Scene view
     }
+}
 }

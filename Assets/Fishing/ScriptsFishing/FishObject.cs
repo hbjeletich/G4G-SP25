@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+namespace Fishing
+{
 public class FishObject : MonoBehaviour
 {
     [Header("Fish Data")]
@@ -349,4 +351,5 @@ public class FishObject : MonoBehaviour
                 break;
         }
     }
+}
 }
