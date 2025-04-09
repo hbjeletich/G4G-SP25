@@ -720,6 +720,7 @@ MonoBehaviour:
   acceleration: 5
   deceleration: 5
   tilt: 6
+  isFishingInProgress: 0
   closestZone:
     yDepth: 2.6
     xRange: {x: -5.5, y: 11.5}
@@ -2941,7 +2942,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ad21badaaa1c4b742857b4b14c777682, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minFishAmount: 3
+  minFishAmount: 2
   maxFishAmount: 7
   spawnAreaSize: {x: 17, y: 6}
   spawnIntervalRange: {x: 3, y: 6}
@@ -2976,6 +2977,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 9f5d203b3de666044bfc47ae08b4dfcd, type: 2}
   - {fileID: 11400000, guid: 05f504bab1f00bc40b513769fa678410, type: 2}
   - {fileID: 11400000, guid: 24725bb99ac058c458928fa58215c838, type: 2}
+  activeFish: []
 --- !u!4 &1564586189
 Transform:
   m_ObjectHideFlags: 0

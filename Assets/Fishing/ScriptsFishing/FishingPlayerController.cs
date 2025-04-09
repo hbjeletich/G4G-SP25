@@ -252,14 +252,6 @@ public class FishingPlayerController : MonoBehaviour
     }
 
 
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (collision.gameObject.CompareTag("Fish"))
-        {
-          return; // Add logic for catching fish here later, most will be in the Fish script
-        }
-    }
-
     private void OnDrawGizmos()
     {
         DrawZoneGizmo(closestZone, Color.green);

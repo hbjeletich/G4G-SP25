@@ -6,7 +6,7 @@ namespace Fishing
 {
 public class FishingInventoryManager : MonoBehaviour
 {
-    public static FishingInventoryManager Instance; // Singleton for easy access
+    public static FishingInventoryManager Instance;
 
     private Dictionary<FishData, int> fishInventory = new();
 
