@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+namespace Fishing
+{
 public class FishObject : MonoBehaviour
 {
     [Header("Fish Data")]
@@ -64,6 +66,7 @@ public class FishObject : MonoBehaviour
     // Components + internal variables
     private SpriteRenderer spriteRenderer;
     private CapsuleCollider2D capsuleCollider;
+    private FishSpawner fishSpawner;
     private Vector2 startPos;
     private Vector2 targetPos;
     private bool isMoving = false;
@@ -84,6 +87,7 @@ public class FishObject : MonoBehaviour
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
         capsuleCollider = GetComponent<CapsuleCollider2D>();
+        fishSpawner = FindObjectOfType<FishSpawner>();
 
         AssignBehaviorByRarity();
         AssignFishSize();
@@ -234,6 +238,23 @@ public class FishObject : MonoBehaviour
         }
     }
 
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            CatchFish();
+        }
+    }
+
+    public void CatchFish()
+    {
+        Debug.Log($"{fishData.fishName} caught!");
+        FishingInventoryManager.Instance.AddFish(fishData);
+        Debug.Log($"Added {fishData.fishName} to inventory. Total: {FishingInventoryManager.Instance.GetInventory()[fishData]}");
+        fishSpawner.activeFish.Remove(gameObject); // Remove from active fish list
+        Destroy(gameObject);
+    }
+
     private void StopAndTurn()
     {
         isMoving = false; 
@@ -349,4 +370,5 @@ public class FishObject : MonoBehaviour
                 break;
         }
     }
+}
 }

@@ -3,20 +3,31 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
-using UnityEngine.UIElements; 
+using UnityEngine.UI;
+
+namespace Fishing
+{
+[System.Serializable]
+public struct FishingZoneSettings
+{
+    public float yDepth;
+    public Vector2 xRange;
+    public Vector2 yRandomizationRange;
+}
 
 public class FishingPlayerController : MonoBehaviour
 {
     [Header("Movement Settings")]
-    private Vector2 moveInput;
     public float moveSpeed = 5f; 
     public float retractSpeed = 5f;
     public float acceleration = 5f; 
     public float deceleration = 5f; 
     public float tilt = 10f; // Tilt angle for hook
+    private Vector2 moveInput;
     private float currentTilt = 0f;
-    private bool isHookMoving = false;
 
+    private bool isHookMoving = false;
+    [HideInInspector] public bool isFishingInProgress = false;
 
     // Determines how far the hook is sent when cast
     public enum FishingZone
@@ -25,6 +36,12 @@ public class FishingPlayerController : MonoBehaviour
         Middle,
         Farthest
     }
+
+    [Header("Fishing Zones Settings")]
+    public FishingZoneSettings closestZone;
+    public FishingZoneSettings middleZone;
+    public FishingZoneSettings farthestZone;
+    public Vector2 retractPosition = new Vector2(0, 0);
 
     // New Input System
     private PlayerInput playerInput; 
@@ -76,7 +93,15 @@ public class FishingPlayerController : MonoBehaviour
     
     private void FixedUpdate()
     {
-        Move();
+        if (!distanceMeter.isFishing)
+        {
+            Move();
+        }
+        else
+        {
+            rb.isKinematic = true;
+            rb.velocity = Vector2.zero; 
+        }
     }
 
     //  private void MotionMove()
@@ -132,32 +157,33 @@ public class FishingPlayerController : MonoBehaviour
     public void CastHook(FishingZone zone)
     {
         Debug.Log("Casting hook in zone: " + zone);
+        isFishingInProgress = true;
 
         float depth = 0f;
         Vector2 xRange = Vector2.zero;
 
+        FishingZoneSettings zoneSettings = closestZone;
+
         switch (zone)
         {
             case FishingZone.Closest:
-                depth = 5f;
-                xRange = new Vector2(-3f, 3f);
+                zoneSettings = closestZone;
                 break;
             case FishingZone.Middle:
-                depth = 15f;
-                xRange = new Vector2(-4f, 4f);
+                zoneSettings = middleZone;
                 break;
             case FishingZone.Farthest:
-                depth = 25f;
-                xRange = new Vector2(-5f, 5f);
+                zoneSettings = farthestZone;
                 break;
         }
 
-        Vector3 startPos = transform.position;
+        Vector3 startPos = new Vector3(retractPosition.x, retractPosition.y, transform.position.z);
         Vector3 targetPos = new Vector3(
-            Random.Range(xRange.x, xRange.y),
-            startPos.y - depth + Random.Range(-1f, 1f),
+            Random.Range(zoneSettings.xRange.x, zoneSettings.xRange.y),
+            startPos.y - zoneSettings.yDepth + Random.Range(zoneSettings.yRandomizationRange.x, zoneSettings.yRandomizationRange.y),
             startPos.z
         );
+
         StartCoroutine(CastHookRoutine(targetPos));
     }
 
@@ -168,7 +194,7 @@ public class FishingPlayerController : MonoBehaviour
 
         float elapsedTime = 0f;
         float castTime = 1.5f;
-        Vector3 startPos = transform.position;
+        Vector3 startPos = new Vector3(retractPosition.x, retractPosition.y, transform.position.z);
 
         // Calc distance to move
         while (elapsedTime < castTime)
@@ -181,12 +207,13 @@ public class FishingPlayerController : MonoBehaviour
 
         rb.position = new Vector2(rb.position.x, targetPos.y);
 
-        yield return new WaitForSeconds(2f);  // Allow hook to stay at target position for 2 seconds
+        // Allow hook to stay at target position for 2 seconds
+        yield return new WaitForSeconds(2f);  
 
+        // Retract hook back
         elapsedTime = 0f;
         float retractDuration = 1f / retractSpeed;
 
-        // Retract hook back
         while (elapsedTime < retractDuration)
         {
             float newY = Mathf.Lerp(targetPos.y, startPos.y, elapsedTime / retractDuration);
@@ -194,12 +221,12 @@ public class FishingPlayerController : MonoBehaviour
             elapsedTime += Time.deltaTime;
             yield return null;
         }
-
         rb.position = new Vector2(rb.position.x, startPos.y);
         isHookMoving = false;
         distanceMeter.isFishing = true; // Allow distance meter to be used again
 
         // Restart distance meter
+        isFishingInProgress = false;
         FindObjectOfType<DistanceMeter>().RestartMeter();
     }
 
@@ -225,11 +252,35 @@ public class FishingPlayerController : MonoBehaviour
     }
 
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void OnDrawGizmos()
     {
-        if (collision.gameObject.CompareTag("Fish"))
-        {
-          return; // Add logic for catching fish here later, most will be in the Fish script
-        }
+        DrawZoneGizmo(closestZone, Color.green);
+        DrawZoneGizmo(middleZone, Color.yellow);
+        DrawZoneGizmo(farthestZone, Color.red);
     }
+
+    private void DrawZoneGizmo(FishingZoneSettings zone, Color color)
+    {
+        Gizmos.color = color;
+
+        Vector3 startPos = new Vector3(retractPosition.x, retractPosition.y, transform.position.z);
+
+        float yCenter = startPos.y - zone.yDepth + ((zone.yRandomizationRange.x + zone.yRandomizationRange.y) * 0.5f);
+        float yHeight = Mathf.Abs(zone.yRandomizationRange.y - zone.yRandomizationRange.x);
+
+        Vector3 center = new Vector3(
+            (zone.xRange.x + zone.xRange.y) * 0.5f,
+            yCenter,
+            startPos.z
+        );
+
+        Vector3 size = new Vector3(
+            Mathf.Abs(zone.xRange.y - zone.xRange.x),
+            yHeight > 0 ? yHeight : 0.5f,
+            0.1f
+        );
+
+        Gizmos.DrawWireCube(center, size);
+    }
+}
 }

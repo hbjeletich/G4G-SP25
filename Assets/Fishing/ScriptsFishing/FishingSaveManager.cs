@@ -4,6 +4,8 @@ using UnityEngine;
 using System.IO;
 using UnityEngine.SceneManagement;
 
+namespace Fishing
+{
 public class FishingSaveManager : MonoBehaviour
 {
     public static FishingSaveManager instance;
@@ -271,6 +273,7 @@ public class GameData
 //         Debug.Log($"RoomManager initialized with {RoomDictionary.Count} rooms.");
 //     }
 // }
+}
 
 
 
