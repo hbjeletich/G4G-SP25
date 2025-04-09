@@ -15,7 +15,7 @@ public class GolfControls : MonoBehaviour
     //consider using footheight
 
     // Start is called before the first frame update
-    void Start()
+    private void Awake()
     {
         hasFootRaise = false;
 
@@ -47,4 +47,19 @@ public class GolfControls : MonoBehaviour
         hasFootRaise = false;
     }
        
+    public bool simulatedLegRaise(){
+        if(Input.GetMouseButtonDown(0)){
+            hasFootRaise = true;
+            return true;
+        }
+        return false;
+    }
+
+    public bool simulatedLegLower(){
+        if(Input.GetMouseButtonDown(0)){
+            hasFootRaise = false;
+            return true;
+        }
+        return false;
+    }
 }

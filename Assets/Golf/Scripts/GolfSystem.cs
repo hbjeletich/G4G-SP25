@@ -49,7 +49,7 @@ public class GolfSystem : MonoBehaviour
         //activate golf controls
         golfControls.gameObject.SetActive(true);
     
-        while(Input.GetMouseButtonDown(0) != true && golfControls.hasFootRaise == false){ //wait for foot to raise before starting golf power assesment. Mouse controls for testing.
+        while(golfControls.simulatedLegRaise() != true && golfControls.hasFootRaise == false){ //wait for foot to raise before starting golf power assesment. Mouse controls for testing.
             yield return null;
         }
 
@@ -67,7 +67,7 @@ public class GolfSystem : MonoBehaviour
         SwingStrengthController.instance.gameObject.SetActive(true);
         balancePrompt.SetActive(true);
 
-        while(Input.GetMouseButtonDown(0) != true /*&& golfControls.hasFootRaise == true*/){ //wait for foot to fall before stopping golf power assesment. Mouse controls for testing
+        while(golfControls.simulatedLegLower() != true && golfControls.hasFootRaise == true){ //wait for foot to fall before stopping golf power assesment. Mouse controls for testing
             yield return null;
         }
 
