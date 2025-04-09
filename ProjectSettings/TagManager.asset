@@ -4,9 +4,11 @@
 TagManager:
   serializedVersion: 2
   tags:
+  - Lake
+  - Fish
+  - Wall
   - LeftAnkle
   - RightAnkle
-  - Ground
   layers:
   - Default
   - TransparentFX
@@ -14,8 +16,8 @@ TagManager:
   - 
   - Water
   - UI
-  - 
-  - 
+  - Lake
+  - Fish
   - 
   - 
   - 
@@ -44,6 +46,18 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Lake
+    uniqueID: 869772749
+    locked: 0
+  - name: Spawner
+    uniqueID: 348100921
+    locked: 0
+  - name: Fish
+    uniqueID: 4199367359
+    locked: 0
+  - name: Collision
+    uniqueID: 575323901
+    locked: 0
   - name: Player
-    uniqueID: 1549912241
+    uniqueID: 2054899809
     locked: 0
