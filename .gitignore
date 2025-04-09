@@ -68,15 +68,12 @@ sysinfo.txt
 
 # found here - https://gist.github.com/binary1230/983ca3168c8a92ab7b295b2a47a84b84 
 
-# project stuff
-WWiseProject/.cache/
-WWiseProject/*.prof
-WwiseProject/*_WwiseProject.*.validationcache
-WwiseProject/*_WwiseProject.*.wsettings
-WwiseProject/**/*.akd
-
-# build stuff (unsure?)
-# Assets/Wwise/Deployment/Plugins/Windows/**/*.meta
+# Wwise project cache files
+G4G-SP25_WwiseProject/.cache/
+G4G-SP25_WwiseProject/*.prof
+G4G-SP25_WwiseProject/*.validationcache
+G4G-SP25_WwiseProject/*.wsettings
+G4G-SP25_WwiseProject/**/*.akd
 
 # WWise Picker (editor)
 # from https://www.audiokinetic.com/library/edge/?source=Unity&id=unity__troubleshooting.html
