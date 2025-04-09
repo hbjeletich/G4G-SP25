@@ -62,6 +62,24 @@ sysinfo.txt
 *.unitypackage.meta
 *.app
 
+## ---------------- ##
+##   WWise stuff    ##
+## ---------------- ##
+
+# Wwise project cache files
+G4G-SP25_WwiseProject/.cache/
+G4G-SP25_WwiseProject/*.prof
+G4G-SP25_WwiseProject/*.validationcache
+G4G-SP25_WwiseProject/*.wsettings
+G4G-SP25_WwiseProject/**/*.akd
+
+# Wwise project temporary data
+Assets/Wwise/Editor/ProjectData/AkWwiseProjectData.asset*
+
+## --------------- ##
+## End WWise Stuff ##
+## --------------- ##
+
 # Crashlytics generated file
 crashlytics-build.properties
 
@@ -73,3 +91,4 @@ crashlytics-build.properties
 /[Aa]ssets/[Ss]treamingAssets/aa/*
 
 .fake
+
