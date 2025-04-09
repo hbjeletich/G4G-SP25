@@ -2,21 +2,22 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Collections.Generic;
 
+namespace Fishing
+{
 public class FishingInventoryUI : MonoBehaviour
 {
-    public Transform inventoryPanel; // Parent UI element for inventory
-    public GameObject fishEntryPrefab; // Prefab for each fish entry
+    public Transform inventoryPanel;
+    public GameObject fishEntryPrefab;
 
-    public Image fishImage;  // Displays selected fish sprite
-    public Text fishName;    // Displays selected fish name
-    public Text rarity;      // Displays rarity
-    public Text lengthRange; // Displays min-max length
+    public Image fishImage;  
+    public Text fishName;   
+    public Text rarity;
+    public Text lengthRange;
 
     private Dictionary<FishData, GameObject> uiEntries = new();
 
     public void UpdateInventoryUI()
     {
-        // Clear previous UI entries (optional for refreshing)
         foreach (Transform child in inventoryPanel)
             Destroy(child.gameObject);
         uiEntries.Clear();
@@ -50,4 +51,5 @@ public class FishingInventoryUI : MonoBehaviour
         rarity.text = $"Rarity: {fish.rarity}";
         lengthRange.text = $"Size: {fish.lengthRange}";
     }
+}
 }
