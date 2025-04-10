@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<WwiseDocument Type="WorkUnit" ID="{476B5073-7941-4A2E-BCC2-2602D85B6482}" SchemaVersion="123">
+	<SoundcasterSessions>
+		<WorkUnit Name="Swimming" ID="{476B5073-7941-4A2E-BCC2-2602D85B6482}" PersistMode="Standalone">
+			<ChildrenList>
+				<SoundcasterSession Name="SFXMusTest" ID="{70765844-381A-40F5-8FE8-AFAF9D496128}">
+					<ModuleList>
+						<Module>
+							<ObjectRef Name="Ambience_Play" ID="{84D7C876-EB66-4869-85F6-2A457D5DEBCF}" WorkUnitID="{8E0C9FF2-4CE2-4E8D-A178-A11E004BA89B}"/>
+							<Position X="0" Y="0"/>
+						</Module>
+						<Module>
+							<ObjectRef Name="MUS_Play" ID="{6F197786-03E7-41D8-854E-690E40A07D2D}" WorkUnitID="{8E0C9FF2-4CE2-4E8D-A178-A11E004BA89B}"/>
+							<Position X="1" Y="0"/>
+						</Module>
+					</ModuleList>
+					<RTPCValueList ShowAll="true"/>
+					<CurrentStateList ShowAll="true"/>
+					<CurrentSwitchList ShowAll="true"/>
+				</SoundcasterSession>
+			</ChildrenList>
+		</WorkUnit>
+	</SoundcasterSessions>
+</WwiseDocument>

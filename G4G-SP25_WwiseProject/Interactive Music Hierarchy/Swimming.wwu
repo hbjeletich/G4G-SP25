@@ -1,0 +1,645 @@
+<?xml version="1.0" encoding="utf-8"?>
+<WwiseDocument Type="WorkUnit" ID="{23FB9FDE-FB8D-4912-8531-61AF87A24883}" SchemaVersion="123">
+	<InteractiveMusic>
+		<WorkUnit Name="Swimming" ID="{23FB9FDE-FB8D-4912-8531-61AF87A24883}" PersistMode="Standalone">
+			<ChildrenList>
+				<MusicPlaylistContainer Name="LydianOrch" ID="{6B194819-F229-49B8-A395-2A0DB6250EBD}" ShortID="1070681694">
+					<ReferenceList>
+						<Reference Name="Conversion">
+							<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{DB8DC4DB-3926-44D2-B1E7-3E97AFD36B7E}"/>
+						</Reference>
+						<Reference Name="OutputBus">
+							<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{8CB677CF-1DCA-49F4-BCB9-7845BCEC97C0}"/>
+						</Reference>
+						<Reference Name="PlaylistRoot">
+							<Custom>
+								<MusicPlaylistItem Name="" ID="{D4F2A0EB-290B-4EBC-A626-286778F04CB9}" ShortID="435818191">
+									<PropertyList>
+										<Property Name="LoopCount" Type="int16" Value="0"/>
+										<Property Name="PlayMode" Type="int16" Value="2"/>
+									</PropertyList>
+									<ChildrenList>
+										<MusicPlaylistItem Name="" ID="{3606F14A-6D96-43A6-A71F-EF906D90B303}" ShortID="49022725">
+											<PropertyList>
+												<Property Name="PlaylistItemType" Type="int16" Value="1"/>
+											</PropertyList>
+											<ReferenceList>
+												<Reference Name="Segment">
+													<ObjectRef Name="Swimming_MUS_LydianAquatic1OrchLayers_v01" ID="{370BB960-B922-46CF-80B2-78A1819383D0}" WorkUnitID="{23FB9FDE-FB8D-4912-8531-61AF87A24883}"/>
+												</Reference>
+											</ReferenceList>
+										</MusicPlaylistItem>
+										<MusicPlaylistItem Name="" ID="{A1AA8403-C613-44DA-9CBD-54E85F23D9CA}" ShortID="1032482278">
+											<PropertyList>
+												<Property Name="PlaylistItemType" Type="int16" Value="1"/>
+												<Property Name="Weight" Type="Real64">
+													<ValueList>
+														<Value>100</Value>
+													</ValueList>
+												</Property>
+											</PropertyList>
+											<ReferenceList>
+												<Reference Name="Segment">
+													<ObjectRef Name="Silence" ID="{C9895179-8909-4E3D-BEF8-FF7BC9B042AA}" WorkUnitID="{23FB9FDE-FB8D-4912-8531-61AF87A24883}"/>
+												</Reference>
+											</ReferenceList>
+										</MusicPlaylistItem>
+										<MusicPlaylistItem Name="" ID="{7E7AD83E-345B-4A02-8625-003269E176BA}" ShortID="305032257">
+											<PropertyList>
+												<Property Name="PlaylistItemType" Type="int16" Value="1"/>
+												<Property Name="Weight" Type="Real64">
+													<ValueList>
+														<Value>10</Value>
+													</ValueList>
+												</Property>
+											</PropertyList>
+											<ReferenceList>
+												<Reference Name="Segment">
+													<ObjectRef Name="Swimming_MUS_LydianAquatic2OrchLayers_v01" ID="{8274D36C-8E80-4CF2-A8FF-E850E1DA72D7}" WorkUnitID="{23FB9FDE-FB8D-4912-8531-61AF87A24883}"/>
+												</Reference>
+											</ReferenceList>
+										</MusicPlaylistItem>
+										<MusicPlaylistItem Name="" ID="{3FBEF0B3-D6F3-43E6-A4B1-E076CCB2F063}" ShortID="994751568">
+											<PropertyList>
+												<Property Name="PlaylistItemType" Type="int16" Value="1"/>
+											</PropertyList>
+											<ReferenceList>
+												<Reference Name="Segment">
+													<ObjectRef Name="Swimming_MUS_LydianAquatic3OrchLayers_v01" ID="{C9DFF125-C40C-446B-B19A-782B4C4B11B4}" WorkUnitID="{23FB9FDE-FB8D-4912-8531-61AF87A24883}"/>
+												</Reference>
+											</ReferenceList>
+										</MusicPlaylistItem>
+										<MusicPlaylistItem Name="" ID="{8DEAA74E-D043-4555-8476-9B59573B0237}" ShortID="16089138">
+											<PropertyList>
+												<Property Name="PlaylistItemType" Type="int16" Value="1"/>
+											</PropertyList>
+											<ReferenceList>
+												<Reference Name="Segment">
+													<ObjectRef Name="Swimming_MUS_LydianAquatic4OrchLayers_v01" ID="{F97390BE-1A21-4697-AD65-E15923C0EE60}" WorkUnitID="{23FB9FDE-FB8D-4912-8531-61AF87A24883}"/>
+												</Reference>
+											</ReferenceList>
+										</MusicPlaylistItem>
+									</ChildrenList>
+								</MusicPlaylistItem>
+							</Custom>
+						</Reference>
+						<Reference Name="TransitionRoot">
+							<Custom>
+								<MusicTransition Name="Root" ID="{72B42A49-7000-4158-80A1-C7A3DF0BE93B}">
+									<PropertyList>
+										<Property Name="IsFolder" Type="bool" Value="True"/>
+									</PropertyList>
+									<ChildrenList>
+										<MusicTransition Name="Transition" ID="{551736D0-2846-49BF-A2CB-7FB91065C2A3}">
+											<TransitionInfo/>
+										</MusicTransition>
+									</ChildrenList>
+									<TransitionInfo/>
+								</MusicTransition>
+							</Custom>
+						</Reference>
+					</ReferenceList>
+					<ChildrenList>
+						<MusicSegment Name="Swimming_MUS_LydianAquatic1OrchLayers_v01" ID="{370BB960-B922-46CF-80B2-78A1819383D0}" ShortID="847407426">
+							<PropertyList>
+								<Property Name="EndPosition" Type="Real64" Value="45000"/>
+							</PropertyList>
+							<ReferenceList>
+								<Reference Name="Conversion">
+									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{DB8DC4DB-3926-44D2-B1E7-3E97AFD36B7E}"/>
+								</Reference>
+								<Reference Name="OutputBus">
+									<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{8CB677CF-1DCA-49F4-BCB9-7845BCEC97C0}"/>
+								</Reference>
+							</ReferenceList>
+							<ChildrenList>
+								<MusicTrack Name="Swimming_MUS_LydianAquatic1OrchLayers_v01" ID="{CF371879-D6A6-488F-8684-77D376623AAA}" ShortID="614402521">
+									<ReferenceList>
+										<Reference Name="OutputBus">
+											<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{8CB677CF-1DCA-49F4-BCB9-7845BCEC97C0}"/>
+										</Reference>
+										<Reference Name="TransitionRoot">
+											<Custom>
+												<MusicTransition Name="Root" ID="{58C998EC-A0FC-4519-8D13-41EAC8225FE1}">
+													<PropertyList>
+														<Property Name="IsFolder" Type="bool" Value="True"/>
+													</PropertyList>
+													<TransitionInfo/>
+												</MusicTransition>
+											</Custom>
+										</Reference>
+									</ReferenceList>
+									<ChildrenList>
+										<AudioFileSource Name="Swimming_MUS_LydianAquatic1OrchLayers_v01" ID="{359730CA-17E2-4022-A498-4FE663C9E7CC}">
+											<Language>SFX</Language>
+											<AudioFile>Swimming_MUS_LydianAquatic1OrchLayers_v01.wav</AudioFile>
+											<MediaIDList>
+												<MediaID ID="340452540"/>
+											</MediaIDList>
+										</AudioFileSource>
+									</ChildrenList>
+									<ObjectLists>
+										<ObjectList Name="Sequences">
+											<Reference>
+												<Local>
+													<MusicTrackSequence Name="" ID="{0EB6A268-8C4E-4AC1-875A-AD471F45E82A}">
+														<ObjectLists>
+															<ObjectList Name="Clips">
+																<Reference>
+																	<Local>
+																		<MusicClip Name="Swimming_MUS_LydianAquatic1OrchLayers_v01" ID="{D95189D9-1DA4-47EE-AC07-E55A4083C702}">
+																			<PropertyList>
+																				<Property Name="EndTrimOffset" Type="Real64" Value="45000"/>
+																				<Property Name="FadeInMode" Type="int16" Value="0"/>
+																				<Property Name="FadeOutMode" Type="int16" Value="0"/>
+																			</PropertyList>
+																			<AudioSourceRef Name="Swimming_MUS_LydianAquatic1OrchLayers_v01" ID="{359730CA-17E2-4022-A498-4FE663C9E7CC}"/>
+																		</MusicClip>
+																	</Local>
+																</Reference>
+															</ObjectList>
+														</ObjectLists>
+													</MusicTrackSequence>
+												</Local>
+											</Reference>
+										</ObjectList>
+									</ObjectLists>
+								</MusicTrack>
+							</ChildrenList>
+							<ObjectLists>
+								<ObjectList Name="Cues">
+									<Reference>
+										<Local>
+											<MusicCue Name="Entry Cue" ID="{FDD87B2E-7382-4025-B786-7AC2872C4C26}"/>
+										</Local>
+									</Reference>
+									<Reference>
+										<Local>
+											<MusicCue Name="Exit Cue" ID="{DF17570D-4F9F-4374-A683-95E7FDE7F812}">
+												<PropertyList>
+													<Property Name="CueType" Type="int16" Value="1"/>
+													<Property Name="TimeMs" Type="Real64" Value="45000"/>
+												</PropertyList>
+											</MusicCue>
+										</Local>
+									</Reference>
+								</ObjectList>
+							</ObjectLists>
+						</MusicSegment>
+						<MusicSegment Name="Silence" ID="{C9895179-8909-4E3D-BEF8-FF7BC9B042AA}" ShortID="737239845">
+							<PropertyList>
+								<Property Name="EndPosition" Type="Real64" Value="35216"/>
+							</PropertyList>
+							<ReferenceList>
+								<Reference Name="Conversion">
+									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{DB8DC4DB-3926-44D2-B1E7-3E97AFD36B7E}"/>
+								</Reference>
+								<Reference Name="OutputBus">
+									<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{8CB677CF-1DCA-49F4-BCB9-7845BCEC97C0}"/>
+								</Reference>
+							</ReferenceList>
+							<ObjectLists>
+								<ObjectList Name="Cues">
+									<Reference>
+										<Local>
+											<MusicCue Name="Entry Cue" ID="{427B97FA-32D0-400E-BAFB-BAC75E37D3F1}"/>
+										</Local>
+									</Reference>
+									<Reference>
+										<Local>
+											<MusicCue Name="Exit Cue" ID="{37F1D65D-5DCD-40D7-B1A6-78F9C46A794A}">
+												<PropertyList>
+													<Property Name="CueType" Type="int16" Value="1"/>
+													<Property Name="TimeMs" Type="Real64" Value="34016"/>
+												</PropertyList>
+											</MusicCue>
+										</Local>
+									</Reference>
+								</ObjectList>
+							</ObjectLists>
+						</MusicSegment>
+						<MusicSegment Name="Swimming_MUS_LydianAquatic4OrchLayers_v01" ID="{F97390BE-1A21-4697-AD65-E15923C0EE60}" ShortID="887351319">
+							<PropertyList>
+								<Property Name="EndPosition" Type="Real64" Value="45000"/>
+								<Property Name="Volume" Type="Real64">
+									<ValueList>
+										<Value>-3</Value>
+									</ValueList>
+								</Property>
+							</PropertyList>
+							<ReferenceList>
+								<Reference Name="Conversion">
+									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{DB8DC4DB-3926-44D2-B1E7-3E97AFD36B7E}"/>
+								</Reference>
+								<Reference Name="OutputBus">
+									<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{8CB677CF-1DCA-49F4-BCB9-7845BCEC97C0}"/>
+								</Reference>
+							</ReferenceList>
+							<ChildrenList>
+								<MusicTrack Name="Swimming_MUS_LydianAquatic4OrchLayers_v01" ID="{A38C3D4D-E195-4A06-AB4A-B745CE72BCAF}" ShortID="921261379">
+									<ReferenceList>
+										<Reference Name="OutputBus">
+											<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{8CB677CF-1DCA-49F4-BCB9-7845BCEC97C0}"/>
+										</Reference>
+										<Reference Name="TransitionRoot">
+											<Custom>
+												<MusicTransition Name="Root" ID="{537821DC-E506-468C-B6CE-9F74BD2B26DF}">
+													<PropertyList>
+														<Property Name="IsFolder" Type="bool" Value="True"/>
+													</PropertyList>
+													<TransitionInfo/>
+												</MusicTransition>
+											</Custom>
+										</Reference>
+									</ReferenceList>
+									<ChildrenList>
+										<AudioFileSource Name="Swimming_MUS_LydianAquatic4OrchLayers_v01" ID="{4C0EA873-85C5-400B-A02F-A97AFB19F838}">
+											<Language>SFX</Language>
+											<AudioFile>Swimming_MUS_LydianAquatic4OrchLayers_v01.wav</AudioFile>
+											<MediaIDList>
+												<MediaID ID="704799984"/>
+											</MediaIDList>
+										</AudioFileSource>
+									</ChildrenList>
+									<ObjectLists>
+										<ObjectList Name="Sequences">
+											<Reference>
+												<Local>
+													<MusicTrackSequence Name="" ID="{1A0CAB8C-549C-4350-83B1-8BCAB7EA8EFF}">
+														<ObjectLists>
+															<ObjectList Name="Clips">
+																<Reference>
+																	<Local>
+																		<MusicClip Name="Swimming_MUS_LydianAquatic4OrchLayers_v01" ID="{B6063F7B-56A9-4D5F-9906-CE32231D8242}">
+																			<PropertyList>
+																				<Property Name="EndTrimOffset" Type="Real64" Value="45000"/>
+																				<Property Name="FadeInMode" Type="int16" Value="0"/>
+																				<Property Name="FadeOutMode" Type="int16" Value="0"/>
+																			</PropertyList>
+																			<AudioSourceRef Name="Swimming_MUS_LydianAquatic4OrchLayers_v01" ID="{4C0EA873-85C5-400B-A02F-A97AFB19F838}"/>
+																		</MusicClip>
+																	</Local>
+																</Reference>
+															</ObjectList>
+														</ObjectLists>
+													</MusicTrackSequence>
+												</Local>
+											</Reference>
+										</ObjectList>
+									</ObjectLists>
+								</MusicTrack>
+							</ChildrenList>
+							<ObjectLists>
+								<ObjectList Name="Cues">
+									<Reference>
+										<Local>
+											<MusicCue Name="Entry Cue" ID="{16714E39-C915-4FFF-8A71-72BFC9688BC4}"/>
+										</Local>
+									</Reference>
+									<Reference>
+										<Local>
+											<MusicCue Name="Exit Cue" ID="{9145C342-F38C-4ACD-81C7-E6A2C2C85A8C}">
+												<PropertyList>
+													<Property Name="CueType" Type="int16" Value="1"/>
+													<Property Name="TimeMs" Type="Real64" Value="45000"/>
+												</PropertyList>
+											</MusicCue>
+										</Local>
+									</Reference>
+								</ObjectList>
+							</ObjectLists>
+						</MusicSegment>
+						<MusicSegment Name="Swimming_MUS_LydianAquatic3OrchLayers_v01" ID="{C9DFF125-C40C-446B-B19A-782B4C4B11B4}" ShortID="89620499">
+							<PropertyList>
+								<Property Name="EndPosition" Type="Real64" Value="45000"/>
+								<Property Name="Volume" Type="Real64">
+									<ValueList>
+										<Value>2</Value>
+									</ValueList>
+								</Property>
+							</PropertyList>
+							<ReferenceList>
+								<Reference Name="Conversion">
+									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{DB8DC4DB-3926-44D2-B1E7-3E97AFD36B7E}"/>
+								</Reference>
+								<Reference Name="OutputBus">
+									<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{8CB677CF-1DCA-49F4-BCB9-7845BCEC97C0}"/>
+								</Reference>
+							</ReferenceList>
+							<ChildrenList>
+								<MusicTrack Name="Swimming_MUS_LydianAquatic3OrchLayers_v01" ID="{68625132-5EE1-43F1-8655-B83C3BC8D679}" ShortID="484599543">
+									<PropertyList>
+										<Property Name="Volume" Type="Real64">
+											<ValueList>
+												<Value>7</Value>
+											</ValueList>
+										</Property>
+									</PropertyList>
+									<ReferenceList>
+										<Reference Name="OutputBus">
+											<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{8CB677CF-1DCA-49F4-BCB9-7845BCEC97C0}"/>
+										</Reference>
+										<Reference Name="TransitionRoot">
+											<Custom>
+												<MusicTransition Name="Root" ID="{54A161CF-B968-4027-A67A-202480DE3C2E}">
+													<PropertyList>
+														<Property Name="IsFolder" Type="bool" Value="True"/>
+													</PropertyList>
+													<TransitionInfo/>
+												</MusicTransition>
+											</Custom>
+										</Reference>
+									</ReferenceList>
+									<ChildrenList>
+										<AudioFileSource Name="Swimming_MUS_LydianAquatic3OrchLayers_v01" ID="{C0A164D1-0B54-49A9-94EC-BF2031AD4B27}">
+											<Language>SFX</Language>
+											<AudioFile>Swimming_MUS_LydianAquatic3OrchLayers_v01.wav</AudioFile>
+											<MediaIDList>
+												<MediaID ID="160742373"/>
+											</MediaIDList>
+										</AudioFileSource>
+									</ChildrenList>
+									<ObjectLists>
+										<ObjectList Name="Sequences">
+											<Reference>
+												<Local>
+													<MusicTrackSequence Name="" ID="{997216B0-51BF-42AE-A60B-356AFC8C568E}">
+														<ObjectLists>
+															<ObjectList Name="Clips">
+																<Reference>
+																	<Local>
+																		<MusicClip Name="Swimming_MUS_LydianAquatic3OrchLayers_v01" ID="{D462112A-CA58-4BBE-A6C8-C7DC0A6FEE6B}">
+																			<PropertyList>
+																				<Property Name="EndTrimOffset" Type="Real64" Value="45000"/>
+																				<Property Name="FadeInMode" Type="int16" Value="0"/>
+																				<Property Name="FadeOutMode" Type="int16" Value="0"/>
+																			</PropertyList>
+																			<AudioSourceRef Name="Swimming_MUS_LydianAquatic3OrchLayers_v01" ID="{C0A164D1-0B54-49A9-94EC-BF2031AD4B27}"/>
+																		</MusicClip>
+																	</Local>
+																</Reference>
+															</ObjectList>
+														</ObjectLists>
+													</MusicTrackSequence>
+												</Local>
+											</Reference>
+										</ObjectList>
+									</ObjectLists>
+								</MusicTrack>
+							</ChildrenList>
+							<ObjectLists>
+								<ObjectList Name="Cues">
+									<Reference>
+										<Local>
+											<MusicCue Name="Entry Cue" ID="{1C280963-BBE3-4767-8C3B-776C3C1B40B2}"/>
+										</Local>
+									</Reference>
+									<Reference>
+										<Local>
+											<MusicCue Name="Exit Cue" ID="{EA9B27F3-387F-46E7-982A-1A041D820324}">
+												<PropertyList>
+													<Property Name="CueType" Type="int16" Value="1"/>
+													<Property Name="TimeMs" Type="Real64" Value="45000"/>
+												</PropertyList>
+											</MusicCue>
+										</Local>
+									</Reference>
+								</ObjectList>
+							</ObjectLists>
+						</MusicSegment>
+						<MusicSegment Name="Swimming_MUS_LydianAquatic2OrchLayers_v01" ID="{8274D36C-8E80-4CF2-A8FF-E850E1DA72D7}" ShortID="947382423">
+							<PropertyList>
+								<Property Name="EndPosition" Type="Real64" Value="29032.2708333333"/>
+								<Property Name="Volume" Type="Real64">
+									<ValueList>
+										<Value>-4</Value>
+									</ValueList>
+								</Property>
+							</PropertyList>
+							<ReferenceList>
+								<Reference Name="Conversion">
+									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{DB8DC4DB-3926-44D2-B1E7-3E97AFD36B7E}"/>
+								</Reference>
+								<Reference Name="OutputBus">
+									<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{8CB677CF-1DCA-49F4-BCB9-7845BCEC97C0}"/>
+								</Reference>
+							</ReferenceList>
+							<ChildrenList>
+								<MusicTrack Name="Swimming_MUS_LydianAquatic2OrchLayers_v01" ID="{385E4740-1695-428E-8D1B-4EE3B610CF0A}" ShortID="254487130">
+									<ReferenceList>
+										<Reference Name="OutputBus">
+											<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{8CB677CF-1DCA-49F4-BCB9-7845BCEC97C0}"/>
+										</Reference>
+										<Reference Name="TransitionRoot">
+											<Custom>
+												<MusicTransition Name="Root" ID="{1A8E5B85-0757-4FAD-91B7-8BE95D990A4A}">
+													<PropertyList>
+														<Property Name="IsFolder" Type="bool" Value="True"/>
+													</PropertyList>
+													<TransitionInfo/>
+												</MusicTransition>
+											</Custom>
+										</Reference>
+									</ReferenceList>
+									<ChildrenList>
+										<AudioFileSource Name="Swimming_MUS_LydianAquatic2OrchLayers_v01" ID="{75E8113E-66BE-4901-AC76-65F72A6337ED}">
+											<Language>SFX</Language>
+											<AudioFile>Swimming_MUS_LydianAquatic2OrchLayers_v01.wav</AudioFile>
+											<MediaIDList>
+												<MediaID ID="405698441"/>
+											</MediaIDList>
+										</AudioFileSource>
+									</ChildrenList>
+									<ObjectLists>
+										<ObjectList Name="Sequences">
+											<Reference>
+												<Local>
+													<MusicTrackSequence Name="" ID="{9E86CBDD-1D2F-4028-BEAC-0E144144B0F7}">
+														<ObjectLists>
+															<ObjectList Name="Clips">
+																<Reference>
+																	<Local>
+																		<MusicClip Name="Swimming_MUS_LydianAquatic2OrchLayers_v01" ID="{6DDCCB9D-0981-4644-B051-3727224DE1D0}">
+																			<PropertyList>
+																				<Property Name="EndTrimOffset" Type="Real64" Value="29032.2708333333"/>
+																				<Property Name="FadeInMode" Type="int16" Value="0"/>
+																				<Property Name="FadeOutMode" Type="int16" Value="0"/>
+																			</PropertyList>
+																			<AudioSourceRef Name="Swimming_MUS_LydianAquatic2OrchLayers_v01" ID="{75E8113E-66BE-4901-AC76-65F72A6337ED}"/>
+																		</MusicClip>
+																	</Local>
+																</Reference>
+															</ObjectList>
+														</ObjectLists>
+													</MusicTrackSequence>
+												</Local>
+											</Reference>
+										</ObjectList>
+									</ObjectLists>
+								</MusicTrack>
+							</ChildrenList>
+							<ObjectLists>
+								<ObjectList Name="Cues">
+									<Reference>
+										<Local>
+											<MusicCue Name="Entry Cue" ID="{BAB40123-99A0-4B2A-8829-92BEB215E55D}"/>
+										</Local>
+									</Reference>
+									<Reference>
+										<Local>
+											<MusicCue Name="Exit Cue" ID="{F9803560-832E-4A35-BC39-CD5C3CC0F0ED}">
+												<PropertyList>
+													<Property Name="CueType" Type="int16" Value="1"/>
+													<Property Name="TimeMs" Type="Real64" Value="29032.2708333333"/>
+												</PropertyList>
+											</MusicCue>
+										</Local>
+									</Reference>
+								</ObjectList>
+							</ObjectLists>
+						</MusicSegment>
+					</ChildrenList>
+				</MusicPlaylistContainer>
+				<MusicPlaylistContainer Name="LydianBase" ID="{2136B4C7-9471-4E25-B334-7108C1536B80}" ShortID="938648832">
+					<PropertyList>
+						<Property Name="Volume" Type="Real64">
+							<ValueList>
+								<Value>-4</Value>
+							</ValueList>
+						</Property>
+					</PropertyList>
+					<ReferenceList>
+						<Reference Name="Conversion">
+							<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{DB8DC4DB-3926-44D2-B1E7-3E97AFD36B7E}"/>
+						</Reference>
+						<Reference Name="OutputBus">
+							<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{8CB677CF-1DCA-49F4-BCB9-7845BCEC97C0}"/>
+						</Reference>
+						<Reference Name="PlaylistRoot">
+							<Custom>
+								<MusicPlaylistItem Name="" ID="{E525A873-9622-4E28-B272-061A0DA708A0}" ShortID="548360269">
+									<ChildrenList>
+										<MusicPlaylistItem Name="" ID="{17E81D9A-6BF6-444D-B2C5-9EABEEE798D4}" ShortID="992195163">
+											<PropertyList>
+												<Property Name="LoopCount" Type="int16" Value="0"/>
+												<Property Name="PlaylistItemType" Type="int16" Value="1"/>
+											</PropertyList>
+											<ReferenceList>
+												<Reference Name="Segment">
+													<ObjectRef Name="Swimming_MUS_LydianAquatic1_v01" ID="{59454929-5AF6-4D65-B38C-C1862FCF7AFD}" WorkUnitID="{23FB9FDE-FB8D-4912-8531-61AF87A24883}"/>
+												</Reference>
+											</ReferenceList>
+										</MusicPlaylistItem>
+									</ChildrenList>
+								</MusicPlaylistItem>
+							</Custom>
+						</Reference>
+						<Reference Name="TransitionRoot">
+							<Custom>
+								<MusicTransition Name="Root" ID="{F56FC244-AF3D-407B-8899-8846E9253F43}">
+									<PropertyList>
+										<Property Name="IsFolder" Type="bool" Value="True"/>
+									</PropertyList>
+									<ChildrenList>
+										<MusicTransition Name="Transition" ID="{8A256625-DFC0-4E0A-A7E4-98D3D268E4A1}">
+											<TransitionInfo/>
+										</MusicTransition>
+									</ChildrenList>
+									<TransitionInfo/>
+								</MusicTransition>
+							</Custom>
+						</Reference>
+					</ReferenceList>
+					<ChildrenList>
+						<MusicSegment Name="Swimming_MUS_LydianAquatic1_v01" ID="{59454929-5AF6-4D65-B38C-C1862FCF7AFD}" ShortID="586252957">
+							<PropertyList>
+								<Property Name="EndPosition" Type="Real64" Value="90000"/>
+							</PropertyList>
+							<ReferenceList>
+								<Reference Name="Conversion">
+									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{DB8DC4DB-3926-44D2-B1E7-3E97AFD36B7E}"/>
+								</Reference>
+								<Reference Name="OutputBus">
+									<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{8CB677CF-1DCA-49F4-BCB9-7845BCEC97C0}"/>
+								</Reference>
+							</ReferenceList>
+							<ChildrenList>
+								<MusicTrack Name="Swimming_MUS_LydianAquatic1_v01" ID="{AED7E787-C917-4177-B356-B1661405C6E0}" ShortID="469395255">
+									<ReferenceList>
+										<Reference Name="OutputBus">
+											<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{8CB677CF-1DCA-49F4-BCB9-7845BCEC97C0}"/>
+										</Reference>
+										<Reference Name="TransitionRoot">
+											<Custom>
+												<MusicTransition Name="Root" ID="{38A61F95-6DEB-4692-8BCA-743E14C93009}">
+													<PropertyList>
+														<Property Name="IsFolder" Type="bool" Value="True"/>
+													</PropertyList>
+													<TransitionInfo/>
+												</MusicTransition>
+											</Custom>
+										</Reference>
+									</ReferenceList>
+									<ChildrenList>
+										<AudioFileSource Name="Swimming_MUS_LydianAquatic1_v01" ID="{0147EC45-EB55-4B1C-82FD-E99479669FCF}">
+											<Language>SFX</Language>
+											<AudioFile>Swimming_MUS_LydianAquatic1_v01.wav</AudioFile>
+											<MediaIDList>
+												<MediaID ID="581393339"/>
+											</MediaIDList>
+										</AudioFileSource>
+									</ChildrenList>
+									<ObjectLists>
+										<ObjectList Name="Sequences">
+											<Reference>
+												<Local>
+													<MusicTrackSequence Name="" ID="{58530421-5440-4840-9C19-88D0008EAFA4}">
+														<ObjectLists>
+															<ObjectList Name="Clips">
+																<Reference>
+																	<Local>
+																		<MusicClip Name="Swimming_MUS_LydianAquatic1_v01" ID="{DE09E383-C9B0-41B8-9A02-0DB1EF1DFF70}">
+																			<PropertyList>
+																				<Property Name="EndTrimOffset" Type="Real64" Value="90000"/>
+																				<Property Name="FadeInMode" Type="int16" Value="0"/>
+																				<Property Name="FadeOutMode" Type="int16" Value="0"/>
+																			</PropertyList>
+																			<AudioSourceRef Name="Swimming_MUS_LydianAquatic1_v01" ID="{0147EC45-EB55-4B1C-82FD-E99479669FCF}"/>
+																		</MusicClip>
+																	</Local>
+																</Reference>
+															</ObjectList>
+														</ObjectLists>
+													</MusicTrackSequence>
+												</Local>
+											</Reference>
+										</ObjectList>
+									</ObjectLists>
+								</MusicTrack>
+							</ChildrenList>
+							<ObjectLists>
+								<ObjectList Name="Cues">
+									<Reference>
+										<Local>
+											<MusicCue Name="Entry Cue" ID="{5F0C79CC-80DF-4F29-840C-C4997706BE96}"/>
+										</Local>
+									</Reference>
+									<Reference>
+										<Local>
+											<MusicCue Name="Exit Cue" ID="{C9E4BB8D-B052-4697-A7A4-6C9C2851FC32}">
+												<PropertyList>
+													<Property Name="CueType" Type="int16" Value="1"/>
+													<Property Name="TimeMs" Type="Real64" Value="90000"/>
+												</PropertyList>
+											</MusicCue>
+										</Local>
+									</Reference>
+								</ObjectList>
+							</ObjectLists>
+						</MusicSegment>
+					</ChildrenList>
+				</MusicPlaylistContainer>
+			</ChildrenList>
+		</WorkUnit>
+	</InteractiveMusic>
+</WwiseDocument>
