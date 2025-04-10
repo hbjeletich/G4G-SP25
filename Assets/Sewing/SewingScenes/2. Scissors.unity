@@ -608,6 +608,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 33b7cd93e5b408242828fa84df35f769, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  akGameObjectID: 18446744073709551615
+  EmittersToStartListeningTo: []
+  EmittersToStopListeningTo: []
   isDefaultListener: 1
   bOverrideScalingFactor: 0
   scalingFactor: -1
@@ -629,11 +632,13 @@ MonoBehaviour:
     useDefaultListeners: 1
   isEnvironmentAware: 0
   isStaticObject: 0
+  m_Collider: {fileID: 0}
   usePositionOffsetData: 0
   m_positionOffsetData:
     KeepMe: 0
     positionOffset: {x: 0, y: 0, z: 0}
   scalingFactor: 1
+  isRegistered: 0
   m_posOffsetData: {fileID: 0}
   listenerMask: 1
 --- !u!1 &601263908
@@ -1841,12 +1846,12 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: b98ae52ad4046dd48b1f2ef6d85ec8c4, type: 3}
+  m_Sprite: {fileID: 21300000, guid: de4446453b5deab419e7c787bf374dcf, type: 3}
   m_Color: {r: 0.82411873, g: 0.74533284, b: 0.82641506, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 0.32, y: 0.32}
+  m_Size: {x: 19.2, y: 10.8}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1

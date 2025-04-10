@@ -2,7 +2,6 @@ using UnityEngine;
 
 [ExecuteInEditMode]
 
-namespace Sewing {
 public class OrthographicCameraFrustum : MonoBehaviour
 {
     private Camera cam;
@@ -57,6 +56,4 @@ public class OrthographicCameraFrustum : MonoBehaviour
             Gizmos.DrawLine(nearBottomRight, farBottomRight);
         }
     }
-}
-
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.InputSystem;
+using Sewing;
 
 namespace Sewing {
 public class MoveObject : MonoBehaviour
@@ -20,7 +21,6 @@ public class MoveObject : MonoBehaviour
 
     public float moveSpeed = 3f; // Speed of movement
     public float rotationSpeed = 5f; // Speed of rotation
-    private bool isMoving = false;
 
     void Awake()
      {
