@@ -11,6 +11,23 @@
 
 namespace AK
 {
+    namespace EVENTS
+    {
+        static const AkUniqueID AMBIENCE_PLAY = 1496310610U;
+        static const AkUniqueID MUS_PLAY = 1280297747U;
+    } // namespace EVENTS
+
+    namespace GAME_PARAMETERS
+    {
+        static const AkUniqueID DIVER_YPOS = 1758962795U;
+    } // namespace GAME_PARAMETERS
+
+    namespace BANKS
+    {
+        static const AkUniqueID INIT = 1355168291U;
+        static const AkUniqueID SWIMMING_MAIN = 563045986U;
+    } // namespace BANKS
+
     namespace BUSSES
     {
         static const AkUniqueID MASTER_AUDIO_BUS = 3803692087U;
