@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+namespace Sewing {
 public class KeyboardMove : MonoBehaviour
 {
 
@@ -90,4 +91,5 @@ public class KeyboardMove : MonoBehaviour
         currentWaypointIndex++;
         movementAvailable = true;
     }
+}
 }
