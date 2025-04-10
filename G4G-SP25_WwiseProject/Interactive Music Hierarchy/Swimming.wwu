@@ -4,6 +4,13 @@
 		<WorkUnit Name="Swimming" ID="{23FB9FDE-FB8D-4912-8531-61AF87A24883}" PersistMode="Standalone">
 			<ChildrenList>
 				<MusicPlaylistContainer Name="LydianOrch" ID="{6B194819-F229-49B8-A395-2A0DB6250EBD}" ShortID="1070681694">
+					<PropertyList>
+						<Property Name="Volume" Type="Real64">
+							<ValueList>
+								<Value>-1</Value>
+							</ValueList>
+						</Property>
+					</PropertyList>
 					<ReferenceList>
 						<Reference Name="Conversion">
 							<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{DB8DC4DB-3926-44D2-B1E7-3E97AFD36B7E}"/>
@@ -59,6 +66,16 @@
 												</Reference>
 											</ReferenceList>
 										</MusicPlaylistItem>
+										<MusicPlaylistItem Name="" ID="{406AD528-86BF-452F-90B8-CE0A8A99A073}" ShortID="448997349">
+											<PropertyList>
+												<Property Name="PlaylistItemType" Type="int16" Value="1"/>
+											</PropertyList>
+											<ReferenceList>
+												<Reference Name="Segment">
+													<ObjectRef Name="Silence" ID="{C9895179-8909-4E3D-BEF8-FF7BC9B042AA}" WorkUnitID="{23FB9FDE-FB8D-4912-8531-61AF87A24883}"/>
+												</Reference>
+											</ReferenceList>
+										</MusicPlaylistItem>
 										<MusicPlaylistItem Name="" ID="{3FBEF0B3-D6F3-43E6-A4B1-E076CCB2F063}" ShortID="994751568">
 											<PropertyList>
 												<Property Name="PlaylistItemType" Type="int16" Value="1"/>
@@ -66,6 +83,16 @@
 											<ReferenceList>
 												<Reference Name="Segment">
 													<ObjectRef Name="Swimming_MUS_LydianAquatic3OrchLayers_v01" ID="{C9DFF125-C40C-446B-B19A-782B4C4B11B4}" WorkUnitID="{23FB9FDE-FB8D-4912-8531-61AF87A24883}"/>
+												</Reference>
+											</ReferenceList>
+										</MusicPlaylistItem>
+										<MusicPlaylistItem Name="" ID="{D6CC8AB2-20A1-4655-A1E3-69454407738A}" ShortID="588573106">
+											<PropertyList>
+												<Property Name="PlaylistItemType" Type="int16" Value="1"/>
+											</PropertyList>
+											<ReferenceList>
+												<Reference Name="Segment">
+													<ObjectRef Name="Silence" ID="{C9895179-8909-4E3D-BEF8-FF7BC9B042AA}" WorkUnitID="{23FB9FDE-FB8D-4912-8531-61AF87A24883}"/>
 												</Reference>
 											</ReferenceList>
 										</MusicPlaylistItem>
@@ -504,7 +531,7 @@
 					<PropertyList>
 						<Property Name="Volume" Type="Real64">
 							<ValueList>
-								<Value>-4</Value>
+								<Value>-2</Value>
 							</ValueList>
 						</Property>
 					</PropertyList>
