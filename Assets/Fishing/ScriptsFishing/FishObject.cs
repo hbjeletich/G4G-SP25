@@ -132,11 +132,6 @@ public class FishObject : MonoBehaviour
         TailWag();
     }
 
-    // void OnCollisionEnter2D(Collision2D collision)
-    // {
-    //     Debug.Log("Fish collided with: " + collision.gameObject.name);
-    // }
-
     private void MoveForward()
     {
         transform.position += -transform.up * currentSpeed * Time.deltaTime;
@@ -229,12 +224,13 @@ public class FishObject : MonoBehaviour
         {
             StopAndTurn();
 
-            // Get the closest point on the wall collider
+            // Calculate the closest point on the wall and the normal vector
+            // to steer away from it
             Vector2 closestPoint = collision.collider.ClosestPoint(transform.position);
             Vector2 wallNormal = (Vector2)transform.position - closestPoint;
 
-            // Instead of teleporting, steer the fish away from the wall smoothly
-            SteerAway(wallNormal.normalized * 2f); // Apply steering force
+            // Smoothly steer away from the wall
+            SteerAway(wallNormal.normalized * 2f);
         }
     }
 
@@ -248,7 +244,14 @@ public class FishObject : MonoBehaviour
 
     public void CatchFish()
     {
+        if (fishData == null) return; // Safety check
+
+        // Play SFX (do check later per rarities for dif sounds)
+        FishingAudioManager.instance.SetSFXVolume(0.8f);
+        FishingAudioManager.instance.PlaySFX(FishingAudioManager.instance.regFishCaughtSFX);
         Debug.Log($"{fishData.fishName} caught!");
+
+        // Add fish to inventory
         FishingInventoryManager.Instance.AddFish(fishData);
         Debug.Log($"Added {fishData.fishName} to inventory. Total: {FishingInventoryManager.Instance.GetInventory()[fishData]}");
         fishSpawner.activeFish.Remove(gameObject); // Remove from active fish list

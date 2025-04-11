@@ -26,6 +26,10 @@ public class FishingPlayerController : MonoBehaviour
     private Vector2 moveInput;
     private float currentTilt = 0f;
 
+    // [Header("Distance Meter Settings")]
+    // public CanvasGroup distanceMeterCanvasGroup;
+    // public float distanceMeterFadeDuration = 0.5f;
+
     private bool isHookMoving = false;
     [HideInInspector] public bool isFishingInProgress = false;
 
@@ -154,15 +158,17 @@ public class FishingPlayerController : MonoBehaviour
             return FishingZone.Farthest;
     }
 
+    #region CastHook
     public void CastHook(FishingZone zone)
     {
         Debug.Log("Casting hook in zone: " + zone);
+        FishingAudioManager.instance.PlaySFX(FishingAudioManager.instance.castHookSFX); // Play cast sound
         isFishingInProgress = true;
 
         float depth = 0f;
         Vector2 xRange = Vector2.zero;
 
-        FishingZoneSettings zoneSettings = closestZone;
+        FishingZoneSettings zoneSettings = new FishingZoneSettings(); // Default val
 
         switch (zone)
         {
@@ -183,7 +189,6 @@ public class FishingPlayerController : MonoBehaviour
             startPos.y - zoneSettings.yDepth + Random.Range(zoneSettings.yRandomizationRange.x, zoneSettings.yRandomizationRange.y),
             startPos.z
         );
-
         StartCoroutine(CastHookRoutine(targetPos));
     }
 
@@ -211,6 +216,7 @@ public class FishingPlayerController : MonoBehaviour
         yield return new WaitForSeconds(2f);  
 
         // Retract hook back
+        FishingAudioManager.instance.PlaySFX(FishingAudioManager.instance.reelInSFX); // Play reel in sound
         elapsedTime = 0f;
         float retractDuration = 1f / retractSpeed;
 
@@ -223,13 +229,14 @@ public class FishingPlayerController : MonoBehaviour
         }
         rb.position = new Vector2(rb.position.x, startPos.y);
         isHookMoving = false;
+        FishingAudioManager.instance.StopAllSFX(); // Stop reel in sound
         distanceMeter.isFishing = true; // Allow distance meter to be used again
 
         // Restart distance meter
         isFishingInProgress = false;
         FindObjectOfType<DistanceMeter>().RestartMeter();
     }
-
+    #endregion
 
     private void Move()
     {
@@ -250,7 +257,6 @@ public class FishingPlayerController : MonoBehaviour
         currentTilt = Mathf.Lerp(currentTilt, targetTilt, Time.fixedDeltaTime * 5f);
         rb.MoveRotation(Quaternion.Euler(0, 0, -currentTilt));
     }
-
 
     private void OnDrawGizmos()
     {
