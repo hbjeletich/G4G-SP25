@@ -26,10 +26,6 @@ public class FishingPlayerController : MonoBehaviour
     private Vector2 moveInput;
     private float currentTilt = 0f;
 
-    // [Header("Distance Meter Settings")]
-    // public CanvasGroup distanceMeterCanvasGroup;
-    // public float distanceMeterFadeDuration = 0.5f;
-
     private bool isHookMoving = false;
     [HideInInspector] public bool isFishingInProgress = false;
 
@@ -148,28 +144,20 @@ public class FishingPlayerController : MonoBehaviour
     //     rb.MoveRotation(Quaternion.Euler(0, 0, currentTilt));
     // }
 
-    public FishingZone DetermineFishingZone(float value)
-    {
-        if (value < 0.33f)
-            return FishingZone.Closest;
-        else if (value < 0.66f)
-            return FishingZone.Middle;
-        else
-            return FishingZone.Farthest;
-    }
-
     #region CastHook
-    public void CastHook(FishingZone zone)
+    public void CastHook()
     {
+        FishingZone zone = distanceMeter.currentZone;  // Get the current fishing zone from the distance meter
         Debug.Log("Casting hook in zone: " + zone);
-        FishingAudioManager.instance.PlaySFX(FishingAudioManager.instance.castHookSFX); // Play cast sound
+
+        FishingAudioManager.instance.PlaySFX(FishingAudioManager.instance.castHookSFX);
+        FishingCameraController.instance.ShiftToFishingView();
+        StartCoroutine(distanceMeter.FadeCanvas(0f));
+        distanceMeter.isFishing = false;
         isFishingInProgress = true;
 
-        float depth = 0f;
-        Vector2 xRange = Vector2.zero;
-
-        FishingZoneSettings zoneSettings = new FishingZoneSettings(); // Default val
-
+        // Determine target position based on the selected zone
+        FishingZoneSettings zoneSettings = new FishingZoneSettings();
         switch (zone)
         {
             case FishingZone.Closest:
@@ -182,13 +170,13 @@ public class FishingPlayerController : MonoBehaviour
                 zoneSettings = farthestZone;
                 break;
         }
-
         Vector3 startPos = new Vector3(retractPosition.x, retractPosition.y, transform.position.z);
         Vector3 targetPos = new Vector3(
             Random.Range(zoneSettings.xRange.x, zoneSettings.xRange.y),
             startPos.y - zoneSettings.yDepth + Random.Range(zoneSettings.yRandomizationRange.x, zoneSettings.yRandomizationRange.y),
             startPos.z
         );
+
         StartCoroutine(CastHookRoutine(targetPos));
     }
 
@@ -229,12 +217,16 @@ public class FishingPlayerController : MonoBehaviour
         }
         rb.position = new Vector2(rb.position.x, startPos.y);
         isHookMoving = false;
-        FishingAudioManager.instance.StopAllSFX(); // Stop reel in sound
-        distanceMeter.isFishing = true; // Allow distance meter to be used again
+
+        // Stop sound, shift camera, and fade in distance meter
+        FishingAudioManager.instance.StopAllSFX(); 
+        FishingCameraController.instance.ShiftToMeterView(); 
+        StartCoroutine(distanceMeter.FadeCanvas(1f)); 
 
         // Restart distance meter
         isFishingInProgress = false;
         FindObjectOfType<DistanceMeter>().RestartMeter();
+        distanceMeter.isFishing = true; 
     }
     #endregion
 

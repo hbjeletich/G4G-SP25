@@ -9,6 +9,9 @@ TagManager:
   - Wall
   - LeftAnkle
   - RightAnkle
+  - ClosestTrigger
+  - MiddleTrigger
+  - FarthestTrigger
   layers:
   - Default
   - TransparentFX
@@ -46,10 +49,16 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Background
+    uniqueID: 2000521595
+    locked: 0
   - name: Lake
     uniqueID: 869772749
     locked: 0
-  - name: Spawner
+  - name: LakeShine
+    uniqueID: 1996787379
+    locked: 0
+  - name: LakeLeaves + Spawner
     uniqueID: 348100921
     locked: 0
   - name: Fish
