@@ -119,7 +119,7 @@ AnimatorController:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Swimming_Player
+  m_Name: Swimming_Player_DeepDark
   serializedVersion: 5
   m_AnimatorParameters:
   - m_Name: xVel
@@ -232,15 +232,15 @@ BlendTree:
   m_Name: Blend Tree
   m_Childs:
   - serializedVersion: 2
-    m_Motion: {fileID: 7400000, guid: bf59816251c86064d96a3ba0b2d90636, type: 2}
+    m_Motion: {fileID: 7400000, guid: fcfd4a92624c29346bfb4d51173a80c6, type: 2}
     m_Threshold: 0
-    m_Position: {x: 0.01, y: 0.01}
+    m_Position: {x: 0, y: 1}
     m_TimeScale: 1
     m_CycleOffset: 0
     m_DirectBlendParameter: xVel
     m_Mirror: 0
   - serializedVersion: 2
-    m_Motion: {fileID: 7400000, guid: f687e9d558560ab45a64cc93f11f178e, type: 2}
+    m_Motion: {fileID: 7400000, guid: 37d8857ed1b7c8b48b3dd4179be4bf53, type: 2}
     m_Threshold: 0.5
     m_Position: {x: -1, y: 0}
     m_TimeScale: 1
@@ -248,7 +248,7 @@ BlendTree:
     m_DirectBlendParameter: xVel
     m_Mirror: 0
   - serializedVersion: 2
-    m_Motion: {fileID: 7400000, guid: c31e61346528c63458437c096ac9651e, type: 2}
+    m_Motion: {fileID: 7400000, guid: 8b58f89df406c4143aa380f50696161f, type: 2}
     m_Threshold: 1
     m_Position: {x: 1, y: 0}
     m_TimeScale: 1
