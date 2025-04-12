@@ -22,19 +22,28 @@ public class GolfSystem : MonoBehaviour
     public GameObject balancePrompt;
 
     public float delayBeforeStarting = 1f;
+
+    private float transitionAnimLen = 1.5f;
     
     // Start is called before the first frame update
     void Start()
     {
         highestScoreIndicator.placeIndicator();
-
         stateUpdate = nullUpdate;
-        state = GolfState.SWINGBACK;
-        StartCoroutine(swingBack());
+    
+        StartCoroutine(startGolfGame());
     }
 
     void Update(){
         stateUpdate();
+    }
+
+    IEnumerator startGolfGame(){
+        yield return new WaitForSeconds(transitionAnimLen);
+
+        stateUpdate = nullUpdate;
+        state = GolfState.SWINGBACK;
+        StartCoroutine(swingBack());
     }
 
     IEnumerator swingBack(){
