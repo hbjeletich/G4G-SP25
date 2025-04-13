@@ -25,6 +25,7 @@ public class FishingPlayerController : MonoBehaviour
     public float tilt = 10f; // Tilt angle for hook
     private Vector2 moveInput;
     private float currentTilt = 0f;
+    private bool isHookMoving = false;
 
     // Determines how far the hook is sent when cast
     public enum FishingZone
@@ -40,9 +41,17 @@ public class FishingPlayerController : MonoBehaviour
     public FishingZoneSettings farthestZone;
     public Vector2 retractPosition = new Vector2(0, 0);
 
-    private bool isHookMoving = false;
+    [Header("Fishing Line")]
+    public Transform startOfLine;
+    public Vector3 hookOffset = new Vector3(-0.2f, 0.65f, 0f);
+    public Vector3 distanceOffset = new Vector3(0, 0, 0);
+
     [HideInInspector] public bool isFishingInProgress = false;
-    public Transform rodTip;  // Where the line starts
+    [SerializeField] private int lineSegmentCount = 20;
+    [SerializeField] private AnimationCurve tensionCurve;
+    [SerializeField] private float tensionSpeed = 2f;
+    private float tension = 1f;
+    private float lineCurveHeight = 0.2f;
 
     // New Input System
     private PlayerInput playerInput; 
@@ -151,19 +160,37 @@ public class FishingPlayerController : MonoBehaviour
 
     private void UpdateFishingLine()
     {
-        if (lineRenderer == null || rodTip == null)
+        if (lineRenderer == null || startOfLine == null)
             return;
 
-        // Hook = player transform
-        Vector3 hookPos = transform.position + new Vector3(-0.2f, 0.65f, 0f); 
-        hookPos.z = -0.1f;
+        // Define start and end of line
+        Vector3 start = startOfLine.position;
+        Vector3 end = transform.position + hookOffset;
 
-        // Rod tip = where line starts
-        Vector3 rodPos = rodTip.position;
-        rodPos.z = -0.1f;
+        start.z = -0.1f;
+        end.z = -0.1f;
 
-        lineRenderer.SetPosition(0, rodPos);
-        lineRenderer.SetPosition(1, hookPos);
+        float distance = Vector3.Distance(start, end + distanceOffset);
+        float normalized = Mathf.InverseLerp(2f, 6f, distance); // ← remapped range
+        tension = Mathf.Clamp01(normalized);
+
+        float maxCurveHeight = 2.0f;
+        lineCurveHeight = tensionCurve.Evaluate(1f - tension) * maxCurveHeight;
+
+        // Calculate line points
+        lineRenderer.positionCount = lineSegmentCount;
+        for (int i = 0; i < lineSegmentCount; i++)
+        {
+            float t = i / (float)(lineSegmentCount - 1);
+            Vector3 point = Vector3.Lerp(start, end, t);
+
+            float curve = Mathf.Sin(t * Mathf.PI) * lineCurveHeight;
+            point.y -= curve;
+
+            point.z = -0.1f;
+            lineRenderer.SetPosition(i, point);
+        }
+
         lineRenderer.enabled = true;
     }
 
