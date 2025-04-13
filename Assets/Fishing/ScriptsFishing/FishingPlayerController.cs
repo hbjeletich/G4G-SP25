@@ -250,6 +250,17 @@ public class FishingPlayerController : MonoBehaviour
         rb.MoveRotation(Quaternion.Euler(0, 0, -currentTilt));
     }
 
+    public void DisablePlayerController()
+    {
+        rb.isKinematic = true; 
+        rb.velocity = Vector2.zero; 
+    }
+
+    public void EnablePlayerController()
+    {
+        rb.isKinematic = false; 
+    }
+
     private void OnDrawGizmos()
     {
         DrawZoneGizmo(closestZone, Color.green);
