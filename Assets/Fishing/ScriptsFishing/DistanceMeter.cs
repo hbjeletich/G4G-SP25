@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
+using TMPro;
 
 namespace Fishing
 {
@@ -16,11 +17,12 @@ namespace Fishing
         public float fadeDuration = 0.5f;
 
         [Header("Zone Thresholds (0 to 1)")]
-        [Range(0f, 1f)]
         [SerializeField] private float closestThreshold = 0.33f;
-
-        [Range(0f, 1f)]
         [SerializeField] private float middleThreshold = 0.66f;
+
+        [Header("Text UI Settings")]
+        public TextMeshProUGUI distanceText;
+        public int maxDistance = 50;
 
         [HideInInspector] public bool isFishing = false;
         [HideInInspector] public FishingPlayerController.FishingZone currentZone = FishingPlayerController.FishingZone.Closest;
@@ -73,7 +75,9 @@ namespace Fishing
             timeCounter += Time.deltaTime * barSpeed;
             float visualValue = Mathf.PingPong(timeCounter, 1f);
             smoothedValue = Mathf.Lerp(smoothedValue, visualValue, Time.deltaTime * markerSmoothSpeed);
+
             UpdateMarkerPosition();
+            UpdateDistanceText();
         }
 
         private void UpdateMarkerPosition()
@@ -87,6 +91,22 @@ namespace Fishing
             newPos.x = smoothedValue * width;
             marker.anchoredPosition = newPos;
         }
+
+        private void UpdateDistanceText()
+        {
+            if (distanceText == null) return;
+
+            float distance = smoothedValue * maxDistance;
+
+            // Round to nearest multiple of 10
+            int snappedDistance = Mathf.RoundToInt(distance / 10f) * 10;
+
+            // Clamp it so it never exceeds maxDistance
+            snappedDistance = Mathf.Clamp(snappedDistance, 0, maxDistance);
+
+            distanceText.text = $"{snappedDistance} m";
+        }
+
 
         private void OnFishPressed(InputAction.CallbackContext context)
         {

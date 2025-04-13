@@ -253,6 +253,7 @@ public class FishObject : MonoBehaviour
 
         // Play SFX (do check later per rarities for dif sounds)
         FishingAudioManager.instance.SetSFXVolume(0.8f);
+        FishingAudioManager.instance.SetSFXPitch(1.0f);
         FishingAudioManager.instance.PlaySFX(FishingAudioManager.instance.regFishCaughtSFX);
         Debug.Log($"{fishData.fishName} caught!");
 

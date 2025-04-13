@@ -26,9 +26,6 @@ public class FishingPlayerController : MonoBehaviour
     private Vector2 moveInput;
     private float currentTilt = 0f;
 
-    private bool isHookMoving = false;
-    [HideInInspector] public bool isFishingInProgress = false;
-
     // Determines how far the hook is sent when cast
     public enum FishingZone
     {
@@ -43,12 +40,17 @@ public class FishingPlayerController : MonoBehaviour
     public FishingZoneSettings farthestZone;
     public Vector2 retractPosition = new Vector2(0, 0);
 
+    private bool isHookMoving = false;
+    [HideInInspector] public bool isFishingInProgress = false;
+    public Transform rodTip;  // Where the line starts
+
     // New Input System
     private PlayerInput playerInput; 
     [HideInInspector] public InputAction moveAction, fishAction, leftFootHeight, rightFootHeight; 
     [HideInInspector] public FishingPlayerController instance; // Singleton instance
     private Rigidbody2D rb;
     private DistanceMeter distanceMeter; 
+    private LineRenderer lineRenderer; 
 
     private void Awake()
     {
@@ -67,6 +69,7 @@ public class FishingPlayerController : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         playerInput = GetComponent<PlayerInput>();
         distanceMeter = FindObjectOfType<DistanceMeter>();
+        lineRenderer = GetComponent<LineRenderer>();
 
         // Input system setup
         moveAction = playerInput.actions["Move"];
@@ -96,6 +99,8 @@ public class FishingPlayerController : MonoBehaviour
         if (!distanceMeter.isFishing)
         {
             Move();
+            UpdateFishingLine();
+
         }
         else
         {
@@ -143,6 +148,25 @@ public class FishingPlayerController : MonoBehaviour
     //     currentTilt = Mathf.Lerp(currentTilt, targetTilt, Time.fixedDeltaTime * 5f);
     //     rb.MoveRotation(Quaternion.Euler(0, 0, currentTilt));
     // }
+
+    private void UpdateFishingLine()
+    {
+        if (lineRenderer == null || rodTip == null)
+            return;
+
+        // Hook = player transform
+        Vector3 hookPos = transform.position + new Vector3(-0.2f, 0.65f, 0f); 
+        hookPos.z = -0.1f;
+
+        // Rod tip = where line starts
+        Vector3 rodPos = rodTip.position;
+        rodPos.z = -0.1f;
+
+        lineRenderer.SetPosition(0, rodPos);
+        lineRenderer.SetPosition(1, hookPos);
+        lineRenderer.enabled = true;
+    }
+
 
     #region CastHook
     public void CastHook()
