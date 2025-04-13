@@ -8,10 +8,10 @@ public class SwingStrengthController : MonoBehaviour
     public float swingStrength;
     public Slider strengthMeter;
 
-    private float maxStrength = 50f;
+    private float maxStrength = 100f;
     private float targetStrength;
     private float currStrengthGoal = 1;
-    private float barRate = 10f;
+    private float barRate = 5f;
     private float strengthMultiplier = 1.2f;
 
     // singleton set up

@@ -112,7 +112,8 @@ public class GolfSystem : MonoBehaviour
 
     IEnumerator followGolfBall(){
         yield return new WaitForSeconds(1f);
-
+        GolfScoreManager.instance.displayScoreText();
+        
         while(golfBallController.isMoving() == true){ //temp mouse controls before implementing balance controls. Simulates when the player stops holding an exercise
             yield return null;
         }
@@ -127,7 +128,7 @@ public class GolfSystem : MonoBehaviour
 
         //highest score tracking
         GolfScoreManager.instance.updateHighestScore();
-        Debug.Log("golf sequence done!");
+        GolfScoreManager.instance.updateEndScreenScore();
         yield return new WaitForSeconds(4f);
         GolfReloadManager.instance.reloadSceneInBackground();
     }
