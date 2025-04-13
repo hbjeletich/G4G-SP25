@@ -15,6 +15,13 @@ namespace Fishing
         public CanvasGroup canvasGroup;
         public float fadeDuration = 0.5f;
 
+        [Header("Zone Thresholds (0 to 1)")]
+        [Range(0f, 1f)]
+        [SerializeField] private float closestThreshold = 0.33f;
+
+        [Range(0f, 1f)]
+        [SerializeField] private float middleThreshold = 0.66f;
+
         [HideInInspector] public bool isFishing = false;
         [HideInInspector] public FishingPlayerController.FishingZone currentZone = FishingPlayerController.FishingZone.Closest;
 
@@ -73,7 +80,6 @@ namespace Fishing
         {
             if (marker == null) return;
 
-            // We'll assume the marker's parent is properly sized
             RectTransform parent = marker.transform.parent.GetComponent<RectTransform>();
             float width = parent.rect.width;
 
@@ -87,20 +93,17 @@ namespace Fishing
             var playerController = FindObjectOfType<FishingPlayerController>();
             if (playerController != null && playerController.isFishingInProgress)
             {
-                Debug.Log("Input ignored: fishing in progress.");
-                return;
+                return;  // Ignore if fishing is already in progress
             }
 
             if (!meterActive)
             {
                 meterActive = true;
                 RestartMeter();
-                Debug.Log("Meter started.");
             }
             else
             {
                 isFishing = true;
-                Debug.Log("Started fishing action (charging).");
             }
         }
 
@@ -111,6 +114,20 @@ namespace Fishing
                 Debug.Log("FishReleased ignored: meter not active or not fishing.");
                 return;
             }
+
+            if (smoothedValue < closestThreshold)
+            {
+                currentZone = FishingPlayerController.FishingZone.Closest;
+            }
+            else if (smoothedValue < middleThreshold)
+            {
+                currentZone = FishingPlayerController.FishingZone.Middle;
+            }
+            else
+            {
+                currentZone = FishingPlayerController.FishingZone.Farthest;
+            }
+            Debug.Log($"OnFishReleased: smoothedValue = {smoothedValue}, assigned zone = {currentZone}");
 
             isFishing = false;
             meterActive = false;
@@ -125,8 +142,6 @@ namespace Fishing
         public void RestartMeter()
         {
             isFishing = true;
-            timeCounter = 0f;
-            smoothedValue = 0f;
             Debug.Log("Restarting meter.");
         }
 
@@ -144,25 +159,7 @@ namespace Fishing
                 canvasGroup.blocksRaycasts = targetAlpha > 0.5f;
                 yield return null;
             }
-
             canvasGroup.alpha = targetAlpha;
-        }
-
-        private void OnTriggerEnter2D(Collider2D other)
-        {
-            switch (other.tag)
-            {
-                case "ClosestTrigger":
-                    currentZone = FishingPlayerController.FishingZone.Closest;
-                    break;
-                case "MiddleTrigger":
-                    currentZone = FishingPlayerController.FishingZone.Middle;
-                    break;
-                case "FarthestTrigger":
-                    currentZone = FishingPlayerController.FishingZone.Farthest;
-                    break;
-            }
-            Debug.Log("Entered zone: " + currentZone);
         }
     }
 }
