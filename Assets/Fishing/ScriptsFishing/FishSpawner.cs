@@ -73,6 +73,7 @@ public class FishSpawner : MonoBehaviour
         Vector2 spawnPosition = GetValidSpawnPosition(); // Ensure valid spacing
 
         GameObject fish = Instantiate(fishPrefab, spawnPosition, Quaternion.identity);
+        FishingAudioManager.instance.PlaySFX(FishingAudioManager.instance.splashSFX); // Play splash when spawned
         FishObject fishObject = fish.GetComponent<FishObject>();
         
         fishObject.fishData = selectedFish;

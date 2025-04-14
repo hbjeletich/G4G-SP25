@@ -6,50 +6,38 @@ namespace Fishing
 {
 public class FishingInventoryUI : MonoBehaviour
 {
-    public Transform inventoryPanel;
-    public GameObject fishEntryPrefab;
+    public FishData fishData;
+    public GameObject fishButtonPrefab;
+    public Transform fishButtonContainer;
+    public List<GameObject> fishButtons = new List<GameObject>();
 
-    public Image fishImage;  
-    public Text fishName;   
-    public Text rarity;
-    public Text lengthRange;
-
-    private Dictionary<FishData, GameObject> uiEntries = new();
-
-    public void UpdateInventoryUI()
-    {
-        foreach (Transform child in inventoryPanel)
-            Destroy(child.gameObject);
-        uiEntries.Clear();
-
-        // Get inventory data
-        Dictionary<FishData, int> inventory = FishingInventoryManager.Instance.GetInventory();
-
-        foreach (var item in inventory)
+        public void Start()
         {
-            FishData fish = item.Key;
-            int count = item.Value;
-
-            // Instantiate a new UI entry
-            GameObject entry = Instantiate(fishEntryPrefab, inventoryPanel);
-            entry.GetComponentInChildren<Text>().text = $"{fish.fishName} x{count}";
-
-            // Set fish image
-            entry.transform.Find("FishImage").GetComponent<Image>().sprite = fish.fishSprite;
-
-            // Add click event to show details
-            entry.GetComponent<Button>().onClick.AddListener(() => DisplayFishDetails(fish));
-
-            uiEntries[fish] = entry;
+             
         }
-    }
 
-    public void DisplayFishDetails(FishData fish)
-    {
-        fishImage.sprite = fish.fishSprite;
-        fishName.text = fish.fishName;
-        rarity.text = $"Rarity: {fish.rarity}";
-        lengthRange.text = $"Size: {fish.lengthRange}";
+        public void Update()
+        {
+            
+        }
+
+        //     public void Start()
+        //     {
+        //         // Assuming you have a list of fish data to display
+        //         List<FishData> fishDataList = new List<FishData>(); // Populate this with your fish data
+
+        //         foreach (FishData data in fishDataList)
+        //         {
+        //             GameObject button = Instantiate(fishButtonPrefab, fishButtonContainer);
+        //             button.GetComponentInChildren<Text>().text = data.fishName;
+        //             button.GetComponent<Button>().onClick.AddListener(() => OnFishButtonClicked(data));
+        //             fishButtons.Add(button);
+        //         }
+        //     }
+
+        // // public void BlueCatfishButtonPressed()
+        // // {
+
+        // // }
     }
-}
 }
