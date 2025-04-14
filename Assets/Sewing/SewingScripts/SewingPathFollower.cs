@@ -8,16 +8,21 @@ namespace Sewing{
 
 public class SewingPathFollower : MonoBehaviour
 {
-    public List<Transform> waypoints;          // Waypoints set in the Inspector
+    //[SerializeField] private InputActionAsset inputActions;
+    public List<Transform> waypoints = new List<Transform>();          // Waypoints set in the Inspector
     public float moveSpeed = 2f;               // Speed of movement
-    public KeyCode moveKey = KeyCode.A;        // Press this to move to next waypoint
 
     private int currentIndex = 0;
     private bool isMoving = false;
 
+    void Awake()
+    {
+        //var actionMap = inputActions.FindActionMap("MotionTracking");
+
+    }
     void Update()
     {
-        if (Input.GetKeyDown(moveKey) && !isMoving)
+        if (Input.GetKey(KeyCode.A) && !isMoving)
         {
             MoveToNextWaypoint();
         }
