@@ -615,7 +615,14 @@ namespace Captury
 			// start the connection thread
 			communicationThread = new Thread(LookForActors);
 			communicationThread.Start();
-		}
+
+			// added by helena for game select so it picks on host
+
+            if (GameSelect.Instance != null)
+            {
+                GameSelect.Instance.CapturySetup();
+            }
+        }
 
 		//==========================
 		// this is run once at exit
