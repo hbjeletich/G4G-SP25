@@ -1,6 +1,7 @@
 using UnityEngine;
 
 [ExecuteInEditMode]
+
 public class OrthographicCameraFrustum : MonoBehaviour
 {
     private Camera cam;
@@ -56,4 +57,3 @@ public class OrthographicCameraFrustum : MonoBehaviour
         }
     }
 }
-

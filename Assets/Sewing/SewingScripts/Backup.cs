@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.InputSystem;
+using Sewing;
 
+namespace Sewing {
 public class Backup : MonoBehaviour
 {
 
@@ -83,4 +85,5 @@ public class Backup : MonoBehaviour
             
         }
     }
+}
 }
