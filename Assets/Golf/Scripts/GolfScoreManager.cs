@@ -6,8 +6,13 @@ using TMPro;
 public class GolfScoreManager : MonoBehaviour
 {
     public TextMeshProUGUI scoreUI;
+    public TextMeshProUGUI endScoreUI;
+    public TextMeshProUGUI highestScoreText;
+
     public static int highestGolfScore = 0;
     public int score;
+
+    public Animator UIAnimator;
 
     public HighestScoreIndicator HighestScoreIndicator;
 
@@ -43,6 +48,15 @@ public class GolfScoreManager : MonoBehaviour
             highestGolfScore = score;
             HighestScoreIndicator.updateIndicatorPos(golfBall.transform.position.z);
             HighestScoreIndicator.placeIndicatorWithAnim();
+            highestScoreText.gameObject.SetActive(true);
         }
+    }
+
+    public void displayScoreText(){
+        UIAnimator.CrossFadeInFixedTime("scoreFadeIn", 0);
+    }
+
+    public void updateEndScreenScore(){
+        endScoreUI.text = score + " m";
     }
 }

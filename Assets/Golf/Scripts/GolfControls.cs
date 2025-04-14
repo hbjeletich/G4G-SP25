@@ -14,7 +14,6 @@ public class GolfControls : MonoBehaviour
 
     //consider using footheight
 
-    // Start is called before the first frame update
     private void Awake()
     {
         hasFootRaise = false;

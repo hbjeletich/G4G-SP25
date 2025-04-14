@@ -25,9 +25,7 @@ public class FishingPlayerController : MonoBehaviour
     public float tilt = 10f; // Tilt angle for hook
     private Vector2 moveInput;
     private float currentTilt = 0f;
-
     private bool isHookMoving = false;
-    [HideInInspector] public bool isFishingInProgress = false;
 
     // Determines how far the hook is sent when cast
     public enum FishingZone
@@ -43,12 +41,25 @@ public class FishingPlayerController : MonoBehaviour
     public FishingZoneSettings farthestZone;
     public Vector2 retractPosition = new Vector2(0, 0);
 
+    [Header("Fishing Line")]
+    public Transform startOfLine;
+    public Vector3 hookOffset = new Vector3(-0.2f, 0.65f, 0f);
+    public Vector3 distanceOffset = new Vector3(0, 0, 0);
+
+    [HideInInspector] public bool isFishingInProgress = false;
+    [SerializeField] private int lineSegmentCount = 20;
+    [SerializeField] private AnimationCurve tensionCurve;
+    [SerializeField] private float tensionSpeed = 2f;
+    private float tension = 1f;
+    private float lineCurveHeight = 0.2f;
+
     // New Input System
     private PlayerInput playerInput; 
     [HideInInspector] public InputAction moveAction, fishAction, leftFootHeight, rightFootHeight; 
     [HideInInspector] public FishingPlayerController instance; // Singleton instance
     private Rigidbody2D rb;
     private DistanceMeter distanceMeter; 
+    private LineRenderer lineRenderer; 
 
     private void Awake()
     {
@@ -67,6 +78,7 @@ public class FishingPlayerController : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         playerInput = GetComponent<PlayerInput>();
         distanceMeter = FindObjectOfType<DistanceMeter>();
+        lineRenderer = GetComponent<LineRenderer>();
 
         // Input system setup
         moveAction = playerInput.actions["Move"];
@@ -96,6 +108,8 @@ public class FishingPlayerController : MonoBehaviour
         if (!distanceMeter.isFishing)
         {
             Move();
+            UpdateFishingLine();
+
         }
         else
         {
@@ -144,26 +158,57 @@ public class FishingPlayerController : MonoBehaviour
     //     rb.MoveRotation(Quaternion.Euler(0, 0, currentTilt));
     // }
 
-    public FishingZone DetermineFishingZone(float value)
+    private void UpdateFishingLine()
     {
-        if (value < 0.33f)
-            return FishingZone.Closest;
-        else if (value < 0.66f)
-            return FishingZone.Middle;
-        else
-            return FishingZone.Farthest;
+        if (lineRenderer == null || startOfLine == null)
+            return;
+
+        // Define start and end of line
+        Vector3 start = startOfLine.position;
+        Vector3 end = transform.position + hookOffset;
+
+        start.z = -0.1f;
+        end.z = -0.1f;
+
+        float distance = Vector3.Distance(start, end + distanceOffset);
+        float normalized = Mathf.InverseLerp(2f, 6f, distance); // ← remapped range
+        tension = Mathf.Clamp01(normalized);
+
+        float maxCurveHeight = 2.0f;
+        lineCurveHeight = tensionCurve.Evaluate(1f - tension) * maxCurveHeight;
+
+        // Calculate line points
+        lineRenderer.positionCount = lineSegmentCount;
+        for (int i = 0; i < lineSegmentCount; i++)
+        {
+            float t = i / (float)(lineSegmentCount - 1);
+            Vector3 point = Vector3.Lerp(start, end, t);
+
+            float curve = Mathf.Sin(t * Mathf.PI) * lineCurveHeight;
+            point.y -= curve;
+
+            point.z = -0.1f;
+            lineRenderer.SetPosition(i, point);
+        }
+
+        lineRenderer.enabled = true;
     }
 
-    public void CastHook(FishingZone zone)
+
+    #region CastHook
+    public void CastHook()
     {
+        FishingZone zone = distanceMeter.currentZone;  // Get the current fishing zone from the distance meter
         Debug.Log("Casting hook in zone: " + zone);
+
+        FishingAudioManager.instance.PlaySFX(FishingAudioManager.instance.castHookSFX);
+        FishingCameraController.instance.ShiftToFishingView();
+        StartCoroutine(distanceMeter.FadeCanvas(0f));
+        distanceMeter.isFishing = false;
         isFishingInProgress = true;
 
-        float depth = 0f;
-        Vector2 xRange = Vector2.zero;
-
-        FishingZoneSettings zoneSettings = closestZone;
-
+        // Determine target position based on the selected zone
+        FishingZoneSettings zoneSettings = new FishingZoneSettings();
         switch (zone)
         {
             case FishingZone.Closest:
@@ -176,7 +221,6 @@ public class FishingPlayerController : MonoBehaviour
                 zoneSettings = farthestZone;
                 break;
         }
-
         Vector3 startPos = new Vector3(retractPosition.x, retractPosition.y, transform.position.z);
         Vector3 targetPos = new Vector3(
             Random.Range(zoneSettings.xRange.x, zoneSettings.xRange.y),
@@ -211,6 +255,7 @@ public class FishingPlayerController : MonoBehaviour
         yield return new WaitForSeconds(2f);  
 
         // Retract hook back
+        FishingAudioManager.instance.PlaySFX(FishingAudioManager.instance.reelInSFX); // Play reel in sound
         elapsedTime = 0f;
         float retractDuration = 1f / retractSpeed;
 
@@ -223,13 +268,18 @@ public class FishingPlayerController : MonoBehaviour
         }
         rb.position = new Vector2(rb.position.x, startPos.y);
         isHookMoving = false;
-        distanceMeter.isFishing = true; // Allow distance meter to be used again
+
+        // Stop sound, shift camera, and fade in distance meter
+        FishingAudioManager.instance.StopAllSFX(); 
+        FishingCameraController.instance.ShiftToMeterView(); 
+        StartCoroutine(distanceMeter.FadeCanvas(1f)); 
 
         // Restart distance meter
         isFishingInProgress = false;
         FindObjectOfType<DistanceMeter>().RestartMeter();
+        distanceMeter.isFishing = true; 
     }
-
+    #endregion
 
     private void Move()
     {
@@ -251,6 +301,16 @@ public class FishingPlayerController : MonoBehaviour
         rb.MoveRotation(Quaternion.Euler(0, 0, -currentTilt));
     }
 
+    public void DisablePlayerController()
+    {
+        rb.isKinematic = true; 
+        rb.velocity = Vector2.zero; 
+    }
+
+    public void EnablePlayerController()
+    {
+        rb.isKinematic = false; 
+    }
 
     private void OnDrawGizmos()
     {
