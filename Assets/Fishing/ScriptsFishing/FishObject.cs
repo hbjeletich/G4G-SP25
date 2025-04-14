@@ -82,12 +82,14 @@ public class FishObject : MonoBehaviour
     private float decelerationRate;
     private float targetSpeed; // Randomized speed per movement phase
     private bool isDecelerating = false;
+    private FishingPlayerController playerController;
 
     void Start()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
         capsuleCollider = GetComponent<CapsuleCollider2D>();
         fishSpawner = FindObjectOfType<FishSpawner>();
+        playerController = FindObjectOfType<FishingPlayerController>();
 
         AssignBehaviorByRarity();
         AssignFishSize();
@@ -131,11 +133,6 @@ public class FishObject : MonoBehaviour
         
         TailWag();
     }
-
-    // void OnCollisionEnter2D(Collision2D collision)
-    // {
-    //     Debug.Log("Fish collided with: " + collision.gameObject.name);
-    // }
 
     private void MoveForward()
     {
@@ -229,12 +226,13 @@ public class FishObject : MonoBehaviour
         {
             StopAndTurn();
 
-            // Get the closest point on the wall collider
+            // Calculate the closest point on the wall and the normal vector
+            // to steer away from it
             Vector2 closestPoint = collision.collider.ClosestPoint(transform.position);
             Vector2 wallNormal = (Vector2)transform.position - closestPoint;
 
-            // Instead of teleporting, steer the fish away from the wall smoothly
-            SteerAway(wallNormal.normalized * 2f); // Apply steering force
+            // Smoothly steer away from the wall
+            SteerAway(wallNormal.normalized * 2f);
         }
     }
 
@@ -245,15 +243,34 @@ public class FishObject : MonoBehaviour
             CatchFish();
         }
     }
-
+    
+    #region CatchFish
     public void CatchFish()
     {
+        if (fishData == null) return; // Safety check
+
+        Time.timeScale = 0f; // Pause the game
+
+        // Play SFX (do check later per rarities for dif sounds)
+        FishingAudioManager.instance.SetSFXVolume(0.8f);
+        FishingAudioManager.instance.SetSFXPitch(1.0f);
+        FishingAudioManager.instance.PlaySFX(FishingAudioManager.instance.regFishCaughtSFX);
         Debug.Log($"{fishData.fishName} caught!");
+
+        // Show popup
+        FishCaughtUIManager uiManager = FindObjectOfType<FishCaughtUIManager>();
+        if (uiManager != null)
+        {
+            uiManager.ShowFish(fishData, Random.Range(fishData.lengthRange.min, fishData.lengthRange.max));
+        }
+
+        // Add fish to inventory
         FishingInventoryManager.Instance.AddFish(fishData);
         Debug.Log($"Added {fishData.fishName} to inventory. Total: {FishingInventoryManager.Instance.GetInventory()[fishData]}");
         fishSpawner.activeFish.Remove(gameObject); // Remove from active fish list
         Destroy(gameObject);
     }
+    #endregion
 
     private void StopAndTurn()
     {
@@ -286,14 +303,6 @@ public class FishObject : MonoBehaviour
         [Range(0.01f, 1.1f)] public float min;
         [Range(0.015f, 1.1f)] public float max;
     }
-
-    // private void AssignFishShadow()
-    // {
-    //     if (fishData != null)
-    //     {
-    //         fishData
-    //     }
-    // }
 
     private void AssignFishSize()
     {
