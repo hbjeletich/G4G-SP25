@@ -33,10 +33,15 @@ namespace Swimming
         private Rigidbody2D rigidbody2D;
         private SpriteRenderer spriteRenderer;
         private Animator animator;
+        [SerializeField] private RuntimeAnimatorController regularAnimator;
+        [SerializeField] private RuntimeAnimatorController deepSeaAnimator;
 
         private bool isFacingRight = true;
         [SerializeField] private GameObject rightColliders;
         [SerializeField] private GameObject leftColliders;
+
+        [SerializeField] private Transform deepSeaCutoff;
+        private float deepSeaYLevel;
 
         private void Awake()
         {        
@@ -45,6 +50,10 @@ namespace Swimming
 
             spriteRenderer = GetComponent<SpriteRenderer>();
             animator = GetComponent<Animator>();
+            if(animator != null)
+            {
+                animator.runtimeAnimatorController = regularAnimator;
+            }
 
             // set up motion tracking actions
             var motionMap = inputActions.FindActionMap("MotionTracking");
@@ -60,6 +69,8 @@ namespace Swimming
             if (playerMap == null) Debug.LogError("player map not found");
             moveAction = playerMap.FindAction("Move");
             jumpAction = playerMap.FindAction("Jump");
+
+            deepSeaYLevel = deepSeaCutoff.position.y;
         }
 
         private void OnEnable()
@@ -120,6 +131,15 @@ namespace Swimming
                 DoSwimming();
             }
 
+            if (transform.position.y <= deepSeaYLevel)
+            {
+                ChangeToDeepSea();
+            }
+            else
+            {
+                ChangeToRegularSea();
+            }
+
             animator.SetFloat("xVel", rigidbody2D.velocity.x);
             //Debug.Log(rigidbody2D.velocity.x);
             animator.SetFloat("yVel", rigidbody2D.velocity.y);
@@ -158,5 +178,16 @@ namespace Swimming
                 collectable.OnPickup();
             }
         }
+
+        private void ChangeToDeepSea()
+        {
+            animator.runtimeAnimatorController = deepSeaAnimator;
+        }
+
+        private void ChangeToRegularSea()
+        {
+            animator.runtimeAnimatorController = regularAnimator;
+        }
+
     }
 }
