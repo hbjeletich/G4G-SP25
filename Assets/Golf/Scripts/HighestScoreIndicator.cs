@@ -11,6 +11,7 @@ public class HighestScoreIndicator : MonoBehaviour
     public TextMeshProUGUI floorScore;
 
     public Animator anim;
+    public AK.Wwise.Event JingleSound;
 
     public void updateIndicatorPos(float posZ){
         golfScoreIndicatorPos = new Vector3(0, floorIndicator.transform.position.y, posZ);
@@ -34,5 +35,6 @@ public class HighestScoreIndicator : MonoBehaviour
         floorScore.text = GolfScoreManager.highestGolfScore + " m";
 
         anim.CrossFadeInFixedTime("FadeIn", 0);
+        JingleSound.Post(gameObject);
     }
 }

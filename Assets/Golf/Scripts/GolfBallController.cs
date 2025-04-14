@@ -8,6 +8,8 @@ public class GolfBallController : MonoBehaviour
     TrailRenderer trail;
 
     private Vector3 startingPos;
+    public AK.Wwise.Event BounceEvent;
+    public AK.Wwise.Event HitEvent;
 
     void Start(){
         rb = GetComponent<Rigidbody>();
@@ -19,6 +21,11 @@ public class GolfBallController : MonoBehaviour
     public void hitGolfBall(float hitStrength){
         trail.enabled = true;
         rb.AddForce(transform.up * hitStrength, ForceMode.Impulse);
+        if (HitEvent != null)
+        {
+            HitEvent.Post(gameObject);
+            
+        }
     }
 
     public int getDistanceFromStart(){
@@ -35,5 +42,12 @@ public class GolfBallController : MonoBehaviour
 
     public void disableTrail(){
         trail.enabled = false;
+    }
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.relativeVelocity.magnitude > 0.2f)
+        {
+            BounceEvent.Post(gameObject);
+        }
     }
 }
