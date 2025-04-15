@@ -1,43 +1,78 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using System.Collections.Generic;
 
 namespace Fishing
 {
-public class FishingInventoryUI : MonoBehaviour
-{
-    public FishData fishData;
-    public GameObject fishButtonPrefab;
-    public Transform fishButtonContainer;
-    public List<GameObject> fishButtons = new List<GameObject>();
+    public class FishingInventoryUI : MonoBehaviour
+    {
+        [Header("UI Elements")]
+        public GameObject fishButtonPrefab;
+        public Transform fishButtonContainer;
+        public FishDetailsUI fishDetailsUI; 
 
-        public void Start()
+        public int itemsPerPage = 12;
+        private List<FishData> currentFishList = new();
+        private int currentPage = 0;
+
+        public void RefreshUI()
         {
-             
+            // Clear old buttons
+            foreach (Transform child in fishButtonContainer)
+            {
+                Destroy(child.gameObject);
+            }
+
+            Dictionary<FishData, int> inventory = FishingInventoryManager.Instance.GetInventory();
+            currentFishList = new List<FishData>(inventory.Keys);
+
+            int startIndex = currentPage * itemsPerPage;
+            int endIndex = Mathf.Min(startIndex + itemsPerPage, currentFishList.Count);
+
+            for (int i = startIndex; i < endIndex; i++)
+            {
+                FishData fish = currentFishList[i];
+                int count = inventory[fish];
+
+                GameObject buttonGO = Instantiate(fishButtonPrefab, fishButtonContainer);
+                
+                // Setup the visual
+                FishInventoryButton inventoryButton = buttonGO.GetComponent<FishInventoryButton>();
+                inventoryButton.Setup(fish, count, fish.fishSprite);
+
+                // Add click event
+                Button uiButton = buttonGO.GetComponent<Button>();
+                uiButton.onClick.AddListener(() => fishDetailsUI.ShowFishDetails(fish));
+            }
         }
 
-        public void Update()
+        public void NextPage()
         {
-            
+            if ((currentPage + 1) * itemsPerPage < currentFishList.Count)
+            {
+                currentPage++;
+                RefreshUI();
+            }
+            else
+            {
+                FishingAudioManager.instance.PlaySFX(FishingAudioManager.instance.cantSFX);
+                Debug.Log("No more pages available.");
+            }
         }
 
-        //     public void Start()
-        //     {
-        //         // Assuming you have a list of fish data to display
-        //         List<FishData> fishDataList = new List<FishData>(); // Populate this with your fish data
-
-        //         foreach (FishData data in fishDataList)
-        //         {
-        //             GameObject button = Instantiate(fishButtonPrefab, fishButtonContainer);
-        //             button.GetComponentInChildren<Text>().text = data.fishName;
-        //             button.GetComponent<Button>().onClick.AddListener(() => OnFishButtonClicked(data));
-        //             fishButtons.Add(button);
-        //         }
-        //     }
-
-        // // public void BlueCatfishButtonPressed()
-        // // {
-
-        // // }
+        public void PreviousPage()
+        {
+            if (currentPage > 0)
+            {
+                currentPage--;
+                RefreshUI();
+            }
+            else
+            {
+                FishingAudioManager.instance.PlaySFX(FishingAudioManager.instance.cantSFX);
+                Debug.Log("No previous pages available.");
+            }
+        }
     }
 }
