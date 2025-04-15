@@ -85,6 +85,8 @@ public class FishingPlayerController : MonoBehaviour
         fishAction = playerInput.actions["Fish"];
         leftFootHeight = playerInput.actions["LeftFootHeight"]; 
         rightFootHeight = playerInput.actions["RightFootHeight"];
+
+        lineRenderer.enabled = true;
     }
 
     private void OnEnable()
@@ -190,8 +192,6 @@ public class FishingPlayerController : MonoBehaviour
             point.z = -0.1f;
             lineRenderer.SetPosition(i, point);
         }
-
-        lineRenderer.enabled = true;
     }
 
 
