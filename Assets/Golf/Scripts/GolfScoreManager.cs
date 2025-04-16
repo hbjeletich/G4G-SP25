@@ -64,6 +64,7 @@ public class GolfScoreManager : MonoBehaviour
     }
 
     public void updateEndScreenScore(){
+        endScoreUI.gameObject.SetActive(true);
         endScoreUI.text = score + " m";
     }
 }
