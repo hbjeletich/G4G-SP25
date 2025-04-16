@@ -129,8 +129,8 @@ public class GolfSystem : MonoBehaviour
     }
 
     IEnumerator followGolfBall(){
-        yield return new WaitForSeconds(1f);
         GolfScoreManager.instance.displayScoreText();
+        yield return new WaitForSeconds(1f);
         
         while(golfBallController.isMoving() == true){ //temp mouse controls before implementing balance controls. Simulates when the player stops holding an exercise
             yield return null;
