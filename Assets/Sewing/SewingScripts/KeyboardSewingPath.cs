@@ -10,7 +10,6 @@ public class KeyboardSewingPath : MonoBehaviour
 {
     public List<Transform> waypoints = new List<Transform>();          // Waypoints set in the Inspector
     public float moveSpeed = 2f;               // Speed of movement
-    private Animator animator;
 
     private int currentIndex = 0;
     private bool isMoving = false;
@@ -19,7 +18,6 @@ public class KeyboardSewingPath : MonoBehaviour
 
     void Awake()
     {
-        animator = GetComponent<Animator>();
     }
     void Update()
     {
@@ -31,7 +29,6 @@ public class KeyboardSewingPath : MonoBehaviour
 
     void MoveToNextWaypoint()
     {
-        animator.SetTrigger("PlayAnimation");
         if (waypoints.Count == 0) return;
 
         int nextIndex = currentIndex + 1;
