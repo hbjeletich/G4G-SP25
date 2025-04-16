@@ -762,7 +762,8 @@ AudioSource:
   m_GameObject: {fileID: 106226808}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 24300002, guid: dcf08de603fad9446882d92a98ad202a,
+    type: 2}
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 0}
   m_PlayOnAwake: 1
@@ -859,7 +860,8 @@ AudioSource:
   m_GameObject: {fileID: 106226808}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 24300002, guid: dcf08de603fad9446882d92a98ad202a,
+    type: 2}
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 0}
   m_PlayOnAwake: 1
@@ -956,7 +958,8 @@ AudioSource:
   m_GameObject: {fileID: 106226808}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 24300002, guid: dcf08de603fad9446882d92a98ad202a,
+    type: 2}
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 0}
   m_PlayOnAwake: 1
@@ -1089,7 +1092,8 @@ AudioSource:
   m_GameObject: {fileID: 106226808}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 24300002, guid: dcf08de603fad9446882d92a98ad202a,
+    type: 2}
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 0}
   m_PlayOnAwake: 1
@@ -1186,7 +1190,8 @@ AudioSource:
   m_GameObject: {fileID: 106226808}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 24300002, guid: dcf08de603fad9446882d92a98ad202a,
+    type: 2}
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 0}
   m_PlayOnAwake: 1
@@ -1668,7 +1673,7 @@ MonoBehaviour:
   props: []
   searchWhenNotTracking: 0
   searchEveryXSeconds: 5
-  trackingArea: {fileID: 0}
+  trackingArea: {fileID: 222218578}
   stopTrackingWhenOutsideBounds: 0
   trackedSkeletons: []
 --- !u!114 &222218580
@@ -1693,7 +1698,7 @@ MonoBehaviour:
   cameras: []
   arTags: []
   log: {fileID: 0}
-  streamedSkeleton: {fileID: 0}
+  streamedSkeleton: {fileID: 939209110}
   streamedAvatar: {fileID: 9000000, guid: ab78030e69a85bd4fa93d69411643cb1, type: 3}
   streamedSkeletonLeftHip: LeftUpLeg
   streamedSkeletonHead: Head
@@ -1727,7 +1732,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 222218578}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -1987,24 +1992,6 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   tensionSpeed: 3
-  moveAction:
-    m_Name: 
-    m_Type: 0
-    m_ExpectedControlType: 
-    m_Id: f0a58149-9a8b-4b74-bbfd-9e99ed4d6071
-    m_Processors: 
-    m_Interactions: 
-    m_SingletonActionBindings: []
-    m_Flags: 0
-  fishAction:
-    m_Name: 
-    m_Type: 0
-    m_ExpectedControlType: 
-    m_Id: a224dc17-c4b8-4ef2-b4e2-7c5f39070169
-    m_Processors: 
-    m_Interactions: 
-    m_SingletonActionBindings: []
-    m_Flags: 0
   leftFootHeight:
     m_Name: 
     m_Type: 0
@@ -4498,6 +4485,12 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ab78030e69a85bd4fa93d69411643cb1, type: 3}
+--- !u!1 &939209110 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: ab78030e69a85bd4fa93d69411643cb1,
+    type: 3}
+  m_PrefabInstance: {fileID: 939209109}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &956215039
 PrefabInstance:
   m_ObjectHideFlags: 0

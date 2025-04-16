@@ -56,6 +56,7 @@ namespace Fishing
             }
             else
             {
+                FishingAudioManager.instance.SetSFXVolume(0.35f);
                 FishingAudioManager.instance.PlaySFX(FishingAudioManager.instance.cantSFX);
                 Debug.Log("No more pages available.");
             }
@@ -70,6 +71,7 @@ namespace Fishing
             }
             else
             {
+                FishingAudioManager.instance.SetSFXVolume(0.35f);
                 FishingAudioManager.instance.PlaySFX(FishingAudioManager.instance.cantSFX);
                 Debug.Log("No previous pages available.");
             }
