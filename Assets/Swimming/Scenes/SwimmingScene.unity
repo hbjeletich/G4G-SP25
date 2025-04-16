@@ -777,6 +777,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2a869751a86fcbd4b8fce6d92b0bbbdd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  PickupSFX:
+    idInternal: 0
+    valueGuidInternal: 
+    WwiseObjectReference: {fileID: 11400000, guid: f3d769349da01c84fa46b1ee2305262e,
+      type: 2}
   shellNumber: 2
 --- !u!58 &491405297
 CircleCollider2D:
@@ -1592,6 +1597,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2a869751a86fcbd4b8fce6d92b0bbbdd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  PickupSFX:
+    idInternal: 0
+    valueGuidInternal: 
+    WwiseObjectReference: {fileID: 11400000, guid: f3d769349da01c84fa46b1ee2305262e,
+      type: 2}
   shellNumber: 1
 --- !u!58 &836613751
 CircleCollider2D:
@@ -2510,6 +2520,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2a869751a86fcbd4b8fce6d92b0bbbdd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  PickupSFX:
+    idInternal: 0
+    valueGuidInternal: 
+    WwiseObjectReference: {fileID: 11400000, guid: f3d769349da01c84fa46b1ee2305262e,
+      type: 2}
   shellNumber: 0
 --- !u!58 &1004268439
 CircleCollider2D:
@@ -3423,7 +3438,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1858818040}
-  - component: {fileID: 1858818039}
   - component: {fileID: 1858818044}
   - component: {fileID: 1858818043}
   - component: {fileID: 1858818042}
@@ -3435,32 +3449,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1858818039
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1858818038}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe0b4bd99dd4eb54db31134417dbd87f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  InitializationSettings: {fileID: 11400000, guid: deb34920628b62445aa0463af0679262,
-    type: 2}
-  basePath: 
-  language: 
-  defaultPoolSize: 0
-  lowerPoolSize: 0
-  streamingPoolSize: 0
-  memoryCutoffThreshold: 0
-  monitorPoolSize: 0
-  monitorQueuePoolSize: 0
-  callbackManagerBufferSize: 0
-  spatialAudioPoolSize: 0
-  maxSoundPropagationDepth: 0
-  engineLogging: 0
 --- !u!4 &1858818040
 Transform:
   m_ObjectHideFlags: 0
@@ -4903,3 +4891,4 @@ SceneRoots:
   - {fileID: 665945005}
   - {fileID: 1819977827}
   - {fileID: 1858818040}
+  - {fileID: 238942495}

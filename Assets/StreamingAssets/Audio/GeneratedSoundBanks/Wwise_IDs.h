@@ -13,7 +13,9 @@ namespace AK
 {
     namespace EVENTS
     {
+        static const AkUniqueID ALL_STOP = 3691838317U;
         static const AkUniqueID AMBIENCE_PLAY = 1496310610U;
+        static const AkUniqueID COLLECTABLE = 1330284301U;
         static const AkUniqueID MUS_PLAY = 1280297747U;
     } // namespace EVENTS
 
