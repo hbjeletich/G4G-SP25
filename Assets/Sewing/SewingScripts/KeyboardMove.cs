@@ -15,7 +15,6 @@ public class KeyboardMove : MonoBehaviour
     public List<Transform> waypoints = new List<Transform>();
     private int currentWaypointIndex = 0; // Tracks the current waypoint
     public int RepOne = 0;
-    public int RepTwo = 0;
     private Animator animator;
     private bool movementAvailable = true;
 
@@ -39,7 +38,7 @@ public class KeyboardMove : MonoBehaviour
         if (movementAvailable == true)
         {
             // Check if the player presses A and there are more waypoints to move through
-            if (Input.GetKeyDown(KeyCode.A) && currentWaypointIndex < waypoints.Count)
+            if (Input.GetKeyDown(KeyCode.A) && currentWaypointIndex < waypoints.Count && RepOne < 10)
             {
                 movementAvailable = false;
                 RepOne++;
@@ -47,10 +46,9 @@ public class KeyboardMove : MonoBehaviour
                 StartCoroutine(MoveToWaypoint(waypoints[currentWaypointIndex])); // Start movement to waypoint
             }
             // Check if the player presses D and there are more waypoints to move through
-            else if (Input.GetKeyDown(KeyCode.D) && currentWaypointIndex < waypoints.Count)
+            else if (Input.GetKeyDown(KeyCode.D) && currentWaypointIndex < waypoints.Count && RepOne >= 10)
             {
                 movementAvailable = false;
-                RepTwo++;
                 animator.SetTrigger("PlayAnimation");
                 StartCoroutine(MoveToWaypoint(waypoints[currentWaypointIndex])); // Start movement to waypoint
             }
