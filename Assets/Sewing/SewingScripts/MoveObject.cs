@@ -76,6 +76,7 @@ public class MoveObject : MonoBehaviour
     }
    private IEnumerator MoveToWaypoint(Transform targetWaypoint)
     {
+        SoundManager.PlaySound(SoundType.SCISSORS);
         Vector3 startPosition = transform.position;
         Quaternion startRotation = transform.rotation;
         Vector3 targetPosition = targetWaypoint.position;

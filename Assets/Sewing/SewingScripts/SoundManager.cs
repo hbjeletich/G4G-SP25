@@ -10,7 +10,7 @@ public enum SoundType
     REWARDONE,
     REWARDTWO,
     SCISSORS,
-    sCISSORSTWO,
+    SCISSORSTWO,
     SEWING,   
     STOREDOOR
 }

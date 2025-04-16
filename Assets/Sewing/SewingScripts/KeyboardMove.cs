@@ -62,6 +62,7 @@ public class KeyboardMove : MonoBehaviour
     // Coroutine to move the object to the current waypoint smoothly
     private IEnumerator MoveToWaypoint(Transform targetWaypoint)
     {
+        SoundManager.PlaySound(SoundType.SCISSORS);
         Vector3 startPosition = transform.position;
         Quaternion startRotation = transform.rotation;
         Vector3 targetPosition = targetWaypoint.position;
