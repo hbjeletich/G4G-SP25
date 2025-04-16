@@ -2007,6 +2007,7 @@ MonoBehaviour:
   clubController: {fileID: 726176000}
   golfBallController: {fileID: 397073995}
   cameraController: {fileID: 1110247330}
+  transitionHandler: {fileID: 1416921416}
   highestScoreIndicator: {fileID: 67967480}
   golfControls: {fileID: 1715978427}
   initialBalPromp: {fileID: 252088059}
@@ -3044,6 +3045,51 @@ RectTransform:
   m_AnchoredPosition: {x: -1003.51483, y: -549.47595}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &1416921415
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1416921417}
+  - component: {fileID: 1416921416}
+  m_Layer: 0
+  m_Name: TransitionHandler
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1416921416
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1416921415}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe59aaa8c74573545affcad3ed97e311, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  UIAnimator: {fileID: 1044953190}
+--- !u!4 &1416921417
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1416921415}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1441281753
 GameObject:
   m_ObjectHideFlags: 0
@@ -4871,6 +4917,7 @@ SceneRoots:
   - {fileID: 1044953189}
   - {fileID: 202684177}
   - {fileID: 760164144}
+  - {fileID: 1416921417}
   - {fileID: 988041728}
   - {fileID: 957268119}
   - {fileID: 2100819478}

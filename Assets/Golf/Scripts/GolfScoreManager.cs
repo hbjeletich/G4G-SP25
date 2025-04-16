@@ -43,13 +43,20 @@ public class GolfScoreManager : MonoBehaviour
         scoreUI.text = score + " m";
     }
 
+    public void toStartingState(){
+        score = 0;
+        scoreUI.text = "0000 M";
+    }
+
     public void updateHighestScore(){
         if(score > highestGolfScore){
             highestGolfScore = score;
             HighestScoreIndicator.updateIndicatorPos(golfBall.transform.position.z);
             HighestScoreIndicator.placeIndicatorWithAnim();
             highestScoreText.gameObject.SetActive(true);
-        }
+            return;
+        } 
+        highestScoreText.gameObject.SetActive(false);
     }
 
     public void displayScoreText(){

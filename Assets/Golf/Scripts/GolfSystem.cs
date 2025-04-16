@@ -14,6 +14,8 @@ public class GolfSystem : MonoBehaviour
     public GolfBallController golfBallController;
     public GolfCameraController cameraController;
 
+    public GolfTransitionHandler transitionHandler;
+
     public HighestScoreIndicator highestScoreIndicator;
     
     public GolfControls golfControls;
@@ -38,6 +40,23 @@ public class GolfSystem : MonoBehaviour
         stateUpdate();
     }
 
+    IEnumerator transitionToGameRestart(){
+
+        transitionHandler.transitionGameOut();
+
+        yield return new WaitForSeconds(1f);
+        cameraController.toStartTransform();
+        clubController.toStartPosition();
+        golfBallController.toStartingState();
+        SwingStrengthController.instance.toStartingState();
+        GolfScoreManager.instance.toStartingState();
+
+        yield return new WaitForSeconds(2f);
+        transitionHandler.transitionGameIn();
+
+        StartCoroutine(startGolfGame());
+    }
+
     IEnumerator startGolfGame(){
         yield return new WaitForSeconds(transitionAnimLen);
 
@@ -48,10 +67,6 @@ public class GolfSystem : MonoBehaviour
 
     IEnumerator swingBack(){
         yield return new WaitForSeconds(delayBeforeStarting);
-        //swing the golf club back to its starting position. Awaiting to be releases
-        clubController.swingBack();
-        yield return new WaitForSeconds(1f);  //wait for swing back animation to play
-
         //show initial balance promp
         initialBalPromp.SetActive(true);
 
@@ -65,6 +80,9 @@ public class GolfSystem : MonoBehaviour
         yield return new WaitForSeconds(.5f); //delay before switching to next state
         //disable intial balance prompt
         initialBalPromp.SetActive(false);
+
+        //swing the golf club back to its starting position. Awaiting to be releases
+        clubController.swingBack();
 
         state = GolfState.ASSESSSTRENGTH;
         StartCoroutine(assesStrength());
@@ -130,7 +148,10 @@ public class GolfSystem : MonoBehaviour
         GolfScoreManager.instance.updateHighestScore();
         GolfScoreManager.instance.updateEndScreenScore();
         yield return new WaitForSeconds(4f);
-        GolfReloadManager.instance.reloadSceneInBackground();
+
+        stateUpdate = nullUpdate;
+        StartCoroutine(transitionToGameRestart());
+        //GolfReloadManager.instance.reloadSceneInBackground();
     }
 
     void nullUpdate(){}

@@ -8,6 +8,8 @@ public class GolfBallController : MonoBehaviour
     TrailRenderer trail;
 
     private Vector3 startingPos;
+    private Quaternion startingRotation;
+
     public AK.Wwise.Event BounceEvent;
     public AK.Wwise.Event HitEvent;
 
@@ -16,6 +18,7 @@ public class GolfBallController : MonoBehaviour
         trail = GetComponent<TrailRenderer>();
 
         startingPos = transform.position;
+        startingRotation = transform.rotation;
     }
 
     public void hitGolfBall(float hitStrength){
@@ -43,6 +46,13 @@ public class GolfBallController : MonoBehaviour
     public void disableTrail(){
         trail.enabled = false;
     }
+
+    public void toStartingState(){
+        transform.position = startingPos;
+        transform.rotation = startingRotation;
+        trail.enabled = true;
+    }
+
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.relativeVelocity.magnitude > 0.2f)
