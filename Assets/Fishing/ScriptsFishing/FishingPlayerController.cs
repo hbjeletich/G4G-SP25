@@ -55,7 +55,7 @@ public class FishingPlayerController : MonoBehaviour
 
     // New Input System
     private PlayerInput playerInput; 
-    [HideInInspector] public InputAction moveAction, fishAction, leftFootHeight, rightFootHeight; 
+    [HideInInspector] public InputAction moveAction, fishAction, leftFootHeight, rightFootHeight, leftHipAction, rightHipAction; // Input actions for movement and fishing 
     [HideInInspector] public FishingPlayerController instance; // Singleton instance
     private Rigidbody2D rb;
     private DistanceMeter distanceMeter; 
@@ -85,8 +85,8 @@ public class FishingPlayerController : MonoBehaviour
         fishAction = playerInput.actions["Fish"];
         leftFootHeight = playerInput.actions["LeftFootHeight"]; 
         rightFootHeight = playerInput.actions["RightFootHeight"];
-
-        lineRenderer.enabled = true;
+        leftHipAction = playerInput.actions["LeftHipAbducted"];
+        rightHipAction = playerInput.actions["RightHipAbducted"];
     }
 
     private void OnEnable()
@@ -95,6 +95,8 @@ public class FishingPlayerController : MonoBehaviour
         fishAction.Enable();
         leftFootHeight.Enable();    
         rightFootHeight.Enable();
+        leftHipAction.Enable();
+        rightHipAction.Enable();
     }
 
     private void OnDisable()
@@ -103,6 +105,8 @@ public class FishingPlayerController : MonoBehaviour
         fishAction.Disable();
         leftFootHeight.Disable();
         rightFootHeight.Disable();
+        leftHipAction.Disable();
+        rightHipAction.Disable();
     }
     
     private void FixedUpdate()
@@ -117,6 +121,22 @@ public class FishingPlayerController : MonoBehaviour
         {
             rb.isKinematic = true;
             rb.velocity = Vector2.zero; 
+        }
+    }
+
+    private void OnLeftHip(InputAction.CallbackContext ctx)
+    {
+        if (ctx.performed && !isFishingInProgress)
+        {
+            CastHook(); 
+        }
+    }
+
+    private void OnRightHip(InputAction.CallbackContext ctx)
+    {
+        if (ctx.performed && !isFishingInProgress)
+        {
+            CastHook(); 
         }
     }
 
@@ -192,6 +212,7 @@ public class FishingPlayerController : MonoBehaviour
             point.z = -0.1f;
             lineRenderer.SetPosition(i, point);
         }
+        lineRenderer.enabled = true;
     }
 
 
