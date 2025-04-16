@@ -12,13 +12,14 @@ public class SewingPathFollower : MonoBehaviour
     [SerializeField] private InputActionAsset inputActions;
     public List<Transform> waypoints = new List<Transform>();          // Waypoints set in the Inspector
     public float moveSpeed = 2f;               // Speed of movement
-
+    private Animator animator;
     private int currentIndex = 0;
     private bool isMoving = false;
     private InputAction footRaiseAction;
 
     void Awake()
-    {
+    {   
+        animator = GetComponent<Animator>();
         var actionMap = inputActions.FindActionMap("MotionTracking");
         footRaiseAction = actionMap.FindAction("FootRaise");
         footRaiseAction.performed += OnFootRaise;
@@ -35,6 +36,7 @@ public class SewingPathFollower : MonoBehaviour
     }
     private void OnFootRaise(InputAction.CallbackContext ctx)
     {
+        animator.SetTrigger("PlayAnimation");
         if (waypoints.Count == 0) return;
 
         int nextIndex = currentIndex + 1;
