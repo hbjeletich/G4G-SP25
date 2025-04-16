@@ -112,7 +112,7 @@ public class GolfSystem : MonoBehaviour
         float swingStrength = SwingStrengthController.instance.getSwingStrength();
         SwingStrengthController.instance.stopMeasuring();
     
-        yield return new WaitForSeconds(.5f); //wait for golf club to connect with golf ball
+        yield return new WaitForSeconds(.2f); //wait for golf club to connect with golf ball
 
         state = GolfState.HIT;
         StartCoroutine(hitGolfBall(swingStrength));
