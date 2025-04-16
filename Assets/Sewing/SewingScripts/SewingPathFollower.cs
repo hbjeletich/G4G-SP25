@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using Sewing;
 
 namespace Sewing{
@@ -8,27 +9,31 @@ namespace Sewing{
 
 public class SewingPathFollower : MonoBehaviour
 {
-    //[SerializeField] private InputActionAsset inputActions;
+    [SerializeField] private InputActionAsset inputActions;
     public List<Transform> waypoints = new List<Transform>();          // Waypoints set in the Inspector
     public float moveSpeed = 2f;               // Speed of movement
 
     private int currentIndex = 0;
     private bool isMoving = false;
+    private InputAction footRaiseAction;
 
     void Awake()
     {
-        //var actionMap = inputActions.FindActionMap("MotionTracking");
-
+        var actionMap = inputActions.FindActionMap("MotionTracking");
+        footRaiseAction = actionMap.FindAction("FootRaise");
+        footRaiseAction.performed += OnFootRaise;
     }
-    void Update()
+
+    private void OnEnable()
     {
-        if (Input.GetKey(KeyCode.A) && !isMoving)
-        {
-            MoveToNextWaypoint();
-        }
+        footRaiseAction.Enable();
     }
 
-    void MoveToNextWaypoint()
+    private void OnDisable()
+    {
+        footRaiseAction.Disable();
+    }
+    private void OnFootRaise(InputAction.CallbackContext ctx)
     {
         if (waypoints.Count == 0) return;
 
