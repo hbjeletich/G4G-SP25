@@ -113,7 +113,8 @@ public class FishingPlayerController : MonoBehaviour
     {
         if (!distanceMeter.isFishing)
         {
-            Move();
+            // MotionMovement(); 
+            Move(); // Filler movement
             UpdateFishingLine();
 
         }
@@ -302,6 +303,7 @@ public class FishingPlayerController : MonoBehaviour
     }
     #endregion
 
+    #region Movement
     private void Move()
     {
         moveInput = moveAction.ReadValue<Vector2>(); // Read movement input
@@ -321,6 +323,47 @@ public class FishingPlayerController : MonoBehaviour
         currentTilt = Mathf.Lerp(currentTilt, targetTilt, Time.fixedDeltaTime * 5f);
         rb.MoveRotation(Quaternion.Euler(0, 0, -currentTilt));
     }
+
+    private void MotionMovement()
+    {
+        // Read foot heights
+        float leftFootHeightValue = leftFootHeight.ReadValue<float>();
+        float rightFootHeightValue = rightFootHeight.ReadValue<float>();
+
+        // Determine movement direction based on which foot is higher
+        float movementDirection = 0f;
+        if (leftFootHeightValue > rightFootHeightValue + 0.05f) 
+        {
+            movementDirection = -1f; // Move left
+        }
+        else if (rightFootHeightValue > leftFootHeightValue + 0.05f) 
+        {
+            movementDirection = 1f; // Move right
+        }
+
+        // Check if there is input
+        if (movementDirection != 0f)
+        {
+            float targetSpeed = -moveInput.x * moveSpeed;
+            float newSpeed = Mathf.Lerp(
+                rb.velocity.x, 
+                targetSpeed, 
+                Time.fixedDeltaTime * acceleration
+            );
+            rb.velocity = new Vector3(newSpeed, rb.velocity.y, 0);
+        }
+        else
+        {
+            // Decelerate to a stop if no input is given
+            rb.velocity = new Vector3(Mathf.Lerp(rb.velocity.x, 0, Time.fixedDeltaTime * deceleration), rb.velocity.y, 0);
+        }
+
+        // Apply ship tilt when moving
+        float targetTilt = movementDirection * tilt;
+        currentTilt = Mathf.Lerp(currentTilt, targetTilt, Time.fixedDeltaTime * 5f);
+        rb.MoveRotation(Quaternion.Euler(0, 0, currentTilt));
+    }
+    #endregion
 
     public void DisablePlayerController()
     {
