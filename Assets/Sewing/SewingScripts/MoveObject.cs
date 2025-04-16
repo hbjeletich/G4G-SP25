@@ -39,7 +39,7 @@ public class MoveObject : MonoBehaviour
     void Update()
     {
         if (currentWaypointIndex == waypoints.Count) {
-            ChangeScene("3. Puzzle");
+            ChangeScene("4. Sewing");
     }
     }
 

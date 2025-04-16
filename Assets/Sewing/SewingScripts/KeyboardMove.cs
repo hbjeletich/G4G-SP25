@@ -56,7 +56,7 @@ public class KeyboardMove : MonoBehaviour
             }
             else if (currentWaypointIndex == waypoints.Count)
             {
-                ChangeScene("3. Puzzle");
+                ChangeScene("4. Sewing");
             }
         }
     }
