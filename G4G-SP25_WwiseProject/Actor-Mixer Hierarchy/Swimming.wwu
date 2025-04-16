@@ -388,7 +388,7 @@
 				</Folder>
 				<Folder Name="Collectables" ID="{8703AA59-84CA-4767-84E8-1CDB1AE4A179}" ShortID="1022851272">
 					<ChildrenList>
-						<Sound Name="Swimming_SFX_Collectables" ID="{DB8C9ABC-97A6-4E03-A80A-7C17E4351E9F}" ShortID="620015929">
+						<RandomSequenceContainer Name="Collectables" ID="{414B2F7D-8341-4B27-A2F3-294B9CE235BD}" ShortID="666030297">
 							<ReferenceList>
 								<Reference Name="Conversion">
 									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{DB8DC4DB-3926-44D2-B1E7-3E97AFD36B7E}"/>
@@ -398,110 +398,122 @@
 								</Reference>
 							</ReferenceList>
 							<ChildrenList>
-								<AudioFileSource Name="CollectableChimes2-001" ID="{98BF5037-6624-4C08-A968-CBB243C0E27D}">
-									<PropertyList>
-										<Property Name="FadeOutDuration" Type="Real64" Value="0.219458329677582"/>
-										<Property Name="OverrideWavLoop" Type="bool" Value="True"/>
-										<Property Name="TrimEnd" Type="Real64" Value="1.00187509775162"/>
-									</PropertyList>
-									<Language>SFX</Language>
-									<AudioFile>CollectableChimes2-001.wav</AudioFile>
-									<MediaIDList>
-										<MediaID ID="262000141"/>
-									</MediaIDList>
-								</AudioFileSource>
+								<Sound Name="Swimming_SFX_Collectables" ID="{DB8C9ABC-97A6-4E03-A80A-7C17E4351E9F}" ShortID="620015929">
+									<ReferenceList>
+										<Reference Name="Conversion">
+											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{DB8DC4DB-3926-44D2-B1E7-3E97AFD36B7E}"/>
+										</Reference>
+										<Reference Name="OutputBus">
+											<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{8CB677CF-1DCA-49F4-BCB9-7845BCEC97C0}"/>
+										</Reference>
+									</ReferenceList>
+									<ChildrenList>
+										<AudioFileSource Name="CollectableChimes2-001" ID="{98BF5037-6624-4C08-A968-CBB243C0E27D}">
+											<PropertyList>
+												<Property Name="FadeOutDuration" Type="Real64" Value="0.219458329677582"/>
+												<Property Name="OverrideWavLoop" Type="bool" Value="True"/>
+												<Property Name="TrimEnd" Type="Real64" Value="1.00187509775162"/>
+											</PropertyList>
+											<Language>SFX</Language>
+											<AudioFile>CollectableChimes2-001.wav</AudioFile>
+											<MediaIDList>
+												<MediaID ID="262000141"/>
+											</MediaIDList>
+										</AudioFileSource>
+									</ChildrenList>
+									<ActiveSourceList>
+										<ActiveSource Name="CollectableChimes2-001" ID="{98BF5037-6624-4C08-A968-CBB243C0E27D}" Platform="Linked"/>
+									</ActiveSourceList>
+								</Sound>
+								<Sound Name="Swimming_SFX_Collectables_01" ID="{4F802F54-F069-4820-804C-F20BC2E5556D}" ShortID="603770921">
+									<ReferenceList>
+										<Reference Name="Conversion">
+											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{DB8DC4DB-3926-44D2-B1E7-3E97AFD36B7E}"/>
+										</Reference>
+										<Reference Name="OutputBus">
+											<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{8CB677CF-1DCA-49F4-BCB9-7845BCEC97C0}"/>
+										</Reference>
+									</ReferenceList>
+									<ChildrenList>
+										<AudioFileSource Name="CollectableChimes2-001" ID="{21F59BB7-3738-4354-BBB7-5A2942A0AACC}">
+											<PropertyList>
+												<Property Name="FadeInDuration" Type="Real64" Value="0.0477083325386047"/>
+												<Property Name="FadeOutDuration" Type="Real64" Value="0.162208330631256"/>
+												<Property Name="OverrideWavLoop" Type="bool" Value="True"/>
+												<Property Name="TrimBegin" Type="Real64" Value="1.01141664981842"/>
+												<Property Name="TrimEnd" Type="Real64" Value="2.44266674041748"/>
+											</PropertyList>
+											<Language>SFX</Language>
+											<AudioFile>CollectableChimes2-001.wav</AudioFile>
+											<MediaIDList>
+												<MediaID ID="675408524"/>
+											</MediaIDList>
+										</AudioFileSource>
+									</ChildrenList>
+									<ActiveSourceList>
+										<ActiveSource Name="CollectableChimes2-001" ID="{21F59BB7-3738-4354-BBB7-5A2942A0AACC}" Platform="Linked"/>
+									</ActiveSourceList>
+								</Sound>
+								<Sound Name="Swimming_SFX_Collectables_02" ID="{84AC35BD-9FDB-4C34-9FD2-3FA05E33359E}" ShortID="400117821">
+									<ReferenceList>
+										<Reference Name="Conversion">
+											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{DB8DC4DB-3926-44D2-B1E7-3E97AFD36B7E}"/>
+										</Reference>
+										<Reference Name="OutputBus">
+											<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{8CB677CF-1DCA-49F4-BCB9-7845BCEC97C0}"/>
+										</Reference>
+									</ReferenceList>
+									<ChildrenList>
+										<AudioFileSource Name="CollectableChimes2-001" ID="{B88FD2BC-FAEC-4460-95B1-D4488062C767}">
+											<PropertyList>
+												<Property Name="FadeInDuration" Type="Real64" Value="0.0477083325386047"/>
+												<Property Name="FadeOutDuration" Type="Real64" Value="0.162208330631256"/>
+												<Property Name="OverrideWavLoop" Type="bool" Value="True"/>
+												<Property Name="TrimBegin" Type="Real64" Value="2.4140416264534"/>
+												<Property Name="TrimEnd" Type="Real64" Value="3.87391660213471"/>
+											</PropertyList>
+											<Language>SFX</Language>
+											<AudioFile>CollectableChimes2-001.wav</AudioFile>
+											<MediaIDList>
+												<MediaID ID="651299140"/>
+											</MediaIDList>
+										</AudioFileSource>
+									</ChildrenList>
+									<ActiveSourceList>
+										<ActiveSource Name="CollectableChimes2-001" ID="{B88FD2BC-FAEC-4460-95B1-D4488062C767}" Platform="Linked"/>
+									</ActiveSourceList>
+								</Sound>
+								<Sound Name="Swimming_SFX_Collectables_03" ID="{6B0880E2-517D-421C-BF17-5430245D5780}" ShortID="234283130">
+									<ReferenceList>
+										<Reference Name="Conversion">
+											<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{DB8DC4DB-3926-44D2-B1E7-3E97AFD36B7E}"/>
+										</Reference>
+										<Reference Name="OutputBus">
+											<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{8CB677CF-1DCA-49F4-BCB9-7845BCEC97C0}"/>
+										</Reference>
+									</ReferenceList>
+									<ChildrenList>
+										<AudioFileSource Name="CollectableChimes2-001" ID="{375FCFA0-5D67-4EE9-879D-5A497026A7C4}">
+											<PropertyList>
+												<Property Name="FadeInDuration" Type="Real64" Value="0.0477083325386047"/>
+												<Property Name="FadeOutDuration" Type="Real64" Value="0.162208330631256"/>
+												<Property Name="OverrideWavLoop" Type="bool" Value="True"/>
+												<Property Name="TrimBegin" Type="Real64" Value="3.86437493562699"/>
+												<Property Name="TrimEnd" Type="Real64" Value="5.88720823526383"/>
+											</PropertyList>
+											<Language>SFX</Language>
+											<AudioFile>CollectableChimes2-001.wav</AudioFile>
+											<MediaIDList>
+												<MediaID ID="641389842"/>
+											</MediaIDList>
+										</AudioFileSource>
+									</ChildrenList>
+									<ActiveSourceList>
+										<ActiveSource Name="CollectableChimes2-001" ID="{375FCFA0-5D67-4EE9-879D-5A497026A7C4}" Platform="Linked"/>
+									</ActiveSourceList>
+								</Sound>
 							</ChildrenList>
-							<ActiveSourceList>
-								<ActiveSource Name="CollectableChimes2-001" ID="{98BF5037-6624-4C08-A968-CBB243C0E27D}" Platform="Linked"/>
-							</ActiveSourceList>
-						</Sound>
-						<Sound Name="Swimming_SFX_Collectables_01" ID="{4F802F54-F069-4820-804C-F20BC2E5556D}" ShortID="603770921">
-							<ReferenceList>
-								<Reference Name="Conversion">
-									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{DB8DC4DB-3926-44D2-B1E7-3E97AFD36B7E}"/>
-								</Reference>
-								<Reference Name="OutputBus">
-									<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{8CB677CF-1DCA-49F4-BCB9-7845BCEC97C0}"/>
-								</Reference>
-							</ReferenceList>
-							<ChildrenList>
-								<AudioFileSource Name="CollectableChimes2-001" ID="{21F59BB7-3738-4354-BBB7-5A2942A0AACC}">
-									<PropertyList>
-										<Property Name="FadeInDuration" Type="Real64" Value="0.0477083325386047"/>
-										<Property Name="FadeOutDuration" Type="Real64" Value="0.162208330631256"/>
-										<Property Name="OverrideWavLoop" Type="bool" Value="True"/>
-										<Property Name="TrimBegin" Type="Real64" Value="1.01141664981842"/>
-										<Property Name="TrimEnd" Type="Real64" Value="2.44266674041748"/>
-									</PropertyList>
-									<Language>SFX</Language>
-									<AudioFile>CollectableChimes2-001.wav</AudioFile>
-									<MediaIDList>
-										<MediaID ID="675408524"/>
-									</MediaIDList>
-								</AudioFileSource>
-							</ChildrenList>
-							<ActiveSourceList>
-								<ActiveSource Name="CollectableChimes2-001" ID="{21F59BB7-3738-4354-BBB7-5A2942A0AACC}" Platform="Linked"/>
-							</ActiveSourceList>
-						</Sound>
-						<Sound Name="Swimming_SFX_Collectables_02" ID="{84AC35BD-9FDB-4C34-9FD2-3FA05E33359E}" ShortID="400117821">
-							<ReferenceList>
-								<Reference Name="Conversion">
-									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{DB8DC4DB-3926-44D2-B1E7-3E97AFD36B7E}"/>
-								</Reference>
-								<Reference Name="OutputBus">
-									<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{8CB677CF-1DCA-49F4-BCB9-7845BCEC97C0}"/>
-								</Reference>
-							</ReferenceList>
-							<ChildrenList>
-								<AudioFileSource Name="CollectableChimes2-001" ID="{B88FD2BC-FAEC-4460-95B1-D4488062C767}">
-									<PropertyList>
-										<Property Name="FadeInDuration" Type="Real64" Value="0.0477083325386047"/>
-										<Property Name="FadeOutDuration" Type="Real64" Value="0.162208330631256"/>
-										<Property Name="OverrideWavLoop" Type="bool" Value="True"/>
-										<Property Name="TrimBegin" Type="Real64" Value="2.4140416264534"/>
-										<Property Name="TrimEnd" Type="Real64" Value="3.87391660213471"/>
-									</PropertyList>
-									<Language>SFX</Language>
-									<AudioFile>CollectableChimes2-001.wav</AudioFile>
-									<MediaIDList>
-										<MediaID ID="641389842"/>
-									</MediaIDList>
-								</AudioFileSource>
-							</ChildrenList>
-							<ActiveSourceList>
-								<ActiveSource Name="CollectableChimes2-001" ID="{B88FD2BC-FAEC-4460-95B1-D4488062C767}" Platform="Linked"/>
-							</ActiveSourceList>
-						</Sound>
-						<Sound Name="Swimming_SFX_Collectables_03" ID="{6B0880E2-517D-421C-BF17-5430245D5780}" ShortID="234283130">
-							<ReferenceList>
-								<Reference Name="Conversion">
-									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{DB8DC4DB-3926-44D2-B1E7-3E97AFD36B7E}"/>
-								</Reference>
-								<Reference Name="OutputBus">
-									<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{8CB677CF-1DCA-49F4-BCB9-7845BCEC97C0}"/>
-								</Reference>
-							</ReferenceList>
-							<ChildrenList>
-								<AudioFileSource Name="CollectableChimes2-001" ID="{375FCFA0-5D67-4EE9-879D-5A497026A7C4}">
-									<PropertyList>
-										<Property Name="FadeInDuration" Type="Real64" Value="0.0477083325386047"/>
-										<Property Name="FadeOutDuration" Type="Real64" Value="0.162208330631256"/>
-										<Property Name="OverrideWavLoop" Type="bool" Value="True"/>
-										<Property Name="TrimBegin" Type="Real64" Value="3.86437493562699"/>
-										<Property Name="TrimEnd" Type="Real64" Value="5.88720823526383"/>
-									</PropertyList>
-									<Language>SFX</Language>
-									<AudioFile>CollectableChimes2-001.wav</AudioFile>
-									<MediaIDList>
-										<MediaID ID="641389842"/>
-									</MediaIDList>
-								</AudioFileSource>
-							</ChildrenList>
-							<ActiveSourceList>
-								<ActiveSource Name="CollectableChimes2-001" ID="{375FCFA0-5D67-4EE9-879D-5A497026A7C4}" Platform="Linked"/>
-							</ActiveSourceList>
-						</Sound>
+						</RandomSequenceContainer>
 					</ChildrenList>
 				</Folder>
 			</ChildrenList>
