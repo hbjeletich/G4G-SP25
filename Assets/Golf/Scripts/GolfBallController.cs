@@ -36,8 +36,12 @@ public class GolfBallController : MonoBehaviour
     }
 
     public bool isMoving(){
+        if(rb.velocity.magnitude <= 10f){
+            rb.AddForce(-rb.velocity.normalized);
+        }
+
         if (rb.velocity.magnitude <= .1f){
-            rb.velocity = Vector3.zero; 
+            rb.velocity = Vector3.zero;
             return false;
         }
         return true;
