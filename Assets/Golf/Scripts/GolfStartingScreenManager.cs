@@ -22,7 +22,7 @@ public class GolfStartingScreenManager : MonoBehaviour
         var actionMap = inputActions.FindActionMap("MotionTracking");
         footRaiseAction = actionMap.FindAction("FootRaise");
 
-        footRaiseAction.performed += startGolfGame;
+        //footRaiseAction.performed += startGolfGame;
         TitleBGM.Post(gameObject);
     }
 
@@ -38,11 +38,13 @@ public class GolfStartingScreenManager : MonoBehaviour
     private void OnEnable()
     {
         footRaiseAction.Enable();
+        footRaiseAction.performed += startGolfGame;
     }
 
     private void OnDisable()
     {
         footRaiseAction.Disable();
+        footRaiseAction.performed -= startGolfGame;
     }
 
     public void startGolfGame(InputAction.CallbackContext ctx){

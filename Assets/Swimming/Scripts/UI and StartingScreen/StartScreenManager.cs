@@ -16,6 +16,7 @@ namespace Swimming
         [SerializeField] private GameObject liftLegText;
         [SerializeField] private float liftLegDelay = 3f;
         private float timer = 0;
+        private bool gameStarted = false;
 
         void Awake()
         {
@@ -32,14 +33,14 @@ namespace Swimming
         {
             raiseFootAction.Enable();
 
-            raiseFootAction.performed += _ => StartGame();
+            raiseFootAction.performed += OnFootRaised;
         }
 
         private void OnDisable()
         {
             raiseFootAction.Disable();
 
-            raiseFootAction.performed -= _ => StartGame();
+            raiseFootAction.performed -= OnFootRaised;
         }
 
         void Update()
@@ -60,9 +61,19 @@ namespace Swimming
             }
         }
 
+        void OnFootRaised(InputAction.CallbackContext ctx)
+        {
+            StartGame();
+        }
+
         private void StartGame()
         {
-            SceneManager.LoadScene("SwimmingScene");
+            if (!gameStarted)
+            {
+                gameStarted = true;
+                raiseFootAction.performed -= OnFootRaised;
+                SceneManager.LoadScene("SwimmingScene");
+            }
         }
     }
 }
