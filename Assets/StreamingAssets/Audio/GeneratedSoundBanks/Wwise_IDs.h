@@ -15,6 +15,7 @@ namespace AK
     {
         // Swimming events
         static const AkUniqueID AMBIENCE_PLAY = 1496310610U;
+        static const AkUniqueID COLLECTABLE = 1330284301U;
         static const AkUniqueID MUS_PLAY = 1280297747U;
         
         // Golf events
