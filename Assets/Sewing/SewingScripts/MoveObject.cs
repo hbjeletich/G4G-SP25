@@ -39,7 +39,7 @@ public class MoveObject : MonoBehaviour
     void Update()
     {
         if (currentWaypointIndex == waypoints.Count) {
-            ChangeScene("3. Puzzle");
+            ChangeScene("4. Sewing");
     }
     }
 
@@ -76,6 +76,7 @@ public class MoveObject : MonoBehaviour
     }
    private IEnumerator MoveToWaypoint(Transform targetWaypoint)
     {
+        SoundManager.PlaySound(SoundType.SCISSORS);
         Vector3 startPosition = transform.position;
         Quaternion startRotation = transform.rotation;
         Vector3 targetPosition = targetWaypoint.position;

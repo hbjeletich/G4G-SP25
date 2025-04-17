@@ -46,6 +46,17 @@
 						</Action>
 					</ChildrenList>
 				</Event>
+				<Event Name="Collectable" ID="{9A51E675-49B2-4310-A704-47AB7E7B6068}">
+					<ChildrenList>
+						<Action Name="" ID="{CE0D4189-47C1-4E9D-9E01-6A9186D7F5C5}" ShortID="664160520">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="Collectables" ID="{414B2F7D-8341-4B27-A2F3-294B9CE235BD}" WorkUnitID="{F1DF5DD9-C886-48B8-8E7A-A5FAE7059CE1}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
 			</ChildrenList>
 		</WorkUnit>
 	</Events>

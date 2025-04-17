@@ -10,7 +10,7 @@
     "Type": "User",
     "GUID": "{60C4AC24-370F-4BAD-BC5C-435229A76DC9}",
     "Language": "SFX",
-    "Hash": "{E7FF6B46-F0FD-601E-398E-F4911B3630BD}",
+    "Hash": "{A7CA7D71-EEE4-5A11-B7A7-1AE7DDF9179A}",
     "ObjectPath": "\\SoundBanks\\Swimming\\Swimming_Main",
     "ShortName": "Swimming_Main",
     "Path": "Swimming_Main.bnk",
@@ -30,6 +30,14 @@
       "Location": "Memory",
       "ShortName": "Swimming_MUS_LydianAquatic3OrchLayers_v01.wav",
       "CachePath": "29/{296DA4EE-A4A5-20EB-B4B9-BD3FFF32C167}.wem"
+     },
+     {
+      "Id": "262000141",
+      "Language": "SFX",
+      "Streaming": "false",
+      "Location": "Memory",
+      "ShortName": "CollectableChimes2-001.wav",
+      "CachePath": "69/{69490FD3-4329-7322-DD84-DF0E37AFB1F4}.wem"
      },
      {
       "Id": "340452540",
@@ -64,12 +72,36 @@
       "CachePath": "5B/{5B50CA6D-8820-700F-2CEF-51D3B509307B}.wem"
      },
      {
+      "Id": "641389842",
+      "Language": "SFX",
+      "Streaming": "false",
+      "Location": "Memory",
+      "ShortName": "CollectableChimes2-001.wav",
+      "CachePath": "B8/{B8148B98-574B-0FE7-6FB9-EC4E500DCF43}.wem"
+     },
+     {
+      "Id": "651299140",
+      "Language": "SFX",
+      "Streaming": "false",
+      "Location": "Memory",
+      "ShortName": "CollectableChimes2-001.wav",
+      "CachePath": "69/{692414B7-33BD-3C45-38AF-BF01F8184954}.wem"
+     },
+     {
       "Id": "674344275",
       "Language": "SFX",
       "Streaming": "false",
       "Location": "Memory",
       "ShortName": "Swimming_SFX_AmbDeepWhales_v01.wav",
       "CachePath": "75/{75B697D6-887A-5D12-F327-300270E69EE5}.wem"
+     },
+     {
+      "Id": "675408524",
+      "Language": "SFX",
+      "Streaming": "false",
+      "Location": "Memory",
+      "ShortName": "CollectableChimes2-001.wav",
+      "CachePath": "C1/{C1A0EA71-2B67-7D50-A959-A6F851EAC572}.wem"
      },
      {
       "Id": "681580292",
@@ -174,6 +206,29 @@
       }
      },
      {
+      "Id": "1330284301",
+      "Name": "Collectable",
+      "ObjectPath": "\\Events\\Swimming\\Collectable",
+      "GUID": "{9A51E675-49B2-4310-A704-47AB7E7B6068}",
+      "DurationType": "OneShot",
+      "DurationMin": "1.001875",
+      "DurationMax": "2.0228333",
+      "MediaRefs": [
+       {
+        "Id": "262000141"
+       },
+       {
+        "Id": "641389842"
+       },
+       {
+        "Id": "651299140"
+       },
+       {
+        "Id": "675408524"
+       }
+      ]
+     },
+     {
       "Id": "1280297747",
       "Name": "MUS_Play",
       "ObjectPath": "\\Events\\Swimming\\MUS_Play",
@@ -208,6 +263,6 @@
     ]
    }
   ],
-  "FileHash": "{69B29642-0221-95F1-1706-EE389E7CBD4B}"
+  "FileHash": "{9CDFBE3E-4E92-A67C-85B0-BEFACA691D6C}"
  }
 }
