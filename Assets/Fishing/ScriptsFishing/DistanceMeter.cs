@@ -32,7 +32,7 @@ namespace Fishing
         private bool meterActive = false;
 
         private PlayerInput playerInput;
-        private InputAction fishAction;
+        private InputAction leftHipAction, rightHipAction;
 
         private void Awake()
         {
@@ -43,28 +43,26 @@ namespace Fishing
                 return;
             }
 
-            fishAction = playerInput.actions["Fish"];
+            // fishAction = playerInput.actions["Fish"];
+            leftHipAction = playerInput.actions["LeftHipAbducted"];
+            rightHipAction = playerInput.actions["RightHipAbducted"];
             isFishing = true;
         }
 
         private void OnEnable()
         {
-            if (fishAction != null)
-            {
-                fishAction.Enable();
-                fishAction.performed += OnFishPressed;
-                fishAction.canceled += OnFishReleased;
-            }
+            // moveAction.Enable();
+            // fishAction.Enable();
+            leftHipAction.Enable();
+            rightHipAction.Enable();
         }
 
         private void OnDisable()
         {
-            if (fishAction != null)
-            {
-                fishAction.Disable();
-                fishAction.performed -= OnFishPressed;
-                fishAction.canceled -= OnFishReleased;
-            }
+            // moveAction.Disable();
+            // fishAction.Disable();
+            leftHipAction.Disable();
+            rightHipAction.Disable();
         }
 
         private void Update()
