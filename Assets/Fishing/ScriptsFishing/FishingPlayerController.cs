@@ -55,7 +55,8 @@ public class FishingPlayerController : MonoBehaviour
 
     // New Input System
     private PlayerInput playerInput; 
-    [HideInInspector] public InputAction leftFootHeight, rightFootHeight, leftHipAction, rightHipAction; // Input actions for movement and fishing 
+    // [HideInInspector] public InputAction moveAction, fishAction; // Filler
+    [HideInInspector] public InputAction leftHipAction, rightHipAction; // Motion 
     [HideInInspector] public FishingPlayerController instance; // Singleton instance
     private Rigidbody2D rb;
     private DistanceMeter distanceMeter; 
@@ -83,8 +84,6 @@ public class FishingPlayerController : MonoBehaviour
         // Input system setup
         // moveAction = playerInput.actions["Move"];
         // fishAction = playerInput.actions["Fish"];
-        leftFootHeight = playerInput.actions["LeftFootHeight"]; 
-        rightFootHeight = playerInput.actions["RightFootHeight"];
         leftHipAction = playerInput.actions["LeftHipAbducted"];
         rightHipAction = playerInput.actions["RightHipAbducted"];
     }
@@ -93,8 +92,6 @@ public class FishingPlayerController : MonoBehaviour
     {
         // moveAction.Enable();
         // fishAction.Enable();
-        leftFootHeight.Enable();    
-        rightFootHeight.Enable();
         leftHipAction.Enable();
         rightHipAction.Enable();
     }
@@ -103,8 +100,6 @@ public class FishingPlayerController : MonoBehaviour
     {
         // moveAction.Disable();
         // fishAction.Disable();
-        leftFootHeight.Disable();
-        rightFootHeight.Disable();
         leftHipAction.Disable();
         rightHipAction.Disable();
     }
@@ -113,7 +108,7 @@ public class FishingPlayerController : MonoBehaviour
     {
         if (!distanceMeter.isFishing)
         {
-            MotionMovement(); 
+            MotionMovement();  // Updated hip motion movement
             // Move(); // Filler movement
             UpdateFishingLine();
 
@@ -141,46 +136,6 @@ public class FishingPlayerController : MonoBehaviour
         }
     }
 
-    //  private void MotionMove()
-    // {
-    //     // Read foot heights
-    //     float leftFootHeightValue = leftFootHeight.ReadValue<float>();
-    //     float rightFootHeightValue = rightFootHeight.ReadValue<float>();
-
-    //     // Determine movement direction based on which foot is higher
-    //     float movementDirection = 0f;
-    //     if (leftFootHeightValue > rightFootHeightValue + 0.05f) 
-    //     {
-    //         movementDirection = -1f; // Move left
-    //     }
-    //     else if (rightFootHeightValue > leftFootHeightValue + 0.05f) 
-    //     {
-    //         movementDirection = 1f; // Move right
-    //     }
-
-    //     // Check if there is input
-    //     if (movementDirection != 0f)
-    //     {
-    //         float targetSpeed = -moveInput.x * moveSpeed;
-    //         float newSpeed = Mathf.Lerp(
-    //             rb.velocity.x, 
-    //             targetSpeed, 
-    //             Time.fixedDeltaTime * acceleration
-    //         );
-    //         rb.velocity = new Vector3(newSpeed, rb.velocity.y, 0);
-    //     }
-    //     else
-    //     {
-    //         // Decelerate to a stop if no input is given
-    //         rb.velocity = new Vector3(Mathf.Lerp(rb.velocity.x, 0, Time.fixedDeltaTime * deceleration), rb.velocity.y, 0);
-    //     }
-
-    //     // Apply ship tilt when moving
-    //     float targetTilt = movementDirection * tilt;
-    //     currentTilt = Mathf.Lerp(currentTilt, targetTilt, Time.fixedDeltaTime * 5f);
-    //     rb.MoveRotation(Quaternion.Euler(0, 0, currentTilt));
-    // }
-
     private void UpdateFishingLine()
     {
         if (lineRenderer == null || startOfLine == null)
@@ -194,7 +149,7 @@ public class FishingPlayerController : MonoBehaviour
         end.z = -0.1f;
 
         float distance = Vector3.Distance(start, end + distanceOffset);
-        float normalized = Mathf.InverseLerp(2f, 6f, distance); // ← remapped range
+        float normalized = Mathf.InverseLerp(2f, 6f, distance);
         tension = Mathf.Clamp01(normalized);
 
         float maxCurveHeight = 2.0f;
@@ -325,9 +280,9 @@ public class FishingPlayerController : MonoBehaviour
 
     private void MotionMovement()
     {
-        // Read foot heights
-        float leftFootHeightValue = leftFootHeight.ReadValue<float>();
-        float rightFootHeightValue = rightFootHeight.ReadValue<float>();
+        // Read hip adbuction values
+        float leftFootHeightValue = leftHipAction.ReadValue<float>();
+        float rightFootHeightValue = rightHipAction.ReadValue<float>();
 
         // Determine movement direction based on which foot is higher
         float movementDirection = 0f;
@@ -356,8 +311,8 @@ public class FishingPlayerController : MonoBehaviour
             // Decelerate to a stop if no input is given
             rb.velocity = new Vector3(Mathf.Lerp(rb.velocity.x, 0, Time.fixedDeltaTime * deceleration), rb.velocity.y, 0);
         }
-
-        // Apply ship tilt when moving
+        
+        // Apply tilt
         float targetTilt = movementDirection * tilt;
         currentTilt = Mathf.Lerp(currentTilt, targetTilt, Time.fixedDeltaTime * 5f);
         rb.MoveRotation(Quaternion.Euler(0, 0, currentTilt));
