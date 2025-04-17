@@ -52,6 +52,7 @@ public class FishingPlayerController : MonoBehaviour
     [SerializeField] private float tensionSpeed = 2f;
     private float tension = 1f;
     private float lineCurveHeight = 0.2f;
+    private float motionInputX = 0f;
 
     // New Input System
     private PlayerInput playerInput; 
@@ -126,10 +127,8 @@ public class FishingPlayerController : MonoBehaviour
     {
         if (!distanceMeter.isFishing)
         {
-            // MotionMovement();  // Updated hip motion movement
-            // Move(); // Filler movement
+            HandleMotionMovement();
             UpdateFishingLine();
-
         }
         else
         {
@@ -304,57 +303,43 @@ public class FishingPlayerController : MonoBehaviour
     //     rb.MoveRotation(Quaternion.Euler(0, 0, -currentTilt));
     // }
 
-    private void MotionMovement(InputAction.CallbackContext context)
+    private void HandleMotionMovement()
     {
-        if (leftHipAction == null || rightHipAction == null)
-            return; 
-
-        float movementDirection = 0f;
-        // Check if there is input
-        if (movementDirection != 0f)
+        if (Mathf.Abs(motionInputX) > 0.01f)
         {
-            float targetSpeed = -moveInput.x * moveSpeed;
+            float targetSpeed = motionInputX * moveSpeed;
             float newSpeed = Mathf.Lerp(
-                rb.velocity.x, 
-                targetSpeed, 
+                rb.velocity.x,
+                targetSpeed,
                 Time.fixedDeltaTime * acceleration
             );
-            rb.velocity = new Vector3(newSpeed, rb.velocity.y, 0);
-        }
+            rb.velocity = new Vector2(newSpeed, rb.velocity.y);
 
-        // Apply tilt
-        float targetTilt = movementDirection * tilt;
-        currentTilt = Mathf.Lerp(currentTilt, targetTilt, Time.fixedDeltaTime * 5f);
-        rb.MoveRotation(Quaternion.Euler(0, 0, currentTilt));
+            float targetTilt = motionInputX * tilt;
+            currentTilt = Mathf.Lerp(currentTilt, targetTilt, Time.fixedDeltaTime * 5f);
+            rb.MoveRotation(Quaternion.Euler(0, 0, -currentTilt));
+        }
+        else
+        {
+            rb.velocity = new Vector2(0f, rb.velocity.y);
+            currentTilt = Mathf.Lerp(currentTilt, 0f, Time.fixedDeltaTime * 5f);
+            rb.MoveRotation(Quaternion.Euler(0, 0, -currentTilt));
+        }
     }
 
     private void LeftMotionMovement(InputAction.CallbackContext context)
     {
-        // Handle left hip motion movement
-        if (leftHipAction != null)
-        {
-            float movementDirection = -1f; // Left direction
-            rb.velocity = new Vector2(movementDirection * moveSpeed, rb.velocity.y);
-            rb.MoveRotation(Quaternion.Euler(0, 0, -tilt));
-        }
+        motionInputX = -1f;
     }
 
     private void RightMotionMovement(InputAction.CallbackContext context)
     {
-        // Handle right hip motion movement
-        if (rightHipAction != null)
-        {
-            float movementDirection = 1f; // Right direction
-            rb.velocity = new Vector2(movementDirection * moveSpeed, rb.velocity.y);
-            rb.MoveRotation(Quaternion.Euler(0, 0, tilt));
-        }
+        motionInputX = 1f;
     }
 
     public void StopMotionMovement(InputAction.CallbackContext context)
     {
-        // Stop the motion movement
-        rb.velocity = new Vector2(0, rb.velocity.y);
-        rb.MoveRotation(Quaternion.Euler(0, 0, 0));
+        motionInputX = 0f;
     }
     #endregion
 
