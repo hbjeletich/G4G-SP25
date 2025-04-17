@@ -3,28 +3,43 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 
+namespace Fishing
+{
 public class FishSpawner : MonoBehaviour
 {
     [Header("Fish Spawner Settings")]
     public int minFishAmount = 5;
     public int maxFishAmount = 8;
     public Vector2 spawnAreaSize = new Vector2(10f, 5f); // Width & Height of rectangular spawn area
-    public Vector2 spawnIntervalRange = new Vector2(3f, 8f); // Min & Max time between spawns
-    public float minDistance = 1f; // Minimum distance between fish
+    public Vector2 spawnIntervalRange = new Vector2(3f, 8f); // Min & Max time btwn spawns
+    public float minDistance = 1f; // Minimum distance btwn fish
 
     [Header("Fish Rarity Spawn Chances")]
-    public float oneStarChance = 50f;
+    public float oneStarChance = 45f;
     public float twoStarChance = 25f;
     public float threeStarChance = 15f;
-    public float fourStarChance = 7f;
-    public float fiveStarChance = 3f;
+    public float fourStarChance = 9f;
+    public float fiveStarChance = 6f;
 
     [Header("Components")]
     public GameObject fishPrefab;
     public List<FishData> fishDataList;
 
-    private List<GameObject> activeFish = new List<GameObject>();
+    [HideInInspector] public List<GameObject> activeFish = new List<GameObject>();
 
+    private void Awake()
+    {
+        SpawnInitialFishAmount();
+    }
+
+    private void SpawnInitialFishAmount()
+    {
+        for (int i = 0; i < minFishAmount; i++)
+        {
+            SpawnFish();
+        }
+    }
+    
     private void Start()
     {
         StartCoroutine(SpawnFishLoop());
@@ -58,6 +73,7 @@ public class FishSpawner : MonoBehaviour
         Vector2 spawnPosition = GetValidSpawnPosition(); // Ensure valid spacing
 
         GameObject fish = Instantiate(fishPrefab, spawnPosition, Quaternion.identity);
+        FishingAudioManager.instance.PlaySFX(FishingAudioManager.instance.splashSFX); // Play splash when spawned
         FishObject fishObject = fish.GetComponent<FishObject>();
         
         fishObject.fishData = selectedFish;
@@ -125,4 +141,5 @@ public class FishSpawner : MonoBehaviour
         Vector3 size = new Vector3(spawnAreaSize.x, spawnAreaSize.y, 0);
         Gizmos.DrawWireCube(center, size);
     }
+}
 }

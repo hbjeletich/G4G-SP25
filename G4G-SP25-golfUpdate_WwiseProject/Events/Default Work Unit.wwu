@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<WwiseDocument Type="WorkUnit" ID="{D95F97DF-94F3-4C2B-8D79-32BE6360789D}" SchemaVersion="123">
+	<Events>
+		<WorkUnit Name="Default Work Unit" ID="{D95F97DF-94F3-4C2B-8D79-32BE6360789D}" PersistMode="Standalone">
+			<ChildrenList>
+				<Event Name="Golf_Impact" ID="{CE71186E-B980-4541-A4A2-874BFC0029D3}">
+					<ChildrenList>
+						<Action Name="" ID="{344A2AD6-A788-4FEA-A42A-2E9EF84A1D8A}" ShortID="682834814">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="Stong_Shot" ID="{9ABAD3A2-2DE0-4733-99EF-E9AFE34D94BA}" WorkUnitID="{14822C16-A4BD-4A7D-B208-1B993BBCCF08}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="Golf_Swing" ID="{D083B40A-E90A-4BFD-959F-BB70BE8C09CF}">
+					<ChildrenList>
+						<Action Name="" ID="{66D5A97E-1919-47C9-80A9-499975A24701}" ShortID="153114413">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="Swing_State" ID="{1A58A14A-CC65-4D33-927C-DB0C94501F65}" WorkUnitID="{14822C16-A4BD-4A7D-B208-1B993BBCCF08}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="Golf_Environment" ID="{F27077A2-7FE0-472D-A14D-46CB6F197E9B}">
+					<ChildrenList>
+						<Action Name="" ID="{40BD82EE-7D82-4333-9B6E-03B4D88B4F2C}" ShortID="569276840">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="Environment_1" ID="{2AAD921F-D8C1-49CC-9C41-4FCC7DCC2EFD}" WorkUnitID="{14822C16-A4BD-4A7D-B208-1B993BBCCF08}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="Golf_Wind_Up" ID="{E4BBB0E3-6C72-41DE-9083-3EA3E7884548}">
+					<ChildrenList>
+						<Action Name="" ID="{85E7E67F-C108-4C06-A592-108761C95C6B}" ShortID="362428849">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="Wind_Up" ID="{8389800A-1FE5-4A44-91D8-81B5C11E7660}" WorkUnitID="{14822C16-A4BD-4A7D-B208-1B993BBCCF08}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="Golf_Environment_Impact" ID="{95C1C2F7-0C92-4F77-9976-928528999AEE}">
+					<ChildrenList>
+						<Action Name="" ID="{97076920-7B66-4FCE-B4EB-7FF72C1918D5}" ShortID="215554504">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="Grass_Impact" ID="{04D8108B-193A-4138-8C65-99B72D8A9574}" WorkUnitID="{14822C16-A4BD-4A7D-B208-1B993BBCCF08}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="Wind_Noise" ID="{420BACCF-E730-4A56-87BD-10C7774B5B9A}">
+					<ChildrenList>
+						<Action Name="" ID="{FD37E264-A178-4780-A0EB-8DAF7024EEEC}" ShortID="411155628">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="Wind_Noise" ID="{09E75B6E-2F9B-4042-A996-C55EC485E8E7}" WorkUnitID="{14822C16-A4BD-4A7D-B208-1B993BBCCF08}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="Golf_Score" ID="{F642801D-A5CE-480E-AD7B-4AE6A5AF966C}">
+					<ChildrenList>
+						<Action Name="" ID="{4D39919A-AF51-4CEC-8B29-ED1FACF65EA8}" ShortID="63145987">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="Score_Jingle" ID="{58831864-BE50-4EEF-9193-442A280C3A9C}" WorkUnitID="{14822C16-A4BD-4A7D-B208-1B993BBCCF08}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="Golf_Transition" ID="{3EF0166C-3F01-4A78-9CD6-426FEF05FBA5}">
+					<ChildrenList>
+						<Action Name="" ID="{BFFB0342-A58F-4D6F-BB16-7161EC137AC8}" ShortID="1007935477">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="Transition_State" ID="{D7A5621C-C002-4794-B375-C84F62FE7D27}" WorkUnitID="{14822C16-A4BD-4A7D-B208-1B993BBCCF08}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="Golf_Start" ID="{0F013E3F-A2C3-4990-BB62-F165E261C043}">
+					<ChildrenList>
+						<Action Name="" ID="{2525F208-DD20-4CB0-A354-50128EB524E7}" ShortID="928056563">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="Start_Jingle" ID="{998F0A71-053D-4C3A-871B-FA35BAE779D9}" WorkUnitID="{14822C16-A4BD-4A7D-B208-1B993BBCCF08}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="Golf_BGM" ID="{3A6ADD90-92F4-4391-8D86-3CAAB4F70A88}">
+					<ChildrenList>
+						<Action Name="" ID="{FE8339CD-8255-4134-AFD9-1BF0341B7A9B}" ShortID="695842563">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="Title_BGM" ID="{58C42700-7C9C-410F-A84E-ECEF5EE9484E}" WorkUnitID="{14822C16-A4BD-4A7D-B208-1B993BBCCF08}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+			</ChildrenList>
+		</WorkUnit>
+	</Events>
+</WwiseDocument>

@@ -14,46 +14,94 @@ public class GolfSystem : MonoBehaviour
     public GolfBallController golfBallController;
     public GolfCameraController cameraController;
 
+    public GolfTransitionHandler transitionHandler;
+
     public HighestScoreIndicator highestScoreIndicator;
     
-    public GameObject balancePrompt; //temp before implementing balance controls. Once balance controllers are implemented, best to make a class for assesing balance which works with strength controller
+    public GolfControls golfControls;
+
+    public GameObject initialBalPromp;
+    public GameObject balancePrompt;
 
     public float delayBeforeStarting = 1f;
+
+    private float transitionAnimLen = 1.5f;
     
     // Start is called before the first frame update
     void Start()
     {
         highestScoreIndicator.placeIndicator();
-
         stateUpdate = nullUpdate;
-        state = GolfState.SWINGBACK;
-        StartCoroutine(swingBack());
+    
+        StartCoroutine(startGolfGame());
     }
 
     void Update(){
         stateUpdate();
     }
 
+    IEnumerator transitionToGameRestart(){
+
+        transitionHandler.transitionGameOut();
+
+        yield return new WaitForSeconds(1f);
+        cameraController.toStartTransform();
+        clubController.toStartPosition();
+        golfBallController.toStartingState();
+        SwingStrengthController.instance.toStartingState();
+        GolfScoreManager.instance.toStartingState();
+
+        yield return new WaitForSeconds(2f);
+        transitionHandler.transitionGameIn();
+
+        StartCoroutine(startGolfGame());
+    }
+
+    IEnumerator startGolfGame(){
+        yield return new WaitForSeconds(transitionAnimLen);
+
+        stateUpdate = nullUpdate;
+        state = GolfState.SWINGBACK;
+        StartCoroutine(swingBack());
+    }
+
     IEnumerator swingBack(){
         yield return new WaitForSeconds(delayBeforeStarting);
+        //show initial balance promp
+        initialBalPromp.SetActive(true);
+
+        //activate golf controls
+        golfControls.gameObject.SetActive(true);
+    
+        while(golfControls.simulatedLegRaise() != true && golfControls.hasFootRaise == false){ //wait for foot to raise before starting golf power assesment. Mouse controls for testing.
+            yield return null;
+        }
+
+        yield return new WaitForSeconds(.5f); //delay before switching to next state
+        //disable intial balance prompt
+        initialBalPromp.SetActive(false);
+
         //swing the golf club back to its starting position. Awaiting to be releases
         clubController.swingBack();
-        yield return new WaitForSeconds(1f);  //wait for swing back animation to play
 
         state = GolfState.ASSESSSTRENGTH;
         StartCoroutine(assesStrength());
     }
 
     IEnumerator assesStrength(){
+        Debug.Log("assesing strength");
         //promp the player to hold an exercise for an amount of time in order to increase the strength of their golf hit
         SwingStrengthController.instance.gameObject.SetActive(true);
-        balancePrompt.SetActive(true); //temp
+        balancePrompt.SetActive(true);
 
-        while(Input.GetMouseButtonDown(0) != true){ //temp mouse controls before implementing balance controls. Simulates when the player stops holding an exercise
+        while(golfControls.simulatedLegLower() != true && golfControls.hasFootRaise == true){ //wait for foot to fall before stopping golf power assesment. Mouse controls for testing
             yield return null;
         }
 
-        balancePrompt.SetActive(false); //temp
+        //disable golf controls
+        golfControls.gameObject.SetActive(false);
+
+        balancePrompt.SetActive(false);
         state = GolfState.SWING;
         StartCoroutine(swing());
     }
@@ -64,7 +112,7 @@ public class GolfSystem : MonoBehaviour
         float swingStrength = SwingStrengthController.instance.getSwingStrength();
         SwingStrengthController.instance.stopMeasuring();
     
-        yield return new WaitForSeconds(.5f); //wait for golf club to connect with golf ball
+        yield return new WaitForSeconds(.2f); //wait for golf club to connect with golf ball
 
         state = GolfState.HIT;
         StartCoroutine(hitGolfBall(swingStrength));
@@ -81,8 +129,9 @@ public class GolfSystem : MonoBehaviour
     }
 
     IEnumerator followGolfBall(){
+        GolfScoreManager.instance.displayScoreText();
         yield return new WaitForSeconds(1f);
-
+        
         while(golfBallController.isMoving() == true){ //temp mouse controls before implementing balance controls. Simulates when the player stops holding an exercise
             yield return null;
         }
@@ -97,9 +146,12 @@ public class GolfSystem : MonoBehaviour
 
         //highest score tracking
         GolfScoreManager.instance.updateHighestScore();
-        Debug.Log("golf sequence done!");
+        GolfScoreManager.instance.updateEndScreenScore();
         yield return new WaitForSeconds(4f);
-        GolfReloadManager.instance.reloadSceneInBackground();
+
+        stateUpdate = nullUpdate;
+        StartCoroutine(transitionToGameRestart());
+        //GolfReloadManager.instance.reloadSceneInBackground();
     }
 
     void nullUpdate(){}

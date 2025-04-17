@@ -8,17 +8,27 @@ public class GolfBallController : MonoBehaviour
     TrailRenderer trail;
 
     private Vector3 startingPos;
+    private Quaternion startingRotation;
+
+    public AK.Wwise.Event BounceEvent;
+    public AK.Wwise.Event HitEvent;
 
     void Start(){
         rb = GetComponent<Rigidbody>();
         trail = GetComponent<TrailRenderer>();
 
         startingPos = transform.position;
+        startingRotation = transform.rotation;
     }
 
     public void hitGolfBall(float hitStrength){
         trail.enabled = true;
         rb.AddForce(transform.up * hitStrength, ForceMode.Impulse);
+        if (HitEvent != null)
+        {
+            HitEvent.Post(gameObject);
+            
+        }
     }
 
     public int getDistanceFromStart(){
@@ -26,11 +36,32 @@ public class GolfBallController : MonoBehaviour
     }
 
     public bool isMoving(){
-        if (rb.velocity.magnitude <= .1f){return false;}
+        if(rb.velocity.magnitude <= 20f){
+            rb.AddForce(-rb.velocity.normalized);
+        }
+
+        if (rb.velocity.magnitude <= .1f){
+            rb.velocity = Vector3.zero;
+            return false;
+        }
         return true;
     }
 
     public void disableTrail(){
         trail.enabled = false;
+    }
+
+    public void toStartingState(){
+        transform.position = startingPos;
+        transform.rotation = startingRotation;
+        trail.enabled = true;
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.relativeVelocity.magnitude > 0.2f)
+        {
+            BounceEvent.Post(gameObject);
+        }
     }
 }

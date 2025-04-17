@@ -1,53 +1,80 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using System.Collections.Generic;
 
-public class FishingInventoryUI : MonoBehaviour
+namespace Fishing
 {
-    public Transform inventoryPanel; // Parent UI element for inventory
-    public GameObject fishEntryPrefab; // Prefab for each fish entry
-
-    public Image fishImage;  // Displays selected fish sprite
-    public Text fishName;    // Displays selected fish name
-    public Text rarity;      // Displays rarity
-    public Text lengthRange; // Displays min-max length
-
-    private Dictionary<FishData, GameObject> uiEntries = new();
-
-    public void UpdateInventoryUI()
+    public class FishingInventoryUI : MonoBehaviour
     {
-        // Clear previous UI entries (optional for refreshing)
-        foreach (Transform child in inventoryPanel)
-            Destroy(child.gameObject);
-        uiEntries.Clear();
+        [Header("UI Elements")]
+        public GameObject fishButtonPrefab;
+        public Transform fishButtonContainer;
+        public FishDetailsUI fishDetailsUI; 
 
-        // Get inventory data
-        Dictionary<FishData, int> inventory = FishingInventoryManager.Instance.GetInventory();
+        public int itemsPerPage = 12;
+        private List<FishData> currentFishList = new();
+        private int currentPage = 0;
 
-        foreach (var item in inventory)
+        public void RefreshUI()
         {
-            FishData fish = item.Key;
-            int count = item.Value;
+            // Clear old buttons
+            foreach (Transform child in fishButtonContainer)
+            {
+                Destroy(child.gameObject);
+            }
 
-            // Instantiate a new UI entry
-            GameObject entry = Instantiate(fishEntryPrefab, inventoryPanel);
-            entry.GetComponentInChildren<Text>().text = $"{fish.fishName} x{count}";
+            Dictionary<FishData, int> inventory = FishingInventoryManager.Instance.GetInventory();
+            currentFishList = new List<FishData>(inventory.Keys);
 
-            // Set fish image
-            entry.transform.Find("FishImage").GetComponent<Image>().sprite = fish.fishSprite;
+            int startIndex = currentPage * itemsPerPage;
+            int endIndex = Mathf.Min(startIndex + itemsPerPage, currentFishList.Count);
 
-            // Add click event to show details
-            entry.GetComponent<Button>().onClick.AddListener(() => DisplayFishDetails(fish));
+            for (int i = startIndex; i < endIndex; i++)
+            {
+                FishData fish = currentFishList[i];
+                int count = inventory[fish];
 
-            uiEntries[fish] = entry;
+                GameObject buttonGO = Instantiate(fishButtonPrefab, fishButtonContainer);
+                
+                // Setup the visual
+                FishInventoryButton inventoryButton = buttonGO.GetComponent<FishInventoryButton>();
+                inventoryButton.Setup(fish, count, fish.fishSprite);
+
+                // Add click event
+                Button uiButton = buttonGO.GetComponent<Button>();
+                uiButton.onClick.AddListener(() => fishDetailsUI.ShowFishDetails(fish));
+            }
         }
-    }
 
-    public void DisplayFishDetails(FishData fish)
-    {
-        fishImage.sprite = fish.fishSprite;
-        fishName.text = fish.fishName;
-        rarity.text = $"Rarity: {fish.rarity}";
-        lengthRange.text = $"Size: {fish.lengthRange}";
+        public void NextPage()
+        {
+            if ((currentPage + 1) * itemsPerPage < currentFishList.Count)
+            {
+                currentPage++;
+                RefreshUI();
+            }
+            else
+            {
+                FishingAudioManager.instance.SetSFXVolume(0.35f);
+                FishingAudioManager.instance.PlaySFX(FishingAudioManager.instance.cantSFX);
+                Debug.Log("No more pages available.");
+            }
+        }
+
+        public void PreviousPage()
+        {
+            if (currentPage > 0)
+            {
+                currentPage--;
+                RefreshUI();
+            }
+            else
+            {
+                FishingAudioManager.instance.SetSFXVolume(0.35f);
+                FishingAudioManager.instance.PlaySFX(FishingAudioManager.instance.cantSFX);
+                Debug.Log("No previous pages available.");
+            }
+        }
     }
 }
