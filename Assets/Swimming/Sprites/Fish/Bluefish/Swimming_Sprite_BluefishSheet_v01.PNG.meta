@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 0c5ccd07ed872884091ebf2d0ce36ecb
+guid: 9b6d09908955d88448ffeeb99f4a8c7f
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -48,7 +48,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 100
+  spritePixelsToUnits: 120
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -95,18 +95,106 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
-    sprites: []
+    sprites:
+    - serializedVersion: 2
+      name: Swimming_Sprite_BluefishSheet_v01_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 2388
+        height: 1668
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8cdb1a62b11f51f419e6dd68e0833254
+      internalID: 979703488
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Swimming_Sprite_BluefishSheet_v01_1
+      rect:
+        serializedVersion: 2
+        x: 2388
+        y: 0
+        width: 2388
+        height: 1668
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3007ba2b6ac97c243831c48672354ea0
+      internalID: -366922607
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Swimming_Sprite_BluefishSheet_v01_2
+      rect:
+        serializedVersion: 2
+        x: 4776
+        y: 0
+        width: 2388
+        height: 1668
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d326640d9df1019459d3bc9b1dd2e126
+      internalID: -776332160
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Swimming_Sprite_BluefishSheet_v01_3
+      rect:
+        serializedVersion: 2
+        x: 7164
+        y: 0
+        width: 2388
+        height: 1668
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 492a85a780b0a1e4abd1040b2b4c91e0
+      internalID: 570557916
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: 94819446a552de246840167d3d2c7f72
     internalID: 0
     vertices: []
     indices: 
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Swimming_Sprite_BluefishSheet_v01_0: 979703488
+      Swimming_Sprite_BluefishSheet_v01_1: -366922607
+      Swimming_Sprite_BluefishSheet_v01_2: -776332160
+      Swimming_Sprite_BluefishSheet_v01_3: 570557916
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

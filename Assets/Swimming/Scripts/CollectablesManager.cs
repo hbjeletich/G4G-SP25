@@ -14,6 +14,7 @@ namespace Swimming
 
         public GameObject gameOverText;
         private int shellsCollected = 0;
+        [SerializeField] private int totalShells = 3;
         [SerializeField] private float gameOverTimer = 5f;
 
         public static CollectablesManager Instance
@@ -52,7 +53,7 @@ namespace Swimming
         {
             shellImages[index].color = Color.white;
             shellsCollected += 1;
-            if(shellsCollected >= 3)
+            if(shellsCollected >= totalShells)
             {
                 GameOver();
             }
@@ -67,6 +68,7 @@ namespace Swimming
             {
                 player.enabled = false;
                 player.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+                player.GetComponent<Rigidbody2D>().isKinematic = true;
                 player.GetComponent<Animator>().enabled = false;
             }
 

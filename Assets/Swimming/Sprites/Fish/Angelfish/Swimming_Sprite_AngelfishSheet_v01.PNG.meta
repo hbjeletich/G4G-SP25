@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: f3c3b2e0d3fd26148b8d73f39f8eec55
+guid: 0c5ccd07ed872884091ebf2d0ce36ecb
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -34,7 +34,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 1
+    filterMode: 0
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -43,12 +43,12 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 1
+  spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 100
+  spritePixelsToUnits: 120
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -72,7 +72,7 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 1
+    textureCompression: 0
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -97,13 +97,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Swimming_Sprite_Bubbles_v01_0
+      name: Swimming_Sprite_AngelfishSheet_v01_0
       rect:
         serializedVersion: 2
-        x: 178
-        y: 1034
-        width: 935
-        height: 931
+        x: 0
+        y: 0
+        width: 2388
+        height: 1668
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -111,20 +111,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 6ae644da0da9c4f4aa231f79b709848d
-      internalID: 638745575
+      spriteID: fb63db5306bbefe4f92bc9949c89fd8d
+      internalID: 573560257
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Swimming_Sprite_Bubbles_v01_1
+      name: Swimming_Sprite_AngelfishSheet_v01_1
       rect:
         serializedVersion: 2
-        x: 1193
-        y: 710
-        width: 679
-        height: 676
+        x: 2388
+        y: 0
+        width: 2388
+        height: 1668
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -132,20 +132,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 5afa2fe2c8a4140449edd40bb09d6ae0
-      internalID: 35377010
+      spriteID: 6ba0074310593084292f33c48b2ae3a5
+      internalID: -88988267
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Swimming_Sprite_Bubbles_v01_2
+      name: Swimming_Sprite_AngelfishSheet_v01_2
       rect:
         serializedVersion: 2
-        x: 451
-        y: 313
-        width: 515
-        height: 524
+        x: 4776
+        y: 0
+        width: 2388
+        height: 1668
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -153,8 +153,29 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c6ae45367f58abb4284e3d7ab8a47726
-      internalID: 419591586
+      spriteID: 4e041666fd95ba243af1d279751b206e
+      internalID: 841373099
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Swimming_Sprite_AngelfishSheet_v01_3
+      rect:
+        serializedVersion: 2
+        x: 7164
+        y: 0
+        width: 2388
+        height: 1668
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 87b19d62499035142acca328e25d91f7
+      internalID: -48524664
       vertices: []
       indices: 
       edges: []
@@ -162,7 +183,7 @@ TextureImporter:
     outline: []
     physicsShape: []
     bones: []
-    spriteID: e092bb6f444885540a2cfa298d539001
+    spriteID: 4bed055a4de7b8f44806ddf2195a3964
     internalID: 0
     vertices: []
     indices: 
@@ -170,9 +191,10 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Swimming_Sprite_Bubbles_v01_0: 638745575
-      Swimming_Sprite_Bubbles_v01_1: 35377010
-      Swimming_Sprite_Bubbles_v01_2: 419591586
+      Swimming_Sprite_AngelfishSheet_v01_0: 573560257
+      Swimming_Sprite_AngelfishSheet_v01_1: -88988267
+      Swimming_Sprite_AngelfishSheet_v01_2: 841373099
+      Swimming_Sprite_AngelfishSheet_v01_3: -48524664
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
