@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using Sewing;
 
 namespace Sewing{
@@ -8,22 +9,55 @@ namespace Sewing{
 
 public class SewingPathFollower : MonoBehaviour
 {
-    public List<Transform> waypoints;          // Waypoints set in the Inspector
+    [SerializeField] private InputActionAsset inputActions;
+    public List<Transform> waypoints = new List<Transform>();          // Waypoints set in the Inspector
     public float moveSpeed = 2f;               // Speed of movement
-    public KeyCode moveKey = KeyCode.A;        // Press this to move to next waypoint
-
     private int currentIndex = 0;
     private bool isMoving = false;
+    private InputAction footRaiseAction, footLowerAction;
+    private bool isFootRaised = false;
 
-    void Update()
-    {
-        if (Input.GetKeyDown(moveKey) && !isMoving)
-        {
-            MoveToNextWaypoint();
-        }
+    void Awake()
+    {   
+        var actionMap = inputActions.FindActionMap("MotionTracking");
+        footRaiseAction = actionMap.FindAction("FootRaise");
+        footLowerAction = actionMap.FindAction("FootLower");
+        footRaiseAction.performed += OnFootRaise;
+        footLowerAction.performed += OnFootLower;
     }
 
-    void MoveToNextWaypoint()
+    private void OnEnable()
+    {
+        footRaiseAction.Enable();
+        footLowerAction.Enable();
+    }
+
+    private void OnDisable()
+    {
+        footRaiseAction.Disable();
+        footLowerAction.Disable();
+    }
+    private void OnFootRaise(InputAction.CallbackContext ctx)
+    {
+        // if (waypoints.Count == 0) return;
+
+        // int nextIndex = currentIndex + 1;
+        // if (nextIndex >= waypoints.Count)
+        // {
+        //     return; // Reached end, don't continue
+        // }
+
+        // StartCoroutine(MoveToWaypoint(waypoints[nextIndex].position));
+        // currentIndex = nextIndex;
+        isFootRaised = true;
+    }
+
+    private void OnFootLower(InputAction.CallbackContext ctx)
+    {
+        isFootRaised = false;
+    }
+
+    private void NeedleMoving()
     {
         if (waypoints.Count == 0) return;
 
@@ -48,6 +82,14 @@ public class SewingPathFollower : MonoBehaviour
 
         transform.position = targetPos;
         isMoving = false;
+    }
+
+    void Update()
+    {
+        if(isFootRaised)
+        {
+            NeedleMoving();
+        }
     }
 }
 }
