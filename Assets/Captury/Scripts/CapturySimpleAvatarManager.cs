@@ -100,7 +100,7 @@ namespace Captury
 			lastSearched = -searchEveryXSeconds - 1.0f;
 
 			// keep the CapturyAvatarManager GameObject between scenes
-			DontDestroyOnLoad(gameObject);
+			//DontDestroyOnLoad(gameObject);
 
 			// register for skeleton events
 			networkPlugin.SkeletonFound += OnSkeletonFound;

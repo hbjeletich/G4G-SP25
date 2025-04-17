@@ -19,7 +19,7 @@ public class Ball_Altitude : MonoBehaviour
         // Start the wind
         WindEvent.Post(gameObject);
         windPlaying = true;
-        Debug.Log("Wind Sound Started");
+        //Debug.Log("Wind Sound Started");
     }
 
     void Update()
@@ -39,7 +39,7 @@ public class Ball_Altitude : MonoBehaviour
         }
 
         // Debug Logs
-        Debug.Log($"Ball Height: {currentHeight} | Wind Volume: {currentWindVolume}");
+        //Debug.Log($"Ball Height: {currentHeight} | Wind Volume: {currentWindVolume}");
 
         // Set RTPC 
         AkUnitySoundEngine.SetRTPCValue("Wind_Volume", currentWindVolume);

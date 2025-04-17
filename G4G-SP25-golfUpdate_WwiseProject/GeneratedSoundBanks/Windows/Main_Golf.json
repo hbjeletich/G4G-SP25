@@ -10,11 +10,27 @@
     "Type": "User",
     "GUID": "{880BDAA7-4472-4D12-B23C-AD433AA1C943}",
     "Language": "SFX",
-    "Hash": "{76043A72-BB66-6DF3-8FD3-3A65261FEF0C}",
+    "Hash": "{ECE45373-B4CD-E1C9-CDDE-7142A7286208}",
     "ObjectPath": "\\SoundBanks\\Default Work Unit\\Main_Golf",
     "ShortName": "Main_Golf",
     "Path": "Main_Golf.bnk",
     "Media": [
+     {
+      "Id": "163225789",
+      "Language": "SFX",
+      "Streaming": "false",
+      "Location": "Memory",
+      "ShortName": "BackToGolfTitle.wav",
+      "CachePath": "92/{923AFB65-2042-F86F-1AF0-452200E95467}.wem"
+     },
+     {
+      "Id": "164177017",
+      "Language": "SFX",
+      "Streaming": "false",
+      "Location": "Memory",
+      "ShortName": "Woosh_1.wav",
+      "CachePath": "4E/{4E1B7478-1A35-354D-F9CC-4EB36A1CC0A9}.wem"
+     },
      {
       "Id": "421976308",
       "Language": "SFX",
@@ -30,6 +46,22 @@
       "Location": "Memory",
       "ShortName": "Environment_1.wav",
       "CachePath": "44/{4494A20A-928D-8A99-B462-A61E3FD82AE9}.wem"
+     },
+     {
+      "Id": "488061997",
+      "Language": "SFX",
+      "Streaming": "false",
+      "Location": "Memory",
+      "ShortName": "Woosh_3.wav",
+      "CachePath": "75/{755C6C53-8B03-E4B7-35D1-E42335698EBE}.wem"
+     },
+     {
+      "Id": "527420233",
+      "Language": "SFX",
+      "Streaming": "false",
+      "Location": "Memory",
+      "ShortName": "Woosh_2.wav",
+      "CachePath": "55/{55D9E275-0C2E-5EB1-817B-D6C2906CCB05}.wem"
      },
      {
       "Id": "672366569",
@@ -64,6 +96,14 @@
       "CachePath": "79/{79763F6E-E5E5-CA0A-B344-204556641DAC}.wem"
      },
      {
+      "Id": "924269636",
+      "Language": "SFX",
+      "Streaming": "false",
+      "Location": "Memory",
+      "ShortName": "StartTransition.wav",
+      "CachePath": "25/{25E451EB-6664-51B1-4BF9-45678AC87C9A}.wem"
+     },
+     {
       "Id": "996684165",
       "Language": "SFX",
       "Streaming": "false",
@@ -81,6 +121,20 @@
      }
     ],
     "Events": [
+     {
+      "Id": "3823536806",
+      "Name": "Golf_BGM",
+      "ObjectPath": "\\Events\\Default Work Unit\\Golf_BGM",
+      "GUID": "{3A6ADD90-92F4-4391-8D86-3CAAB4F70A88}",
+      "DurationType": "OneShot",
+      "DurationMin": "256",
+      "DurationMax": "256",
+      "MediaRefs": [
+       {
+        "Id": "163225789"
+       }
+      ]
+     },
      {
       "Id": "4208230819",
       "Name": "Golf_Environment",
@@ -138,6 +192,20 @@
       ]
      },
      {
+      "Id": "1594576204",
+      "Name": "Golf_Start",
+      "ObjectPath": "\\Events\\Default Work Unit\\Golf_Start",
+      "GUID": "{0F013E3F-A2C3-4990-BB62-F165E261C043}",
+      "DurationType": "OneShot",
+      "DurationMin": "7.7087984",
+      "DurationMax": "7.7087984",
+      "MediaRefs": [
+       {
+        "Id": "924269636"
+       }
+      ]
+     },
+     {
       "Id": "3110887642",
       "Name": "Golf_Swing",
       "ObjectPath": "\\Events\\Default Work Unit\\Golf_Swing",
@@ -151,6 +219,26 @@
        },
        {
         "Id": "804092203"
+       }
+      ]
+     },
+     {
+      "Id": "4261217065",
+      "Name": "Golf_Transition",
+      "ObjectPath": "\\Events\\Default Work Unit\\Golf_Transition",
+      "GUID": "{3EF0166C-3F01-4A78-9CD6-426FEF05FBA5}",
+      "DurationType": "OneShot",
+      "DurationMin": "3.0112472",
+      "DurationMax": "3.0112472",
+      "MediaRefs": [
+       {
+        "Id": "164177017"
+       },
+       {
+        "Id": "488061997"
+       },
+       {
+        "Id": "527420233"
        }
       ]
      },
@@ -192,6 +280,6 @@
     ]
    }
   ],
-  "FileHash": "{E00860D3-46E9-396A-8BEA-DF686F85F241}"
+  "FileHash": "{C33C589D-356D-6CC9-E86F-30DF883B157D}"
  }
 }
