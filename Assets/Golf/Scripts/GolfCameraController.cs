@@ -16,10 +16,24 @@ public class GolfCameraController : MonoBehaviour
 
     public Transform ballTransform;
 
+    private Vector3 startTransform;
+    private Quaternion startRotation;
+
+    void Start(){
+        startTransform = transform.position;
+        startRotation = transform.rotation;
+    }
+
     public void followBall(){
         Vector3 ballPosition = ballTransform.position;
         Vector3 targetPos = new Vector3(ballPosition.x + offsetXFromBall, ballPosition.y + offsetYFromBall, ballPosition.z + offsetZFromBall);
         transform.position = Vector3.SmoothDamp(transform.position, targetPos, ref _velocity, smoothTime);
         transform.LookAt(ballTransform);
+    }
+
+    public void toStartTransform(){
+        Debug.Log("running camera to start!");
+        transform.position = startTransform;
+        transform.rotation = startRotation;
     }
 }
