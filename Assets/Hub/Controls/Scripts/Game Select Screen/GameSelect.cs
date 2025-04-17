@@ -8,8 +8,14 @@ using UnityEngine.UI;
 
 public class GameSelect : MonoBehaviour
 {
-    public static GameSelect _instance;
+    [Header("Captury Settings")]
     public string host = "127.0.0.1";
+
+    [Header("Sound Settings")]
+    public AudioSource audioSource;
+    public AudioClip hoverSound;
+
+    public static GameSelect _instance;
 
     public static GameSelect Instance
     {
@@ -88,6 +94,20 @@ public class GameSelect : MonoBehaviour
             Application.Quit();  // Stop in build
         #endif
     }
+
+    public void HoverButton(float pitch = 1.0f)
+    {
+        if (audioSource != null && hoverSound != null)
+        {
+            audioSource.pitch = pitch;
+            audioSource.PlayOneShot(hoverSound);
+        }
+        else 
+        {
+            Debug.Log("Missing AudioSource or AudioClip on GameSelect script.");
+        }
+    }
+
 
     public void CapturySetup()
     {
