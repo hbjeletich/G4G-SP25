@@ -13,12 +13,9 @@ namespace AK
 {
     namespace EVENTS
     {
-        // Swimming events
         static const AkUniqueID AMBIENCE_PLAY = 1496310610U;
         static const AkUniqueID COLLECTABLE = 1330284301U;
-        static const AkUniqueID MUS_PLAY = 1280297747U;
-        
-        // Golf events
+        static const AkUniqueID GOLF_BGM = 3823536806U;
         static const AkUniqueID GOLF_ENVIRONMENT = 4208230819U;
         static const AkUniqueID GOLF_ENVIRONMENT_IMPACT = 1621041688U;
         static const AkUniqueID GOLF_IMPACT = 1183497998U;
@@ -27,20 +24,21 @@ namespace AK
         static const AkUniqueID GOLF_SWING = 3110887642U;
         static const AkUniqueID GOLF_TRANSITION = 4261217065U;
         static const AkUniqueID GOLF_WIND_UP = 271725226U;
+        static const AkUniqueID MUS_PLAY = 1280297747U;
         static const AkUniqueID WIND_NOISE = 650903076U;
     } // namespace EVENTS
-    
+
     namespace GAME_PARAMETERS
     {
         static const AkUniqueID DIVER_YPOS = 1758962795U;
         static const AkUniqueID WIND_VOLUME = 4244623852U;
     } // namespace GAME_PARAMETERS
-    
+
     namespace BANKS
     {
         static const AkUniqueID INIT = 1355168291U;
-        static const AkUniqueID SWIMMING_MAIN = 563045986U;
         static const AkUniqueID MAIN_GOLF = 899873513U;
+        static const AkUniqueID SWIMMING_MAIN = 563045986U;
     } // namespace BANKS
 
     namespace BUSSES
