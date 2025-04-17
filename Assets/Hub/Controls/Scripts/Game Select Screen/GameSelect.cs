@@ -4,13 +4,12 @@ using Captury;
 using Swimming;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class GameSelect : MonoBehaviour
 {
     public static GameSelect _instance;
     public string host = "127.0.0.1";
-
-    // find obj of type CapturyNetworkPlugin
 
     public static GameSelect Instance
     {
@@ -26,7 +25,6 @@ public class GameSelect : MonoBehaviour
                     DontDestroyOnLoad(singletonObject);
                 }
             }
-
             return _instance;
         }
     }
@@ -38,14 +36,45 @@ public class GameSelect : MonoBehaviour
             Destroy(gameObject);
             return;
         }
-
         _instance = this;
         DontDestroyOnLoad(gameObject);
     }
+
     private void Start()
     {
         CapturySetup();
+        SetupButtons();
     }
+
+    private void SetupButtons()
+    {
+        /*// Find all game selection buttons in the scene
+        Button[] buttons = FindObjectsOfType<Button>();
+
+        foreach (Button button in buttons)
+        {
+            if(button != null)
+            {
+                SceneButton sceneButton = button.GetComponent<SceneButton>();
+                if (sceneButton != null)
+                {
+                    button.onClick.RemoveAllListeners();
+                    string sceneName = sceneButton.targetSceneName;
+
+                    button.onClick.AddListener(() => SceneManager.LoadScene(sceneName));
+                }
+            }
+        }*/
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            SceneManager.LoadScene("GameSelectScene");
+        }
+    }
+
     public void OpenScene(string sceneName)
     {
         SceneManager.LoadScene(sceneName);
@@ -54,7 +83,6 @@ public class GameSelect : MonoBehaviour
     public void CapturySetup()
     {
         CapturyNetworkPlugin capturyNetworkPlugin = FindObjectOfType<CapturyNetworkPlugin>();
-
         if (capturyNetworkPlugin != null)
         {
             capturyNetworkPlugin.host = host;

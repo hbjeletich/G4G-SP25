@@ -631,7 +631,7 @@ namespace Captury
 		{
 			Log("Captury: disabling network plugin");
 			communicationFinished = true;
-			communicationThread.Join();
+			if(communicationThread != null) communicationThread.Join();
 		}
 
 		//============================
