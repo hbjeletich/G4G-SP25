@@ -9,7 +9,7 @@ using UnityEngine.UI;
 public class GameSelect : MonoBehaviour
 {
     [Header("Captury Settings")]
-    public string host = "127.0.0.1";
+    public string host = "192.168.10.106";
 
     [Header("Sound Settings")]
     public AudioSource audioSource;
