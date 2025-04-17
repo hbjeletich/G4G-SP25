@@ -10,6 +10,10 @@ public class ClubController : MonoBehaviour
 
     private bool hasNotSwung = true;
 
+    public void toStartPosition(){
+        swingAnimator.CrossFadeInFixedTime("Start_Pos", 0f);
+    }
+
     public void swingBack(){
         swingAnimator.CrossFadeInFixedTime("Swing_Back", 0f);
     }

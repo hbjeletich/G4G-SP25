@@ -1365,7 +1365,7 @@ MonoBehaviour:
   props: []
   searchWhenNotTracking: 0
   searchEveryXSeconds: 5
-  trackingArea: {fileID: 0}
+  trackingArea: {fileID: 1244098914}
   stopTrackingWhenOutsideBounds: 0
   trackedSkeletons: []
 --- !u!114 &1244098916
@@ -2091,7 +2091,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1591254845}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c36cb91a121ef084595fd5dc8295ada1, type: 3}
   m_Name: 
@@ -2130,7 +2130,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1591254845}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: eb7e2c3400d1d8443965c423ac889f58, type: 3}
   m_Name: 
@@ -2627,7 +2627,7 @@ MonoBehaviour:
   rightFootName: RightFoot
   minAbductionDistance: 0.2
   minLiftHeight: 0.05
-  calibrationDelay: 2
+  calibrationDelay: 0
   debugMode: 1
 --- !u!4 &2032409670
 Transform:
