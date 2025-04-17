@@ -94,6 +94,11 @@ public class FishingPlayerController : MonoBehaviour
         // fishAction.Enable();
         leftHipAction.Enable();
         rightHipAction.Enable();
+
+        leftHipAction.performed += MotionMovement;
+        rightHipAction.performed += MotionMovement;
+        leftHipAction.canceled += StopMotionMovement;
+        rightHipAction.canceled += StopMotionMovement;
     }
 
     private void OnDisable()
@@ -102,13 +107,18 @@ public class FishingPlayerController : MonoBehaviour
         // fishAction.Disable();
         leftHipAction.Disable();
         rightHipAction.Disable();
+
+        leftHipAction.performed -= MotionMovement;
+        rightHipAction.performed -= MotionMovement;
+        leftHipAction.canceled -= StopMotionMovement;
+        rightHipAction.canceled -= StopMotionMovement;
     }
     
     private void FixedUpdate()
     {
         if (!distanceMeter.isFishing)
         {
-            MotionMovement();  // Updated hip motion movement
+            // MotionMovement();  // Updated hip motion movement
             // Move(); // Filler movement
             UpdateFishingLine();
 
@@ -278,7 +288,7 @@ public class FishingPlayerController : MonoBehaviour
     //     rb.MoveRotation(Quaternion.Euler(0, 0, -currentTilt));
     // }
 
-    private void MotionMovement()
+    private void MotionMovement(InputAction.CallbackContext context)
     {
         // Read hip adbuction values
         float leftFootHeightValue = leftHipAction.ReadValue<float>();
@@ -316,6 +326,13 @@ public class FishingPlayerController : MonoBehaviour
         float targetTilt = movementDirection * tilt;
         currentTilt = Mathf.Lerp(currentTilt, targetTilt, Time.fixedDeltaTime * 5f);
         rb.MoveRotation(Quaternion.Euler(0, 0, currentTilt));
+    }
+
+    public void StopMotionMovement(InputAction.CallbackContext context)
+    {
+        // Stop the motion movement
+        rb.velocity = new Vector2(0, rb.velocity.y);
+        rb.MoveRotation(Quaternion.Euler(0, 0, 0));
     }
     #endregion
 
