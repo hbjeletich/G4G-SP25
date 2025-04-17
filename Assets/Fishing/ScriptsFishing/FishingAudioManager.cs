@@ -20,6 +20,8 @@ namespace Fishing
         public AudioClip bigFishCaughtSFX;
         public AudioClip bubblesSFX;
         public AudioClip splashSFX;
+        public AudioClip cantSFX;
+        public AudioClip clickSFX;
 
         private AudioSource musicSource;
         private AudioSource ambientSource;

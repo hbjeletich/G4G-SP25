@@ -1223,7 +1223,7 @@ MonoBehaviour:
   swimForce: 30
   maxSwimVelocity: 15
   waterDrag: 1.5
-  debugMode: 1
+  debugMode: 0
   debugActions: {fileID: -944628639613478452, guid: f00c78adf1bfe904583a89aa9904ba72,
     type: 3}
   regularAnimator: {fileID: 9100000, guid: f99b857d4000b904b9ca32193ab795b4, type: 2}
@@ -3353,7 +3353,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 086a399939e6c094886da367ef9f81ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  host: 127.0.0.1
+  host: 192.168.10.106
   port: 2101
   scaleFactor: 0.001
   actorCheckTimeout: 500

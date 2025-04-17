@@ -55,7 +55,7 @@ public class FishingPlayerController : MonoBehaviour
 
     // New Input System
     private PlayerInput playerInput; 
-    [HideInInspector] public InputAction moveAction, fishAction, leftFootHeight, rightFootHeight; 
+    [HideInInspector] public InputAction leftFootHeight, rightFootHeight, leftHipAction, rightHipAction; // Input actions for movement and fishing 
     [HideInInspector] public FishingPlayerController instance; // Singleton instance
     private Rigidbody2D rb;
     private DistanceMeter distanceMeter; 
@@ -81,33 +81,40 @@ public class FishingPlayerController : MonoBehaviour
         lineRenderer = GetComponent<LineRenderer>();
 
         // Input system setup
-        moveAction = playerInput.actions["Move"];
-        fishAction = playerInput.actions["Fish"];
+        // moveAction = playerInput.actions["Move"];
+        // fishAction = playerInput.actions["Fish"];
         leftFootHeight = playerInput.actions["LeftFootHeight"]; 
         rightFootHeight = playerInput.actions["RightFootHeight"];
+        leftHipAction = playerInput.actions["LeftHipAbducted"];
+        rightHipAction = playerInput.actions["RightHipAbducted"];
     }
 
     private void OnEnable()
     {
-        moveAction.Enable();
-        fishAction.Enable();
+        // moveAction.Enable();
+        // fishAction.Enable();
         leftFootHeight.Enable();    
         rightFootHeight.Enable();
+        leftHipAction.Enable();
+        rightHipAction.Enable();
     }
 
     private void OnDisable()
     {
-        moveAction.Disable();
-        fishAction.Disable();
+        // moveAction.Disable();
+        // fishAction.Disable();
         leftFootHeight.Disable();
         rightFootHeight.Disable();
+        leftHipAction.Disable();
+        rightHipAction.Disable();
     }
     
     private void FixedUpdate()
     {
         if (!distanceMeter.isFishing)
         {
-            Move();
+            MotionMovement(); 
+            // Move(); // Filler movement
             UpdateFishingLine();
 
         }
@@ -115,6 +122,22 @@ public class FishingPlayerController : MonoBehaviour
         {
             rb.isKinematic = true;
             rb.velocity = Vector2.zero; 
+        }
+    }
+
+    private void OnLeftHip(InputAction.CallbackContext ctx)
+    {
+        if (ctx.performed && !isFishingInProgress)
+        {
+            CastHook(); 
+        }
+    }
+
+    private void OnRightHip(InputAction.CallbackContext ctx)
+    {
+        if (ctx.performed && !isFishingInProgress)
+        {
+            CastHook(); 
         }
     }
 
@@ -190,7 +213,6 @@ public class FishingPlayerController : MonoBehaviour
             point.z = -0.1f;
             lineRenderer.SetPosition(i, point);
         }
-
         lineRenderer.enabled = true;
     }
 
@@ -248,7 +270,6 @@ public class FishingPlayerController : MonoBehaviour
             elapsedTime += Time.deltaTime;
             yield return null;
         }
-
         rb.position = new Vector2(rb.position.x, targetPos.y);
 
         // Allow hook to stay at target position for 2 seconds
@@ -281,25 +302,67 @@ public class FishingPlayerController : MonoBehaviour
     }
     #endregion
 
-    private void Move()
+    #region Movement
+    // private void Move()
+    // {
+    //     moveInput = moveAction.ReadValue<Vector2>(); // Read movement input
+
+    //     float movementBoost = isHookMoving ? 1.2f : 1f; // Boost speed when hook is moving
+    //     float targetSpeed = moveInput.x * moveSpeed * movementBoost;
+    //     float dampenFactor = moveInput.x == 0 ? 0.9f : 1f;
+    //     float newSpeed = Mathf.Lerp(
+    //         rb.velocity.x * dampenFactor,
+    //         targetSpeed,
+    //         Time.fixedDeltaTime * (moveInput.x != 0 ? acceleration : deceleration)
+    //     );
+    //     rb.velocity = new Vector2(newSpeed, rb.velocity.y);
+
+    //     // Apply tilt 
+    //     float targetTilt = moveInput.x * tilt;
+    //     currentTilt = Mathf.Lerp(currentTilt, targetTilt, Time.fixedDeltaTime * 5f);
+    //     rb.MoveRotation(Quaternion.Euler(0, 0, -currentTilt));
+    // }
+
+    private void MotionMovement()
     {
-        moveInput = moveAction.ReadValue<Vector2>(); // Read movement input
+        // Read foot heights
+        float leftFootHeightValue = leftFootHeight.ReadValue<float>();
+        float rightFootHeightValue = rightFootHeight.ReadValue<float>();
 
-        float movementBoost = isHookMoving ? 1.2f : 1f; // Boost speed when hook is moving
-        float targetSpeed = moveInput.x * moveSpeed * movementBoost;
-        float dampenFactor = moveInput.x == 0 ? 0.9f : 1f;
-        float newSpeed = Mathf.Lerp(
-            rb.velocity.x * dampenFactor,
-            targetSpeed,
-            Time.fixedDeltaTime * (moveInput.x != 0 ? acceleration : deceleration)
-        );
-        rb.velocity = new Vector2(newSpeed, rb.velocity.y);
+        // Determine movement direction based on which foot is higher
+        float movementDirection = 0f;
+        if (leftFootHeightValue > rightFootHeightValue + 0.05f) 
+        {
+            movementDirection = -1f; // Move left
+        }
+        else if (rightFootHeightValue > leftFootHeightValue + 0.05f) 
+        {
+            movementDirection = 1f; // Move right
+        }
 
-        // Apply tilt 
-        float targetTilt = moveInput.x * tilt;
+        // Check if there is input
+        if (movementDirection != 0f)
+        {
+            float targetSpeed = -moveInput.x * moveSpeed;
+            float newSpeed = Mathf.Lerp(
+                rb.velocity.x, 
+                targetSpeed, 
+                Time.fixedDeltaTime * acceleration
+            );
+            rb.velocity = new Vector3(newSpeed, rb.velocity.y, 0);
+        }
+        else
+        {
+            // Decelerate to a stop if no input is given
+            rb.velocity = new Vector3(Mathf.Lerp(rb.velocity.x, 0, Time.fixedDeltaTime * deceleration), rb.velocity.y, 0);
+        }
+
+        // Apply ship tilt when moving
+        float targetTilt = movementDirection * tilt;
         currentTilt = Mathf.Lerp(currentTilt, targetTilt, Time.fixedDeltaTime * 5f);
-        rb.MoveRotation(Quaternion.Euler(0, 0, -currentTilt));
+        rb.MoveRotation(Quaternion.Euler(0, 0, currentTilt));
     }
+    #endregion
 
     public void DisablePlayerController()
     {

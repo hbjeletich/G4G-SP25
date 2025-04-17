@@ -12,6 +12,8 @@ public class GolfStartingScreenManager : MonoBehaviour
 
     public Animator screenTransitionAnimator;
     private float transitionAnimLen = .5f;
+    public AK.Wwise.Event TitleBGM;
+    public AK.Wwise.Event StartTone;
 
     private void Awake()
     {
@@ -21,6 +23,7 @@ public class GolfStartingScreenManager : MonoBehaviour
         footRaiseAction = actionMap.FindAction("FootRaise");
 
         footRaiseAction.performed += startGolfGame;
+        TitleBGM.Post(gameObject);
     }
 
     void Update(){
@@ -52,7 +55,11 @@ public class GolfStartingScreenManager : MonoBehaviour
 
     IEnumerator transitionToGolfGame(){
         screenTransitionAnimator.CrossFadeInFixedTime("TransitionToGame", 0);
+        TitleBGM.Stop(gameObject);
+        Debug.Log("Title BGM stopped.");
+        StartTone.Post(gameObject);
         yield return new WaitForSeconds(transitionAnimLen);
+
 
         StartCoroutine(LoadSceneCoroutine("GolfGame"));
     }
