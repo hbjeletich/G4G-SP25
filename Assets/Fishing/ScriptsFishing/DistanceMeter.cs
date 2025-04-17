@@ -32,7 +32,8 @@ namespace Fishing
         private bool meterActive = false;
 
         private PlayerInput playerInput;
-        private InputAction leftHipAction, rightHipAction;
+        // private InputAction fishAction;
+        private InputAction leftHipAction, rightHipAction;  // Motion 
 
         private void Awake()
         {
@@ -51,18 +52,42 @@ namespace Fishing
 
         private void OnEnable()
         {
-            // moveAction.Enable();
-            // fishAction.Enable();
-            leftHipAction.Enable();
-            rightHipAction.Enable();
+            // if (fishAction != null)
+            // {
+            //     fishAction.Enable();
+            //     fishAction.performed += OnFishPressed;
+            //     fishAction.canceled += OnFishReleased;
+            // }
+
+            if (leftHipAction != null || rightHipAction != null)
+            {
+                leftHipAction.Enable();
+                rightHipAction.Enable();
+                leftHipAction.performed += OnFishPressed;
+                rightHipAction.performed += OnFishPressed;
+                leftHipAction.canceled += OnFishReleased;
+                rightHipAction.canceled += OnFishReleased;
+            }
         }
 
-        private void OnDisable()
+         private void OnDisable()
         {
-            // moveAction.Disable();
-            // fishAction.Disable();
-            leftHipAction.Disable();
-            rightHipAction.Disable();
+            // if (fishAction != null)
+            // {
+            //     fishAction.Disable();
+            //     fishAction.performed -= OnFishPressed;
+            //     fishAction.canceled -= OnFishReleased;
+            // }
+
+            if (leftHipAction != null || rightHipAction != null)
+            {
+                leftHipAction.Disable();
+                rightHipAction.Disable();
+                leftHipAction.performed -= OnFishPressed;
+                rightHipAction.performed -= OnFishPressed;
+                leftHipAction.canceled -= OnFishReleased;
+                rightHipAction.canceled -= OnFishReleased;
+            }
         }
 
         private void Update()

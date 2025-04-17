@@ -13,15 +13,22 @@ namespace Fishing
         [SerializeField] private AudioClip defaultMusic;
         [SerializeField] private AudioClip defaultAmbient;
 
+        [Header("Rarity SFX Clips")]
+        public AudioClip commonCatchSFX;
+        public AudioClip uncommonCatchSFX;
+        public AudioClip rareCatchSFX;
+        public AudioClip epicCatchSFX;
+        public AudioClip legendaryCatchSFX;
+
         [Header("SFX Clips")]
         public AudioClip castHookSFX;
         public AudioClip reelInSFX;
-        public AudioClip regFishCaughtSFX;
-        public AudioClip bigFishCaughtSFX;
         public AudioClip bubblesSFX;
         public AudioClip splashSFX;
         public AudioClip cantSFX;
         public AudioClip clickSFX;
+
+        private Dictionary<string, AudioClip> raritySFXMap;
 
         private AudioSource musicSource;
         private AudioSource ambientSource;
@@ -59,6 +66,17 @@ namespace Fishing
             {
                 Debug.LogError("FishingAudioManager: You must have at least 5 AudioSources assigned (music, sfx1, ambient, sfx2, sfx3)");
             }
+
+             // Map rarities to clips
+            raritySFXMap = new Dictionary<string, AudioClip>
+            {
+                { "★", commonCatchSFX },
+                { "★★", uncommonCatchSFX },
+                { "★★★", rareCatchSFX },
+                { "★★★★", epicCatchSFX },
+                { "★★★★★", legendaryCatchSFX }
+            };
+
             StartCoroutine(PlayDefaultAudioDelayed());
             StartCoroutine(PlayRandomBubblesRoutine());
         }
@@ -123,6 +141,41 @@ namespace Fishing
             else
             {
                 Debug.LogWarning("FishingAudioManager: No free SFX source available!");
+            }
+        }
+
+        public void PlayCatchSFX(string rarity)
+        {
+            if (raritySFXMap.TryGetValue(rarity, out AudioClip clip) && clip != null)
+            {
+                StartCoroutine(PlayCatchSFXWithMusicPause(clip));
+            }
+            else
+            {
+                Debug.LogWarning($"No SFX found for rarity: {rarity}");
+            }
+        }
+
+        private IEnumerator PlayCatchSFXWithMusicPause(AudioClip clip)
+        {
+            if (clip == null) yield break;
+
+            PauseMusic();
+
+            AudioSource sfxSource = GetFreeSFXSource();
+            if (sfxSource != null)
+            {
+                SetSFXVolume(0.8f);
+                SetSFXPitch(1f);
+                sfxSource.PlayOneShot(clip);
+
+                yield return new WaitForSeconds(0.1f);
+                ResumeMusic();
+            }
+            else
+            {
+                Debug.LogWarning("FishingAudioManager: No free SFX source available for catch SFX!");
+                ResumeMusic();  // Resume music even if no SFX is played
             }
         }
 
