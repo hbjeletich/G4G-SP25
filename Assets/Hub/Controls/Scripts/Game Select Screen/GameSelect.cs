@@ -80,6 +80,15 @@ public class GameSelect : MonoBehaviour
         SceneManager.LoadScene(sceneName);
     }
 
+    public void ExitGame()
+    {
+        #if UNITY_EDITOR
+            UnityEditor.EditorApplication.isPlaying = false;  // Stop in editor
+        #else
+            Application.Quit();  // Stop in build
+        #endif
+    }
+
     public void CapturySetup()
     {
         CapturyNetworkPlugin capturyNetworkPlugin = FindObjectOfType<CapturyNetworkPlugin>();
