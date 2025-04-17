@@ -1,0 +1,285 @@
+{
+ "SoundBanksInfo": {
+  "Platform": "Windows",
+  "BasePlatform": "Windows",
+  "SchemaVersion": "16",
+  "SoundBankVersion": "154",
+  "SoundBanks": [
+   {
+    "Id": "899873513",
+    "Type": "User",
+    "GUID": "{880BDAA7-4472-4D12-B23C-AD433AA1C943}",
+    "Language": "SFX",
+    "Hash": "{ECE45373-B4CD-E1C9-CDDE-7142A7286208}",
+    "ObjectPath": "\\SoundBanks\\Default Work Unit\\Main_Golf",
+    "ShortName": "Main_Golf",
+    "Path": "Main_Golf.bnk",
+    "Media": [
+     {
+      "Id": "163225789",
+      "Language": "SFX",
+      "Streaming": "false",
+      "Location": "Memory",
+      "ShortName": "BackToGolfTitle.wav",
+      "CachePath": "92/{923AFB65-2042-F86F-1AF0-452200E95467}.wem"
+     },
+     {
+      "Id": "164177017",
+      "Language": "SFX",
+      "Streaming": "false",
+      "Location": "Memory",
+      "ShortName": "Woosh_1.wav",
+      "CachePath": "4E/{4E1B7478-1A35-354D-F9CC-4EB36A1CC0A9}.wem"
+     },
+     {
+      "Id": "421976308",
+      "Language": "SFX",
+      "Streaming": "false",
+      "Location": "Memory",
+      "ShortName": "Swing_1.wav",
+      "CachePath": "23/{2321E32C-7F5F-0355-E156-C464B52D1143}.wem"
+     },
+     {
+      "Id": "464272691",
+      "Language": "SFX",
+      "Streaming": "false",
+      "Location": "Memory",
+      "ShortName": "Environment_1.wav",
+      "CachePath": "44/{4494A20A-928D-8A99-B462-A61E3FD82AE9}.wem"
+     },
+     {
+      "Id": "488061997",
+      "Language": "SFX",
+      "Streaming": "false",
+      "Location": "Memory",
+      "ShortName": "Woosh_3.wav",
+      "CachePath": "75/{755C6C53-8B03-E4B7-35D1-E42335698EBE}.wem"
+     },
+     {
+      "Id": "527420233",
+      "Language": "SFX",
+      "Streaming": "false",
+      "Location": "Memory",
+      "ShortName": "Woosh_2.wav",
+      "CachePath": "55/{55D9E275-0C2E-5EB1-817B-D6C2906CCB05}.wem"
+     },
+     {
+      "Id": "672366569",
+      "Language": "SFX",
+      "Streaming": "false",
+      "Location": "Memory",
+      "ShortName": "Score_Jingle.wav",
+      "CachePath": "03/{037D1FBD-16BE-ED93-7556-7DCC9E403A39}.wem"
+     },
+     {
+      "Id": "709974473",
+      "Language": "SFX",
+      "Streaming": "false",
+      "Location": "Memory",
+      "ShortName": "Wind_Blow.wav",
+      "CachePath": "A2/{A27416CF-B7F7-8278-0F6B-CF6048DF6BE0}.wem"
+     },
+     {
+      "Id": "715414232",
+      "Language": "SFX",
+      "Streaming": "false",
+      "Location": "Memory",
+      "ShortName": "Stong_Shot.wav",
+      "CachePath": "AA/{AA6DC422-2118-F0C0-8A41-7B9AB6A1531A}.wem"
+     },
+     {
+      "Id": "804092203",
+      "Language": "SFX",
+      "Streaming": "false",
+      "Location": "Memory",
+      "ShortName": "Swing_2.wav",
+      "CachePath": "79/{79763F6E-E5E5-CA0A-B344-204556641DAC}.wem"
+     },
+     {
+      "Id": "924269636",
+      "Language": "SFX",
+      "Streaming": "false",
+      "Location": "Memory",
+      "ShortName": "StartTransition.wav",
+      "CachePath": "25/{25E451EB-6664-51B1-4BF9-45678AC87C9A}.wem"
+     },
+     {
+      "Id": "996684165",
+      "Language": "SFX",
+      "Streaming": "false",
+      "Location": "Memory",
+      "ShortName": "Grass_Impact.wav",
+      "CachePath": "F8/{F86162BC-E707-ECD5-9277-8724A7357EE8}.wem"
+     },
+     {
+      "Id": "1021446157",
+      "Language": "SFX",
+      "Streaming": "false",
+      "Location": "Memory",
+      "ShortName": "Wind_Up.wav",
+      "CachePath": "03/{03D9395E-4D8F-39B2-5F66-0508BBF8A953}.wem"
+     }
+    ],
+    "Events": [
+     {
+      "Id": "3823536806",
+      "Name": "Golf_BGM",
+      "ObjectPath": "\\Events\\Default Work Unit\\Golf_BGM",
+      "GUID": "{3A6ADD90-92F4-4391-8D86-3CAAB4F70A88}",
+      "DurationType": "OneShot",
+      "DurationMin": "256",
+      "DurationMax": "256",
+      "MediaRefs": [
+       {
+        "Id": "163225789"
+       }
+      ]
+     },
+     {
+      "Id": "4208230819",
+      "Name": "Golf_Environment",
+      "ObjectPath": "\\Events\\Default Work Unit\\Golf_Environment",
+      "GUID": "{F27077A2-7FE0-472D-A14D-46CB6F197E9B}",
+      "DurationType": "Infinite",
+      "MediaRefs": [
+       {
+        "Id": "464272691"
+       }
+      ]
+     },
+     {
+      "Id": "1621041688",
+      "Name": "Golf_Environment_Impact",
+      "ObjectPath": "\\Events\\Default Work Unit\\Golf_Environment_Impact",
+      "GUID": "{95C1C2F7-0C92-4F77-9976-928528999AEE}",
+      "MaxAttenuation": "100",
+      "DurationType": "OneShot",
+      "DurationMin": "1.052585",
+      "DurationMax": "1.052585",
+      "MediaRefs": [
+       {
+        "Id": "996684165"
+       }
+      ]
+     },
+     {
+      "Id": "1183497998",
+      "Name": "Golf_Impact",
+      "ObjectPath": "\\Events\\Default Work Unit\\Golf_Impact",
+      "GUID": "{CE71186E-B980-4541-A4A2-874BFC0029D3}",
+      "MaxAttenuation": "30",
+      "DurationType": "OneShot",
+      "DurationMin": "0.74106824",
+      "DurationMax": "0.74106824",
+      "MediaRefs": [
+       {
+        "Id": "715414232"
+       }
+      ]
+     },
+     {
+      "Id": "3905678478",
+      "Name": "Golf_Score",
+      "ObjectPath": "\\Events\\Default Work Unit\\Golf_Score",
+      "GUID": "{F642801D-A5CE-480E-AD7B-4AE6A5AF966C}",
+      "DurationType": "OneShot",
+      "DurationMin": "3.9375057",
+      "DurationMax": "3.9375057",
+      "MediaRefs": [
+       {
+        "Id": "672366569"
+       }
+      ]
+     },
+     {
+      "Id": "1594576204",
+      "Name": "Golf_Start",
+      "ObjectPath": "\\Events\\Default Work Unit\\Golf_Start",
+      "GUID": "{0F013E3F-A2C3-4990-BB62-F165E261C043}",
+      "DurationType": "OneShot",
+      "DurationMin": "7.7087984",
+      "DurationMax": "7.7087984",
+      "MediaRefs": [
+       {
+        "Id": "924269636"
+       }
+      ]
+     },
+     {
+      "Id": "3110887642",
+      "Name": "Golf_Swing",
+      "ObjectPath": "\\Events\\Default Work Unit\\Golf_Swing",
+      "GUID": "{D083B40A-E90A-4BFD-959F-BB70BE8C09CF}",
+      "DurationType": "OneShot",
+      "DurationMin": "0.54328316",
+      "DurationMax": "0.6459311",
+      "MediaRefs": [
+       {
+        "Id": "421976308"
+       },
+       {
+        "Id": "804092203"
+       }
+      ]
+     },
+     {
+      "Id": "4261217065",
+      "Name": "Golf_Transition",
+      "ObjectPath": "\\Events\\Default Work Unit\\Golf_Transition",
+      "GUID": "{3EF0166C-3F01-4A78-9CD6-426FEF05FBA5}",
+      "DurationType": "OneShot",
+      "DurationMin": "3.0112472",
+      "DurationMax": "3.0112472",
+      "MediaRefs": [
+       {
+        "Id": "164177017"
+       },
+       {
+        "Id": "488061997"
+       },
+       {
+        "Id": "527420233"
+       }
+      ]
+     },
+     {
+      "Id": "271725226",
+      "Name": "Golf_Wind_Up",
+      "ObjectPath": "\\Events\\Default Work Unit\\Golf_Wind_Up",
+      "GUID": "{E4BBB0E3-6C72-41DE-9083-3EA3E7884548}",
+      "MaxAttenuation": "30",
+      "DurationType": "OneShot",
+      "DurationMin": "1.1875057",
+      "DurationMax": "1.1875057",
+      "MediaRefs": [
+       {
+        "Id": "1021446157"
+       }
+      ]
+     },
+     {
+      "Id": "650903076",
+      "Name": "Wind_Noise",
+      "ObjectPath": "\\Events\\Default Work Unit\\Wind_Noise",
+      "GUID": "{420BACCF-E730-4A56-87BD-10C7774B5B9A}",
+      "DurationType": "Infinite",
+      "MediaRefs": [
+       {
+        "Id": "709974473"
+       }
+      ]
+     }
+    ],
+    "GameParameters": [
+     {
+      "Id": "4244623852",
+      "Name": "Wind_Volume",
+      "ObjectPath": "\\Game Parameters\\Default Work Unit\\Wind_Volume",
+      "GUID": "{4158D38F-F4C2-48C1-8550-CC7A211448C8}"
+     }
+    ]
+   }
+  ],
+  "FileHash": "{C33C589D-356D-6CC9-E86F-30DF883B157D}"
+ }
+}
