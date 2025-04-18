@@ -65,17 +65,6 @@ public class FishingPlayerController : MonoBehaviour
 
     private void Awake()
     {
-        if (instance == null)
-        {
-            instance = this;
-            DontDestroyOnLoad(gameObject); 
-        }
-        else if (instance != this)
-        {
-            Destroy(gameObject); 
-            return;
-        }
-
         // Component initialization
         rb = GetComponent<Rigidbody2D>();
         playerInput = GetComponent<PlayerInput>();
@@ -134,30 +123,6 @@ public class FishingPlayerController : MonoBehaviour
         {
             rb.isKinematic = true;
             rb.velocity = Vector2.zero; 
-        }
-    }
-
-    private void OnLeftHip(InputAction.CallbackContext ctx)
-    {
-        if (ctx.performed && !isFishingInProgress)
-        {
-            CastHook(); 
-        }
-        else 
-        {
-            LeftMotionMovement(ctx);
-        }
-    }
-
-    private void OnRightHip(InputAction.CallbackContext ctx)
-    {
-        if (ctx.performed && !isFishingInProgress)
-        {
-            CastHook(); 
-        }
-        else 
-        {
-            RightMotionMovement(ctx);
         }
     }
 
@@ -283,6 +248,46 @@ public class FishingPlayerController : MonoBehaviour
     #endregion
 
     #region Movement
+
+    private void LeftMotionMovement(InputAction.CallbackContext context)
+    {
+        motionInputX = -1f;
+    }
+
+    private void RightMotionMovement(InputAction.CallbackContext context)
+    {
+        motionInputX = 1f;
+    }
+
+    public void StopMotionMovement(InputAction.CallbackContext context)
+    {
+        motionInputX = 0f;
+    }
+
+    private void OnLeftHip(InputAction.CallbackContext ctx)
+    {
+        if (ctx.performed && !isFishingInProgress)
+        {
+            CastHook(); 
+        }
+        else 
+        {
+            LeftMotionMovement(ctx);
+        }
+    }
+
+    private void OnRightHip(InputAction.CallbackContext ctx)
+    {
+        if (ctx.performed && !isFishingInProgress)
+        {
+            CastHook(); 
+        }
+        else 
+        {
+            RightMotionMovement(ctx);
+        }
+    }
+
     // private void Move()
     // {
     //     moveInput = moveAction.ReadValue<Vector2>(); // Read movement input
@@ -325,21 +330,6 @@ public class FishingPlayerController : MonoBehaviour
             currentTilt = Mathf.Lerp(currentTilt, 0f, Time.fixedDeltaTime * 5f);
             rb.MoveRotation(Quaternion.Euler(0, 0, -currentTilt));
         }
-    }
-
-    private void LeftMotionMovement(InputAction.CallbackContext context)
-    {
-        motionInputX = -1f;
-    }
-
-    private void RightMotionMovement(InputAction.CallbackContext context)
-    {
-        motionInputX = 1f;
-    }
-
-    public void StopMotionMovement(InputAction.CallbackContext context)
-    {
-        motionInputX = 0f;
     }
     #endregion
 

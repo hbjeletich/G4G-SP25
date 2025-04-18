@@ -5,6 +5,7 @@ using Swimming;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using UnityEngine.Rendering;
 
 public class GameSelect : MonoBehaviour
 {
@@ -77,14 +78,37 @@ public class GameSelect : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            SceneManager.LoadScene("GameSelectScene");
+            StartCoroutine(ExitGameCoroutine());
         }
     }
 
+    private IEnumerator ExitGameCoroutine()
+    {
+        yield return SceneManager.LoadSceneAsync("GameSelectScene", LoadSceneMode.Single);
+        yield return null;  // Wait for the scene to load
+        UnityEngine.Rendering.VolumeManager.instance.ResetMainStack();
+    }
+
+
     public void OpenScene(string sceneName)
     {
-        SceneManager.LoadScene(sceneName);
+        StartCoroutine(LoadSceneAsync(sceneName));
     }
+
+    private IEnumerator LoadSceneAsync(string sceneName)
+    {
+        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Single);
+        while (!asyncLoad.isDone)
+        {
+            yield return null;
+        }
+
+        // Delay one more frame to ensure scene camera/volume is fully initialized
+        yield return null;
+
+        UnityEngine.Rendering.VolumeManager.instance.ResetMainStack();
+    }
+
 
     public void ExitGame()
     {
@@ -107,7 +131,6 @@ public class GameSelect : MonoBehaviour
             Debug.Log("Missing AudioSource or AudioClip on GameSelect script.");
         }
     }
-
 
     public void CapturySetup()
     {
