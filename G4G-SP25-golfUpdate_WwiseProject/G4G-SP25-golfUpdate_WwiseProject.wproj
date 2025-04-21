@@ -22,15 +22,15 @@
 				<Property Name="ExternalSourcesOutputPath" Type="string">
 					<ValueList>
 						<Value Platform="Mac">GeneratedSoundBanks\Mac</Value>
-						<Value Platform="Windows">G:\GolfNew\G4G-SP25\G4G-SP25_WwiseProject\GeneratedSoundBanks\Windows\</Value>
+						<Value Platform="Windows">G4G-SP25-golfUpdate_WwiseProject\GeneratedSoundBanks\Windows</Value>
 					</ValueList>
 				</Property>
 				<Property Name="SoundBankGenerateHeaderFile" Type="bool" Value="True" />
-				<Property Name="SoundBankGenerateEstimatedDuration" Type="bool" Value="True" /><Property Name="GenerateSoundBankXML" Type="bool" Value="False" /><Property Name="SoundBankGenerateMaxAttenuationInfo" Type="bool" Value="True" /><Property Name="GenerateSoundBankJSON" Type="bool" Value="True" /><Property Name="SoundBankGeneratePrintGUID" Type="bool" Value="True" /><Property Name="SoundBankGeneratePrintPath" Type="bool" Value="True" /><Property Name="SoundBankHeaderFilePath" Type="string" Value="../../GolfNew/G4G-SP25/Assets/StreamingAssets/Audio/GeneratedSoundBanks" />
+				<Property Name="SoundBankGenerateEstimatedDuration" Type="bool" Value="True" /><Property Name="SoundBankHeaderFilePath" Type="string" Value="..\Assets\StreamingAssets\Audio\GeneratedSoundBanks" />
 				<Property Name="SoundBankPaths" Type="string">
 					<ValueList>
-						<Value Platform="Mac">..\..\GolfNew\G4G-SP25\G4G-SP25_WwiseProject\GeneratedSoundBanks\Mac\</Value>
-						<Value Platform="Windows">..\..\GolfNew\G4G-SP25\G4G-SP25_WwiseProject\GeneratedSoundBanks\Windows\</Value>
+						<Value Platform="Mac">\\</Value>
+						<Value Platform="Windows">GeneratedSoundBanks\Windows\</Value>
 					</ValueList>
 				</Property>
 				<Property Name="SoundBankPostGenerateCustomCmdDescription" Type="string">

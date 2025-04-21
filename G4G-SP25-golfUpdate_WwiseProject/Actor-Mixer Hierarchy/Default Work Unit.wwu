@@ -523,6 +523,137 @@
 						<ActiveSource Name="Score_Jingle" ID="{D37F6326-0025-4A67-9849-7598FC1ED31B}" Platform="Linked"/>
 					</ActiveSourceList>
 				</Sound>
+				<RandomSequenceContainer Name="Transition_State" ID="{D7A5621C-C002-4794-B375-C84F62FE7D27}" ShortID="324353412">
+					<ReferenceList>
+						<Reference Name="Conversion">
+							<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{AFA74038-A5C3-4D49-8FF1-51B82F161135}"/>
+						</Reference>
+						<Reference Name="OutputBus">
+							<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{348808B5-3820-43EE-86BE-686F3A0236F6}"/>
+						</Reference>
+					</ReferenceList>
+					<ChildrenList>
+						<Sound Name="Woosh_2" ID="{C01B8D29-3129-4C6B-98B3-3CE1D292FD39}" ShortID="747725304">
+							<ReferenceList>
+								<Reference Name="Conversion">
+									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{AFA74038-A5C3-4D49-8FF1-51B82F161135}"/>
+								</Reference>
+								<Reference Name="OutputBus">
+									<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{348808B5-3820-43EE-86BE-686F3A0236F6}"/>
+								</Reference>
+							</ReferenceList>
+							<ChildrenList>
+								<AudioFileSource Name="Woosh_2" ID="{DB041435-BDF4-4ED7-B6AD-0E5361949C2B}">
+									<Language>SFX</Language>
+									<AudioFile>Woosh_2.wav</AudioFile>
+									<MediaIDList>
+										<MediaID ID="527420233"/>
+									</MediaIDList>
+								</AudioFileSource>
+							</ChildrenList>
+							<ActiveSourceList>
+								<ActiveSource Name="Woosh_2" ID="{DB041435-BDF4-4ED7-B6AD-0E5361949C2B}" Platform="Linked"/>
+							</ActiveSourceList>
+						</Sound>
+						<Sound Name="Woosh_1" ID="{A431A888-71F3-49E8-98C2-CC0DE0879C4F}" ShortID="341710436">
+							<ReferenceList>
+								<Reference Name="Conversion">
+									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{AFA74038-A5C3-4D49-8FF1-51B82F161135}"/>
+								</Reference>
+								<Reference Name="OutputBus">
+									<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{348808B5-3820-43EE-86BE-686F3A0236F6}"/>
+								</Reference>
+							</ReferenceList>
+							<ChildrenList>
+								<AudioFileSource Name="Woosh_1" ID="{21F99EBB-F24F-4B22-824A-3F1AC30B1DB9}">
+									<Language>SFX</Language>
+									<AudioFile>Woosh_1.wav</AudioFile>
+									<MediaIDList>
+										<MediaID ID="164177017"/>
+									</MediaIDList>
+								</AudioFileSource>
+							</ChildrenList>
+							<ActiveSourceList>
+								<ActiveSource Name="Woosh_1" ID="{21F99EBB-F24F-4B22-824A-3F1AC30B1DB9}" Platform="Linked"/>
+							</ActiveSourceList>
+						</Sound>
+						<Sound Name="Woosh_3" ID="{97067DBD-952B-476B-808C-65A392DAAFC4}" ShortID="266512101">
+							<ReferenceList>
+								<Reference Name="Conversion">
+									<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{AFA74038-A5C3-4D49-8FF1-51B82F161135}"/>
+								</Reference>
+								<Reference Name="OutputBus">
+									<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{348808B5-3820-43EE-86BE-686F3A0236F6}"/>
+								</Reference>
+							</ReferenceList>
+							<ChildrenList>
+								<AudioFileSource Name="Woosh_3" ID="{1E047178-662F-4C2A-92EB-4D07A7BC4253}">
+									<Language>SFX</Language>
+									<AudioFile>Woosh_3.wav</AudioFile>
+									<MediaIDList>
+										<MediaID ID="488061997"/>
+									</MediaIDList>
+								</AudioFileSource>
+							</ChildrenList>
+							<ActiveSourceList>
+								<ActiveSource Name="Woosh_3" ID="{1E047178-662F-4C2A-92EB-4D07A7BC4253}" Platform="Linked"/>
+							</ActiveSourceList>
+						</Sound>
+					</ChildrenList>
+				</RandomSequenceContainer>
+				<Sound Name="Start_Jingle" ID="{998F0A71-053D-4C3A-871B-FA35BAE779D9}" ShortID="234266996">
+					<ReferenceList>
+						<Reference Name="Conversion">
+							<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{AFA74038-A5C3-4D49-8FF1-51B82F161135}"/>
+						</Reference>
+						<Reference Name="OutputBus">
+							<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{348808B5-3820-43EE-86BE-686F3A0236F6}"/>
+						</Reference>
+					</ReferenceList>
+					<ChildrenList>
+						<AudioFileSource Name="StartTransition" ID="{79B75044-D522-4AB0-91D0-E790A1B5FF2B}">
+							<Language>SFX</Language>
+							<AudioFile>StartTransition.wav</AudioFile>
+							<MediaIDList>
+								<MediaID ID="924269636"/>
+							</MediaIDList>
+						</AudioFileSource>
+					</ChildrenList>
+					<ActiveSourceList>
+						<ActiveSource Name="StartTransition" ID="{79B75044-D522-4AB0-91D0-E790A1B5FF2B}" Platform="Linked"/>
+					</ActiveSourceList>
+				</Sound>
+				<Sound Name="Title_BGM" ID="{58C42700-7C9C-410F-A84E-ECEF5EE9484E}" ShortID="823447538">
+					<PropertyList>
+						<Property Name="IsLoopingEnabled" Type="bool" Value="True"/>
+						<Property Name="IsLoopingInfinite" Type="bool" Value="False"/>
+					</PropertyList>
+					<ReferenceList>
+						<Reference Name="Conversion">
+							<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{AFA74038-A5C3-4D49-8FF1-51B82F161135}"/>
+						</Reference>
+						<Reference Name="OutputBus">
+							<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{348808B5-3820-43EE-86BE-686F3A0236F6}"/>
+						</Reference>
+					</ReferenceList>
+					<ChildrenList>
+						<AudioFileSource Name="BackToGolfTitle" ID="{D75FDD4F-E571-46FC-85E9-08E8EF90BBC5}">
+							<PropertyList>
+								<Property Name="FadeInDuration" Type="Real64" Value="6.22603719599425"/>
+								<Property Name="FadeOutDuration" Type="Real64" Value="5.310443490701"/>
+								<Property Name="OverrideWavLoop" Type="bool" Value="True"/>
+							</PropertyList>
+							<Language>SFX</Language>
+							<AudioFile>BackToGolfTitle.wav</AudioFile>
+							<MediaIDList>
+								<MediaID ID="163225789"/>
+							</MediaIDList>
+						</AudioFileSource>
+					</ChildrenList>
+					<ActiveSourceList>
+						<ActiveSource Name="BackToGolfTitle" ID="{D75FDD4F-E571-46FC-85E9-08E8EF90BBC5}" Platform="Linked"/>
+					</ActiveSourceList>
+				</Sound>
 			</ChildrenList>
 		</WorkUnit>
 	</AudioObjects>

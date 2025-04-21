@@ -80,6 +80,39 @@
 						</Action>
 					</ChildrenList>
 				</Event>
+				<Event Name="Golf_Transition" ID="{3EF0166C-3F01-4A78-9CD6-426FEF05FBA5}">
+					<ChildrenList>
+						<Action Name="" ID="{BFFB0342-A58F-4D6F-BB16-7161EC137AC8}" ShortID="1007935477">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="Transition_State" ID="{D7A5621C-C002-4794-B375-C84F62FE7D27}" WorkUnitID="{14822C16-A4BD-4A7D-B208-1B993BBCCF08}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="Golf_Start" ID="{0F013E3F-A2C3-4990-BB62-F165E261C043}">
+					<ChildrenList>
+						<Action Name="" ID="{2525F208-DD20-4CB0-A354-50128EB524E7}" ShortID="928056563">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="Start_Jingle" ID="{998F0A71-053D-4C3A-871B-FA35BAE779D9}" WorkUnitID="{14822C16-A4BD-4A7D-B208-1B993BBCCF08}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
+				<Event Name="Golf_BGM" ID="{3A6ADD90-92F4-4391-8D86-3CAAB4F70A88}">
+					<ChildrenList>
+						<Action Name="" ID="{FE8339CD-8255-4134-AFD9-1BF0341B7A9B}" ShortID="695842563">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="Title_BGM" ID="{58C42700-7C9C-410F-A84E-ECEF5EE9484E}" WorkUnitID="{14822C16-A4BD-4A7D-B208-1B993BBCCF08}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
 			</ChildrenList>
 		</WorkUnit>
 	</Events>
