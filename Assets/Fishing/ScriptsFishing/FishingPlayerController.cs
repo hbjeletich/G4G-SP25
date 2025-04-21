@@ -217,8 +217,8 @@ public class FishingPlayerController : MonoBehaviour
         }
         rb.position = new Vector2(rb.position.x, targetPos.y);
 
-        // Allow hook to stay at target position for 2 seconds
-        yield return new WaitForSeconds(2f);  
+        // Allow hook to stay at target position for 5 seconds
+        yield return new WaitForSeconds(5f);  
 
         // Retract hook back
         FishingAudioManager.instance.PlaySFX(FishingAudioManager.instance.reelInSFX); // Play reel in sound
@@ -312,14 +312,17 @@ public class FishingPlayerController : MonoBehaviour
     {
         if (Mathf.Abs(motionInputX) > 0.01f)
         {
-            float targetSpeed = motionInputX * moveSpeed;
+            float movementBoost = isHookMoving ? 1.2f : 1f; 
+            float targetSpeed = motionInputX * moveSpeed * movementBoost;
+            float dampenFactor = motionInputX == 0 ? 0.9f : 1f;
             float newSpeed = Mathf.Lerp(
-                rb.velocity.x,
+                rb.velocity.x * dampenFactor,
                 targetSpeed,
-                Time.fixedDeltaTime * acceleration
+                Time.fixedDeltaTime * (motionInputX != 0 ? acceleration : deceleration)
             );
             rb.velocity = new Vector2(newSpeed, rb.velocity.y);
 
+            // Apply tilt 
             float targetTilt = motionInputX * tilt;
             currentTilt = Mathf.Lerp(currentTilt, targetTilt, Time.fixedDeltaTime * 5f);
             rb.MoveRotation(Quaternion.Euler(0, 0, -currentTilt));

@@ -1979,11 +1979,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 618b18bc099e1af4ab35f62061f4fad4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 4
+  moveSpeed: 30
   retractSpeed: 0.5
-  acceleration: 5
-  deceleration: 5
-  tilt: 6
+  acceleration: 15
+  deceleration: 25
+  tilt: 50
   closestZone:
     yDepth: 2.6
     xRange: {x: -5.5, y: 11.5}
@@ -2037,37 +2037,37 @@ MonoBehaviour:
     m_RotationOrder: 4
   tensionSpeed: 3
   leftHipAction:
-    m_Name: 
-    m_Type: 0
-    m_ExpectedControlType: 
-    m_Id: a37ba6a5-3f04-44f2-8389-cdefbe49bf11
+    m_Name: LeftHipAbducted
+    m_Type: 1
+    m_ExpectedControlType: Button
+    m_Id: ec65b7ba-9a97-4a08-ae5d-105762d76435
     m_Processors: 
     m_Interactions: 
     m_SingletonActionBindings: []
     m_Flags: 0
   rightHipAction:
-    m_Name: 
-    m_Type: 0
-    m_ExpectedControlType: 
-    m_Id: cb732cb0-f745-40a8-aa3e-72b8d3b5dc0b
+    m_Name: RightHipAbducted
+    m_Type: 1
+    m_ExpectedControlType: Button
+    m_Id: adca42d7-40b5-4287-9c62-ebb7b50c6dca
     m_Processors: 
     m_Interactions: 
     m_SingletonActionBindings: []
     m_Flags: 0
   weightShiftLeftAction:
-    m_Name: 
-    m_Type: 0
-    m_ExpectedControlType: 
-    m_Id: 3841996d-660e-4e03-afa4-d91a292d8d14
+    m_Name: WeightShiftLeft
+    m_Type: 1
+    m_ExpectedControlType: Button
+    m_Id: 9feb59db-cf14-4a38-a64d-fd5200a068f9
     m_Processors: 
     m_Interactions: 
     m_SingletonActionBindings: []
     m_Flags: 0
   weightShiftRightAction:
-    m_Name: 
-    m_Type: 0
-    m_ExpectedControlType: 
-    m_Id: 45f473d6-ffd5-4f0f-83f5-7f85e96ed6e0
+    m_Name: WeightShiftRight
+    m_Type: 1
+    m_ExpectedControlType: Button
+    m_Id: 9c3b3fb7-832a-486f-a864-9bec6f6a0daa
     m_Processors: 
     m_Interactions: 
     m_SingletonActionBindings: []
@@ -4566,7 +4566,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &999386512
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8458,6 +8458,64 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1961892823}
   m_CullTransparentMesh: 1
+--- !u!1 &1962902577
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1962902579}
+  - component: {fileID: 1962902578}
+  m_Layer: 0
+  m_Name: WwiseGlobal
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1962902578
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1962902577}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8f56afb0c2f3e984e852ab8d6ad6c099, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  InitializationSettings: {fileID: 11400000, guid: f3e8f9079477ce64fa0cf8ce02b98ef6,
+    type: 2}
+  basePath: 
+  language: 
+  defaultPoolSize: 0
+  lowerPoolSize: 0
+  streamingPoolSize: 0
+  memoryCutoffThreshold: 0
+  monitorPoolSize: 0
+  monitorQueuePoolSize: 0
+  callbackManagerBufferSize: 0
+  spatialAudioPoolSize: 0
+  maxSoundPropagationDepth: 0
+  engineLogging: 0
+--- !u!4 &1962902579
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1962902577}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1993175394
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -9570,3 +9628,4 @@ SceneRoots:
   - {fileID: 1993175394}
   - {fileID: 306646866}
   - {fileID: 1681055950}
+  - {fileID: 1962902579}

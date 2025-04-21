@@ -31,7 +31,7 @@ public class ShipPlayerController : MonoBehaviour
 
     // Components
     [HideInInspector] public Rigidbody rb;
-    [HideInInspector] public static ShipPlayerController instance;
+    // [HideInInspector] public static ShipPlayerController instance;
     private ShipCameraScroll cameraScroll; 
     private CapturyInputManager capturyInputManager;
     [HideInInspector] public RoomScriptable currentRoom;
@@ -39,17 +39,17 @@ public class ShipPlayerController : MonoBehaviour
 
     private void Awake()
     {
-        // Singleton pattern to ensure only one instance exists
-        if (instance == null)
-        {
-            instance = this;
-            DontDestroyOnLoad(gameObject); // Make persistent
-        }
-        else if (instance != this)
-        {
-            Destroy(gameObject); // Destroy duplicates
-            return;
-        }
+        // // Singleton pattern to ensure only one instance exists
+        // if (instance == null)
+        // {
+        //     instance = this;
+        //     DontDestroyOnLoad(gameObject); // Make persistent
+        // }
+        // else if (instance != this)
+        // {
+        //     Destroy(gameObject); // Destroy duplicates
+        //     return;
+        // }
 
         // Component initialization
         rb = GetComponent<Rigidbody>();
