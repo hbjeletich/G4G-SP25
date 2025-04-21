@@ -4,7 +4,12 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - golfBall
+  - Obstacle
+  - LeftAnkle
+  - RightAnkle
+  - Chest
+  - WinTrigger
+  - ChestParticles
   layers:
   - Default
   - TransparentFX
@@ -41,4 +46,7 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Popups
+    uniqueID: 2611896307
     locked: 0
