@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using Sewing;
+using System.Diagnostics;
 
 namespace Sewing{
     
@@ -50,6 +51,7 @@ public class SewingPathFollower : MonoBehaviour
         // StartCoroutine(MoveToWaypoint(waypoints[nextIndex].position));
         // currentIndex = nextIndex;
         isFootRaised = true;
+        //currentIndex += 1;
     }
 
     private void OnFootLower(InputAction.CallbackContext ctx)
@@ -59,16 +61,24 @@ public class SewingPathFollower : MonoBehaviour
 
     private void NeedleMoving()
     {
-        if (waypoints.Count == 0) return;
+            // added while loop -- only add a waypoint if not already moving
+            while (!isMoving)
+            {
+                if (waypoints.Count == 0) return;
+                if (currentIndex > waypoints.Count) return;
 
-        int nextIndex = currentIndex + 1;
-        if (nextIndex >= waypoints.Count)
-        {
-            return; // Reached end, don't continue
-        }
+                int nextIndex = currentIndex + 1;
+                if (nextIndex >= waypoints.Count)
+                {
+                    return; // Reached end, don't continue
+                }
 
-        StartCoroutine(MoveToWaypoint(waypoints[nextIndex].position));
-        currentIndex = nextIndex;
+                // helena doing some testing!
+                UnityEngine.Debug.Log($"Moving to waypoint: {nextIndex}");
+
+                StartCoroutine(MoveToWaypoint(waypoints[nextIndex].position));
+                currentIndex = nextIndex;
+            }
     }
 
     System.Collections.IEnumerator MoveToWaypoint(Vector3 targetPos)
