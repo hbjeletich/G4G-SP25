@@ -2,79 +2,65 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.InputSystem;
 using Sewing;
 
 namespace Sewing {
-public class MoveObject : MonoBehaviour
+public class KeyboardScissors : MonoBehaviour
 {
-    [SerializeField] private InputActionAsset inputActions;
+
+    //script to test with keyboard controls when not in lab
+
+
     // List to hold waypoints (Empty GameObjects you set up in the scene)
     public List<Transform> waypoints = new List<Transform>();
     private int currentWaypointIndex = 0; // Tracks the current waypoint
     public int RepOne = 0;
-    public int RepTwo = 0;
     private Animator animator;
     private bool movementAvailable = true;
-    private InputAction leftHipAction;
-    private InputAction rightHipAction;
 
     public float moveSpeed = 3f; // Speed of movement
     public float rotationSpeed = 5f; // Speed of rotation
+    private bool isMoving = false;
 
-    void Awake()
-     {
+    void Start()
+    {
         animator = GetComponent<Animator>();
-        var actionMap = inputActions.FindActionMap("MotionTracking");
-        leftHipAction = actionMap.FindAction("LeftHipAbducted");
-        rightHipAction = actionMap.FindAction("RightHipAbducted");
+    }
 
-        leftHipAction.performed += OnLeftHip;
-        rightHipAction.performed += OnRightHip;
-     }
     // Update is called once per frame
-    public void ChangeScene(string sceneName) {
+    public void ChangeScene(string sceneName)
+    {
         SceneManager.LoadScene(sceneName);
     }
+
     void Update()
     {
-        if (currentWaypointIndex == waypoints.Count) {
-            ChangeScene("4. Sewing");
-    }
-    }
-
-    private void OnEnable()
-    {
-        leftHipAction.Enable();
-        rightHipAction.Enable();
-    }
-
-    private void OnDisable()
-    {
-        leftHipAction.Disable();
-        rightHipAction.Disable();
-    }
-    private void OnLeftHip(InputAction.CallbackContext ctx)
-    {
-        if (movementAvailable == true && currentWaypointIndex < waypoints.Count)
+        if (movementAvailable == true)
         {
-            movementAvailable = false;
+            // Check if the player presses A and there are more waypoints to move through
+            if (Input.GetKeyDown(KeyCode.A) && currentWaypointIndex < waypoints.Count && RepOne < 10)
+            {
+                movementAvailable = false;
                 RepOne++;
                 animator.SetTrigger("PlayAnimation");
                 StartCoroutine(MoveToWaypoint(waypoints[currentWaypointIndex])); // Start movement to waypoint
-        }
-         }
-    private void OnRightHip(InputAction.CallbackContext ctx){
-
-        if (movementAvailable == true && currentWaypointIndex < waypoints.Count)
-        {
-            movementAvailable = false;
-                RepTwo++;
+            }
+            // Check if the player presses D and there are more waypoints to move through
+            else if (Input.GetKeyDown(KeyCode.D) && currentWaypointIndex < waypoints.Count && RepOne >= 10)
+            {
+                movementAvailable = false;
                 animator.SetTrigger("PlayAnimation");
                 StartCoroutine(MoveToWaypoint(waypoints[currentWaypointIndex])); // Start movement to waypoint
+            }
+            else if (currentWaypointIndex == waypoints.Count)
+            {
+                ChangeScene("4. Sewing");
+            }
         }
     }
-   private IEnumerator MoveToWaypoint(Transform targetWaypoint)
+
+    // Coroutine to move the object to the current waypoint smoothly
+    private IEnumerator MoveToWaypoint(Transform targetWaypoint)
     {
         SoundManager.PlaySound(SoundType.SCISSORS);
         Vector3 startPosition = transform.position;

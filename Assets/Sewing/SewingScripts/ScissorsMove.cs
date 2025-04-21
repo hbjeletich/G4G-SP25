@@ -6,11 +6,8 @@ using UnityEngine.InputSystem;
 using Sewing;
 
 namespace Sewing {
-public class Backup : MonoBehaviour
+public class ScissorsMove : MonoBehaviour
 {
-
-    //backup for the moveobject function
-    
     [SerializeField] private InputActionAsset inputActions;
     // List to hold waypoints (Empty GameObjects you set up in the scene)
     public List<Transform> waypoints = new List<Transform>();
@@ -21,6 +18,9 @@ public class Backup : MonoBehaviour
     private bool movementAvailable = true;
     private InputAction leftHipAction;
     private InputAction rightHipAction;
+
+    public float moveSpeed = 3f; // Speed of movement
+    public float rotationSpeed = 5f; // Speed of rotation
 
     void Awake()
      {
@@ -39,7 +39,7 @@ public class Backup : MonoBehaviour
     void Update()
     {
         if (currentWaypointIndex == waypoints.Count) {
-            ChangeScene("3. Puzzle");
+            ChangeScene("4. Sewing");
     }
     }
 
@@ -59,8 +59,9 @@ public class Backup : MonoBehaviour
         if (movementAvailable == true && currentWaypointIndex < waypoints.Count)
         {
             movementAvailable = false;
-            RepOne++;
-            animator.SetTrigger("PlayAnimation");
+                RepOne++;
+                animator.SetTrigger("PlayAnimation");
+                StartCoroutine(MoveToWaypoint(waypoints[currentWaypointIndex])); // Start movement to waypoint
         }
          }
     private void OnRightHip(InputAction.CallbackContext ctx){
@@ -68,22 +69,41 @@ public class Backup : MonoBehaviour
         if (movementAvailable == true && currentWaypointIndex < waypoints.Count)
         {
             movementAvailable = false;
-            RepTwo++;
-            animator.SetTrigger("PlayAnimation");
+                RepTwo++;
+                animator.SetTrigger("PlayAnimation");
+                StartCoroutine(MoveToWaypoint(waypoints[currentWaypointIndex])); // Start movement to waypoint
         }
     }
-    // Function to move the object to the current waypoint
-    private void MoveToWaypoint()
+   private IEnumerator MoveToWaypoint(Transform targetWaypoint)
     {
-        if (currentWaypointIndex < waypoints.Count)
+        SoundManager.PlaySound(SoundType.SCISSORS);
+        Vector3 startPosition = transform.position;
+        Quaternion startRotation = transform.rotation;
+        Vector3 targetPosition = targetWaypoint.position;
+        Quaternion targetRotation = targetWaypoint.rotation;
+
+        float journeyLength = Vector3.Distance(startPosition, targetPosition);
+        float startTime = Time.time;
+
+        while (Vector3.Distance(transform.position, targetPosition) > 0.05f)
         {
-            transform.position = waypoints[currentWaypointIndex].position;
-             transform.rotation = waypoints[currentWaypointIndex].rotation;
-            
-                currentWaypointIndex++;
-                movementAvailable = true;
-            
+            // Smooth movement
+            float distanceCovered = (Time.time - startTime) * moveSpeed;
+            float fractionOfJourney = distanceCovered / journeyLength;
+
+            transform.position = Vector3.Lerp(startPosition, targetPosition, fractionOfJourney);
+
+            // Smooth rotation
+            transform.rotation = Quaternion.Slerp(startRotation, targetRotation, fractionOfJourney);
+
+            yield return null; // Wait for the next frame
         }
+
+        transform.position = targetPosition; // Ensure it exactly reaches the target position
+        transform.rotation = targetRotation; // Ensure it exactly reaches the target rotation
+
+        currentWaypointIndex++;
+        movementAvailable = true;
     }
 }
 }
