@@ -6,18 +6,18 @@ using UnityEngine.InputSystem;
 using Sewing;
 
 namespace Sewing{
-public class IntroSceneTransition : MonoBehaviour
+    public class CustomerScene : MonoBehaviour
 {
     [SerializeField] private InputActionAsset inputActions;
     private InputAction footRaiseAction;
-    // Start is called before the first frame update
-    void Awake()
+    private bool movementComplete = false;
+
+     void Awake()
     {
         var actionMap = inputActions.FindActionMap("MotionTracking");
         footRaiseAction = actionMap.FindAction("FootRaise");
         footRaiseAction.performed += OnFootRaise;
     }
-
     private void OnEnable()
     {
         footRaiseAction.Enable();
@@ -30,9 +30,10 @@ public class IntroSceneTransition : MonoBehaviour
 
     private void OnFootRaise(InputAction.CallbackContext ctx)
     {
-        ChangeScene("2. Customer");
+        if (movementComplete == true){
+        ChangeScene("3. Scissors");
+        }
     }
-
     public void ChangeScene(string sceneName) {
         SceneManager.LoadScene(sceneName);
     }
