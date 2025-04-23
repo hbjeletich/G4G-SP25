@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 7506002108373301182}
   - component: {fileID: 5800034020193893711}
   - component: {fileID: 2281257578450285154}
+  - component: {fileID: -363756070051699048}
   m_Layer: 0
   m_Name: StandardObstacle
   m_TagString: Obstacle
@@ -109,3 +110,15 @@ CapsuleCollider:
   m_Height: 0.022920579
   m_Direction: 1
   m_Center: {x: -0.00008160395, y: -0.00074655894, z: -0.0005263539}
+--- !u!114 &-363756070051699048
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4596464173311341004}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab985d33f7c9c994bb05dd069ca5364d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

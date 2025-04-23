@@ -32,12 +32,11 @@ public class ShipPlayerController : MonoBehaviour
 
     // New Input System
     private PlayerInput playerInput; 
-    [HideInInspector] public InputAction moveAction;
-    // [HideInInspector] public InputAction leftHipAction, rightHipAction, weightShiftLeftAction, weightShiftRightAction, weightShiftXAction; // Motion input actions
+    // [HideInInspector] public InputAction moveAction;
+    [HideInInspector] public InputAction leftHipAction, rightHipAction, weightShiftLeftAction, weightShiftRightAction, weightShiftXAction; // Motion input actions
 
     // Components
     [HideInInspector] public Rigidbody rb;
-    // [HideInInspector] public static ShipPlayerController instance;
     private ShipCameraScroll cameraScroll; 
     private CapturyInputManager capturyInputManager;
     [HideInInspector] public RoomScriptable currentRoom;
@@ -53,11 +52,11 @@ public class ShipPlayerController : MonoBehaviour
 
         // Input system setup
         capturyInputManager = FindObjectOfType<CapturyInputManager>();
-        moveAction = playerInput.actions["Move"];
-        // leftHipAction = playerInput.actions["LeftHipAbducted"];
-        // rightHipAction = playerInput.actions["RightHipAbducted"];
-        // weightShiftLeftAction = playerInput.actions["WeightShiftLeft"]; 
-        // weightShiftRightAction = playerInput.actions["WeightShiftRight"];
+        // moveAction = playerInput.actions["Move"];
+        leftHipAction = playerInput.actions["LeftHipAbducted"];
+        rightHipAction = playerInput.actions["RightHipAbducted"];
+        weightShiftLeftAction = playerInput.actions["WeightShiftLeft"]; 
+        weightShiftRightAction = playerInput.actions["WeightShiftRight"];
     }
 
     private void Start()
@@ -78,37 +77,38 @@ public class ShipPlayerController : MonoBehaviour
 
     private void OnEnable()
     {
-        moveAction.Enable();
-        // leftHipAction.Enable();
-        // rightHipAction.Enable();
-        // weightShiftLeftAction.Enable();
-        // weightShiftRightAction.Enable();
-        // weightShiftXAction.Enable();
+        // moveAction.Enable();
+        leftHipAction.Enable();
+        rightHipAction.Enable();
+        weightShiftLeftAction.Enable();
+        weightShiftRightAction.Enable();
+        weightShiftXAction.Enable();
 
-        // leftHipAction.performed += LeftMotionMovement;
-        // rightHipAction.performed += RightMotionMovement;
-        // leftHipAction.canceled += StopMotionMovement;
-        // rightHipAction.canceled += StopMotionMovement;
+        leftHipAction.performed += LeftMotionMovement;
+        rightHipAction.performed += RightMotionMovement;
+        leftHipAction.canceled += StopMotionMovement;
+        rightHipAction.canceled += StopMotionMovement;
     }
 
     private void OnDisable()
     {
-        moveAction.Disable();
-        // leftHipAction.Disable();
-        // rightHipAction.Disable();
-        // weightShiftLeftAction.Disable();
-        // weightShiftRightAction.Disable();
-        // weightShiftXAction.Disable();
+        // moveAction.Disable();
+        leftHipAction.Disable();
+        rightHipAction.Disable();
+        weightShiftLeftAction.Disable();
+        weightShiftRightAction.Disable();
+        weightShiftXAction.Disable();
 
-        // leftHipAction.performed -= LeftMotionMovement;
-        // rightHipAction.performed -= RightMotionMovement;
-        // leftHipAction.canceled -= StopMotionMovement;
-        // rightHipAction.canceled -= StopMotionMovement;
+        leftHipAction.performed -= LeftMotionMovement;
+        rightHipAction.performed -= RightMotionMovement;
+        leftHipAction.canceled -= StopMotionMovement;
+        rightHipAction.canceled -= StopMotionMovement;
     }
     
     private void FixedUpdate()
     {
-        Move();
+        // Move();  // Filler movement
+        HandleMotionMovement();
         AutoMoveUp();
     }
 
@@ -125,7 +125,6 @@ public class ShipPlayerController : MonoBehaviour
 
     private void StopMotionMovement(InputAction.CallbackContext context)
     {
-        // Use context to detect which side to stop if needed
         isLeftHipActive = false;
         isRightHipActive = false;
     }
@@ -160,38 +159,38 @@ public class ShipPlayerController : MonoBehaviour
         rb.MoveRotation(Quaternion.Euler(0, 0, -currentTilt));
     }
 
-    private void Move()
-    {
-        moveInput = moveAction.ReadValue<Vector2>(); 
-        if (hasWon) return;  // Skip movement if the game is won
+    // private void Move()
+    // {
+    //     moveInput = moveAction.ReadValue<Vector2>(); 
+    //     if (hasWon) return;  // Skip movement if the game is won
 
-        // Check if there is input
-        if (moveInput.x != 0)
-        {
-            float targetSpeed = -moveInput.x * moveSpeed;
-            float newSpeed = Mathf.Lerp(
-                rb.velocity.x, 
-                targetSpeed, 
-                Time.fixedDeltaTime * acceleration
-            );
-            rb.velocity = new Vector3(newSpeed, rb.velocity.y, 0);
-        }
-        else
-        {
-            // Decelerate to a stop if no input is given
-            float xVelocity = Mathf.Lerp(rb.velocity.x, 0, Time.fixedDeltaTime * deceleration);
-            if (Mathf.Abs(xVelocity) < 0.1f)
-            {
-                xVelocity = 0f; // snap to zero
-            }
-            rb.velocity = new Vector3(xVelocity, rb.velocity.y, 0);
-        }
+    //     // Check if there is input
+    //     if (moveInput.x != 0)
+    //     {
+    //         float targetSpeed = -moveInput.x * moveSpeed;
+    //         float newSpeed = Mathf.Lerp(
+    //             rb.velocity.x, 
+    //             targetSpeed, 
+    //             Time.fixedDeltaTime * acceleration
+    //         );
+    //         rb.velocity = new Vector3(newSpeed, rb.velocity.y, 0);
+    //     }
+    //     else
+    //     {
+    //         // Decelerate to a stop if no input is given
+    //         float xVelocity = Mathf.Lerp(rb.velocity.x, 0, Time.fixedDeltaTime * deceleration);
+    //         if (Mathf.Abs(xVelocity) < 0.1f)
+    //         {
+    //             xVelocity = 0f; // snap to zero
+    //         }
+    //         rb.velocity = new Vector3(xVelocity, rb.velocity.y, 0);
+    //     }
 
-        // Tilt ship based on movement
-        float targetTilt = moveInput.x * tilt; 
-        currentTilt = Mathf.Lerp(currentTilt, targetTilt, Time.fixedDeltaTime * 5f);
-        rb.MoveRotation(Quaternion.Euler(0, 0, currentTilt));
-    }
+    //     // Tilt ship based on movement
+    //     float targetTilt = moveInput.x * tilt; 
+    //     currentTilt = Mathf.Lerp(currentTilt, targetTilt, Time.fixedDeltaTime * 5f);
+    //     rb.MoveRotation(Quaternion.Euler(0, 0, currentTilt));
+    // }
 
     private void AutoMoveUp()
     {
@@ -271,9 +270,9 @@ public class ShipPlayerController : MonoBehaviour
     public void DisablePlayerController()
     {
         // Disable player movement and input
-        moveAction.Disable();
-        // leftHipAction.Disable();
-        // rightHipAction.Disable();
+        // moveAction.Disable();
+        leftHipAction.Disable();
+        rightHipAction.Disable();
         rb.velocity = Vector3.zero;
 
         // Make sure ship doesn't tilt over
@@ -283,9 +282,9 @@ public class ShipPlayerController : MonoBehaviour
 
     public void EnablePlayerController()
     {
-        moveAction.Enable();
-        // leftHipAction.Enable();
-        // rightHipAction.Enable();
+        // moveAction.Enable();
+        leftHipAction.Enable();
+        rightHipAction.Enable();
         rb.isKinematic = false;
         rb.freezeRotation = false;
     }

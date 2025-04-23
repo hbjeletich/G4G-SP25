@@ -193,6 +193,48 @@ public class RoomGoToManager : MonoBehaviour
             playerOverworld.EnablePlayerController();
         }
     }
+
+    public void OnMainGameButtonPressed()
+    {
+        StartCoroutine(EnterMainGameCoroutine());
+    }
+
+    private IEnumerator EnterMainGameCoroutine()
+    {
+        Debug.Log("Starting main game transition");
+
+        blackScreenFade = FindObjectOfType<ScreenFade>();
+        if (blackScreenFade == null)
+        {
+            Debug.Log("blackScreenFade = " + blackScreenFade);
+            yield break;
+        }
+
+        // Black screen fade in
+        blackScreenFade.StartCoroutine(blackScreenFade.BlackFadeIn());
+        yield return new WaitForSeconds(blackScreenFade.fadeDuration);
+
+        // Load main game scene
+        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync("ShipMainLevel", LoadSceneMode.Single);
+        while (!asyncLoad.isDone)
+        {
+            yield return null;
+        }
+
+        // Fade out black screen
+        blackScreenFade = FindObjectOfType<ScreenFade>();
+        if (blackScreenFade != null)
+        {
+            blackScreenFade.StartCoroutine(blackScreenFade.BlackFadeOut());
+        }
+
+        // Enable player controller in main game
+        playerOverworld = FindObjectOfType<ShipPlayerController>();
+        if (playerOverworld != null)
+        {
+            playerOverworld.EnablePlayerController();
+        }
+    }
     #endregion
 }
 }
