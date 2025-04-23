@@ -18,6 +18,7 @@ public class ScissorsMove : MonoBehaviour
     private bool movementAvailable = true;
     private InputAction leftHipAction;
     private InputAction rightHipAction;
+    private InputAction footRaiseAction;
 
     public float moveSpeed = 3f; // Speed of movement
     public float rotationSpeed = 5f; // Speed of rotation
@@ -28,31 +29,42 @@ public class ScissorsMove : MonoBehaviour
         var actionMap = inputActions.FindActionMap("MotionTracking");
         leftHipAction = actionMap.FindAction("LeftHipAbducted");
         rightHipAction = actionMap.FindAction("RightHipAbducted");
+        footRaiseAction = actionMap.FindAction("FootRaise");
 
+        footRaiseAction.performed += OnFootRaise;
         leftHipAction.performed += OnLeftHip;
         rightHipAction.performed += OnRightHip;
+        
      }
     // Update is called once per frame
     public void ChangeScene(string sceneName) {
         SceneManager.LoadScene(sceneName);
     }
-    void Update()
-    {
-        if (currentWaypointIndex == waypoints.Count) {
-            ChangeScene("4. Sewing");
-    }
-    }
+    // void Update()
+    // {
+    //     if (currentWaypointIndex == waypoints.Count) {
+    //         ChangeScene("4. Sewing");
+    // }
+    // }
 
     private void OnEnable()
     {
         leftHipAction.Enable();
         rightHipAction.Enable();
+        footRaiseAction.Enable();
     }
 
     private void OnDisable()
     {
         leftHipAction.Disable();
         rightHipAction.Disable();
+        footRaiseAction.Disable();
+    }
+    private void OnFootRaise(InputAction.CallbackContext ctx)
+    {
+        if (currentWaypointIndex == waypoints.Count) {
+            ChangeScene("4. Sewing");
+    }
     }
     private void OnLeftHip(InputAction.CallbackContext ctx)
     {
