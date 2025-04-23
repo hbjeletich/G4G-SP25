@@ -25,9 +25,15 @@ public class ShipPlayerController : MonoBehaviour
     private int localScenePoints = 0;
     private bool hasWon = false; 
 
+    // Internal variables for motion
+    private float motionInputX = 0f;
+    private bool isLeftHipActive = false;
+    private bool isRightHipActive = false;
+
     // New Input System
     private PlayerInput playerInput; 
-    [HideInInspector] public InputAction moveAction, leftFootHeight, rightFootHeight; 
+    [HideInInspector] public InputAction moveAction;
+    // [HideInInspector] public InputAction leftHipAction, rightHipAction, weightShiftLeftAction, weightShiftRightAction, weightShiftXAction; // Motion input actions
 
     // Components
     [HideInInspector] public Rigidbody rb;
@@ -39,18 +45,6 @@ public class ShipPlayerController : MonoBehaviour
 
     private void Awake()
     {
-        // // Singleton pattern to ensure only one instance exists
-        // if (instance == null)
-        // {
-        //     instance = this;
-        //     DontDestroyOnLoad(gameObject); // Make persistent
-        // }
-        // else if (instance != this)
-        // {
-        //     Destroy(gameObject); // Destroy duplicates
-        //     return;
-        // }
-
         // Component initialization
         rb = GetComponent<Rigidbody>();
         cameraScroll = FindObjectOfType<ShipCameraScroll>();
@@ -60,8 +54,10 @@ public class ShipPlayerController : MonoBehaviour
         // Input system setup
         capturyInputManager = FindObjectOfType<CapturyInputManager>();
         moveAction = playerInput.actions["Move"];
-        leftFootHeight = playerInput.actions["LeftFootHeight"]; 
-        rightFootHeight = playerInput.actions["RightFootHeight"];
+        // leftHipAction = playerInput.actions["LeftHipAbducted"];
+        // rightHipAction = playerInput.actions["RightHipAbducted"];
+        // weightShiftLeftAction = playerInput.actions["WeightShiftLeft"]; 
+        // weightShiftRightAction = playerInput.actions["WeightShiftRight"];
     }
 
     private void Start()
@@ -83,15 +79,31 @@ public class ShipPlayerController : MonoBehaviour
     private void OnEnable()
     {
         moveAction.Enable();
-        leftFootHeight.Enable();    
-        rightFootHeight.Enable();
+        // leftHipAction.Enable();
+        // rightHipAction.Enable();
+        // weightShiftLeftAction.Enable();
+        // weightShiftRightAction.Enable();
+        // weightShiftXAction.Enable();
+
+        // leftHipAction.performed += LeftMotionMovement;
+        // rightHipAction.performed += RightMotionMovement;
+        // leftHipAction.canceled += StopMotionMovement;
+        // rightHipAction.canceled += StopMotionMovement;
     }
 
     private void OnDisable()
     {
         moveAction.Disable();
-        leftFootHeight.Disable();
-        rightFootHeight.Disable();
+        // leftHipAction.Disable();
+        // rightHipAction.Disable();
+        // weightShiftLeftAction.Disable();
+        // weightShiftRightAction.Disable();
+        // weightShiftXAction.Disable();
+
+        // leftHipAction.performed -= LeftMotionMovement;
+        // rightHipAction.performed -= RightMotionMovement;
+        // leftHipAction.canceled -= StopMotionMovement;
+        // rightHipAction.canceled -= StopMotionMovement;
     }
     
     private void FixedUpdate()
@@ -100,47 +112,53 @@ public class ShipPlayerController : MonoBehaviour
         AutoMoveUp();
     }
 
-    // private void MotionMove()
-    // {
-    //     if (hasWon) return; 
+    #region Movement
+     private void LeftMotionMovement(InputAction.CallbackContext context)
+    {
+        isLeftHipActive = true;
+    }
 
-    //     // Read foot heights
-    //     float leftFootHeightValue = leftFootHeight.ReadValue<float>();
-    //     float rightFootHeightValue = rightFootHeight.ReadValue<float>();
+    private void RightMotionMovement(InputAction.CallbackContext context)
+    {
+        isRightHipActive = true;
+    }
 
-    //     // Determine movement direction based on which foot is higher
-    //     float movementDirection = 0f;
-    //     if (leftFootHeightValue > rightFootHeightValue + 0.05f) 
-    //     {
-    //         movementDirection = -1f; // Move left
-    //     }
-    //     else if (rightFootHeightValue > leftFootHeightValue + 0.05f) 
-    //     {
-    //         movementDirection = 1f; // Move right
-    //     }
+    private void StopMotionMovement(InputAction.CallbackContext context)
+    {
+        // Use context to detect which side to stop if needed
+        isLeftHipActive = false;
+        isRightHipActive = false;
+    }
 
-    //     // Check if there is input
-    //     if (movementDirection != 0f)
-    //     {
-    //         float targetSpeed = -moveInput.x * moveSpeed;
-    //         float newSpeed = Mathf.Lerp(
-    //             rb.velocity.x, 
-    //             targetSpeed, 
-    //             Time.fixedDeltaTime * acceleration
-    //         );
-    //         rb.velocity = new Vector3(newSpeed, rb.velocity.y, 0);
-    //     }
-    //     else
-    //     {
-    //         // Decelerate to a stop if no input is given
-    //         rb.velocity = new Vector3(Mathf.Lerp(rb.velocity.x, 0, Time.fixedDeltaTime * deceleration), rb.velocity.y, 0);
-    //     }
+    private void OnLeftHip(InputAction.CallbackContext ctx)
+    {
+        LeftMotionMovement(ctx);
+    }
 
-    //     // Apply ship tilt when moving
-    //     float targetTilt = movementDirection * tilt;
-    //     currentTilt = Mathf.Lerp(currentTilt, targetTilt, Time.fixedDeltaTime * 5f);
-    //     rb.MoveRotation(Quaternion.Euler(0, 0, currentTilt));
-    // }
+    private void OnRightHip(InputAction.CallbackContext ctx)
+    {
+        RightMotionMovement(ctx);
+    }
+
+    private void HandleMotionMovement()
+    {
+        motionInputX = 0f;
+        if (isLeftHipActive) motionInputX -= 1f;
+        if (isRightHipActive) motionInputX += 1f;
+        
+        float targetSpeed = motionInputX * moveSpeed;
+        float newSpeed = Mathf.Lerp(
+            rb.velocity.x,
+            targetSpeed,
+            Time.fixedDeltaTime * (Mathf.Abs(motionInputX) > 0.01f ? acceleration : deceleration)
+        );
+        rb.velocity = new Vector2(newSpeed, rb.velocity.y);
+
+        // Apply tilt
+        float targetTilt = motionInputX * tilt;
+        currentTilt = Mathf.Lerp(currentTilt, targetTilt, Time.fixedDeltaTime * 5f);
+        rb.MoveRotation(Quaternion.Euler(0, 0, -currentTilt));
+    }
 
     private void Move()
     {
@@ -187,7 +205,7 @@ public class ShipPlayerController : MonoBehaviour
             rb.MovePosition(targetPosition); 
         }    
     }
-
+    #endregion
 
     private void OnTriggerEnter(Collider other)
     {
@@ -249,12 +267,13 @@ public class ShipPlayerController : MonoBehaviour
         }
     }
 
+    #region Enable/Disable Player Controller
     public void DisablePlayerController()
     {
         // Disable player movement and input
         moveAction.Disable();
-        leftFootHeight.Disable();
-        rightFootHeight.Disable();
+        // leftHipAction.Disable();
+        // rightHipAction.Disable();
         rb.velocity = Vector3.zero;
 
         // Make sure ship doesn't tilt over
@@ -265,11 +284,12 @@ public class ShipPlayerController : MonoBehaviour
     public void EnablePlayerController()
     {
         moveAction.Enable();
-        leftFootHeight.Enable();    
-        rightFootHeight.Enable();
+        // leftHipAction.Enable();
+        // rightHipAction.Enable();
         rb.isKinematic = false;
         rb.freezeRotation = false;
     }
+    #endregion
 
     public void UpdatePlayerRoom(string newRoomName)
     {

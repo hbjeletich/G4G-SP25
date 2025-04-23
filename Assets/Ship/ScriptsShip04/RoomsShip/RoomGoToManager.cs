@@ -150,5 +150,49 @@ public class RoomGoToManager : MonoBehaviour
             blackScreenFade.StartCoroutine(blackScreenFade.BlackFadeOut());
         }
     }
+
+    #region Buttons
+    public void OnTutorialButtonPressed()
+    {
+        StartCoroutine(EnterTutorialCoroutine());
+    }
+
+    private IEnumerator EnterTutorialCoroutine()
+    {
+        Debug.Log("Starting tutorial transition");
+
+        blackScreenFade = FindObjectOfType<ScreenFade>();
+        if (blackScreenFade == null)
+        {
+            Debug.Log("blackScreenFade = " + blackScreenFade);
+            yield break;
+        }
+
+        // Black screen fade in
+        blackScreenFade.StartCoroutine(blackScreenFade.BlackFadeIn());
+        yield return new WaitForSeconds(blackScreenFade.fadeDuration);
+
+        // Load tutorial scene
+        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync("ShipTutorial", LoadSceneMode.Single);
+        while (!asyncLoad.isDone)
+        {
+            yield return null;
+        }
+
+        // Fade out black screen
+        blackScreenFade = FindObjectOfType<ScreenFade>();
+        if (blackScreenFade != null)
+        {
+            blackScreenFade.StartCoroutine(blackScreenFade.BlackFadeOut());
+        }
+
+        // Enable player controller in tutorial
+        playerOverworld = FindObjectOfType<ShipPlayerController>();
+        if (playerOverworld != null)
+        {
+            playerOverworld.EnablePlayerController();
+        }
+    }
+    #endregion
 }
 }

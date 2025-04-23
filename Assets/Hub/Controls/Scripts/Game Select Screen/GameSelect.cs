@@ -17,6 +17,7 @@ public class GameSelect : MonoBehaviour
     public AudioClip hoverSound;
 
     public static GameSelect _instance;
+    public AudioSource AudioSource { get; private set; }
 
     public static GameSelect Instance
     {
@@ -85,7 +86,12 @@ public class GameSelect : MonoBehaviour
     private IEnumerator ExitGameCoroutine()
     {
         yield return SceneManager.LoadSceneAsync("GameSelectScene", LoadSceneMode.Single);
-        yield return null;  // Wait for the scene to load
+        yield return null;
+        
+        if (AudioSource != null && AudioSource.isPlaying)
+        {
+            AudioSource.Stop();
+        }
         UnityEngine.Rendering.VolumeManager.instance.ResetMainStack();
     }
 

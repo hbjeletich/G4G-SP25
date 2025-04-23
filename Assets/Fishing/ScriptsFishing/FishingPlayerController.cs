@@ -59,8 +59,7 @@ public class FishingPlayerController : MonoBehaviour
     // New Input System
     private PlayerInput playerInput; 
     // [HideInInspector] public InputAction moveAction, fishAction; // Filler
-    [HideInInspector] public InputAction leftHipAction, rightHipAction, weightShiftLeftAction, weightShiftRightAction, weightShiftXAction; // Motion
-    [HideInInspector] public FishingPlayerController instance; // Singleton instance
+    [HideInInspector] public InputAction leftHipAction, rightHipAction, weightShiftLeftAction, weightShiftRightAction, weightShiftXAction; // Motion input actions
     private Rigidbody2D rb;
     private DistanceMeter distanceMeter; 
     private LineRenderer lineRenderer; 
