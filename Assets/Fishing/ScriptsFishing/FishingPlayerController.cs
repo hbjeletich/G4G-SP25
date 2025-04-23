@@ -53,6 +53,8 @@ public class FishingPlayerController : MonoBehaviour
     private float tension = 1f;
     private float lineCurveHeight = 0.2f;
     private float motionInputX = 0f;
+    private bool isLeftHipActive = false;
+    private bool isRightHipActive = false;
 
     // New Input System
     private PlayerInput playerInput; 
@@ -248,20 +250,21 @@ public class FishingPlayerController : MonoBehaviour
     #endregion
 
     #region Movement
-
     private void LeftMotionMovement(InputAction.CallbackContext context)
     {
-        motionInputX = -1f;
+        isLeftHipActive = true;
     }
 
     private void RightMotionMovement(InputAction.CallbackContext context)
     {
-        motionInputX = 1f;
+        isRightHipActive = true;
     }
 
-    public void StopMotionMovement(InputAction.CallbackContext context)
+    private void StopMotionMovement(InputAction.CallbackContext context)
     {
-        motionInputX = 0f;
+        // Use context to detect which side to stop if needed
+        isLeftHipActive = false;
+        isRightHipActive = false;
     }
 
     private void OnLeftHip(InputAction.CallbackContext ctx)
@@ -310,29 +313,22 @@ public class FishingPlayerController : MonoBehaviour
 
     private void HandleMotionMovement()
     {
-        if (Mathf.Abs(motionInputX) > 0.01f)
-        {
-            float movementBoost = isHookMoving ? 1.2f : 1f; 
-            float targetSpeed = motionInputX * moveSpeed * movementBoost;
-            float dampenFactor = motionInputX == 0 ? 0.9f : 1f;
-            float newSpeed = Mathf.Lerp(
-                rb.velocity.x * dampenFactor,
-                targetSpeed,
-                Time.fixedDeltaTime * (motionInputX != 0 ? acceleration : deceleration)
-            );
-            rb.velocity = new Vector2(newSpeed, rb.velocity.y);
+        motionInputX = 0f;
+        if (isLeftHipActive) motionInputX -= 1f;
+        if (isRightHipActive) motionInputX += 1f;
+        
+        float targetSpeed = motionInputX * moveSpeed;
+        float newSpeed = Mathf.Lerp(
+            rb.velocity.x,
+            targetSpeed,
+            Time.fixedDeltaTime * (Mathf.Abs(motionInputX) > 0.01f ? acceleration : deceleration)
+        );
+        rb.velocity = new Vector2(newSpeed, rb.velocity.y);
 
-            // Apply tilt 
-            float targetTilt = motionInputX * tilt;
-            currentTilt = Mathf.Lerp(currentTilt, targetTilt, Time.fixedDeltaTime * 5f);
-            rb.MoveRotation(Quaternion.Euler(0, 0, -currentTilt));
-        }
-        else
-        {
-            rb.velocity = new Vector2(0f, rb.velocity.y);
-            currentTilt = Mathf.Lerp(currentTilt, 0f, Time.fixedDeltaTime * 5f);
-            rb.MoveRotation(Quaternion.Euler(0, 0, -currentTilt));
-        }
+        // Apply tilt
+        float targetTilt = motionInputX * tilt;
+        currentTilt = Mathf.Lerp(currentTilt, targetTilt, Time.fixedDeltaTime * 5f);
+        rb.MoveRotation(Quaternion.Euler(0, 0, -currentTilt));
     }
     #endregion
 
