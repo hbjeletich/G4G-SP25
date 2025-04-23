@@ -217,6 +217,10 @@ public class ShipPlayerController : MonoBehaviour
             ShipAudioManager.instance.SetSFXVolume(0.25f);
             ShipAudioManager.instance.PlaySFX(damageClip);
 
+            // Red viginette effect
+            if (shipUIManager != null)
+                shipUIManager.RedViginette();
+
             // Make transparent
             other.gameObject.GetComponent<ShipObstacle>().TriggerObstacleEffect();
 

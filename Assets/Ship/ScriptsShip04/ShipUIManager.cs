@@ -13,6 +13,11 @@ namespace Ship
         public TextMeshProUGUI scoreText;
         public Image healthBarFill;
 
+        [Header("Viginette Settings")]
+        public CanvasGroup viginetteCanvasGroup;
+        public float fadeInDuration = 0.5f;
+        public float fadeOutDuration = 0.5f;
+
         private void Awake()
         {
             scoreText.text = "Score: 0";
@@ -45,6 +50,37 @@ namespace Ship
             }
 
             healthBarFill.fillAmount = Mathf.Clamp01(targetHealth / 4f);
+        }
+
+        public void RedViginette()
+        {
+            StartCoroutine(RedViginetteCoroutine());
+        }
+
+        private IEnumerator RedViginetteCoroutine()
+        {
+            // Fade in
+            float timer = 0;
+            while (timer <= fadeInDuration)
+            {
+                viginetteCanvasGroup.alpha = Mathf.Lerp(0, 1, timer / fadeInDuration);
+                timer += Time.deltaTime;
+                yield return null;
+            }
+            viginetteCanvasGroup.alpha = 1;
+            
+            // Wait
+            yield return new WaitForSeconds(0.5f);
+
+            // Fade out
+            timer = 0;
+            while (timer <= fadeOutDuration)
+            {
+                viginetteCanvasGroup.alpha = Mathf.Lerp(1, 0, timer / fadeOutDuration);
+                timer += Time.deltaTime;
+                yield return null;
+            }
+            viginetteCanvasGroup.alpha = 0;
         }
     }
 }
