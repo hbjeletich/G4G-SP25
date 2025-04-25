@@ -2,24 +2,28 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameplaySceneUIManager : MonoBehaviour
+public class ScissorsSceneUIManager : MonoBehaviour
 {
     [Header("Sprite Settings")]
     public Animator gameDemonstrationSpriteObject;
-    // maybe change layering in runtime to hide/show?
-    // otherwise just copy code from fade in
-
+    public Animator previousGameDemonstrationSpriteObject;
     public SpriteRenderer gameDemonstrationSpriteRenderer;
+    public SpriteRenderer previousGameDemonstrationSpriteRenderer;
+
 
     void Start()
     {
         gameDemonstrationSpriteObject.enabled = false;
         gameDemonstrationSpriteRenderer.enabled = false;
+        previousGameDemonstrationSpriteObject.enabled = true;
+        previousGameDemonstrationSpriteRenderer.enabled = true;
     }
 
-    public void ShowCompletionUI()
+    public void ScissorsShowCompletionUI()
     {
         gameDemonstrationSpriteObject.enabled = true;
         gameDemonstrationSpriteRenderer.enabled = true;
+        previousGameDemonstrationSpriteObject.enabled = false;
+        previousGameDemonstrationSpriteRenderer.enabled = false;
     }
 }

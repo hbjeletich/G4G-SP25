@@ -21,6 +21,8 @@ public class SewingPathFollower : MonoBehaviour
     public GameObject bobbinObject;
     public string triggerName = "PlayAnimation";
 
+    public SewingSceneUIManager sewingSceneUIManager;
+
     void Awake()
     {   
         var actionMap = inputActions.FindActionMap("MotionTracking");
@@ -93,6 +95,10 @@ public class SewingPathFollower : MonoBehaviour
 
         transform.position = targetPos;
         isMoving = false;
+        if (currentIndex == waypoints.Count)
+        {
+            sewingSceneUIManager.SewingShowCompletionUI();
+        }
     }
 
     void Update()

@@ -23,6 +23,8 @@ public class ScissorsMove : MonoBehaviour
     public float moveSpeed = 3f; // Speed of movement
     public float rotationSpeed = 5f; // Speed of rotation
 
+    public ScissorsSceneUIManager scissorsSceneUIManager; //assign in inspector
+
     void Awake()
      {
         animator = GetComponent<Animator>();
@@ -116,6 +118,10 @@ public class ScissorsMove : MonoBehaviour
 
         currentWaypointIndex++;
         movementAvailable = true;
+        if (currentWaypointIndex == waypoints.Count) 
+        {
+            scissorsSceneUIManager.ScissorsShowCompletionUI();
+        }
     }
 }
 }
