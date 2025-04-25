@@ -88,7 +88,7 @@ namespace Sewing
     {
         isFading = true;
         StartCoroutine(Fade(0, targetAlpha, fadeDuration)); // Fade from 0 to targetAlpha
-        customerSceneUIManager.ShowCompletionUI();
+    
     }
 
     IEnumerator Fade(float startAlpha, float endAlpha, float duration)
@@ -110,6 +110,7 @@ namespace Sewing
             time += Time.deltaTime;
         }
         movementComplete = true;
+        customerSceneUIManager.ShowCompletionUI();
         isFading = false; // Set to false after the fade is complete
     }
 }

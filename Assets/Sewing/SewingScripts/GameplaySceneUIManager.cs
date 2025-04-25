@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CustomerSceneUIManager : MonoBehaviour
+public class GameplaySceneUIManager : MonoBehaviour
 {
     [Header("Sprite Settings")]
     public Animator gameDemonstrationSpriteObject;
