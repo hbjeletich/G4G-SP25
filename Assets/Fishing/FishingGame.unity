@@ -1979,9 +1979,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 618b18bc099e1af4ab35f62061f4fad4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 30
+  moveSpeed: 35
   retractSpeed: 0.5
-  acceleration: 15
+  acceleration: 25
   deceleration: 25
   tilt: 50
   closestZone:
@@ -2081,7 +2081,6 @@ MonoBehaviour:
     m_Interactions: 
     m_SingletonActionBindings: []
     m_Flags: 0
-  instance: {fileID: 0}
 --- !u!50 &248137771
 Rigidbody2D:
   serializedVersion: 4

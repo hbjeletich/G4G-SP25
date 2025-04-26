@@ -34,7 +34,6 @@ public class ShipPlayerController : MonoBehaviour
     private PlayerInput playerInput; 
     // [HideInInspector] public InputAction moveAction;
     [HideInInspector] public InputAction leftHipAction, rightHipAction, weightShiftLeftAction, weightShiftRightAction, weightShiftXAction; // Motion input actions
-
     // Components
     [HideInInspector] public Rigidbody rb;
     private ShipCameraScroll cameraScroll; 
@@ -57,6 +56,8 @@ public class ShipPlayerController : MonoBehaviour
         rightHipAction = playerInput.actions["RightHipAbducted"];
         weightShiftLeftAction = playerInput.actions["WeightShiftLeft"]; 
         weightShiftRightAction = playerInput.actions["WeightShiftRight"];
+    
+
     }
 
     private void Start()
@@ -110,6 +111,7 @@ public class ShipPlayerController : MonoBehaviour
         // Move();  // Filler movement
         HandleMotionMovement();
         AutoMoveUp();
+
     }
 
     #region Movement

@@ -1174,7 +1174,7 @@ MonoBehaviour:
   cameras: []
   arTags: []
   log: {fileID: 0}
-  streamedSkeleton: {fileID: 0}
+  streamedSkeleton: {fileID: 1715344658}
   streamedAvatar: {fileID: 9000000, guid: ab78030e69a85bd4fa93d69411643cb1, type: 3}
   streamedSkeletonLeftHip: LeftUpLeg
   streamedSkeletonHead: Head
@@ -1580,9 +1580,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1196650086}
-  - component: {fileID: 1196650089}
   - component: {fileID: 1196650088}
   - component: {fileID: 1196650087}
+  - component: {fileID: 1196650089}
   m_Layer: 0
   m_Name: PlayerShip
   m_TagString: Untagged
@@ -1645,7 +1645,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Actions: {fileID: -944628639613478452, guid: 4f4913b6b09b5da408774633872d015f,
+  m_Actions: {fileID: -944628639613478452, guid: 788d0aee30682674880f11ca6a0b3013,
     type: 3}
   m_NotificationBehavior: 2
   m_UIInputModule: {fileID: 0}
@@ -1661,98 +1661,70 @@ MonoBehaviour:
   m_ActionEvents:
   - m_PersistentCalls:
       m_Calls: []
-    m_ActionId: 0c18f9c0-6f0f-4283-b3a3-99e511018dd4
-    m_ActionName: 'Player/Move[/Keyboard/leftArrow,/Keyboard/rightArrow,/Keyboard/a,/Keyboard/d]'
+    m_ActionId: b397b7a3-ade3-40ea-bdd3-41804734f245
+    m_ActionName: MotionTracking/FootRaise
   - m_PersistentCalls:
       m_Calls: []
-    m_ActionId: 987af5bd-3528-413e-b7e9-2402bd878069
-    m_ActionName: 'Player/Run[/Keyboard/shift,/Keyboard/ctrl]'
+    m_ActionId: ad06f6e7-0c37-48f5-a221-eaf455501166
+    m_ActionName: MotionTracking/FootLower
   - m_PersistentCalls:
       m_Calls: []
-    m_ActionId: 2d94ce9a-9d7f-4ce7-a624-044cc80d8cd1
-    m_ActionName: 'Player/Interact[/Keyboard/z,/Mouse/leftButton]'
+    m_ActionId: a2342602-806a-4f36-9dca-0e589404f95d
+    m_ActionName: MotionTracking/FootHeight
   - m_PersistentCalls:
       m_Calls: []
-    m_ActionId: 77da7d6b-7156-4399-8c82-97ec53d712b8
-    m_ActionName: 'Player/Open Menu[/Keyboard/x]'
+    m_ActionId: 4b1c3c3c-8751-4fb3-8759-5c1b549effea
+    m_ActionName: MotionTracking/WeightShiftX
   - m_PersistentCalls:
       m_Calls: []
-    m_ActionId: 31b9af2a-ddef-4a48-8627-60c3339f8485
-    m_ActionName: 'UI/Point[/Mouse/position,/Keyboard/w,/Keyboard/s,/Keyboard/a,/Keyboard/d,/Keyboard/upArrow,/Keyboard/downArrow,/Keyboard/leftArrow,/Keyboard/rightArrow]'
+    m_ActionId: 9feb59db-cf14-4a38-a64d-fd5200a068f9
+    m_ActionName: MotionTracking/WeightShiftLeft
   - m_PersistentCalls:
       m_Calls: []
-    m_ActionId: 5d7fbe8c-ad9c-4aa2-ae28-1fa619c4b6ed
-    m_ActionName: 'UI/Click[/Mouse/leftButton,/Keyboard/z]'
+    m_ActionId: 9c3b3fb7-832a-486f-a864-9bec6f6a0daa
+    m_ActionName: MotionTracking/WeightShiftRight
   - m_PersistentCalls:
       m_Calls: []
-    m_ActionId: e7bb8159-a482-4cf9-ade5-b2653ae95819
-    m_ActionName: 'UI/Cancel[/Keyboard/x]'
+    m_ActionId: feb0c326-c82e-463c-ad9e-572723b81e5a
+    m_ActionName: MotionTracking/QuadrantOne
   - m_PersistentCalls:
       m_Calls: []
-    m_ActionId: 914f5d73-6b75-46e2-b019-6a2e0bc15fad
-    m_ActionName: 'MotionTracking/FootRaise[/CapturyInput/footRaise]'
+    m_ActionId: 2bba24b5-d6c5-4bde-b59a-ac0999963df9
+    m_ActionName: MotionTracking/QuadrantTwo
   - m_PersistentCalls:
       m_Calls: []
-    m_ActionId: 0a6ea2e6-f30c-420b-a55a-2c313e425db9
-    m_ActionName: 'MotionTracking/FootLower[/CapturyInput/footLower]'
+    m_ActionId: 6f3b03d7-5dff-4994-a77d-70bd7ff4f7a4
+    m_ActionName: MotionTracking/QuadrantThree
   - m_PersistentCalls:
       m_Calls: []
-    m_ActionId: 509f4716-2994-4dc7-a7e5-47b3528f66fe
-    m_ActionName: 'MotionTracking/FootHeight[/CapturyInput/footHeight]'
+    m_ActionId: e6db2df5-31db-4d36-85e6-238c5b7b98ab
+    m_ActionName: MotionTracking/QuadrantFour
   - m_PersistentCalls:
       m_Calls: []
-    m_ActionId: 51fb9b0c-07f9-4f19-9223-e5b8a3a4651a
-    m_ActionName: 'MotionTracking/WeightShiftX[/CapturyInput/weightShiftX]'
+    m_ActionId: 7517b4b8-e667-4e0c-8416-a232f7a7ec62
+    m_ActionName: MotionTracking/AllQuadrantsComplete
   - m_PersistentCalls:
       m_Calls: []
-    m_ActionId: 3fb5c6a2-456f-4e6d-9f21-14ca06b25c65
-    m_ActionName: 'MotionTracking/WeightShiftLeft[/CapturyInput/weightShiftLeft]'
+    m_ActionId: ec65b7ba-9a97-4a08-ae5d-105762d76435
+    m_ActionName: MotionTracking/LeftHipAbducted
   - m_PersistentCalls:
       m_Calls: []
-    m_ActionId: c6ec4660-ea27-4b6f-b158-48d2c4b08f93
-    m_ActionName: 'MotionTracking/WeightShiftRight[/CapturyInput/weightShiftRight]'
+    m_ActionId: adca42d7-40b5-4287-9c62-ebb7b50c6dca
+    m_ActionName: MotionTracking/RightHipAbducted
   - m_PersistentCalls:
       m_Calls: []
-    m_ActionId: 856ec79c-7b5b-4e50-83dd-b6b572b34275
-    m_ActionName: 'MotionTracking/QuadrantOne[/CapturyInput/quadrantOne]'
+    m_ActionId: 1e53e15a-bb70-47c4-b000-9eddc9c76e65
+    m_ActionName: MotionTracking/AbductionDistance
   - m_PersistentCalls:
       m_Calls: []
-    m_ActionId: cfcc7532-f46f-4bf9-9614-3041e07cd0de
-    m_ActionName: 'MotionTracking/QuadrantTwo[/CapturyInput/quadrantTwo]'
+    m_ActionId: f6c204b5-125a-42a3-b105-df1ba90186f3
+    m_ActionName: MotionTracking/LeftFootHeight
   - m_PersistentCalls:
       m_Calls: []
-    m_ActionId: cdd1d0d4-fe77-49dc-a8bd-0e8c1d87859f
-    m_ActionName: 'MotionTracking/QuadrantThree[/CapturyInput/quadrantThree]'
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 61c4cf2b-20c4-48fc-9b36-4d07eab5f58a
-    m_ActionName: 'MotionTracking/QuadrantFour[/CapturyInput/quadrantFour]'
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: c8c7e870-259e-484a-bf4d-60675dc7b65d
-    m_ActionName: 'MotionTracking/AllQuadrantsComplete[/CapturyInput/allQuadrantsComplete]'
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: c39df67f-3360-4365-b0bc-8c552876f771
-    m_ActionName: 'MotionTracking/LeftHipAbducted[/CapturyInput/leftHipAbducted]'
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 79fcc6a5-b4ca-4a95-8886-4acad8829fba
-    m_ActionName: 'MotionTracking/RightHipAbducted[/CapturyInput/rightHipAbducted]'
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 25a90ff2-c2f3-44fa-8835-1b618eb5e2d6
-    m_ActionName: 'MotionTracking/AbductionDistance[/CapturyInput/abductionDistance]'
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 5dcb7573-cfb9-4468-b66f-8fee9027277e
-    m_ActionName: 'MotionTracking/LeftFootHeight[/CapturyInput/leftFootHeight]'
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: dbb3cbfe-edca-4d5a-aeb5-ddccfeab6d1b
-    m_ActionName: 'MotionTracking/RightFootHeight[/CapturyInput/rightFootHeight]'
+    m_ActionId: 08acf6f5-bbdb-4fac-81fc-20576118c02d
+    m_ActionName: MotionTracking/RightFootHeight
   m_NeverAutoSwitchControlSchemes: 1
-  m_DefaultControlScheme: Keyboard&Mouse
+  m_DefaultControlScheme: 
   m_DefaultActionMap: MotionTracking
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 84815508}
@@ -1765,9 +1737,64 @@ MonoBehaviour:
   m_GameObject: {fileID: 1196650085}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dae1d6fd0f861b448a4c647d2eb7803e, type: 3}
+  m_Script: {fileID: 11500000, guid: 4f42c0aaa211a7648b8e227d3b3bcc66, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  moveSpeed: 5
+  acceleration: 5
+  deceleration: 5
+  tilt: 10
+  maxHealth: 5
+  chestPickupClips: []
+  damageClip: {fileID: 0}
+  currentHealth: 0
+  leftHipAction:
+    m_Name: 
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: dbb8f481-2a45-4c99-b3b1-a93d8212ecc1
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
+  rightHipAction:
+    m_Name: 
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: 2f238ee7-b1c0-4162-8b66-97247847688e
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
+  weightShiftLeftAction:
+    m_Name: 
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: 53f4f6e5-a70b-4f71-b1f7-7534a778c42a
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
+  weightShiftRightAction:
+    m_Name: 
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: 69a59f54-84b9-4eb6-8a5e-4fded9873c66
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
+  weightShiftXAction:
+    m_Name: 
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: 1604d8a8-de94-4db0-9834-f4919e843e47
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
+  rb: {fileID: 0}
+  currentRoom: {fileID: 0}
 --- !u!1 &1246654492
 GameObject:
   m_ObjectHideFlags: 0
@@ -3256,6 +3283,12 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ab78030e69a85bd4fa93d69411643cb1, type: 3}
+--- !u!1 &1715344658 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: ab78030e69a85bd4fa93d69411643cb1,
+    type: 3}
+  m_PrefabInstance: {fileID: 1715344657}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2055307452
 GameObject:
   m_ObjectHideFlags: 0
