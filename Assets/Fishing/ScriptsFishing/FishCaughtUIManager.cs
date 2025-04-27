@@ -14,6 +14,7 @@ namespace Fishing
         public TextMeshProUGUI fishNameText;
         public TextMeshProUGUI lengthText;
         public TextMeshProUGUI rarityText;
+        public CanvasGroup newCatchCanvasGroup;
 
         [Header("Display Settings")]
         public float fadeDuration = 0.3f;
@@ -43,7 +44,7 @@ namespace Fishing
             };
         }
 
-        public void ShowFish(FishData fishData, float length)
+        public void ShowFish(FishData fishData, float length, bool isNewCatch)
         {
             fishImage.sprite = fishData.fishSprite;
             fishNameText.text = fishData.fishName;
@@ -61,6 +62,13 @@ namespace Fishing
                 rarityText.text = "Unknown";
                 rarityText.color = Color.white;
                 rarityIcon.enabled = false;
+            }
+
+            if (newCatchCanvasGroup != null)
+            {
+                newCatchCanvasGroup.alpha = isNewCatch ? 1f : 0f;
+                newCatchCanvasGroup.interactable = isNewCatch;
+                newCatchCanvasGroup.blocksRaycasts = isNewCatch;
             }
 
             if (currentRoutine != null)

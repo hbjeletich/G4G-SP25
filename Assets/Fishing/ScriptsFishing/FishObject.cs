@@ -83,6 +83,7 @@ public class FishObject : MonoBehaviour
     private float targetSpeed; // Randomized speed per movement phase
     private bool isDecelerating = false;
     private FishingPlayerController playerController;
+    private CaughtFishTracker caughtFishTracker;
 
     void Start()
     {
@@ -90,6 +91,7 @@ public class FishObject : MonoBehaviour
         capsuleCollider = GetComponent<CapsuleCollider2D>();
         fishSpawner = FindObjectOfType<FishSpawner>();
         playerController = FindObjectOfType<FishingPlayerController>();
+        caughtFishTracker = FindObjectOfType<CaughtFishTracker>();
 
         AssignBehaviorByRarity();
         AssignFishSize();
@@ -255,11 +257,16 @@ public class FishObject : MonoBehaviour
         FishingAudioManager.instance.PlayCatchSFX(fishData.rarity);
         Debug.Log($"{fishData.fishName} caught!");
 
-        // Show popup
+        bool isFirstCatch = caughtFishTracker != null && !caughtFishTracker.HasCaughtFish(fishData.fishName);
+        if (isFirstCatch && caughtFishTracker != null)
+        {
+            caughtFishTracker.MarkFishAsCaught(fishData.fishName);
+        }
+
         FishCaughtUIManager uiManager = FindObjectOfType<FishCaughtUIManager>();
         if (uiManager != null)
         {
-            uiManager.ShowFish(fishData, Random.Range(fishData.lengthRange.min, fishData.lengthRange.max));
+            uiManager.ShowFish(fishData, Random.Range(fishData.lengthRange.min, fishData.lengthRange.max), isFirstCatch);
         }
 
         // Add fish to inventory
@@ -378,4 +385,21 @@ public class FishObject : MonoBehaviour
         }
     }
 }
+
+#region CaughtFishTracker
+public class CaughtFishTracker : MonoBehaviour
+{
+    private HashSet<string> caughtFishNames = new HashSet<string>();
+
+    public bool HasCaughtFish(string fishName)
+    {
+        return caughtFishNames.Contains(fishName);
+    }
+
+    public void MarkFishAsCaught(string fishName)
+    {
+        caughtFishNames.Add(fishName);
+    }
+}
+#endregion
 }
