@@ -16,6 +16,8 @@ public class ShipGameManager : MonoBehaviour
 
     [Header("Title Button Data")]    
     public RoomScriptable currentRoom;
+    public RoomScriptable mainLevelScriptable;  
+    public RoomScriptable tutorialLevelScriptable;
     public string exitingTo1;
     public string exitingTo2;
 
@@ -35,22 +37,44 @@ public class ShipGameManager : MonoBehaviour
 
     public void TriggerGameOver()
     {
-        if (!gameOver)
+        Scene scene = SceneManager.GetActiveScene();
+        if (scene.name == "ShipTitleScreen")
         {
-            gameOver = true;
-            StartCoroutine(GameOver());
+            return;
+        }
+        if (!gameOver && scene.name == "ShipMainLevel")
+        {
+            if (mainLevelScriptable != null)
+            {
+                RoomGoToManager.instance.GoToRoom(mainLevelScriptable, "ShipTitleScreen");
+            }
+            else
+            {
+                Debug.LogError("Main Level Scriptable is not assigned.");
+            }
+        }
+        if (!gameOver && scene.name == "ShipTutorial")
+        {
+            if (tutorialLevelScriptable != null)
+            {
+                RoomGoToManager.instance.GoToRoom(tutorialLevelScriptable, "ShipTitleScreen");
+            }
+            else
+            {
+                Debug.LogError("Tutorial Level Scriptable is not assigned.");
+            }
         }
     }
 
-    private IEnumerator GameOver()
-    {
-        yield return new WaitForSeconds(1f); 
-        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync("ShipTitleScreen"); 
-        while (!asyncLoad.isDone)
-        {
-            yield return null;
-        }
-    }
+    // private IEnumerator GameOver()
+    // {
+    //     yield return new WaitForSeconds(1f); 
+    //     AsyncOperation asyncLoad = SceneManager.LoadSceneAsync("ShipTitleScreen"); 
+    //     while (!asyncLoad.isDone)
+    //     {
+    //         yield return null;
+    //     }
+    // }
 
     // Coroutine to handle scene loading
     private IEnumerator LoadRoomScene(RoomScriptable targetRoom)

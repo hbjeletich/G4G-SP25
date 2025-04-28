@@ -7032,11 +7032,47 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 58844c675e03f304fbaf593308d9c7b5, type: 3}
   damageClip: {fileID: 8300000, guid: 46d100478cda88f44afd0b37bbd7676f, type: 3}
   currentHealth: 0
-  moveAction:
+  leftHipAction:
     m_Name: 
     m_Type: 0
     m_ExpectedControlType: 
-    m_Id: 9342707d-5a5d-4075-a5b3-91791470c017
+    m_Id: 0b66811b-5bf4-4c89-a0dd-aeada8ce7299
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
+  rightHipAction:
+    m_Name: 
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: d34c57c0-ee59-45b3-9f81-a48a48cef811
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
+  weightShiftLeftAction:
+    m_Name: 
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: 0545d65f-d0c2-4b23-8d6c-704dca07ca71
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
+  weightShiftRightAction:
+    m_Name: 
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: 24562f34-f982-44c6-a333-bc8f845096b5
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings: []
+    m_Flags: 0
+  weightShiftXAction:
+    m_Name: 
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: 4ff58b66-2c8f-44e2-a23b-2fb11a1ad979
     m_Processors: 
     m_Interactions: 
     m_SingletonActionBindings: []
@@ -7101,6 +7137,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameOver: 0
+  currentRoom: {fileID: 11400000, guid: f049d4ce209e6f64aaa65ccc8636d3d2, type: 2}
+  mainLevelScriptable: {fileID: 11400000, guid: 4dd6c56948348154cbe855844f6bb499,
+    type: 2}
+  tutorialLevelScriptable: {fileID: 11400000, guid: 824d5f13c4aa5cc4ca2fe591db23e251,
+    type: 2}
+  exitingTo1: ShipTutorial
+  exitingTo2: ShipMainLevel
 --- !u!1 &1430631222
 GameObject:
   m_ObjectHideFlags: 0

@@ -3696,6 +3696,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameOver: 0
+  currentRoom: {fileID: 11400000, guid: 4dd6c56948348154cbe855844f6bb499, type: 2}
+  mainLevelScriptable: {fileID: 11400000, guid: 4dd6c56948348154cbe855844f6bb499,
+    type: 2}
+  tutorialLevelScriptable: {fileID: 11400000, guid: 824d5f13c4aa5cc4ca2fe591db23e251,
+    type: 2}
+  exitingTo1: ShipTutorial
+  exitingTo2: ShipMainLevel
 --- !u!1 &1486904943
 GameObject:
   m_ObjectHideFlags: 0
