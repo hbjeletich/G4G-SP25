@@ -18,4 +18,10 @@ MonoBehaviour:
   musicVolume: 0.424
   ambientVolume: 0.538
   spawnPointName: 
-  exits: []
+  exits:
+  - exitingTo: ShipTutorial
+    spawnPointName: SpawnPoint
+    targetRoom: {fileID: 11400000, guid: 824d5f13c4aa5cc4ca2fe591db23e251, type: 2}
+  - exitingTo: ShipMainLevel
+    spawnPointName: SpawnPoint
+    targetRoom: {fileID: 11400000, guid: 4dd6c56948348154cbe855844f6bb499, type: 2}
