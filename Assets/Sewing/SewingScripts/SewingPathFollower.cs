@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using Sewing;
 using System.Diagnostics;
+using UnityEngine.SceneManagement;
 
 namespace Sewing{
     
@@ -17,6 +18,10 @@ public class SewingPathFollower : MonoBehaviour
     private bool isMoving = false;
     private InputAction footRaiseAction, footLowerAction;
     private bool isFootRaised = false;
+    public GameObject bobbinObject;
+    public string triggerName = "PlayAnimation";
+
+    public SewingSceneUIManager sewingSceneUIManager;
 
     void Awake()
     {   
@@ -40,18 +45,12 @@ public class SewingPathFollower : MonoBehaviour
     }
     private void OnFootRaise(InputAction.CallbackContext ctx)
     {
-        // if (waypoints.Count == 0) return;
-
-        // int nextIndex = currentIndex + 1;
-        // if (nextIndex >= waypoints.Count)
-        // {
-        //     return; // Reached end, don't continue
-        // }
-
-        // StartCoroutine(MoveToWaypoint(waypoints[nextIndex].position));
-        // currentIndex = nextIndex;
         isFootRaised = true;
-        //currentIndex += 1;
+
+        if (currentIndex == waypoints.Count) {
+            ChangeScene("5. Success");
+    
+    }
     }
 
     private void OnFootLower(InputAction.CallbackContext ctx)
@@ -83,6 +82,10 @@ public class SewingPathFollower : MonoBehaviour
 
     System.Collections.IEnumerator MoveToWaypoint(Vector3 targetPos)
     {
+         Animator targetAnimator = bobbinObject.GetComponent<Animator>();
+
+                // Set the trigger parameter to true, triggering the animation
+        targetAnimator.SetTrigger(triggerName);
         isMoving = true;
         while (Vector3.Distance(transform.position, targetPos) > 0.01f)
         {
@@ -92,6 +95,10 @@ public class SewingPathFollower : MonoBehaviour
 
         transform.position = targetPos;
         isMoving = false;
+        if (currentIndex == waypoints.Count)
+        {
+            sewingSceneUIManager.SewingShowCompletionUI();
+        }
     }
 
     void Update()
@@ -100,6 +107,9 @@ public class SewingPathFollower : MonoBehaviour
         {
             NeedleMoving();
         }
+    }
+    public void ChangeScene(string sceneName) {
+        SceneManager.LoadScene(sceneName);
     }
 }
 }
