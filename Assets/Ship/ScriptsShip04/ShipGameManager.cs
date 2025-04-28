@@ -14,6 +14,11 @@ public class ShipGameManager : MonoBehaviour
     [HideInInspector] public bool gameOver = false; 
     public static float totalPoints = 0; // Total points across all rooms
 
+    [Header("Title Button Data")]    
+    public RoomScriptable currentRoom;
+    public string exitingTo1;
+    public string exitingTo2;
+
     private void Awake()
     {
         if (ShipGameManager.instance == null)
@@ -74,6 +79,16 @@ public class ShipGameManager : MonoBehaviour
                 Debug.LogWarning($"Spawn point {targetRoom.spawnPointName} not found in scene {targetRoom.roomName}.");
             }
         }
+    }
+
+    public void OnTutorialButtonPressed()
+    {
+        RoomGoToManager.instance.GoToRoom(currentRoom, exitingTo1);
+    }   
+
+    public void OnStartButtonPressed()
+    {
+        RoomGoToManager.instance.GoToRoom(currentRoom, exitingTo2);
     }
 }
 

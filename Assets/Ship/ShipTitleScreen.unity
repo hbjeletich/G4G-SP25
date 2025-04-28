@@ -1021,8 +1021,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1411930253}
-        m_TargetAssemblyTypeName: Ship.RoomGoToManager, Assembly-CSharp
+      - m_Target: {fileID: 1411930252}
+        m_TargetAssemblyTypeName: Ship.ShipGameManager, Assembly-CSharp
         m_MethodName: OnTutorialButtonPressed
         m_Mode: 1
         m_Arguments:
@@ -2589,6 +2589,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameOver: 0
+  currentRoom: {fileID: 11400000, guid: 8ae0bcd8098c2d44d9dce821fd2868f0, type: 2}
+  exitingTo1: ShipTutorial
+  exitingTo2: ShipMainLevel
 --- !u!114 &1411930253
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3372,9 +3375,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1411930253}
-        m_TargetAssemblyTypeName: Ship.RoomGoToManager, Assembly-CSharp
-        m_MethodName: OnMainGameButtonPressed
+      - m_Target: {fileID: 1411930252}
+        m_TargetAssemblyTypeName: Ship.ShipGameManager, Assembly-CSharp
+        m_MethodName: OnStartButtonPressed
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
