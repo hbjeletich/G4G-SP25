@@ -50,7 +50,8 @@ public class ShipGameManager : MonoBehaviour
             }
             else
             {
-                Debug.LogError("Main Level Scriptable is not assigned.");
+                Debug.Log("Scriptable is null, falling back to GameOver coroutine.");
+                StartCoroutine(GameOver());  // Fallback if scriptables don't work
             }
         }
         if (!gameOver && scene.name == "ShipTutorial")
@@ -61,20 +62,21 @@ public class ShipGameManager : MonoBehaviour
             }
             else
             {
-                Debug.LogError("Tutorial Level Scriptable is not assigned.");
+                Debug.Log("Scriptable is null, falling back to GameOver coroutine.");
+                StartCoroutine(GameOver());  // Fallback if scriptables don't work
             }
         }
     }
 
-    // private IEnumerator GameOver()
-    // {
-    //     yield return new WaitForSeconds(1f); 
-    //     AsyncOperation asyncLoad = SceneManager.LoadSceneAsync("ShipTitleScreen"); 
-    //     while (!asyncLoad.isDone)
-    //     {
-    //         yield return null;
-    //     }
-    // }
+    private IEnumerator GameOver()
+    {
+        yield return new WaitForSeconds(1f); 
+        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync("ShipTitleScreen"); 
+        while (!asyncLoad.isDone)
+        {
+            yield return null;
+        }
+    }
 
     // Coroutine to handle scene loading
     private IEnumerator LoadRoomScene(RoomScriptable targetRoom)
