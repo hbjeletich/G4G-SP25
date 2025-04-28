@@ -33,9 +33,9 @@ public class ScissorsMove : MonoBehaviour
         rightHipAction = actionMap.FindAction("RightHipAbducted");
         footRaiseAction = actionMap.FindAction("FootRaise");
 
-        footRaiseAction.performed += OnFootRaise;
+        /*footRaiseAction.performed += OnFootRaise;
         leftHipAction.performed += OnLeftHip;
-        rightHipAction.performed += OnRightHip;
+        rightHipAction.performed += OnRightHip;*/
         
      }
     // Update is called once per frame
@@ -54,6 +54,10 @@ public class ScissorsMove : MonoBehaviour
         leftHipAction.Enable();
         rightHipAction.Enable();
         footRaiseAction.Enable();
+
+        footRaiseAction.performed += OnFootRaise;
+        leftHipAction.performed += OnLeftHip;
+        rightHipAction.performed += OnRightHip;
     }
 
     private void OnDisable()
@@ -61,6 +65,11 @@ public class ScissorsMove : MonoBehaviour
         leftHipAction.Disable();
         rightHipAction.Disable();
         footRaiseAction.Disable();
+
+
+        footRaiseAction.performed -= OnFootRaise;
+        leftHipAction.performed -= OnLeftHip;
+        rightHipAction.performed -= OnRightHip;
     }
     private void OnFootRaise(InputAction.CallbackContext ctx)
     {
@@ -74,17 +83,17 @@ public class ScissorsMove : MonoBehaviour
         {
             movementAvailable = false;
                 RepOne++;
-                animator.SetTrigger("PlayAnimation");
+                if(animator!= null) animator.SetTrigger("PlayAnimation");
                 StartCoroutine(MoveToWaypoint(waypoints[currentWaypointIndex])); // Start movement to waypoint
         }
-         }
+    }
     private void OnRightHip(InputAction.CallbackContext ctx){
 
         if (movementAvailable == true && currentWaypointIndex < waypoints.Count)
         {
             movementAvailable = false;
                 RepTwo++;
-                animator.SetTrigger("PlayAnimation");
+                if (animator != null) animator.SetTrigger("PlayAnimation");
                 StartCoroutine(MoveToWaypoint(waypoints[currentWaypointIndex])); // Start movement to waypoint
         }
     }
