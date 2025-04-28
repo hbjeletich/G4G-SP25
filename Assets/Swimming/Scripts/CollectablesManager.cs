@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 namespace Swimming
@@ -9,6 +11,11 @@ namespace Swimming
     {
         private static CollectablesManager _instance;
         [SerializeField] private Image[] shellImages;
+
+        public GameObject gameOverText;
+        private int shellsCollected = 0;
+        [SerializeField] private int totalShells = 3;
+        [SerializeField] private float gameOverTimer = 5f;
 
         public static CollectablesManager Instance
         {
@@ -38,11 +45,41 @@ namespace Swimming
 
             _instance = this;
             DontDestroyOnLoad(gameObject);
+
+            gameOverText.SetActive(false);
         }
 
         public void CollectShell(int index)
         {
             shellImages[index].color = Color.white;
+            shellsCollected += 1;
+            if(shellsCollected >= totalShells)
+            {
+                GameOver();
+            }
+        }
+
+        public void GameOver()
+        {
+            gameOverText.SetActive(true);
+
+            PlayerController player = FindObjectOfType<PlayerController>();
+            if (player != null)
+            {
+                player.enabled = false;
+                player.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+                player.GetComponent<Rigidbody2D>().isKinematic = true;
+                player.GetComponent<Animator>().enabled = false;
+            }
+
+            StartCoroutine(BackToStart());
+        }
+
+        private IEnumerator BackToStart()
+        {
+            yield return new WaitForSeconds(gameOverTimer);
+
+            SceneManager.LoadScene("SwimmingStartingScene");
         }
     }
 }

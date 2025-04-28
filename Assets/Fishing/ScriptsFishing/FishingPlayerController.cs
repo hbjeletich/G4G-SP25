@@ -52,28 +52,20 @@ public class FishingPlayerController : MonoBehaviour
     [SerializeField] private float tensionSpeed = 2f;
     private float tension = 1f;
     private float lineCurveHeight = 0.2f;
+    private float motionInputX = 0f;
+    private bool isLeftHipActive = false;
+    private bool isRightHipActive = false;
 
     // New Input System
     private PlayerInput playerInput; 
-    [HideInInspector] public InputAction moveAction, fishAction, leftFootHeight, rightFootHeight; 
-    [HideInInspector] public FishingPlayerController instance; // Singleton instance
+    // [HideInInspector] public InputAction moveAction, fishAction; // Filler
+    [HideInInspector] public InputAction leftHipAction, rightHipAction, weightShiftLeftAction, weightShiftRightAction, weightShiftXAction; // Motion input actions
     private Rigidbody2D rb;
     private DistanceMeter distanceMeter; 
     private LineRenderer lineRenderer; 
 
     private void Awake()
     {
-        if (instance == null)
-        {
-            instance = this;
-            DontDestroyOnLoad(gameObject); 
-        }
-        else if (instance != this)
-        {
-            Destroy(gameObject); 
-            return;
-        }
-
         // Component initialization
         rb = GetComponent<Rigidbody2D>();
         playerInput = GetComponent<PlayerInput>();
@@ -81,35 +73,52 @@ public class FishingPlayerController : MonoBehaviour
         lineRenderer = GetComponent<LineRenderer>();
 
         // Input system setup
-        moveAction = playerInput.actions["Move"];
-        fishAction = playerInput.actions["Fish"];
-        leftFootHeight = playerInput.actions["LeftFootHeight"]; 
-        rightFootHeight = playerInput.actions["RightFootHeight"];
+        // moveAction = playerInput.actions["Move"];
+        // fishAction = playerInput.actions["Fish"];
+        leftHipAction = playerInput.actions["LeftHipAbducted"];
+        rightHipAction = playerInput.actions["RightHipAbducted"];
+        weightShiftLeftAction = playerInput.actions["WeightShiftLeft"]; 
+        weightShiftRightAction = playerInput.actions["WeightShiftRight"];
     }
 
     private void OnEnable()
     {
-        moveAction.Enable();
-        fishAction.Enable();
-        leftFootHeight.Enable();    
-        rightFootHeight.Enable();
+        // moveAction.Enable();
+        // fishAction.Enable();
+        leftHipAction.Enable();
+        rightHipAction.Enable();
+        weightShiftLeftAction.Enable();
+        weightShiftRightAction.Enable();
+        weightShiftXAction.Enable();
+
+        leftHipAction.performed += LeftMotionMovement;
+        rightHipAction.performed += RightMotionMovement;
+        leftHipAction.canceled += StopMotionMovement;
+        rightHipAction.canceled += StopMotionMovement;
     }
 
     private void OnDisable()
     {
-        moveAction.Disable();
-        fishAction.Disable();
-        leftFootHeight.Disable();
-        rightFootHeight.Disable();
+        // moveAction.Disable();
+        // fishAction.Disable();
+        leftHipAction.Disable();
+        rightHipAction.Disable();
+        weightShiftLeftAction.Disable();
+        weightShiftRightAction.Disable();
+        weightShiftXAction.Disable();
+
+        leftHipAction.performed -= LeftMotionMovement;
+        rightHipAction.performed -= RightMotionMovement;
+        leftHipAction.canceled -= StopMotionMovement;
+        rightHipAction.canceled -= StopMotionMovement;
     }
     
     private void FixedUpdate()
     {
         if (!distanceMeter.isFishing)
         {
-            Move();
+            HandleMotionMovement();
             UpdateFishingLine();
-
         }
         else
         {
@@ -117,46 +126,6 @@ public class FishingPlayerController : MonoBehaviour
             rb.velocity = Vector2.zero; 
         }
     }
-
-    //  private void MotionMove()
-    // {
-    //     // Read foot heights
-    //     float leftFootHeightValue = leftFootHeight.ReadValue<float>();
-    //     float rightFootHeightValue = rightFootHeight.ReadValue<float>();
-
-    //     // Determine movement direction based on which foot is higher
-    //     float movementDirection = 0f;
-    //     if (leftFootHeightValue > rightFootHeightValue + 0.05f) 
-    //     {
-    //         movementDirection = -1f; // Move left
-    //     }
-    //     else if (rightFootHeightValue > leftFootHeightValue + 0.05f) 
-    //     {
-    //         movementDirection = 1f; // Move right
-    //     }
-
-    //     // Check if there is input
-    //     if (movementDirection != 0f)
-    //     {
-    //         float targetSpeed = -moveInput.x * moveSpeed;
-    //         float newSpeed = Mathf.Lerp(
-    //             rb.velocity.x, 
-    //             targetSpeed, 
-    //             Time.fixedDeltaTime * acceleration
-    //         );
-    //         rb.velocity = new Vector3(newSpeed, rb.velocity.y, 0);
-    //     }
-    //     else
-    //     {
-    //         // Decelerate to a stop if no input is given
-    //         rb.velocity = new Vector3(Mathf.Lerp(rb.velocity.x, 0, Time.fixedDeltaTime * deceleration), rb.velocity.y, 0);
-    //     }
-
-    //     // Apply ship tilt when moving
-    //     float targetTilt = movementDirection * tilt;
-    //     currentTilt = Mathf.Lerp(currentTilt, targetTilt, Time.fixedDeltaTime * 5f);
-    //     rb.MoveRotation(Quaternion.Euler(0, 0, currentTilt));
-    // }
 
     private void UpdateFishingLine()
     {
@@ -171,7 +140,7 @@ public class FishingPlayerController : MonoBehaviour
         end.z = -0.1f;
 
         float distance = Vector3.Distance(start, end + distanceOffset);
-        float normalized = Mathf.InverseLerp(2f, 6f, distance); // ← remapped range
+        float normalized = Mathf.InverseLerp(2f, 6f, distance);
         tension = Mathf.Clamp01(normalized);
 
         float maxCurveHeight = 2.0f;
@@ -190,7 +159,6 @@ public class FishingPlayerController : MonoBehaviour
             point.z = -0.1f;
             lineRenderer.SetPosition(i, point);
         }
-
         lineRenderer.enabled = true;
     }
 
@@ -248,11 +216,10 @@ public class FishingPlayerController : MonoBehaviour
             elapsedTime += Time.deltaTime;
             yield return null;
         }
-
         rb.position = new Vector2(rb.position.x, targetPos.y);
 
-        // Allow hook to stay at target position for 2 seconds
-        yield return new WaitForSeconds(2f);  
+        // Allow hook to stay at target position for 5 seconds
+        yield return new WaitForSeconds(5f);  
 
         // Retract hook back
         FishingAudioManager.instance.PlaySFX(FishingAudioManager.instance.reelInSFX); // Play reel in sound
@@ -281,25 +248,88 @@ public class FishingPlayerController : MonoBehaviour
     }
     #endregion
 
-    private void Move()
+    #region Movement
+    private void LeftMotionMovement(InputAction.CallbackContext context)
     {
-        moveInput = moveAction.ReadValue<Vector2>(); // Read movement input
+        isLeftHipActive = true;
+    }
 
-        float movementBoost = isHookMoving ? 1.2f : 1f; // Boost speed when hook is moving
-        float targetSpeed = moveInput.x * moveSpeed * movementBoost;
-        float dampenFactor = moveInput.x == 0 ? 0.9f : 1f;
+    private void RightMotionMovement(InputAction.CallbackContext context)
+    {
+        isRightHipActive = true;
+    }
+
+    private void StopMotionMovement(InputAction.CallbackContext context)
+    {
+        // Use context to detect which side to stop if needed
+        isLeftHipActive = false;
+        isRightHipActive = false;
+    }
+
+    private void OnLeftHip(InputAction.CallbackContext ctx)
+    {
+        if (ctx.performed && !isFishingInProgress)
+        {
+            CastHook(); 
+        }
+        else 
+        {
+            LeftMotionMovement(ctx);
+        }
+    }
+
+    private void OnRightHip(InputAction.CallbackContext ctx)
+    {
+        if (ctx.performed && !isFishingInProgress)
+        {
+            CastHook(); 
+        }
+        else 
+        {
+            RightMotionMovement(ctx);
+        }
+    }
+
+    // private void Move()
+    // {
+    //     moveInput = moveAction.ReadValue<Vector2>(); // Read movement input
+
+    //     float movementBoost = isHookMoving ? 1.2f : 1f; // Boost speed when hook is moving
+    //     float targetSpeed = moveInput.x * moveSpeed * movementBoost;
+    //     float dampenFactor = moveInput.x == 0 ? 0.9f : 1f;
+    //     float newSpeed = Mathf.Lerp(
+    //         rb.velocity.x * dampenFactor,
+    //         targetSpeed,
+    //         Time.fixedDeltaTime * (moveInput.x != 0 ? acceleration : deceleration)
+    //     );
+    //     rb.velocity = new Vector2(newSpeed, rb.velocity.y);
+
+    //     // Apply tilt 
+    //     float targetTilt = moveInput.x * tilt;
+    //     currentTilt = Mathf.Lerp(currentTilt, targetTilt, Time.fixedDeltaTime * 5f);
+    //     rb.MoveRotation(Quaternion.Euler(0, 0, -currentTilt));
+    // }
+
+    private void HandleMotionMovement()
+    {
+        motionInputX = 0f;
+        if (isLeftHipActive) motionInputX -= 1f;
+        if (isRightHipActive) motionInputX += 1f;
+        
+        float targetSpeed = motionInputX * moveSpeed;
         float newSpeed = Mathf.Lerp(
-            rb.velocity.x * dampenFactor,
+            rb.velocity.x,
             targetSpeed,
-            Time.fixedDeltaTime * (moveInput.x != 0 ? acceleration : deceleration)
+            Time.fixedDeltaTime * (Mathf.Abs(motionInputX) > 0.01f ? acceleration : deceleration)
         );
         rb.velocity = new Vector2(newSpeed, rb.velocity.y);
 
-        // Apply tilt 
-        float targetTilt = moveInput.x * tilt;
+        // Apply tilt
+        float targetTilt = motionInputX * tilt;
         currentTilt = Mathf.Lerp(currentTilt, targetTilt, Time.fixedDeltaTime * 5f);
         rb.MoveRotation(Quaternion.Euler(0, 0, -currentTilt));
     }
+    #endregion
 
     public void DisablePlayerController()
     {

@@ -32,7 +32,8 @@ namespace Fishing
         private bool meterActive = false;
 
         private PlayerInput playerInput;
-        private InputAction fishAction;
+        // private InputAction fishAction;
+        private InputAction leftHipAction, rightHipAction;  // Motion 
 
         private void Awake()
         {
@@ -43,27 +44,49 @@ namespace Fishing
                 return;
             }
 
-            fishAction = playerInput.actions["Fish"];
+            // fishAction = playerInput.actions["Fish"];
+            leftHipAction = playerInput.actions["LeftHipAbducted"];
+            rightHipAction = playerInput.actions["RightHipAbducted"];
             isFishing = true;
         }
 
         private void OnEnable()
         {
-            if (fishAction != null)
+            // if (fishAction != null)
+            // {
+            //     fishAction.Enable();
+            //     fishAction.performed += OnFishPressed;
+            //     fishAction.canceled += OnFishReleased;
+            // }
+
+            if (leftHipAction != null || rightHipAction != null)
             {
-                fishAction.Enable();
-                fishAction.performed += OnFishPressed;
-                fishAction.canceled += OnFishReleased;
+                leftHipAction.Enable();
+                rightHipAction.Enable();
+                leftHipAction.performed += OnFishPressed;
+                rightHipAction.performed += OnFishPressed;
+                leftHipAction.canceled += OnFishReleased;
+                rightHipAction.canceled += OnFishReleased;
             }
         }
 
-        private void OnDisable()
+         private void OnDisable()
         {
-            if (fishAction != null)
+            // if (fishAction != null)
+            // {
+            //     fishAction.Disable();
+            //     fishAction.performed -= OnFishPressed;
+            //     fishAction.canceled -= OnFishReleased;
+            // }
+
+            if (leftHipAction != null || rightHipAction != null)
             {
-                fishAction.Disable();
-                fishAction.performed -= OnFishPressed;
-                fishAction.canceled -= OnFishReleased;
+                leftHipAction.Disable();
+                rightHipAction.Disable();
+                leftHipAction.performed -= OnFishPressed;
+                rightHipAction.performed -= OnFishPressed;
+                leftHipAction.canceled -= OnFishReleased;
+                rightHipAction.canceled -= OnFishReleased;
             }
         }
 
