@@ -38,17 +38,14 @@ public class WeightShiftTracking : MonoBehaviour
             CapturyInput.Register();
 
             capturyInput = InputSystem.AddDevice<CapturyInput>();
-            Debug.Log($"WeightShiftTracking: Created new CapturyInput device with ID: {capturyInput.deviceId}");
         }
         else
         {
-            Debug.Log($"WeightShiftTracking: Using existing CapturyInput device with ID: {capturyInput.deviceId}");
         }
 
         CapturyNetworkPlugin networkPlugin = FindObjectOfType<CapturyNetworkPlugin>();
         if (networkPlugin != null)
         {
-            Debug.Log("WeightShiftTracking: Subscribing to CapturyNetworkPlugin.SkeletonFound...");
             networkPlugin.SkeletonFound -= OnSkeletonFound;
             networkPlugin.SkeletonFound += OnSkeletonFound;
         }
@@ -95,6 +92,7 @@ public class WeightShiftTracking : MonoBehaviour
 
     IEnumerator CalibrateNeutralPosition()
     {
+        // calibrate to find neutral position
         Debug.Log("Starting weight shift calibration. Please stand in neutral position...");
         yield return new WaitForSeconds(calibrationDelay); // give time for user to get in position
 
@@ -193,7 +191,7 @@ public class WeightShiftTracking : MonoBehaviour
             }
         }
 
-        // queue the state event
+        // give info to input system
         InputSystem.QueueStateEvent(capturyInput, state);
     }
 

@@ -7,13 +7,16 @@ using UnityEngine.InputSystem.LowLevel;
 
 public class FootTracking : MonoBehaviour
 {
-    [SerializeField] private Transform leftAnkle;
-    [SerializeField] private Transform rightAnkle;
-    [SerializeField] private float raiseThreshold = 0.1f;
+    // transforms for ankles
+    private Transform leftAnkle;
+    private Transform rightAnkle;
+
+    [SerializeField] private float raiseThreshold = 0.1f; // what counts as foot being raised
 
     private CapturyInput capturyInput;
-    private bool isFootRaised = false;
+    private bool isFootRaised = false; // tracking state
 
+    // names of the game object that tracks the ankle
     [SerializeField] private string leftAnkleName = "LeftFoot";
     [SerializeField] private string rightAnkleName = "RightFoot";
 
@@ -24,20 +27,22 @@ public class FootTracking : MonoBehaviour
 
     private void Start()
     {
+        // add captury input device
         capturyInput = InputSystem.AddDevice<CapturyInput>();
 
         if (capturyInput == null)
-        {
+        { 
             Debug.LogError("Failed to create CapturyInput device!");
             return;
         }
 
-        //Debug.Log($"CapturyInput device created with ID: {capturyInput.deviceId}");
-
+        // find captury network plugin (part of captury's scripts)
+        // this is how we connect to skeleton
         CapturyNetworkPlugin networkPlugin = FindObjectOfType<CapturyNetworkPlugin>();
         if (networkPlugin != null)
         {
-            //Debug.Log("FootTracking: Subscribing to CapturyNetworkPlugin.SkeletonFound...");
+            // OnSkeletonFound is event we added to captury's script so we can
+            // get the skeleton at the correct time
             networkPlugin.SkeletonFound -= OnSkeletonFound;
             networkPlugin.SkeletonFound += OnSkeletonFound;
         }
@@ -49,6 +54,8 @@ public class FootTracking : MonoBehaviour
 
     private void OnDestroy()
     {
+        // OnDestroy -- useful for scene changes
+
         if (capturyInput != null)
         {
             InputSystem.RemoveDevice(capturyInput);
@@ -63,14 +70,13 @@ public class FootTracking : MonoBehaviour
 
     private void OnSkeletonFound(CapturySkeleton skeleton)
     {
-        //Debug.Log("FootTracking received Skeleton: " + skeleton.name);
-
+        // link event to function
         skeleton.OnSkeletonSetupComplete += OnSkeletonSetupComplete;
     }
 
     private void OnSkeletonSetupComplete(CapturySkeleton skeleton)
     {
-        //Debug.Log("Skeleton setup complete. Now tracking ankles!");
+        // looking for ankle parts
 
         leftAnkle = FindJointByExactName(skeleton, leftAnkleName);
         rightAnkle = FindJointByExactName(skeleton, rightAnkleName);
@@ -87,6 +93,7 @@ public class FootTracking : MonoBehaviour
 
     private Transform FindJointByExactName(CapturySkeleton skeleton, string jointName)
     {
+        // finding the joint in skeleton by its exact name
         foreach (var joint in skeleton.joints)
         {
             if (joint.name == jointName)
@@ -106,6 +113,7 @@ public class FootTracking : MonoBehaviour
         // height difference between ankles
         float footHeight = Mathf.Abs(leftAnkle.position.y - rightAnkle.position.y);
 
+        // create input state
         var state = new CapturyInputState
         {
             footHeight = footHeight,
@@ -117,6 +125,7 @@ public class FootTracking : MonoBehaviour
         bool wasFootRaised = isFootRaised;
         isFootRaised = footHeight > raiseThreshold;
 
+        // send state data to input system
         InputSystem.QueueStateEvent(capturyInput, state);
     }
 }

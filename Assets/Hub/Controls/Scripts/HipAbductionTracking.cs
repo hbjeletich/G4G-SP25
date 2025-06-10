@@ -38,7 +38,6 @@ public class HipAbductionTracking : MonoBehaviour
             CapturyInput.Register();
 
             capturyInput = InputSystem.AddDevice<CapturyInput>();
-            Debug.Log($"HipAbductionTracking: Created new CapturyInput device with ID: {capturyInput.deviceId}");
         }
         else
         {
@@ -48,7 +47,6 @@ public class HipAbductionTracking : MonoBehaviour
         CapturyNetworkPlugin networkPlugin = FindObjectOfType<CapturyNetworkPlugin>();
         if (networkPlugin != null)
         {
-            Debug.Log("HipAbductionTracking: Subscribing to CapturyNetworkPlugin.SkeletonFound...");
             networkPlugin.SkeletonFound -= OnSkeletonFound;
             networkPlugin.SkeletonFound += OnSkeletonFound;
         }
@@ -90,6 +88,7 @@ public class HipAbductionTracking : MonoBehaviour
 
     IEnumerator CalibrateStartPosition()
     {
+        // calibrate to see what non-shifted weight
         yield return new WaitForSeconds(calibrationDelay); // Give time for user to get in position
 
         if (leftFoot != null && rightFoot != null)
@@ -192,6 +191,7 @@ public class HipAbductionTracking : MonoBehaviour
         state.leftFootHeight = leftHeight;
         state.rightFootHeight = rightHeight;
 
+        // give info to input system
         InputSystem.QueueStateEvent(capturyInput, state);
     }
 

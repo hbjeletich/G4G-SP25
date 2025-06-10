@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class SceneButton : MonoBehaviour
 {
-    public string targetSceneName;
+    public string targetSceneName; // open game scene by name
     private Button button;
 
     private void Awake()

@@ -21,10 +21,12 @@ public class UIDiagonalScroller : MonoBehaviour
 
     void Update()
     {
+        // move to new pos
         Vector2 newPos = targetRect.anchoredPosition + Vector2.up * scrollSpeed * Time.deltaTime;
 
         if (Mathf.Abs(newPos.y - originalPos.y) > resetDistance)
         {
+            // if we've hit reset distance, reset the scroll
             newPos.y = originalPos.y;
         }
 

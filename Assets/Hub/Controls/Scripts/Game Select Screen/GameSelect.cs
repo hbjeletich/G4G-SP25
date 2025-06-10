@@ -9,18 +9,21 @@ using UnityEngine.Rendering;
 
 public class GameSelect : MonoBehaviour
 {
+    // host to overwrite IP of captury network plugin
     [Header("Captury Settings")]
     public string host = "192.168.10.106";
 
+    // sound
     [Header("Sound Settings")]
     public AudioSource audioSource;
     public AudioClip hoverSound;
 
-    public static GameSelect _instance;
+    public static GameSelect _instance; // singleton
     public AudioSource AudioSource { get; private set; }
 
     public static GameSelect Instance
     {
+        // singleton
         get
         {
             if (_instance == null)
@@ -39,6 +42,7 @@ public class GameSelect : MonoBehaviour
 
     private void Awake()
     {
+        // singleton
         if (_instance != null && _instance != this)
         {
             Destroy(gameObject);
@@ -50,33 +54,13 @@ public class GameSelect : MonoBehaviour
 
     private void Start()
     {
-        CapturySetup();
-        SetupButtons();
+        CapturySetup(); // set host IP on start
     }
 
-    private void SetupButtons()
-    {
-        /*// Find all game selection buttons in the scene
-        Button[] buttons = FindObjectsOfType<Button>();
-
-        foreach (Button button in buttons)
-        {
-            if(button != null)
-            {
-                SceneButton sceneButton = button.GetComponent<SceneButton>();
-                if (sceneButton != null)
-                {
-                    button.onClick.RemoveAllListeners();
-                    string sceneName = sceneButton.targetSceneName;
-
-                    button.onClick.AddListener(() => SceneManager.LoadScene(sceneName));
-                }
-            }
-        }*/
-    }
 
     private void Update()
     {
+        // exit game logic
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             StartCoroutine(ExitGameCoroutine());
@@ -85,9 +69,11 @@ public class GameSelect : MonoBehaviour
 
     private IEnumerator ExitGameCoroutine()
     {
+        // go back to game select
         yield return SceneManager.LoadSceneAsync("GameSelectScene", LoadSceneMode.Single);
         yield return null;
         
+        // stop audio
         if (AudioSource != null && AudioSource.isPlaying)
         {
             AudioSource.Stop();
@@ -98,18 +84,20 @@ public class GameSelect : MonoBehaviour
 
     public void OpenScene(string sceneName)
     {
+        // go to new game scene
         StartCoroutine(LoadSceneAsync(sceneName));
     }
 
     private IEnumerator LoadSceneAsync(string sceneName)
     {
+        // async load scene before load
         AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Single);
         while (!asyncLoad.isDone)
         {
             yield return null;
         }
 
-        // Delay one more frame to ensure scene camera/volume is fully initialized
+        // delay one more frame to ensure scene camera/volume is fully initialized
         yield return null;
 
         UnityEngine.Rendering.VolumeManager.instance.ResetMainStack();
@@ -127,6 +115,7 @@ public class GameSelect : MonoBehaviour
 
     public void HoverButton(float pitch = 1.0f)
     {
+        // play sound on button hover
         if (audioSource != null && hoverSound != null)
         {
             audioSource.pitch = pitch;
@@ -140,6 +129,7 @@ public class GameSelect : MonoBehaviour
 
     public void CapturySetup()
     {
+        // set captury host
         CapturyNetworkPlugin capturyNetworkPlugin = FindObjectOfType<CapturyNetworkPlugin>();
         if (capturyNetworkPlugin != null)
         {

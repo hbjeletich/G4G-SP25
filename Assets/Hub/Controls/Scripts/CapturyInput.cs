@@ -9,8 +9,12 @@ using UnityEngine.InputSystem.Utilities;
 
 public struct CapturyInputState : IInputStateTypeInfo
 {
+    // defining all trackable data
+
     // format code must be exactly 4 characters
-    public FourCC format => new FourCC('C', 'A', 'P', 'T');
+    public FourCC format => new FourCC('C', 'A', 'P', 'T'); // creates a four charr5acter code for captury input
+
+    // defining controls as seen in MotionControls.cs
 
     // foot tracking
     [InputControl(layout = "Axis")]
@@ -68,6 +72,9 @@ public struct CapturyInputState : IInputStateTypeInfo
 [InputControlLayout(stateType = typeof(CapturyInputState), displayName = "Captury Input")]
 public class CapturyInput : InputDevice
 {
+    // creating input device
+
+    // foot tracking
     [InputControl(layout = "Axis", displayName = "Foot Height", usage = "Primary")]
     public AxisControl footHeight { get; private set; }
 
@@ -121,6 +128,7 @@ public class CapturyInput : InputDevice
 
     protected override void FinishSetup()
     {
+        // connects input to receive data
         base.FinishSetup(); // Call base.FinishSetup() first
 
         footHeight = GetChildControl<AxisControl>("footHeight");
@@ -148,6 +156,7 @@ public class CapturyInput : InputDevice
 
     public static void Register()
     {
+        // registers captury input as device
         InputSystem.RegisterLayout<CapturyInput>(
             matches: new InputDeviceMatcher().WithInterface("Custom"),
             name: "CapturyInput");

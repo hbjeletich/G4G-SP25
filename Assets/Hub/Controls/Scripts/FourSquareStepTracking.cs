@@ -57,17 +57,14 @@ public class FourSquareStepTracking : MonoBehaviour
             CapturyInput.Register();
 
             capturyInput = InputSystem.AddDevice<CapturyInput>();
-            Debug.Log($"FourSquareStepTracking: Created new CapturyInput device with ID: {capturyInput.deviceId}");
         }
         else
         {
-            Debug.Log($"FourSquareStepTracking: Using existing CapturyInput device with ID: {capturyInput.deviceId}");
         }
 
         CapturyNetworkPlugin networkPlugin = FindObjectOfType<CapturyNetworkPlugin>();
         if (networkPlugin != null)
         {
-            Debug.Log("FourSquareStepTracking: Subscribing to CapturyNetworkPlugin.SkeletonFound...");
             networkPlugin.SkeletonFound -= OnSkeletonFound;
             networkPlugin.SkeletonFound += OnSkeletonFound;
         }
@@ -112,6 +109,7 @@ public class FourSquareStepTracking : MonoBehaviour
 
     IEnumerator CalibrateStartPosition()
     {
+        // calibration from quadrant one
         Debug.Log("Starting four square calibration. Please stand in quadrant 1 position...");
         yield return new WaitForSeconds(calibrationDelay); // give time for user to get in position
 
@@ -129,6 +127,8 @@ public class FourSquareStepTracking : MonoBehaviour
 
             CapturyInputState state = new CapturyInputState();
             state.quadrantOne = 1.0f;
+
+            // give info to input system
             InputSystem.QueueStateEvent(capturyInput, state);
         }
     }
@@ -258,11 +258,12 @@ public class FourSquareStepTracking : MonoBehaviour
 
     private void CheckAllQuadrantsEntered()
     {
-        bool allEntered = true;
+        bool allEntered = true; // set true
         foreach (bool entered in quadrantEntered.Values)
         {
             if (!entered)
             {
+                // if any unentered, set false
                 allEntered = false;
                 break;
             }
