@@ -37,6 +37,7 @@ namespace Fishing
 
         private void Awake()
         {
+            // getting out inputs
             playerInput = FindObjectOfType<PlayerInput>();
             if (playerInput == null)
             {
@@ -59,6 +60,7 @@ namespace Fishing
             //     fishAction.canceled += OnFishReleased;
             // }
 
+            // enabling hip abduction inputs
             if (leftHipAction != null || rightHipAction != null)
             {
                 leftHipAction.Enable();
@@ -79,6 +81,7 @@ namespace Fishing
             //     fishAction.canceled -= OnFishReleased;
             // }
 
+            // disabling hip abduction inputs
             if (leftHipAction != null || rightHipAction != null)
             {
                 leftHipAction.Disable();
