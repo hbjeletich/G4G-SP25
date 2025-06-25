@@ -2119,7 +2119,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &565573723
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3060,9 +3060,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1196650086}
-  - component: {fileID: 1196650089}
-  - component: {fileID: 1196650088}
   - component: {fileID: 1196650087}
+  - component: {fileID: 1196650088}
   m_Layer: 0
   m_Name: PlayerShip
   m_TagString: Player
@@ -3120,111 +3119,16 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1196650085}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Actions: {fileID: -944628639613478452, guid: 788d0aee30682674880f11ca6a0b3013,
-    type: 3}
-  m_NotificationBehavior: 2
-  m_UIInputModule: {fileID: 0}
-  m_DeviceLostEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  m_DeviceRegainedEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  m_ControlsChangedEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  m_ActionEvents:
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: b397b7a3-ade3-40ea-bdd3-41804734f245
-    m_ActionName: MotionTracking/FootRaise
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: ad06f6e7-0c37-48f5-a221-eaf455501166
-    m_ActionName: MotionTracking/FootLower
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: a2342602-806a-4f36-9dca-0e589404f95d
-    m_ActionName: MotionTracking/FootHeight
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 4b1c3c3c-8751-4fb3-8759-5c1b549effea
-    m_ActionName: MotionTracking/WeightShiftX
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 9feb59db-cf14-4a38-a64d-fd5200a068f9
-    m_ActionName: MotionTracking/WeightShiftLeft
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 9c3b3fb7-832a-486f-a864-9bec6f6a0daa
-    m_ActionName: MotionTracking/WeightShiftRight
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: feb0c326-c82e-463c-ad9e-572723b81e5a
-    m_ActionName: MotionTracking/QuadrantOne
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 2bba24b5-d6c5-4bde-b59a-ac0999963df9
-    m_ActionName: MotionTracking/QuadrantTwo
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 6f3b03d7-5dff-4994-a77d-70bd7ff4f7a4
-    m_ActionName: MotionTracking/QuadrantThree
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: e6db2df5-31db-4d36-85e6-238c5b7b98ab
-    m_ActionName: MotionTracking/QuadrantFour
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 7517b4b8-e667-4e0c-8416-a232f7a7ec62
-    m_ActionName: MotionTracking/AllQuadrantsComplete
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: ec65b7ba-9a97-4a08-ae5d-105762d76435
-    m_ActionName: MotionTracking/LeftHipAbducted
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: adca42d7-40b5-4287-9c62-ebb7b50c6dca
-    m_ActionName: MotionTracking/RightHipAbducted
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 1e53e15a-bb70-47c4-b000-9eddc9c76e65
-    m_ActionName: MotionTracking/AbductionDistance
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: f6c204b5-125a-42a3-b105-df1ba90186f3
-    m_ActionName: MotionTracking/LeftFootHeight
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 08acf6f5-bbdb-4fac-81fc-20576118c02d
-    m_ActionName: MotionTracking/RightFootHeight
-  m_NeverAutoSwitchControlSchemes: 1
-  m_DefaultControlScheme: 
-  m_DefaultActionMap: MotionTracking
-  m_SplitScreenIndex: -1
-  m_Camera: {fileID: 84815508}
---- !u!114 &1196650089
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1196650085}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4f42c0aaa211a7648b8e227d3b3bcc66, type: 3}
+  m_Script: {fileID: 11500000, guid: 1f877cdc02a7c304c82f20d979ee9838, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 500
-  acceleration: 600
-  deceleration: 500
-  tilt: 600
-  maxHealth: 600
+  moveSpeed: 5
+  acceleration: 5
+  deceleration: 5
+  tilt: 10
+  maxHealth: 500
   chestPickupClips:
   - {fileID: 8300000, guid: c4f13d6e69efe9940a96e163b50d46a2, type: 3}
   - {fileID: 8300000, guid: 53a71295bce650c4fa80e88418f67e7c, type: 3}
@@ -3238,7 +3142,7 @@ MonoBehaviour:
     m_Name: 
     m_Type: 0
     m_ExpectedControlType: 
-    m_Id: c7a52bab-f626-4411-9796-6bfb4c2a1764
+    m_Id: 2327650c-b52d-4a61-b36c-7c1db381c8a7
     m_Processors: 
     m_Interactions: 
     m_SingletonActionBindings: []
@@ -3528,7 +3432,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1369933484
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4292,6 +4196,57 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1577169336}
   m_CullTransparentMesh: 1
+--- !u!1 &1585409872
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1585409874}
+  - component: {fileID: 1585409873}
+  m_Layer: 0
+  m_Name: WeightShiftTracking
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1585409873
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1585409872}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dbb57af1a018b4840a88d1bb09421f7c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pelvis: {fileID: 0}
+  pelvisName: Hips
+  weightShiftThreshold: 0.15
+  neutralZoneWidth: 0.05
+  calibrationDelay: 0
+  calibrationFrames: 30
+  debugMode: 1
+--- !u!4 &1585409874
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1585409872}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -15.747958, y: -20.27142, z: 9.565663}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1596980798
 GameObject:
   m_ObjectHideFlags: 0
@@ -5445,3 +5400,4 @@ SceneRoots:
   - {fileID: 565573724}
   - {fileID: 1369933485}
   - {fileID: 97876035}
+  - {fileID: 1585409874}
