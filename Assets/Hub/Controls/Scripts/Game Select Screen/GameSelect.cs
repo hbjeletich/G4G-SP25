@@ -11,7 +11,7 @@ public class GameSelect : MonoBehaviour
 {
     // host to overwrite IP of captury network plugin
     [Header("Captury Settings")]
-    public string host = "192.168.10.106";
+    public string host = "127.0.0.1";
 
     // sound
     [Header("Sound Settings")]

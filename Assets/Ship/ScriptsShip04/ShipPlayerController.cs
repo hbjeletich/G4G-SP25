@@ -31,9 +31,10 @@ public class ShipPlayerController : MonoBehaviour
     private bool isRightHipActive = false;
 
     // New Input System
-    private PlayerInput playerInput; 
+    public InputActionAsset playerInput;
+    [HideInInspector] public InputAction weightShiftXAction;
     // [HideInInspector] public InputAction moveAction;
-    [HideInInspector] public InputAction leftHipAction, rightHipAction, weightShiftLeftAction, weightShiftRightAction, weightShiftXAction; // Motion input actions
+    //[HideInInspector] public InputAction leftHipAction, rightHipAction, weightShiftLeftAction, weightShiftRightAction, weightShiftXAction; // Motion input actions
     // Components
     [HideInInspector] public Rigidbody rb;
     private ShipCameraScroll cameraScroll; 
@@ -46,19 +47,28 @@ public class ShipPlayerController : MonoBehaviour
         // Component initialization
         rb = GetComponent<Rigidbody>();
         cameraScroll = FindObjectOfType<ShipCameraScroll>();
-        playerInput = GetComponent<PlayerInput>();
+        //playerInput = GetComponent<PlayerInput>();
         shipUIManager = FindObjectOfType<ShipUIManager>();
 
         // Input system setup
         capturyInputManager = FindObjectOfType<CapturyInputManager>();
         // moveAction = playerInput.actions["Move"];
-        leftHipAction = playerInput.actions["LeftHipAbducted"];
-        rightHipAction = playerInput.actions["RightHipAbducted"];
-        weightShiftLeftAction = playerInput.actions["WeightShiftLeft"]; 
-        weightShiftRightAction = playerInput.actions["WeightShiftRight"];
-    
 
-    }
+        var motionMap = playerInput.FindActionMap("MotionTracking");
+            if (motionMap != null)
+            {
+                motionMap.Enable();
+                weightShiftXAction = motionMap.FindAction("WeightShiftX");
+            }
+                //leftHipAction = motionMap.FindAction("LeftHipAbducted");
+                //rightHipAction = motionMap.FindAction("RightHipAbducted");
+                //weightShiftLeftAction = motionMap.FindAction("WeightShiftLeft"); 
+                //weightShiftRightAction = motionMap.FindAction("WeightShiftRight");
+                if (motionMap == null) Debug.Log("Could not find map.");
+            if (weightShiftXAction == null) Debug.Log("Could not find action.");
+
+
+        }
 
     private void Start()
     {
@@ -79,31 +89,31 @@ public class ShipPlayerController : MonoBehaviour
     private void OnEnable()
     {
         // moveAction.Enable();
-        leftHipAction.Enable();
+       /* leftHipAction.Enable();
         rightHipAction.Enable();
-        weightShiftLeftAction.Enable();
-        weightShiftRightAction.Enable();
+        weightShiftLeftAction.Enable();*/
+        //weightShiftRightAction.Enable();
         weightShiftXAction.Enable();
 
-        leftHipAction.performed += LeftMotionMovement;
+       /* leftHipAction.performed += LeftMotionMovement;
         rightHipAction.performed += RightMotionMovement;
         leftHipAction.canceled += StopMotionMovement;
-        rightHipAction.canceled += StopMotionMovement;
+        rightHipAction.canceled += StopMotionMovement;*/
     }
 
     private void OnDisable()
     {
         // moveAction.Disable();
-        leftHipAction.Disable();
+        /*leftHipAction.Disable();
         rightHipAction.Disable();
         weightShiftLeftAction.Disable();
-        weightShiftRightAction.Disable();
+        weightShiftRightAction.Disable();*/
         weightShiftXAction.Disable();
 
-        leftHipAction.performed -= LeftMotionMovement;
+      /*  leftHipAction.performed -= LeftMotionMovement;
         rightHipAction.performed -= RightMotionMovement;
         leftHipAction.canceled -= StopMotionMovement;
-        rightHipAction.canceled -= StopMotionMovement;
+        rightHipAction.canceled -= StopMotionMovement;*/
     }
     
     private void FixedUpdate()
@@ -115,7 +125,7 @@ public class ShipPlayerController : MonoBehaviour
     }
 
     #region Movement
-     private void LeftMotionMovement(InputAction.CallbackContext context)
+   /* private void LeftMotionMovement(InputAction.CallbackContext context)
     {
         isLeftHipActive = true;
     }
@@ -139,24 +149,37 @@ public class ShipPlayerController : MonoBehaviour
     private void OnRightHip(InputAction.CallbackContext ctx)
     {
         RightMotionMovement(ctx);
-    }
+    }*/
 
     private void HandleMotionMovement()
     {
-        motionInputX = 0f;
-        if (isLeftHipActive) motionInputX -= 1f;
-        if (isRightHipActive) motionInputX += 1f;
+       //f (hasWon) return;
         
-        float targetSpeed = motionInputX * moveSpeed;
-        float newSpeed = Mathf.Lerp(
-            rb.velocity.x,
-            targetSpeed,
-            Time.fixedDeltaTime * (Mathf.Abs(motionInputX) > 0.01f ? acceleration : deceleration)
-        );
+        float horizontalInput = 0f;
+
+        horizontalInput = weightShiftXAction.ReadValue<float>();
+            Debug.Log(horizontalInput);
+            Debug.Log(weightShiftXAction.ReadValue<float>());
+        float targetSpeed = horizontalInput * moveSpeed;
+        float currentSpeed = rb.velocity.x;
+            float newSpeed;
+
+            if (Mathf.Abs(horizontalInput) > 0.01f)
+            {
+                newSpeed = Mathf.Lerp(currentSpeed, targetSpeed, Time.fixedDeltaTime * acceleration);
+            } else
+            {
+                newSpeed = Mathf.Lerp(currentSpeed, 0f, Time.fixedDeltaTime * deceleration);
+                if (Mathf.Abs(newSpeed) < 0.1f) 
+                {
+                    newSpeed = 0f;
+                }
+            }
+
         rb.velocity = new Vector2(newSpeed, rb.velocity.y);
 
         // Apply tilt
-        float targetTilt = motionInputX * tilt;
+        float targetTilt = horizontalInput * tilt;
         currentTilt = Mathf.Lerp(currentTilt, targetTilt, Time.fixedDeltaTime * 5f);
         rb.MoveRotation(Quaternion.Euler(0, 0, -currentTilt));
     }
@@ -275,12 +298,13 @@ public class ShipPlayerController : MonoBehaviour
     #region Enable/Disable Player Controller
     public void DisablePlayerController()
     {
-        // Disable player movement and input
-        // moveAction.Disable();
-        leftHipAction.Disable();
-        rightHipAction.Disable();
-        rb.velocity = Vector3.zero;
-
+            // Disable player movement and input
+            // moveAction.Disable();
+            /*leftHipAction.Disable();
+            rightHipAction.Disable();
+            rb.velocity = Vector3.zero;*/
+            weightShiftXAction.Disable();
+            rb.velocity = Vector2.zero;
         // Make sure ship doesn't tilt over
         rb.freezeRotation = true;
         rb.isKinematic = true;
@@ -288,9 +312,10 @@ public class ShipPlayerController : MonoBehaviour
 
     public void EnablePlayerController()
     {
-        // moveAction.Enable();
-        leftHipAction.Enable();
-        rightHipAction.Enable();
+            weightShiftXAction.Enable();
+            // moveAction.Enable();
+            /*leftHipAction.Enable();
+        rightHipAction.Enable();*/
         rb.isKinematic = false;
         rb.freezeRotation = false;
     }

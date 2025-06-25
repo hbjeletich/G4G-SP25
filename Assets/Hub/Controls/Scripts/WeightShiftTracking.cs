@@ -103,8 +103,11 @@ public class WeightShiftTracking : MonoBehaviour
 
             for (int i = 0; i < calibrationFrames; i++)
             {
-                sum += pelvis.position;
-                yield return null; // wait a frame
+                if (pelvis != null)
+                {
+                    sum += pelvis.position;
+                    yield return null; // wait a frame
+                }
             }
 
             initialPelvisPosition = sum / calibrationFrames;
