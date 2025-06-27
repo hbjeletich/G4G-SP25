@@ -18,7 +18,7 @@ public class ScissorsMove : MonoBehaviour
     private bool movementAvailable = true;
     private InputAction leftHipAction;
     private InputAction rightHipAction;
-    private InputAction footRaiseAction;
+    //private InputAction footRaiseAction;
 
     public float moveSpeed = 3f; // Speed of movement
     public float rotationSpeed = 5f; // Speed of rotation
@@ -31,7 +31,7 @@ public class ScissorsMove : MonoBehaviour
         var actionMap = inputActions.FindActionMap("MotionTracking");
         leftHipAction = actionMap.FindAction("LeftHipAbducted");
         rightHipAction = actionMap.FindAction("RightHipAbducted");
-        footRaiseAction = actionMap.FindAction("FootRaise");
+        //footRaiseAction = actionMap.FindAction("FootRaise");
 
         /*footRaiseAction.performed += OnFootRaise;
         leftHipAction.performed += OnLeftHip;
@@ -42,20 +42,21 @@ public class ScissorsMove : MonoBehaviour
     public void ChangeScene(string sceneName) {
         SceneManager.LoadScene(sceneName);
     }
-    // void Update()
-    // {
-    //     if (currentWaypointIndex == waypoints.Count) {
-    //         ChangeScene("4. Sewing");
-    // }
-    // }
+    
+        void Update()
+     {
+         if (currentWaypointIndex == waypoints.Count) {
+             ChangeScene("4. Sewing");
+     }
+    }
 
     private void OnEnable()
     {
         leftHipAction.Enable();
         rightHipAction.Enable();
-        footRaiseAction.Enable();
+        //footRaiseAction.Enable();
 
-        footRaiseAction.performed += OnFootRaise;
+        //footRaiseAction.performed += OnFootRaise;
         leftHipAction.performed += OnLeftHip;
         rightHipAction.performed += OnRightHip;
     }
@@ -64,19 +65,19 @@ public class ScissorsMove : MonoBehaviour
     {
         leftHipAction.Disable();
         rightHipAction.Disable();
-        footRaiseAction.Disable();
+        //footRaiseAction.Disable();
 
 
-        footRaiseAction.performed -= OnFootRaise;
+        //footRaiseAction.performed -= OnFootRaise;
         leftHipAction.performed -= OnLeftHip;
         rightHipAction.performed -= OnRightHip;
     }
-    private void OnFootRaise(InputAction.CallbackContext ctx)
+    /*private void OnFootRaise(InputAction.CallbackContext ctx)
     {
         if (currentWaypointIndex == waypoints.Count) {
             ChangeScene("4. Sewing");
     }
-    }
+    }*/
     private void OnLeftHip(InputAction.CallbackContext ctx)
     {
         if (movementAvailable == true && currentWaypointIndex < waypoints.Count)

@@ -20,6 +20,7 @@ public class SewingPathFollower : MonoBehaviour
     private bool isFootRaised = false;
     public GameObject bobbinObject;
     public string triggerName = "PlayAnimation";
+        public float waitTime = 3f;
 
     public SewingSceneUIManager sewingSceneUIManager;
 
@@ -46,11 +47,6 @@ public class SewingPathFollower : MonoBehaviour
     private void OnFootRaise(InputAction.CallbackContext ctx)
     {
         isFootRaised = true;
-
-        if (currentIndex == waypoints.Count) {
-            ChangeScene("5. Success");
-    
-    }
     }
 
     private void OnFootLower(InputAction.CallbackContext ctx)
@@ -95,9 +91,11 @@ public class SewingPathFollower : MonoBehaviour
 
         transform.position = targetPos;
         isMoving = false;
-        if (currentIndex == waypoints.Count)
+        if (currentIndex == waypoints.Count - 1)
         {
             sewingSceneUIManager.SewingShowCompletionUI();
+                yield return new WaitForSeconds(waitTime);
+                ChangeScene("5. Success");
         }
     }
 
