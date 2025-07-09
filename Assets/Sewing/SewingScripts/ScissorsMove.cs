@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.InputSystem;
+using UnityEngine.Events;
 using Sewing;
 
 namespace Sewing {
@@ -23,7 +24,7 @@ public class ScissorsMove : MonoBehaviour
     public float moveSpeed = 3f; // Speed of movement
     public float rotationSpeed = 5f; // Speed of rotation
 
-    public ScissorsSceneUIManager scissorsSceneUIManager; //assign in inspector
+        public UnityEvent OnLastWaypoint;
 
     void Awake()
      {
@@ -130,7 +131,7 @@ public class ScissorsMove : MonoBehaviour
         movementAvailable = true;
         if (currentWaypointIndex == waypoints.Count) 
         {
-            scissorsSceneUIManager.ScissorsShowCompletionUI();
+                OnLastWaypoint.Invoke();
         }
     }
 }

@@ -578,8 +578,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30d7d1861a591e14f91441894855845a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  leftAnkle: {fileID: 0}
-  rightAnkle: {fileID: 0}
   raiseThreshold: 0.1
   leftAnkleName: LeftFoot
   rightAnkleName: RightFoot
@@ -693,7 +691,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 861078806}
-  - component: {fileID: 861078805}
+  - component: {fileID: 861078807}
   m_Layer: 0
   m_Name: CustomerSceneUIManager
   m_TagString: Untagged
@@ -701,20 +699,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &861078805
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 861078804}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 60048123d25892b4890f3a38f3903b22, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  gameDemonstrationSpriteObject: {fileID: 907870452}
-  gameDemonstrationSpriteRenderer: {fileID: 907870453}
 --- !u!4 &861078806
 Transform:
   m_ObjectHideFlags: 0
@@ -730,6 +714,21 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &861078807
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 861078804}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: de77b3614616129429c5086f6d71159b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shownArray: []
+  hiddenArray:
+  - {fileID: 907870451}
 --- !u!1 &899571136
 GameObject:
   m_ObjectHideFlags: 0
@@ -1029,10 +1028,24 @@ MonoBehaviour:
   movementComplete: 0
   waypoint: {fileID: 1995032663}
   moveSpeed: 3
-  customerSceneUIManager: {fileID: 861078805}
   fadeDuration: 1
   targetAlpha: 1
   speechObject: {fileID: 1574641086}
+  OnFadeEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 861078807}
+        m_TargetAssemblyTypeName: Sewing.UIManager, Assembly-CSharp
+        m_MethodName: ShowCompletionUI
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &1222233727
 GameObject:
   m_ObjectHideFlags: 0

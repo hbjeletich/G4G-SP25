@@ -5,6 +5,7 @@ using UnityEngine.InputSystem;
 using Sewing;
 using System.Diagnostics;
 using UnityEngine.SceneManagement;
+using UnityEngine.Events;
 
 namespace Sewing{
     
@@ -22,7 +23,7 @@ public class SewingPathFollower : MonoBehaviour
     public string triggerName = "PlayAnimation";
         public float waitTime = 3f;
 
-    public SewingSceneUIManager sewingSceneUIManager;
+        public UnityEvent OnPathComplete;
 
     void Awake()
     {   
@@ -93,7 +94,7 @@ public class SewingPathFollower : MonoBehaviour
         isMoving = false;
         if (currentIndex == waypoints.Count - 1)
         {
-            sewingSceneUIManager.SewingShowCompletionUI();
+                OnPathComplete.Invoke();
                 yield return new WaitForSeconds(waitTime);
                 ChangeScene("5. Success");
         }

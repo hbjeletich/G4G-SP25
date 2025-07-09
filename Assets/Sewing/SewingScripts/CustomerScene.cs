@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.InputSystem;
 using Sewing;
+using UnityEngine.Events;
 
 namespace Sewing
 {
@@ -14,7 +15,7 @@ namespace Sewing
     public bool movementComplete = false;
     public Transform waypoint;
     public float moveSpeed = 3f; // Speed of movement
-    public CustomerSceneUIManager customerSceneUIManager;  // Assign in inspector wahoo
+    //public CustomerSceneUIManager customerSceneUIManager;  // Assign in inspector wahoo
 
     public float fadeDuration = 1f;
     public float targetAlpha = 1f;
@@ -23,6 +24,8 @@ namespace Sewing
     private bool isFading = false;
 
     public GameObject speechObject;
+
+    public UnityEvent OnFadeEvent;
 
      void Awake()
     {
@@ -34,11 +37,11 @@ namespace Sewing
     {
         StartCoroutine(MoveToWaypoint(waypoint));
 
-        Renderer renderer = speechObject.GetComponent<Renderer>();
-        originalColor = renderer.material.color;
+        SpriteRenderer renderer = speechObject.GetComponent<SpriteRenderer>();
+        originalColor = renderer.color;
         Color transparentColor = originalColor;
         transparentColor.a = 0f;
-        renderer.material.color = transparentColor;
+        renderer.color = transparentColor;
     }
 
     private void OnEnable()
@@ -93,6 +96,7 @@ namespace Sewing
 
     IEnumerator Fade(float startAlpha, float endAlpha, float duration)
     {
+        OnFadeEvent.Invoke();
         float time = 0;
         float initialAlpha = originalColor.a;
 
@@ -101,16 +105,15 @@ namespace Sewing
             float t = time / duration;
             float newAlpha = Mathf.Lerp(startAlpha, endAlpha, t);
 
-            if (speechObject.GetComponent<Renderer>() != null) // For 3D objects
+            if (speechObject.GetComponent<SpriteRenderer>() != null) // For 3D objects
             {
-                speechObject.GetComponent<Renderer>().material.color = new Color(originalColor.r, originalColor.g, originalColor.b, newAlpha);
+                speechObject.GetComponent<SpriteRenderer>().color = new Color(originalColor.r, originalColor.g, originalColor.b, newAlpha);
             }
 
             yield return null;
             time += Time.deltaTime;
         }
         movementComplete = true;
-        customerSceneUIManager.ShowCompletionUI();
         isFading = false; // Set to false after the fade is complete
     }
 }
