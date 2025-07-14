@@ -24,6 +24,7 @@ public class SewingPathFollower : MonoBehaviour
         public float waitTime = 3f;
 
         public UnityEvent OnPathComplete;
+        public bool pathComplete = false;
 
     void Awake()
     {   
@@ -66,6 +67,7 @@ public class SewingPathFollower : MonoBehaviour
                 int nextIndex = currentIndex + 1;
                 if (nextIndex >= waypoints.Count)
                 {
+                    pathComplete = true;
                     return; // Reached end, don't continue
                 }
 
@@ -92,7 +94,8 @@ public class SewingPathFollower : MonoBehaviour
 
         transform.position = targetPos;
         isMoving = false;
-        if (currentIndex == waypoints.Count - 1)
+        //if (currentIndex == waypoints.Count - 1 && pathComplete)
+        if(pathComplete)
         {
                 OnPathComplete.Invoke();
                 yield return new WaitForSeconds(waitTime);
