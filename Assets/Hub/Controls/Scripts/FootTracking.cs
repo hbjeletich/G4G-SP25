@@ -128,4 +128,5 @@ public class FootTracking : MonoBehaviour
         // send state data to input system
         InputSystem.QueueStateEvent(capturyInput, state);
     }
+
 }

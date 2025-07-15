@@ -9,112 +9,158 @@ using UnityEngine.Events;
 namespace Sewing
 {
     public class CustomerScene : MonoBehaviour
-{
-    [SerializeField] private InputActionAsset inputActions;
-    private InputAction footRaiseAction;
-    public bool movementComplete = false;
-    public Transform waypoint;
-    public float moveSpeed = 3f; // Speed of movement
-    //public CustomerSceneUIManager customerSceneUIManager;  // Assign in inspector wahoo
-
-    public float fadeDuration = 1f;
-    public float targetAlpha = 1f;
-
-    private Color originalColor;
-    private bool isFading = false;
-
-    public GameObject speechObject;
-
-    public UnityEvent OnFadeEvent;
-
-     void Awake()
     {
-        var actionMap = inputActions.FindActionMap("MotionTracking");
-        footRaiseAction = actionMap.FindAction("FootRaise");
-        footRaiseAction.performed += OnFootRaise;
-    }
-   void Start ()
-    {
-        StartCoroutine(MoveToWaypoint(waypoint));
+        [SerializeField] private InputActionAsset inputActions;
+        private InputAction footRaiseAction;
+        private bool movementComplete = false;
+        private bool movementStarted = false;
+        public Transform waypoint;
+        public float moveSpeed = 3f; // Speed of movement
+        //public CustomerSceneUIManager customerSceneUIManager;  // Assign in inspector wahoo
 
-        SpriteRenderer renderer = speechObject.GetComponent<SpriteRenderer>();
-        originalColor = renderer.color;
-        Color transparentColor = originalColor;
-        transparentColor.a = 0f;
-        renderer.color = transparentColor;
-    }
+        public float fadeDuration = 1f;
+        public float targetAlpha = 1f;
+        private bool isFading = false;
 
-    private void OnEnable()
-    {
-        footRaiseAction.Enable();
-    }
+        private Color originalColor;
 
-    private void OnDisable()
-    {
-        footRaiseAction.Disable();
-    }
+        public GameObject speechObject;
 
-    private void OnFootRaise(InputAction.CallbackContext ctx)
-    {
-        if (movementComplete == true){
-        ChangeScene("3. Scissors");
-        }
-    }
-    public void ChangeScene(string sceneName) 
-    {
-        SceneManager.LoadScene(sceneName);
-    }
+        public UnityEvent OnFadeEvent;
 
-   
-    private IEnumerator MoveToWaypoint(Transform waypoint)
-    {
-        Vector3 startPosition = transform.position;
-        Vector3 targetPosition = waypoint.position;
-        float journeyLength = Vector3.Distance(startPosition, targetPosition);
-        float startTime = Time.time;
+        private Vector3 debugStartPosition;
 
-        while (Vector3.Distance(transform.position, targetPosition) > 0.05f)
+
+        void Awake()
         {
-            float distanceCovered = (Time.time - startTime) * moveSpeed;
-            float fractionOfJourney = distanceCovered / journeyLength;
+            //Debug.Log($"[{Time.time:F2}] CustomerScene Awake called on {gameObject.name}");
+            //Debug.Log($"Awake Stack Trace:\n{System.Environment.StackTrace}");
 
-            transform.position = Vector3.Lerp(startPosition, targetPosition, fractionOfJourney);
-           
-            yield return null; // Wait for the next frame
+            var actionMap = inputActions.FindActionMap("MotionTracking");
+            footRaiseAction = actionMap.FindAction("FootRaise");
+            footRaiseAction.performed += OnFootRaise;
         }
-
-        transform.position = targetPosition;
-        Debug.Log("Person done moving!");
-        FadeIn();
-    }
-    public void FadeIn()
-    {
-        isFading = true;
-        StartCoroutine(Fade(0, targetAlpha, fadeDuration)); // Fade from 0 to targetAlpha
-    
-    }
-
-    IEnumerator Fade(float startAlpha, float endAlpha, float duration)
-    {
-        OnFadeEvent.Invoke();
-        float time = 0;
-        float initialAlpha = originalColor.a;
-
-        while (time < duration)
+        void Start ()
         {
-            float t = time / duration;
-            float newAlpha = Mathf.Lerp(startAlpha, endAlpha, t);
-
-            if (speechObject.GetComponent<SpriteRenderer>() != null) // For 3D objects
+            //Debug.Log($"[{Time.time:F2}] CustomerScene Start called - Position: {transform.position}");
+            if (!movementStarted)
             {
-                speechObject.GetComponent<SpriteRenderer>().color = new Color(originalColor.r, originalColor.g, originalColor.b, newAlpha);
+                movementStarted = true;
+                StartCoroutine(MoveToWaypoint(waypoint));
             }
 
-            yield return null;
-            time += Time.deltaTime;
+            SpriteRenderer renderer = speechObject.GetComponent<SpriteRenderer>();
+            originalColor = renderer.color;
+            Color transparentColor = originalColor;
+            transparentColor.a = 0f;
+            renderer.color = transparentColor;
         }
-        movementComplete = true;
-        isFading = false; // Set to false after the fade is complete
+        void Update()
+        {
+            // Check if position suddenly changed
+            //if (Vector3.Distance(transform.position, debugStartPosition) < 0.1f && movementStarted && !movementComplete)
+            //{
+            //    Debug.LogWarning($"[{Time.time:F2}] POSITION RESET DETECTED! Back to start position!");
+            //}
+        }
+
+        private void OnEnable()
+        {
+            footRaiseAction.Enable();
+        }
+
+        private void OnDisable()
+        {
+            footRaiseAction.Disable();
+        }
+
+        private void OnFootRaise(InputAction.CallbackContext ctx)
+        {
+
+            if (movementComplete == true)
+            {
+                Debug.Log("Changing scene to Scissors");
+                ChangeScene("3. Scissors");
+            } else
+            {
+                Debug.Log("Movement not complete, ignoring foot raise");
+            }
+        }
+        public void ChangeScene(string sceneName) 
+        {
+            SceneManager.LoadScene(sceneName);
+        }
+
+
+        private IEnumerator MoveToWaypoint(Transform waypoint)
+        {
+            Vector3 startPosition = transform.position;
+            Vector3 targetPosition = waypoint.position;
+            float journeyLength = Vector3.Distance(startPosition, targetPosition);
+            float elapsedTime = 0f; 
+
+            while (Vector3.Distance(transform.position, targetPosition) > 0.05f)
+            {
+                Vector3 positionBefore = transform.position;
+
+                elapsedTime += Time.deltaTime;
+                float fractionOfJourney = (elapsedTime * moveSpeed) / journeyLength;
+
+                fractionOfJourney = Mathf.Clamp01(fractionOfJourney);
+
+                transform.position = Vector3.Lerp(startPosition, targetPosition, fractionOfJourney);
+
+                if (Vector3.Distance(transform.position, positionBefore) > 1f)
+                {
+                    Debug.LogError($"[{Time.time:F2}] EXTERNAL POSITION CHANGE DETECTED! From: {positionBefore} To: {transform.position}");
+                }
+
+                yield return null;
+            }
+            transform.position = targetPosition;
+            Debug.Log("Person done moving!");
+            FadeIn();
+        }
+        public void FadeIn()
+        {
+            isFading = true;
+            StartCoroutine(Fade(0, targetAlpha, fadeDuration));
+    
+        }
+
+        IEnumerator Fade(float startAlpha, float endAlpha, float duration)
+        {
+            OnFadeEvent.Invoke();
+            float time = 0;
+            float initialAlpha = originalColor.a;
+
+            while (time < duration)
+            {
+                float t = time / duration;
+                float newAlpha = Mathf.Lerp(startAlpha, endAlpha, t);
+
+                if (speechObject.GetComponent<SpriteRenderer>() != null) // For 3D objects
+                {
+                    speechObject.GetComponent<SpriteRenderer>().color = new Color(originalColor.r, originalColor.g, originalColor.b, newAlpha);
+                }
+
+                yield return null;
+                time += Time.deltaTime;
+            }
+            movementComplete = true;
+            isFading = false; // Set to false after the fade is complete
+        }
+
+        void OnDestroy()
+        {
+            Debug.Log($"[{Time.time:F2}] CustomerScene OnDestroy called on {gameObject.name}");
+            Debug.Log($"Destroy Stack Trace:\n{System.Environment.StackTrace}");
+
+            if (footRaiseAction != null)
+            {
+                footRaiseAction.performed -= OnFootRaise;
+                footRaiseAction.Disable();
+            }
+        }
     }
-}
 }

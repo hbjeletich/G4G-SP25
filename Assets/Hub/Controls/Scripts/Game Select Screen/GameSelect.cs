@@ -17,6 +17,7 @@ public class GameSelect : MonoBehaviour
     [Header("Sound Settings")]
     public AudioSource audioSource;
     public AudioClip hoverSound;
+    public AudioSource localSource;
 
     public static GameSelect _instance; // singleton
     public AudioSource AudioSource { get; private set; }
@@ -50,6 +51,12 @@ public class GameSelect : MonoBehaviour
         }
         _instance = this;
         DontDestroyOnLoad(gameObject);
+
+        localSource = GetComponent<AudioSource>();
+        if(localSource == null)
+        {
+            localSource = gameObject.AddComponent<AudioSource>();
+        }
     }
 
     private void Start()
@@ -78,6 +85,12 @@ public class GameSelect : MonoBehaviour
         {
             AudioSource.Stop();
         }
+
+        if(localSource != null && localSource.isPlaying)
+        {
+            localSource.Stop();
+        }
+
         UnityEngine.Rendering.VolumeManager.instance.ResetMainStack();
     }
 

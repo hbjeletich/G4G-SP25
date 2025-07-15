@@ -5,36 +5,47 @@ using UnityEngine.SceneManagement;
 using UnityEngine.InputSystem;
 using Sewing;
 
-namespace Sewing{
-public class IntroSceneTransition : MonoBehaviour
+namespace Sewing
 {
-    [SerializeField] private InputActionAsset inputActions;
-    private InputAction footRaiseAction;
-    // Start is called before the first frame update
-    void Awake()
+    public class IntroSceneTransition : MonoBehaviour
     {
-        var actionMap = inputActions.FindActionMap("MotionTracking");
-        footRaiseAction = actionMap.FindAction("FootRaise");
-        footRaiseAction.performed += OnFootRaise;
-    }
+        [SerializeField] private InputActionAsset inputActions;
+        private InputAction footRaiseAction;
+        // Start is called before the first frame update
+        void Awake()
+        {
+            var actionMap = inputActions.FindActionMap("MotionTracking");
+            footRaiseAction = actionMap.FindAction("FootRaise");
+            footRaiseAction.performed += OnFootRaise;
+            SoundManager.StartBGM();
+        }
 
-    private void OnEnable()
-    {
-        footRaiseAction.Enable();
-    }
+        private void OnEnable()
+        {
+            footRaiseAction.Enable();
+        }
 
-    private void OnDisable()
-    {
-        footRaiseAction.Disable();
-    }
+        private void OnDisable()
+        {
+            footRaiseAction.Disable();
+        }
 
-    private void OnFootRaise(InputAction.CallbackContext ctx)
-    {
-        ChangeScene("2. Customer");
-    }
+        private void OnFootRaise(InputAction.CallbackContext ctx)
+        {
+            ChangeScene("2. Customer");
+        }
 
-    public void ChangeScene(string sceneName) {
-        SceneManager.LoadScene(sceneName);
+        public void ChangeScene(string sceneName) {
+            SceneManager.LoadScene(sceneName);
+        }
+
+        void OnDestroy()
+        {
+            if (footRaiseAction != null)
+            {
+                footRaiseAction.performed -= OnFootRaise;
+                footRaiseAction.Disable();
+            }
+        }
     }
-}
 }
