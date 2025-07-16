@@ -1,44 +1,89 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 namespace Ship
 {
-public class ShipTitleScreenButtons : MonoBehaviour
-{
-    [Header("Button References")]
-    public GameObject tutorialButton;
-    public GameObject mainGameButton;
-    void Start() {}
-
-    public void TutorialButtonPressed()
+    public class ShipTitleScreenButtons : MonoBehaviour
     {
-        StartCoroutine(LoadTutorialScene());
-    }   
+        [Header("Button References")]
+        public Button menuButton;
+        public Button mainGameButton;
 
-    public void MainGameButtonPressed()
-    {
-        StartCoroutine(LoadMainGameScene());
-    }
+        [Header("Menu Screen References")]
+        public GameObject menuPanel;
+        public Button oneMinuteButton;
+        public Button threeMinuteButton;
+        public Button fiveMinuteButton;
+        public Button infiniteButton;
+        public Button backButton;
 
-    private IEnumerator LoadTutorialScene()
-    {
-        // Load the tutorial scene
-        AsyncOperation asyncLoad = UnityEngine.SceneManagement.SceneManager.LoadSceneAsync("ShipTutorial");
-        while (!asyncLoad.isDone)
+        private GameMode selectedGameMode = GameMode.OneMinute;
+
+        private bool menuOpen = false;
+        void Start() 
         {
-            yield return null;
+            menuOpen = false;
+            menuPanel.SetActive(false);
+            
+            // setup listeners
+            menuButton.onClick.AddListener(MenuButtonPressed);
+            mainGameButton.onClick.AddListener(MainGameButtonPressed);
+
+            oneMinuteButton.onClick.AddListener(() => StartGameWithMode(GameMode.OneMinute));
+            threeMinuteButton.onClick.AddListener(() => StartGameWithMode(GameMode.ThreeMinute));
+            fiveMinuteButton.onClick.AddListener(() => StartGameWithMode(GameMode.FiveMinute));
+            infiniteButton.onClick.AddListener(() => StartGameWithMode(GameMode.Infinite));
+
+            backButton.onClick.AddListener(BackButtonPressed);
+        }
+
+        public void MenuButtonPressed()
+        {
+            menuOpen = true;
+            menuPanel.SetActive(true);
+        }   
+
+        public void MainGameButtonPressed()
+        {
+            StartCoroutine(LoadMainGameScene());
+        }
+
+        public void BackButtonPressed()
+        {
+            menuOpen = false;
+            menuPanel.SetActive(false);
+        }
+
+        private IEnumerator LoadMainGameScene()
+        {
+            // Load the main game scene
+            AsyncOperation asyncLoad = SceneManager.LoadSceneAsync("ShipMainLevel");
+            while (!asyncLoad.isDone)
+            {
+                yield return null;
+            }
+        }
+        public static GameMode GetSelectedGameMode()
+        {
+            return (GameMode)PlayerPrefs.GetInt("SelectedGameMode", (int)GameMode.Infinite);
+        }
+
+        private void StartGameWithMode(GameMode mode)
+        {
+            selectedGameMode = mode;
+            PlayerPrefs.SetInt("SelectedGameMode", (int)mode);
+            PlayerPrefs.Save();
+
+            Debug.Log($"StartGameWithMode called with: {mode}");
+            Debug.Log($"Saved to PlayerPrefs as int: {(int)mode}");
+
+            // Immediately test reading it back
+            int readBack = PlayerPrefs.GetInt("SelectedGameMode", -999);
+            Debug.Log($"Immediate readback test: {readBack}");
+            Debug.Log($"Readback as enum: {(GameMode)readBack}");
         }
     }
-
-    private IEnumerator LoadMainGameScene()
-    {
-        // Load the main game scene
-        AsyncOperation asyncLoad = UnityEngine.SceneManagement.SceneManager.LoadSceneAsync("ShipMainGame");
-        while (!asyncLoad.isDone)
-        {
-            yield return null;
-        }
-    }
-}
 }

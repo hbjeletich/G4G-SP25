@@ -108,7 +108,7 @@ namespace Ship
 
             float horizontalInput = 0f;
 
-            horizontalInput = weightShiftXAction.ReadValue<float>();
+            horizontalInput = -weightShiftXAction.ReadValue<float>();
             Debug.Log(horizontalInput);
             Debug.Log(weightShiftXAction.ReadValue<float>());
             float targetSpeed = horizontalInput * moveSpeed;
