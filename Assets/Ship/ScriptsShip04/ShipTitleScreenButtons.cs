@@ -19,6 +19,8 @@ namespace Ship
         public Button fiveMinuteButton;
         public Button infiniteButton;
         public Button backButton;
+        public Slider speedSlider;
+        private float currentSpeed = 2f;
 
         private GameMode selectedGameMode = GameMode.OneMinute;
 
@@ -38,6 +40,8 @@ namespace Ship
             infiniteButton.onClick.AddListener(() => StartGameWithMode(GameMode.Infinite));
 
             backButton.onClick.AddListener(BackButtonPressed);
+
+            speedSlider.onValueChanged.AddListener(SetGameSpeed);
         }
 
         public void MenuButtonPressed()
@@ -55,6 +59,11 @@ namespace Ship
         {
             menuOpen = false;
             menuPanel.SetActive(false);
+        }
+
+        public void SetGameSpeed(float speed)
+        {
+            PlayerPrefs.SetInt("SelectedGameSpeed", (int)speed + 1);
         }
 
         private IEnumerator LoadMainGameScene()
@@ -79,11 +88,6 @@ namespace Ship
 
             Debug.Log($"StartGameWithMode called with: {mode}");
             Debug.Log($"Saved to PlayerPrefs as int: {(int)mode}");
-
-            // Immediately test reading it back
-            int readBack = PlayerPrefs.GetInt("SelectedGameMode", -999);
-            Debug.Log($"Immediate readback test: {readBack}");
-            Debug.Log($"Readback as enum: {(GameMode)readBack}");
         }
     }
 }

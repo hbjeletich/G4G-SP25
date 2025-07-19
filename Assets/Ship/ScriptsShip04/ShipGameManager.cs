@@ -78,6 +78,13 @@ namespace Ship
             // Set the game mode
             gameModeManager.SetGameMode(selectedMode);
 
+            ShipCameraScroll camScroll = FindObjectOfType<ShipCameraScroll>();
+            int savedSpeedInt = PlayerPrefs.GetInt("SelectedGameSpeed", 2);
+            if (camScroll!=null)
+            {
+                camScroll.scrollSpeed = savedSpeedInt;
+            }
+
             Debug.Log($"Initialized game with mode: {selectedMode}");
         }
 

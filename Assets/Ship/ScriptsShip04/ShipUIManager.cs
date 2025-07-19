@@ -37,30 +37,6 @@ namespace Ship
             scoreText.text = "Score: " + score;
         }
 
-        public void UpdateHealth(float health)
-        {
-            StartCoroutine(UpdateHealthBar(health));
-            
-            // float normalized = Mathf.Clamp01(health / 4f);
-            // healthBarFill.fillAmount = normalized;
-        }
-
-        private IEnumerator UpdateHealthBar(float targetHealth)
-        {
-            float currentFill = healthBarFill.fillAmount;
-            float elapsedTime = 0f;
-            float duration = 0.5f;
-
-            while (elapsedTime < duration)
-            {
-            elapsedTime += Time.deltaTime;
-            healthBarFill.fillAmount = Mathf.Lerp(currentFill, Mathf.Clamp01(targetHealth / 4f), elapsedTime / duration);
-            yield return null;
-            }
-
-            healthBarFill.fillAmount = Mathf.Clamp01(targetHealth / 4f);
-        }
-
         public void RedViginette()
         {
             StartCoroutine(RedViginetteCoroutine());

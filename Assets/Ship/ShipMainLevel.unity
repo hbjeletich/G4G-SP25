@@ -2282,7 +2282,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 438.86115}
+  m_AnchoredPosition: {x: 0, y: 397}
   m_SizeDelta: {x: 738.7294, y: 147.7936}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &813982787
@@ -2305,7 +2305,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: New Text
+  m_text: 0:00
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 9895a747723cbe643ad78eb655db4bdf, type: 2}
   m_sharedMaterial: {fileID: -4012548125909401892, guid: 9895a747723cbe643ad78eb655db4bdf,
@@ -2333,8 +2333,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 125
-  m_fontSizeBase: 125
+  m_fontSize: 132
+  m_fontSizeBase: 132
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -2408,7 +2408,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &889943144
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3260,14 +3260,12 @@ MonoBehaviour:
   acceleration: 5
   deceleration: 5
   tilt: 10
-  maxHealth: 500
   chestPickupClips:
   - {fileID: 8300000, guid: c4f13d6e69efe9940a96e163b50d46a2, type: 3}
   - {fileID: 8300000, guid: 53a71295bce650c4fa80e88418f67e7c, type: 3}
   - {fileID: 8300000, guid: a4528a7cc456533458b72c30f4039643, type: 3}
   - {fileID: 8300000, guid: 58844c675e03f304fbaf593308d9c7b5, type: 3}
   damageClip: {fileID: 8300000, guid: 46d100478cda88f44afd0b37bbd7676f, type: 3}
-  currentHealth: 0
   playerInput: {fileID: -944628639613478452, guid: 788d0aee30682674880f11ca6a0b3013,
     type: 3}
   weightShiftXAction:
@@ -4368,7 +4366,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1577169337
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4747,7 +4745,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &2018993095
 RectTransform:
   m_ObjectHideFlags: 0

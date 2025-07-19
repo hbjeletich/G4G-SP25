@@ -72,12 +72,9 @@ public class ShipPlayerController : MonoBehaviour
 
     private void Start()
     {
-        currentHealth = maxHealth;
-
         if (shipUIManager != null)
         {
             shipUIManager.UpdateScore(localScenePoints);
-            shipUIManager.UpdateHealth(currentHealth);
         }
         else
         {
@@ -236,8 +233,6 @@ public class ShipPlayerController : MonoBehaviour
         if (other.CompareTag("Obstacle"))
         {
             // Deplete health and play sound
-            HealthDeplete(1); 
-            currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth); // Ensure health doesn't go below 0
             ShipAudioManager.instance.SetSFXPitch(1f);
             ShipAudioManager.instance.SetSFXVolume(0.25f);
             ShipAudioManager.instance.PlaySFX(damageClip);
@@ -278,20 +273,6 @@ public class ShipPlayerController : MonoBehaviour
         if (other.CompareTag("ChestParticles"))
         {
             Destroy(other.gameObject);
-        }
-    }
-
-    public void HealthDeplete(int damage)
-    {
-        currentHealth -= damage;
-        currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);  // Ensure health doesn't go below 0 (mainly for testing purposes)
-
-        if (shipUIManager != null)
-            shipUIManager.UpdateHealth(currentHealth);
-
-        if (currentHealth <= 0)
-        {
-            ShipGameManager.instance.TriggerGameOver();
         }
     }
 

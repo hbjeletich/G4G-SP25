@@ -18,10 +18,8 @@ namespace Ship
         private float currentTilt = 0f;
 
         [Header("Obstacles and Pickups")]
-        public float maxHealth = 5;
         public AudioClip[] chestPickupClips;
         public AudioClip damageClip;
-        [HideInInspector] public float currentHealth;
         private int localScenePoints = 0;
         private bool hasWon = false;
 
@@ -67,12 +65,10 @@ namespace Ship
 
         private void Start()
         {
-            currentHealth = maxHealth;
-
+ 
             if (shipUIManager != null)
             {
                 shipUIManager.UpdateScore(localScenePoints);
-                shipUIManager.UpdateHealth(currentHealth);
             }
             else
             {
@@ -147,6 +143,7 @@ namespace Ship
                     transform.position.z
                 );
                 rb.MovePosition(targetPosition);
+           //   Debug.Log(rb.velocity.y);
             }
         }
         #endregion
@@ -155,9 +152,8 @@ namespace Ship
         {
             if (other.CompareTag("Obstacle"))
             {
-                // Deplete health and play sound
-                HealthDeplete(1);
-                currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth); // Ensure health doesn't go below 0
+                // play sound
+              
                 ShipAudioManager.instance.SetSFXPitch(1f);
                 ShipAudioManager.instance.SetSFXVolume(0.25f);
                 ShipAudioManager.instance.PlaySFX(damageClip);
@@ -171,7 +167,7 @@ namespace Ship
 
                 // Stop ship movement
                 rb.velocity = new Vector3(0f, rb.velocity.y, 0f);
-                Debug.Log("Hit an obstacle! Velocity cleared. Health: " + currentHealth);
+                Debug.Log("Hit an obstacle! Velocity cleared.");
             }
 
             if (other.CompareTag("Chest"))
@@ -198,20 +194,6 @@ namespace Ship
             if (other.CompareTag("ChestParticles"))
             {
                 Destroy(other.gameObject);
-            }
-        }
-
-        public void HealthDeplete(int damage)
-        {
-            currentHealth -= damage;
-            currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);  // Ensure health doesn't go below 0 (mainly for testing purposes)
-
-            if (shipUIManager != null)
-                shipUIManager.UpdateHealth(currentHealth);
-
-            if (currentHealth <= 0)
-            {
-                ShipGameManager.instance.TriggerGameOver();
             }
         }
 
