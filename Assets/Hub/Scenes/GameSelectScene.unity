@@ -379,15 +379,16 @@ RectTransform:
   m_GameObject: {fileID: 252340899}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.25719175, y: 0.43465418, z: 0.43465418}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_LocalScale: {x: 0.25719172, y: 0.43465403, z: 0.43465403}
+  m_ConstrainProportionsScale: 1
+  m_Children:
+  - {fileID: 2098459583}
   m_Father: {fileID: 288853545}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.29565182, y: 36.3}
-  m_SizeDelta: {x: 183.736, y: 108}
+  m_AnchoredPosition: {x: -1.6707082, y: 36.5}
+  m_SizeDelta: {x: 192, y: 108}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &252340901
 MonoBehaviour:
@@ -409,7 +410,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: b7664a28f2012224bba1ceda69ca70bb, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 196b6e45ca767a743aa2fbc2acfce143, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -577,6 +578,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   targetSceneName: GolfStartingScreen
+  attachedImages:
+  - {fileID: 326565986}
+  - {fileID: 1303683553}
 --- !u!114 &262130245
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -739,6 +743,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   targetSceneName: ShipTitleScreen
+  attachedImages:
+  - {fileID: 2092188974}
+  - {fileID: 252340901}
 --- !u!114 &288853550
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -976,6 +983,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   targetSceneName: 1. Title
+  attachedImages:
+  - {fileID: 2064718751}
+  - {fileID: 700889337}
 --- !u!114 &328689964
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4098,6 +4108,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   targetSceneName: FishingGame
+  attachedImages:
+  - {fileID: 1276268741}
+  - {fileID: 1733113932}
 --- !u!114 &1963613897
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9092,6 +9105,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   targetSceneName: SwimmingStartingScene
+  attachedImages:
+  - {fileID: 593378147}
+  - {fileID: 353989767}
 --- !u!114 &1998931920
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9691,6 +9707,81 @@ CanvasRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2092188972}
+  m_CullTransparentMesh: 1
+--- !u!1 &2098459582
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2098459583}
+  - component: {fileID: 2098459585}
+  - component: {fileID: 2098459584}
+  m_Layer: 3
+  m_Name: Image
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &2098459583
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2098459582}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0.6, y: 0.5617642, z: 0.5617642}
+  m_ConstrainProportionsScale: 1
+  m_Children: []
+  m_Father: {fileID: 252340900}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 49, y: 2}
+  m_SizeDelta: {x: 135, y: 198.3}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &2098459584
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2098459582}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 21300000, guid: d14c4442975636c469f369b140fab263, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &2098459585
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2098459582}
   m_CullTransparentMesh: 1
 --- !u!1 &2125861675
 GameObject:
