@@ -44,7 +44,6 @@ namespace Swimming
             }
 
             _instance = this;
-            DontDestroyOnLoad(gameObject);
 
             gameOverText.SetActive(false);
         }
@@ -79,7 +78,7 @@ namespace Swimming
         {
             yield return new WaitForSeconds(gameOverTimer);
 
-            SceneManager.LoadScene("SwimmingStartingScene");
+            SceneManager.LoadScene("GameSelectScene");
         }
     }
 }
