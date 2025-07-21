@@ -148,6 +148,24 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "SquatStarted",
+                    "type": "Button",
+                    "id": "a18f4eec-ca49-445e-98c4-470d03022d72",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "SquatCompleted",
+                    "type": "Button",
+                    "id": "03e4f917-55c2-42a0-b33a-4dbcb824fac3",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -324,6 +342,28 @@
                     "processors": "",
                     "groups": "",
                     "action": "RightFootHeight",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "bcc24e9e-ac57-4d07-bb0a-67dd81defc3a",
+                    "path": "<CapturyInput>/squatStarted",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "SquatStarted",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "ecb6c647-e0b4-4157-850a-15deea4ccc7a",
+                    "path": "<CapturyInput>/squatCompleted",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "SquatCompleted",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

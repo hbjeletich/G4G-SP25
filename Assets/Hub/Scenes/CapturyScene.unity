@@ -256,20 +256,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe0b4bd99dd4eb54db31134417dbd87f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  InitializationSettings: {fileID: 11400000, guid: deb34920628b62445aa0463af0679262,
-    type: 2}
-  basePath: 
-  language: 
-  defaultPoolSize: 0
-  lowerPoolSize: 0
-  streamingPoolSize: 0
-  memoryCutoffThreshold: 0
-  monitorPoolSize: 0
-  monitorQueuePoolSize: 0
-  callbackManagerBufferSize: 0
-  spatialAudioPoolSize: 0
-  maxSoundPropagationDepth: 0
-  engineLogging: 0
 --- !u!4 &70480302
 Transform:
   m_ObjectHideFlags: 0
@@ -364,12 +350,118 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 94571766}
   m_CullTransparentMesh: 1
+--- !u!1 &167627494
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 167627496}
+  - component: {fileID: 167627495}
+  m_Layer: 0
+  m_Name: WwiseGlobal
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &167627495
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 167627494}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8f56afb0c2f3e984e852ab8d6ad6c099, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  InitializationSettings: {fileID: 11400000, guid: f3e8f9079477ce64fa0cf8ce02b98ef6,
+    type: 2}
+  basePath: 
+  language: 
+  defaultPoolSize: 0
+  lowerPoolSize: 0
+  streamingPoolSize: 0
+  memoryCutoffThreshold: 0
+  monitorPoolSize: 0
+  monitorQueuePoolSize: 0
+  callbackManagerBufferSize: 0
+  spatialAudioPoolSize: 0
+  maxSoundPropagationDepth: 0
+  engineLogging: 0
+--- !u!4 &167627496
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 167627494}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &629404731 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: ab78030e69a85bd4fa93d69411643cb1,
     type: 3}
   m_PrefabInstance: {fileID: 2026463715}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &702633951
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 702633953}
+  - component: {fileID: 702633952}
+  m_Layer: 0
+  m_Name: Squat Tracking
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &702633952
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 702633951}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4efbbf10f2221d74ba1a6d5f64ddf8c1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pelvisName: Hips
+  squatThresholdPercentage: 0.075
+  standingThreshold: 0.2
+  calibrationDelay: 0
+--- !u!4 &702633953
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 702633951}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.50074023, y: 4.6077776, z: -1.409216}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -544,6 +636,8 @@ GameObject:
   - component: {fileID: 963194229}
   - component: {fileID: 963194231}
   - component: {fileID: 963194230}
+  - component: {fileID: 963194233}
+  - component: {fileID: 963194232}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -673,10 +767,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 33b7cd93e5b408242828fa84df35f769, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isDefaultListener: 1
-  bOverrideScalingFactor: 0
-  scalingFactor: -1
-  listenerId: 0
 --- !u!114 &963194231
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -687,6 +777,34 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 84c1c8113643be446bfa174b2d8a1518, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &963194232
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 963194225}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 785d9a5f62e6b014d9f5adb5bbe28f7f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isDefaultListener: 1
+  bOverrideScalingFactor: 0
+  scalingFactor: -1
+  listenerId: 0
+--- !u!114 &963194233
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 963194225}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4f2b079aa32c21444ab6e7585a4ac487, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_listeners:
@@ -717,7 +835,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1289660117
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1061,8 +1179,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30d7d1861a591e14f91441894855845a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  leftAnkle: {fileID: 0}
-  rightAnkle: {fileID: 0}
   raiseThreshold: 0.1
   leftAnkleName: LeftFoot
   rightAnkleName: RightFoot
@@ -1595,3 +1711,5 @@ SceneRoots:
   - {fileID: 1927929096}
   - {fileID: 1289660118}
   - {fileID: 70480302}
+  - {fileID: 167627496}
+  - {fileID: 702633953}

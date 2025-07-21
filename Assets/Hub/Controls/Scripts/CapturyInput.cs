@@ -67,6 +67,13 @@ public struct CapturyInputState : IInputStateTypeInfo
 
     [InputControl(layout = "Axis")]
     public float rightFootHeight;
+
+    // squat controls
+    [InputControl(layout = "Button")]
+    public float squatStarted;
+
+    [InputControl(layout = "Button")]
+    public float squatCompleted;
 }
 
 [InputControlLayout(stateType = typeof(CapturyInputState), displayName = "Captury Input")]
@@ -126,6 +133,13 @@ public class CapturyInput : InputDevice
     [InputControl(layout = "Axis", displayName = "Right Foot Height")]
     public AxisControl rightFootHeight { get; private set; }
 
+    // squat controls
+    [InputControl(layout = "Button", displayName = "Squat Started")]
+    public ButtonControl squatStarted { get; private set; }
+
+    [InputControl(layout = "Button", displayName = "Squat Completed")]
+    public ButtonControl squatCompleted { get; private set; }
+
     protected override void FinishSetup()
     {
         // connects input to receive data
@@ -150,6 +164,9 @@ public class CapturyInput : InputDevice
         abductionDistance = GetChildControl<AxisControl>("abductionDistance");
         leftFootHeight = GetChildControl<AxisControl>("leftFootHeight");
         rightFootHeight = GetChildControl<AxisControl>("rightFootHeight");
+
+        squatStarted = GetChildControl<ButtonControl>("squatStarted");
+        squatCompleted = GetChildControl<ButtonControl>("squatCompleted");
 
         Debug.Log("CapturyInput setup complete");
     }
