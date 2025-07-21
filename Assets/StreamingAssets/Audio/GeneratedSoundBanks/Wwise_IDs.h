@@ -22,6 +22,7 @@ namespace AK
         static const AkUniqueID GOLF_SCORE = 3905678478U;
         static const AkUniqueID GOLF_START = 1594576204U;
         static const AkUniqueID GOLF_SWING = 3110887642U;
+        static const AkUniqueID GOLF_SWING_TICK = 320338942U;
         static const AkUniqueID GOLF_TRANSITION = 4261217065U;
         static const AkUniqueID GOLF_WIND_UP = 271725226U;
         static const AkUniqueID MUS_PLAY = 1280297747U;

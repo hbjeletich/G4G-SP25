@@ -654,6 +654,106 @@
 						<ActiveSource Name="BackToGolfTitle" ID="{D75FDD4F-E571-46FC-85E9-08E8EF90BBC5}" Platform="Linked"/>
 					</ActiveSourceList>
 				</Sound>
+				<Sound Name="Golf_Sound_LoopingReel_v01" ID="{14325E65-09BA-4F8A-BB08-7D68FF301E29}" ShortID="275150212">
+					<PropertyList>
+						<Property Name="IsLoopingEnabled" Type="bool" Value="True"/>
+					</PropertyList>
+					<ReferenceList>
+						<Reference Name="Conversion">
+							<ObjectRef Name="Default Conversion Settings" ID="{6D1B890C-9826-4384-BF07-C15223E9FB56}" WorkUnitID="{AFA74038-A5C3-4D49-8FF1-51B82F161135}"/>
+						</Reference>
+						<Reference Name="OutputBus">
+							<ObjectRef Name="Master Audio Bus" ID="{1514A4D8-1DA6-412A-A17E-75CA0C2149F3}" WorkUnitID="{348808B5-3820-43EE-86BE-686F3A0236F6}"/>
+						</Reference>
+					</ReferenceList>
+					<ChildrenList>
+						<AudioFileSource Name="Golf_Sound_LoopingReel_v01" ID="{8B9954A8-A22B-47ED-A521-A16C6BC2D98E}">
+							<Language>SFX</Language>
+							<AudioFile>Golf_Sound_LoopingReel_v01.wav</AudioFile>
+							<MediaIDList>
+								<MediaID ID="822568863"/>
+							</MediaIDList>
+						</AudioFileSource>
+					</ChildrenList>
+					<ObjectLists>
+						<ObjectList Name="RTPC">
+							<Reference>
+								<Local>
+									<RTPC Name="" ID="{2C032975-DA40-4598-B438-5D7A221697E0}" ShortID="2612752">
+										<PropertyList>
+											<Property Name="PropertyName" Type="string" Value="Pitch"/>
+										</PropertyList>
+										<ReferenceList>
+											<Reference Name="ControlInput">
+												<ObjectRef Name="Swing_Hold_Time" ID="{228F65E7-750C-464E-945C-671D35060A88}" WorkUnitID="{0FE3BA38-83BA-4897-8A58-D4C08BB9163F}"/>
+											</Reference>
+											<Reference Name="Curve">
+												<Custom>
+													<Curve Name="" ID="{EA6EB81A-D1D6-4C38-9178-81F5396A6177}">
+														<PropertyList>
+															<Property Name="Flags" Type="int32" Value="65537"/>
+														</PropertyList>
+														<PointList>
+															<Point>
+																<XPos>0</XPos>
+																<YPos>-264</YPos>
+																<Flags>5</Flags>
+																<SegmentShape>Exp1</SegmentShape>
+															</Point>
+															<Point>
+																<XPos>100</XPos>
+																<YPos>264</YPos>
+																<Flags>37</Flags>
+															</Point>
+														</PointList>
+													</Curve>
+												</Custom>
+											</Reference>
+										</ReferenceList>
+									</RTPC>
+								</Local>
+							</Reference>
+							<Reference>
+								<Local>
+									<RTPC Name="" ID="{66E3B981-A4DE-4EF3-9AF4-441B0DC6202F}" ShortID="529083595">
+										<PropertyList>
+											<Property Name="PropertyName" Type="string" Value="Volume"/>
+										</PropertyList>
+										<ReferenceList>
+											<Reference Name="ControlInput">
+												<ObjectRef Name="Swing_Hold_Time" ID="{228F65E7-750C-464E-945C-671D35060A88}" WorkUnitID="{0FE3BA38-83BA-4897-8A58-D4C08BB9163F}"/>
+											</Reference>
+											<Reference Name="Curve">
+												<Custom>
+													<Curve Name="" ID="{1643BAAE-A978-446D-AFA4-FFF5631527F3}">
+														<PropertyList>
+															<Property Name="Flags" Type="int32" Value="3"/>
+														</PropertyList>
+														<PointList>
+															<Point>
+																<XPos>0</XPos>
+																<YPos>-2.59362</YPos>
+																<Flags>5</Flags>
+															</Point>
+															<Point>
+																<XPos>100</XPos>
+																<YPos>3.88865</YPos>
+																<Flags>37</Flags>
+															</Point>
+														</PointList>
+													</Curve>
+												</Custom>
+											</Reference>
+										</ReferenceList>
+									</RTPC>
+								</Local>
+							</Reference>
+						</ObjectList>
+					</ObjectLists>
+					<ActiveSourceList>
+						<ActiveSource Name="Golf_Sound_LoopingReel_v01" ID="{8B9954A8-A22B-47ED-A521-A16C6BC2D98E}" Platform="Linked"/>
+					</ActiveSourceList>
+				</Sound>
 			</ChildrenList>
 		</WorkUnit>
 	</AudioObjects>

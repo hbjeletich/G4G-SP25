@@ -10,7 +10,7 @@
     "Type": "User",
     "GUID": "{880BDAA7-4472-4D12-B23C-AD433AA1C943}",
     "Language": "SFX",
-    "Hash": "{6992753F-73D8-45EE-3F65-254B9B1C9775}",
+    "Hash": "{81F5BB9E-0923-0005-9C71-B02233C67B40}",
     "ObjectPath": "\\SoundBanks\\Default Work Unit\\Main_Golf",
     "ShortName": "Main_Golf",
     "Path": "Main_Golf.bnk",
@@ -94,6 +94,14 @@
       "Location": "Memory",
       "ShortName": "Swing_2.wav",
       "CachePath": "79/{79763F6E-E5E5-CA0A-B344-204556641DAC}.wem"
+     },
+     {
+      "Id": "822568863",
+      "Language": "SFX",
+      "Streaming": "false",
+      "Location": "Memory",
+      "ShortName": "Golf_Sound_LoopingReel_v01.wav",
+      "CachePath": "37/{37B53898-DE3A-7333-4B7D-AF87928EBA12}.wem"
      },
      {
       "Id": "924269636",
@@ -223,6 +231,18 @@
       ]
      },
      {
+      "Id": "320338942",
+      "Name": "Golf_Swing_Tick",
+      "ObjectPath": "\\Events\\Default Work Unit\\Golf_Swing_Tick",
+      "GUID": "{2ED107E5-B633-4508-8A40-1EC94429D123}",
+      "DurationType": "Infinite",
+      "MediaRefs": [
+       {
+        "Id": "822568863"
+       }
+      ]
+     },
+     {
       "Id": "4261217065",
       "Name": "Golf_Transition",
       "ObjectPath": "\\Events\\Default Work Unit\\Golf_Transition",
@@ -280,6 +300,6 @@
     ]
    }
   ],
-  "FileHash": "{E96CCBBA-A0A1-AAFA-ABDD-31536B39DB51}"
+  "FileHash": "{22FE5A21-668E-376A-F398-A48D52C29771}"
  }
 }

@@ -66,7 +66,7 @@ MonoBehaviour:
     ParentPath: SoundBanks\Default Work Unit
     guid: 521ef0cd2792934fb7da34fbe3d3bf92
     GuidInternal: 
-    m_lastTime: -8584557997919698564
+    m_lastTime: -8584484807664931355
     List:
     - name: Main_Golf
       guid: a7da0b887244124db23cad433aa1c943
@@ -121,7 +121,7 @@ MonoBehaviour:
     ParentPath: Events\Default Work Unit
     guid: df975fd9f3942b4c8d7932be6360789d
     GuidInternal: 
-    m_lastTime: -8584557997931856056
+    m_lastTime: -8584484816783059761
     List:
     - name: Golf_BGM
       guid: 90dd6a3af49291438d863caab4f70a88
@@ -242,6 +242,23 @@ MonoBehaviour:
       maxAttenuation: 0
       maxDuration: 0.6459311
       minDuration: 0.54328316
+    - name: Golf_Swing_Tick
+      guid: e507d12e33b608458a401ec94429d123
+      id: 320338942
+      PathAndIcons:
+      - ElementName: Events
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Default Work Unit
+        ObjectType: 12
+        guid: df975fd9f3942b4c8d7932be6360789d
+      - ElementName: Golf_Swing_Tick
+        ObjectType: 3
+        guid: e507d12e33b608458a401ec94429d123
+      Path: Events\Default Work Unit\Golf_Swing_Tick
+      maxAttenuation: 0
+      maxDuration: 0
+      minDuration: 0
     - name: Golf_Transition
       guid: 6c16f03e013f784a9cd6426fef05fba5
       id: 4261217065
@@ -369,8 +386,22 @@ MonoBehaviour:
     ParentPath: Game Parameters\Default Work Unit
     guid: 38bae30fba8397488a58d4c08bb9163f
     GuidInternal: 
-    m_lastTime: -8584557997931746347
+    m_lastTime: -8584484807664771596
     List:
+    - name: Swing_Hold_Time
+      guid: e7658f220c754e46945c671d35060a88
+      id: 465474989
+      PathAndIcons:
+      - ElementName: Game Parameters
+        ObjectType: 5
+        guid: 00000000000000000000000000000000
+      - ElementName: Default Work Unit
+        ObjectType: 12
+        guid: 38bae30fba8397488a58d4c08bb9163f
+      - ElementName: Swing_Hold_Time
+        ObjectType: 13
+        guid: e7658f220c754e46945c671d35060a88
+      Path: Game Parameters\Default Work Unit\Swing_Hold_Time
     - name: Wind_Volume
       guid: 8fd35841c2f4c1488550cc7a211448c8
       id: 4244623852
@@ -454,7 +485,7 @@ MonoBehaviour:
     GuidInternal: 
     m_lastTime: -8584557997919678632
     List: []
-  ExpandedFileSystemItemIds: 02000000
+  ExpandedFileSystemItemIds: 020000000300000004000000
   ExpandedWaapiItemIds: 02000000
   AutoSyncSelection: 0
   autoPopulateEnabled: 1

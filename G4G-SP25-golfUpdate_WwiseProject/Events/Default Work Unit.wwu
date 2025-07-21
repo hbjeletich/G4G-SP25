@@ -113,6 +113,17 @@
 						</Action>
 					</ChildrenList>
 				</Event>
+				<Event Name="Golf_Swing_Tick" ID="{2ED107E5-B633-4508-8A40-1EC94429D123}">
+					<ChildrenList>
+						<Action Name="" ID="{949469BF-D0CC-4E9E-AF9C-3B7F67291E46}" ShortID="759227869">
+							<ReferenceList>
+								<Reference Name="Target">
+									<ObjectRef Name="Golf_Sound_LoopingReel_v01" ID="{14325E65-09BA-4F8A-BB08-7D68FF301E29}" WorkUnitID="{14822C16-A4BD-4A7D-B208-1B993BBCCF08}"/>
+								</Reference>
+							</ReferenceList>
+						</Action>
+					</ChildrenList>
+				</Event>
 			</ChildrenList>
 		</WorkUnit>
 	</Events>

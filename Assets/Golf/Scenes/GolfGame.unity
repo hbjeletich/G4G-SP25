@@ -531,8 +531,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30d7d1861a591e14f91441894855845a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  leftAnkle: {fileID: 0}
-  rightAnkle: {fileID: 0}
   raiseThreshold: 0.1
   leftAnkleName: LeftFoot
   rightAnkleName: RightFoot
@@ -2051,6 +2049,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   swingStrength: 0
   strengthMeter: {fileID: 806718423}
+  tickingEvent:
+    idInternal: 0
+    valueGuidInternal: 
+    WwiseObjectReference: {fileID: 11400000, guid: e49866ef8b824324b8b3be5a57e4fab8,
+      type: 2}
 --- !u!1 &806886067
 GameObject:
   m_ObjectHideFlags: 0
@@ -3869,7 +3872,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e05ed264310a5dc4ab0ccedf1bdb0aba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  swingAnimator: {fileID: 1465184620}
 --- !u!114 &1465184622
 MonoBehaviour:
   m_ObjectHideFlags: 0
