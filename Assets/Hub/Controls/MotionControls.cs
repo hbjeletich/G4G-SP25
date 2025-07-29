@@ -188,6 +188,15 @@ public partial class @MotionControls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""SquatTrackingY"",
+                    ""type"": ""Value"",
+                    ""id"": ""e610b9d2-2f61-417b-bdce-7224b88e785c"",
+                    ""expectedControlType"": ""Axis"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [
@@ -388,6 +397,17 @@ public partial class @MotionControls: IInputActionCollection2, IDisposable
                     ""action"": ""SquatCompleted"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""69bd79ba-a49b-40d5-9bf1-977aa9318ef4"",
+                    ""path"": ""<CapturyInput>/squatTrackingY"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SquatTrackingY"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -414,6 +434,7 @@ public partial class @MotionControls: IInputActionCollection2, IDisposable
         m_MotionTracking_RightFootHeight = m_MotionTracking.FindAction("RightFootHeight", throwIfNotFound: true);
         m_MotionTracking_SquatStarted = m_MotionTracking.FindAction("SquatStarted", throwIfNotFound: true);
         m_MotionTracking_SquatCompleted = m_MotionTracking.FindAction("SquatCompleted", throwIfNotFound: true);
+        m_MotionTracking_SquatTrackingY = m_MotionTracking.FindAction("SquatTrackingY", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -493,6 +514,7 @@ public partial class @MotionControls: IInputActionCollection2, IDisposable
     private readonly InputAction m_MotionTracking_RightFootHeight;
     private readonly InputAction m_MotionTracking_SquatStarted;
     private readonly InputAction m_MotionTracking_SquatCompleted;
+    private readonly InputAction m_MotionTracking_SquatTrackingY;
     public struct MotionTrackingActions
     {
         private @MotionControls m_Wrapper;
@@ -515,6 +537,7 @@ public partial class @MotionControls: IInputActionCollection2, IDisposable
         public InputAction @RightFootHeight => m_Wrapper.m_MotionTracking_RightFootHeight;
         public InputAction @SquatStarted => m_Wrapper.m_MotionTracking_SquatStarted;
         public InputAction @SquatCompleted => m_Wrapper.m_MotionTracking_SquatCompleted;
+        public InputAction @SquatTrackingY => m_Wrapper.m_MotionTracking_SquatTrackingY;
         public InputActionMap Get() { return m_Wrapper.m_MotionTracking; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -578,6 +601,9 @@ public partial class @MotionControls: IInputActionCollection2, IDisposable
             @SquatCompleted.started += instance.OnSquatCompleted;
             @SquatCompleted.performed += instance.OnSquatCompleted;
             @SquatCompleted.canceled += instance.OnSquatCompleted;
+            @SquatTrackingY.started += instance.OnSquatTrackingY;
+            @SquatTrackingY.performed += instance.OnSquatTrackingY;
+            @SquatTrackingY.canceled += instance.OnSquatTrackingY;
         }
 
         private void UnregisterCallbacks(IMotionTrackingActions instance)
@@ -636,6 +662,9 @@ public partial class @MotionControls: IInputActionCollection2, IDisposable
             @SquatCompleted.started -= instance.OnSquatCompleted;
             @SquatCompleted.performed -= instance.OnSquatCompleted;
             @SquatCompleted.canceled -= instance.OnSquatCompleted;
+            @SquatTrackingY.started -= instance.OnSquatTrackingY;
+            @SquatTrackingY.performed -= instance.OnSquatTrackingY;
+            @SquatTrackingY.canceled -= instance.OnSquatTrackingY;
         }
 
         public void RemoveCallbacks(IMotionTrackingActions instance)
@@ -673,5 +702,6 @@ public partial class @MotionControls: IInputActionCollection2, IDisposable
         void OnRightFootHeight(InputAction.CallbackContext context);
         void OnSquatStarted(InputAction.CallbackContext context);
         void OnSquatCompleted(InputAction.CallbackContext context);
+        void OnSquatTrackingY(InputAction.CallbackContext context);
     }
 }

@@ -15,20 +15,22 @@ namespace Swimming
         [SerializeField] private float sinkForce = 15f; // squatting
         [SerializeField] private float maxSinkVelocity = 3f;
         [SerializeField] private float waterDrag = 1.5f;
+
+        [Header("Continuous Motion Settings")]
+        [SerializeField] private float footHeightForce = 10f;
+        [SerializeField] private float squatForce = 12f;
+        [SerializeField] private float continuousMotionThreshold = 0.1f;
+
         private bool isSwimming = false;
         private bool isSinking = false;
 
         // debug mode for using keyboard input
-        [SerializeField] private bool debugMode = false; 
+        [SerializeField] private bool debugMode = false;
 
         // input actions
-        private InputAction weightShiftLeftAction;
-        private InputAction weightShiftRightAction;
         private InputAction weightShiftXAction;
-        private InputAction raiseFootAction;
-        private InputAction lowerFootAction;
-        private InputAction squatStartedAction;
-        private InputAction squatCompletedAction;
+        private InputAction footHeightAction;
+        private InputAction squatTrackingYAction;
 
         // debug input actions
         [SerializeField] private InputActionAsset debugActions;
@@ -50,27 +52,23 @@ namespace Swimming
         private float deepSeaYLevel;
 
         private void Awake()
-        {        
+        {
             rigidbody2D = GetComponent<Rigidbody2D>();
             rigidbody2D.drag = waterDrag; // for underwater feel
             rigidbody2D.gravityScale = 0f;
 
             spriteRenderer = GetComponent<SpriteRenderer>();
             animator = GetComponent<Animator>();
-            if(animator != null)
+            if (animator != null)
             {
                 animator.runtimeAnimatorController = regularAnimator;
             }
 
             // set up motion tracking actions
             var motionMap = inputActions.FindActionMap("MotionTracking");
-            weightShiftLeftAction = motionMap.FindAction("WeightShiftLeft");
-            weightShiftRightAction = motionMap.FindAction("WeightShiftRight");
             weightShiftXAction = motionMap.FindAction("WeightShiftX");
-            raiseFootAction = motionMap.FindAction("FootRaise");
-            lowerFootAction = motionMap.FindAction("FootLower");
-            squatStartedAction = motionMap.FindAction("SquatStarted");
-            squatCompletedAction = motionMap.FindAction("SquatCompleted");
+            footHeightAction = motionMap.FindAction("FootHeight");
+            squatTrackingYAction = motionMap.FindAction("SquatTrackingY");
 
             // set up keyboard input for debug mode
             var playerMap = debugActions.FindActionMap("SwimmingDebug");
@@ -85,25 +83,13 @@ namespace Swimming
 
         private void OnEnable()
         {
-            weightShiftLeftAction.Enable();
-            weightShiftRightAction.Enable();
             weightShiftXAction.Enable();
-            raiseFootAction.Enable();
-            lowerFootAction.Enable();
-            squatStartedAction.Enable();
-            squatCompletedAction.Enable();
+            footHeightAction.Enable();
+            squatTrackingYAction.Enable();
 
             moveAction.Enable();
             jumpAction.Enable();
             crouchAction.Enable();
-
-            // upward movement callbacks
-            raiseFootAction.performed += _ => StartSwimming();
-            lowerFootAction.performed += _ => StopSwimming();
-
-            // squat movement callbacks
-            squatStartedAction.performed += _ => StartSinking();
-            squatCompletedAction.performed += _ => StopSinking();
 
             // debug callbacks
             jumpAction.started += _ => StartSwimming();
@@ -114,21 +100,13 @@ namespace Swimming
 
         private void OnDisable()
         {
-            weightShiftLeftAction.Disable();
-            weightShiftRightAction.Disable();
             weightShiftXAction.Disable();
-            raiseFootAction.Disable();
-            lowerFootAction.Disable();
-            squatStartedAction.Disable();
-            squatCompletedAction.Disable();
+            footHeightAction.Disable();
+            squatTrackingYAction.Disable();
 
             moveAction.Disable();
             jumpAction.Disable();
             crouchAction.Disable();
-
-            // squat movement
-            squatStartedAction.performed -= _ => StartSinking();
-            squatCompletedAction.performed -= _ => StopSinking();
 
             // debug
             jumpAction.started -= _ => StartSwimming();
@@ -144,22 +122,17 @@ namespace Swimming
                 // keyboard input in debug mode
                 float horizontalInput = moveAction.ReadValue<Vector2>().x;
                 DoHorizontalMovement(horizontalInput);
+
+                float verticalInput = moveAction.ReadValue<Vector2>().y;
+                DoContinuousVerticalMovement(verticalInput);
             }
             else
             {
                 // motion tracking input when not in debug mode
                 float weightShift = weightShiftXAction.ReadValue<float>();
                 DoHorizontalMovement(weightShift);
-            }
 
-            if (isSwimming)
-            {
-                DoSwimming();
-            }
-
-            if(isSinking)
-            {
-                DoSinking();
+                HandleContinuousVerticalMovement();
             }
 
             if (transform.position.y <= deepSeaYLevel)
@@ -172,30 +145,55 @@ namespace Swimming
             }
 
             animator.SetFloat("xVel", rigidbody2D.velocity.x);
-            //Debug.Log(rigidbody2D.velocity.x);
             animator.SetFloat("yVel", rigidbody2D.velocity.y);
+        }
+
+        private void HandleContinuousVerticalMovement()
+        {
+            float footHeight = footHeightAction.ReadValue<float>();
+            float squatDepth = squatTrackingYAction.ReadValue<float>();
+
+            float netVerticalForce = 0f;
+
+            // 0 = no lift, 1 = maximum lift
+            if (footHeight > continuousMotionThreshold)
+            {
+                netVerticalForce += footHeight * footHeightForce;
+            }
+
+            // 0 = standing, 1 = deep squat
+            if (squatDepth > continuousMotionThreshold)
+            {
+                netVerticalForce -= squatDepth * squatForce;
+            }
+
+            DoContinuousVerticalMovement(netVerticalForce);
+        }
+
+        private void DoContinuousVerticalMovement(float verticalForce)
+        {
+            if (Mathf.Abs(verticalForce) < 0.01f) return;
+
+            if (verticalForce > 0) // upward movement
+            {
+                if (rigidbody2D.velocity.y < maxSwimVelocity)
+                {
+                    rigidbody2D.AddForce(Vector2.up * verticalForce, ForceMode2D.Force);
+                }
+            }
+            else // downward movement
+            {
+                if (rigidbody2D.velocity.y > -maxSinkVelocity)
+                {
+                    rigidbody2D.AddForce(Vector2.up * verticalForce, ForceMode2D.Force);
+                }
+            }
         }
 
         private void DoHorizontalMovement(float _input)
         {
             float verticalVelocity = rigidbody2D.velocity.y;
             rigidbody2D.velocity = new Vector2(_input * moveSpeed, verticalVelocity);
-        }
-
-        private void DoSwimming()
-        {
-            if (rigidbody2D.velocity.y < maxSwimVelocity)
-            {
-                rigidbody2D.AddForce(Vector2.up * swimForce, ForceMode2D.Force);
-            }
-        }
-
-        private void DoSinking()
-        {
-            if (rigidbody2D.velocity.y > -maxSinkVelocity)
-            {
-                rigidbody2D.AddForce(Vector2.down * sinkForce, ForceMode2D.Force);
-            }
         }
 
         private void StartSwimming()
@@ -238,6 +236,5 @@ namespace Swimming
         {
             animator.runtimeAnimatorController = regularAnimator;
         }
-
     }
 }

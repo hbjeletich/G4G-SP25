@@ -166,6 +166,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "SquatTrackingY",
+                    "type": "Value",
+                    "id": "e610b9d2-2f61-417b-bdce-7224b88e785c",
+                    "expectedControlType": "Axis",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
                 }
             ],
             "bindings": [
@@ -364,6 +373,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "SquatCompleted",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "69bd79ba-a49b-40d5-9bf1-977aa9318ef4",
+                    "path": "<CapturyInput>/squatTrackingY",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "SquatTrackingY",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
