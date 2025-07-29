@@ -5696,8 +5696,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pelvis: {fileID: 0}
   pelvisName: Hips
+  enableWeightShiftTracking: 1
   weightShiftThreshold: 0.15
   neutralZoneWidth: 0.05
+  enableSquatTracking: 1
+  squatThresholdPercentage: 0.075
+  standingThreshold: 0.2
   calibrationDelay: 0
   calibrationFrames: 30
   debugMode: 1
@@ -5975,54 +5979,6 @@ Transform:
   - {fileID: 783808836}
   - {fileID: 1029235409}
   m_Father: {fileID: 651767779}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &2098984802
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2098984804}
-  - component: {fileID: 2098984803}
-  m_Layer: 0
-  m_Name: Squat Tracking
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &2098984803
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2098984802}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4efbbf10f2221d74ba1a6d5f64ddf8c1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  pelvisName: Hips
-  squatThresholdPercentage: 0.075
-  standingThreshold: 0.2
-  calibrationDelay: 0
---- !u!4 &2098984804
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2098984802}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -54.8, y: 46.1, z: 0.34}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2127134760
 GameObject:
@@ -6387,4 +6343,3 @@ SceneRoots:
   - {fileID: 894272536}
   - {fileID: 1916071115}
   - {fileID: 665945005}
-  - {fileID: 2098984804}

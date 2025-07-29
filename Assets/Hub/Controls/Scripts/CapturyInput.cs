@@ -6,6 +6,7 @@ using UnityEngine.InputSystem.Controls;
 using UnityEngine.InputSystem.Layouts;
 using UnityEngine.InputSystem.LowLevel;
 using UnityEngine.InputSystem.Utilities;
+using UnityEngine.Rendering;
 
 public struct CapturyInputState : IInputStateTypeInfo
 {
@@ -69,6 +70,9 @@ public struct CapturyInputState : IInputStateTypeInfo
     public float rightFootHeight;
 
     // squat controls
+    [InputControl(layout = "Axis")]
+    public float squatTrackingY;
+
     [InputControl(layout = "Button")]
     public float squatStarted;
 
@@ -134,6 +138,8 @@ public class CapturyInput : InputDevice
     public AxisControl rightFootHeight { get; private set; }
 
     // squat controls
+    [InputControl(layout = "Axis", displayName = "Squat Tracking Y-Axis")]
+    public AxisControl squatTrackingY { get; private set; }
     [InputControl(layout = "Button", displayName = "Squat Started")]
     public ButtonControl squatStarted { get; private set; }
 
@@ -165,6 +171,7 @@ public class CapturyInput : InputDevice
         leftFootHeight = GetChildControl<AxisControl>("leftFootHeight");
         rightFootHeight = GetChildControl<AxisControl>("rightFootHeight");
 
+        squatTrackingY = GetChildControl<AxisControl>("squatTrackingY");
         squatStarted = GetChildControl<ButtonControl>("squatStarted");
         squatCompleted = GetChildControl<ButtonControl>("squatCompleted");
 
