@@ -16,7 +16,7 @@ public class JointData
 public class MotionFrame
 {
     public float timestamp;
-    public JointData[] joints;  // Use array instead of dictionary for JsonUtility
+    public JointData[] joints;
     public CapturyInputState inputState;
 
     public MotionFrame()
@@ -29,11 +29,11 @@ public class MotionFrame
 public class MotionRecording
 {
     public string sessionId;
-    public string startTime;  // Use string instead of DateTime
-    public string endTime;    // Use string instead of DateTime
+    public string startTime;
+    public string endTime;   
     public float frameRate;
-    public MotionFrame[] frames;  // Use array instead of List for JsonUtility
-    public string[] metadataKeys;   // Separate arrays instead of dictionary
+    public MotionFrame[] frames; 
+    public string[] metadataKeys;  
     public string[] metadataValues;
 
     public MotionRecording()
@@ -65,14 +65,14 @@ public class CapturyMotionRecorder : MonoBehaviour
     [Header("Debug")]
     [SerializeField] private bool debugMode = true;
 
-    // Recording state
+    // recording state
     private bool isRecording = false;
-    private List<MotionFrame> recordedFrames;  // Use List during recording
-    private Dictionary<string, string> recordingMetadata;  // Use Dictionary during recording
+    private List<MotionFrame> recordedFrames;
+    private Dictionary<string, string> recordingMetadata;
     private float lastFrameTime;
     private float frameInterval;
 
-    // Captury references
+    // captury references
     private CapturyNetworkPlugin networkPlugin;
     private CapturySkeleton trackedSkeleton;
     private Dictionary<string, Transform> jointTransforms;
@@ -82,7 +82,6 @@ public class CapturyMotionRecorder : MonoBehaviour
         frameInterval = 1f / recordingFrameRate;
         jointTransforms = new Dictionary<string, Transform>();
 
-        // Find Captury network plugin
         networkPlugin = FindObjectOfType<CapturyNetworkPlugin>();
         if (networkPlugin != null)
         {
@@ -93,7 +92,6 @@ public class CapturyMotionRecorder : MonoBehaviour
             Debug.LogError("CapturyMotionRecorder: Could not find CapturyNetworkPlugin!");
         }
 
-        // Create output directory
         if (!Directory.Exists(outputDirectory))
         {
             Directory.CreateDirectory(outputDirectory);
@@ -101,7 +99,6 @@ public class CapturyMotionRecorder : MonoBehaviour
 
         if (autoStartRecording)
         {
-            // Wait a bit before auto-starting to allow skeleton setup
             Invoke(nameof(StartRecording), 3f);
         }
     }
@@ -157,26 +154,11 @@ public class CapturyMotionRecorder : MonoBehaviour
     {
         if (isRecording && trackedSkeleton != null)
         {
-            // Check if it's time to record a new frame
             if (Time.time - lastFrameTime >= frameInterval)
             {
                 RecordFrame();
                 lastFrameTime = Time.time;
             }
-        }
-
-        // Handle keyboard input for recording control
-        if (Input.GetKeyDown(KeyCode.R))
-        {
-            if (isRecording)
-                StopRecording();
-            else
-                StartRecording();
-        }
-
-        if (Input.GetKeyDown(KeyCode.S) && isRecording)
-        {
-            StopRecording();
         }
     }
 
@@ -218,7 +200,6 @@ public class CapturyMotionRecorder : MonoBehaviour
 
         isRecording = false;
 
-        // Save the recording
         SaveRecording();
 
         Debug.Log($"Stopped motion recording. Recorded {recordedFrames.Count} frames.");
@@ -234,7 +215,6 @@ public class CapturyMotionRecorder : MonoBehaviour
         Debug.Log($"jointTransforms count: {jointTransforms.Count}");
         Debug.Log($"jointsToRecord length: {jointsToRecord.Length}");
 
-        // Create joint data array
         var jointDataList = new List<JointData>();
 
         // record joint positions and rotations here
@@ -279,12 +259,8 @@ public class CapturyMotionRecorder : MonoBehaviour
 
     private CapturyInputState GetCurrentInputState()
     {
-        // This is a simplified version - in practice you'd get the actual current state
-        // from your input system. For now, we'll create a basic state.
+        // TO BE REPLACED
         var inputState = new CapturyInputState();
-
-        // You would populate this with actual current values from your tracking systems
-        // This is just a placeholder implementation
         return inputState;
     }
 
@@ -296,13 +272,11 @@ public class CapturyMotionRecorder : MonoBehaviour
             string filename = $"motion_recording_{timestamp}.json";
             string filepath = Path.Combine(outputDirectory, filename);
 
-            // Create recording object for serialization
             var recording = new MotionRecording();
             recording.frameRate = recordingFrameRate;
             recording.frames = recordedFrames.ToArray();
             recording.endTime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
 
-            // Convert metadata dictionary to arrays
             recording.metadataKeys = new string[recordingMetadata.Count];
             recording.metadataValues = new string[recordingMetadata.Count];
             int i = 0;
@@ -313,14 +287,12 @@ public class CapturyMotionRecorder : MonoBehaviour
                 i++;
             }
 
-            // Using Unity's JsonUtility
             string json = JsonUtility.ToJson(recording, true);
 
             File.WriteAllText(filepath, json);
 
             Debug.Log($"Motion recording saved to: {filepath}");
 
-            // Also create a Python conversion script alongside the data
             CreatePythonConversionScript(filepath);
         }
         catch (Exception e)
@@ -548,7 +520,6 @@ if __name__ == '__main__':
 ";
     }
 
-    // Public methods for external control
     public bool IsRecording => isRecording;
     public int FrameCount => recordedFrames?.Count ?? 0;
     public float RecordingDuration => isRecording ? Time.time - lastFrameTime : 0f;
