@@ -76,17 +76,31 @@ public class GameSelect : MonoBehaviour
 
     private IEnumerator ExitGameCoroutine()
     {
+        // Stop Ship game music before returning to GameSelectScene
+        if (Ship.MusicPersistance.instance != null)
+        {
+            Ship.MusicPersistance.instance.StopMusic();
+            Ship.MusicPersistance.instance.StopAmbient();
+        }
+
+        // Stop Fishing game music before returning to GameSelectScene
+        if (Fishing.FishingMusicPersistence.instance != null)
+        {
+            Fishing.FishingMusicPersistence.instance.StopMusic();
+            Fishing.FishingMusicPersistence.instance.StopAmbient();
+        }
+
         // go back to game select
         yield return SceneManager.LoadSceneAsync("GameSelectScene", LoadSceneMode.Single);
         yield return null;
-        
-        // stop audio
+
+        // stop audio (existing GameSelect audio logic)
         if (AudioSource != null && AudioSource.isPlaying)
         {
             AudioSource.Stop();
         }
 
-        if(localSource != null && localSource.isPlaying)
+        if (localSource != null && localSource.isPlaying)
         {
             localSource.Stop();
         }
