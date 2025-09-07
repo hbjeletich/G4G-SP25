@@ -1,9 +1,8 @@
 using UnityEngine;
 using UnityEditor;
 
-[InitializeOnLoad]
 public class CameraBoundsDrawer
-{
+{/*
     static CameraBoundsDrawer()
     {
         SceneView.duringSceneGui += OnSceneGUI;
@@ -32,5 +31,5 @@ public class CameraBoundsDrawer
         Handles.DrawLine(corners[3], corners[0]);
 
         SceneView.RepaintAll(); // Refresh the Scene view
-    }
+    }*/
 }
