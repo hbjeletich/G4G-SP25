@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<WwiseDocument Type="WorkUnit" ID="{0FE3BA38-83BA-4897-8A58-D4C08BB9163F}" SchemaVersion="123">
+	<GameParameters>
+		<WorkUnit Name="Default Work Unit" ID="{0FE3BA38-83BA-4897-8A58-D4C08BB9163F}" PersistMode="Standalone">
+			<ChildrenList>
+				<GameParameter Name="Wind_Volume" ID="{4158D38F-F4C2-48C1-8550-CC7A211448C8}">
+					<PropertyList>
+						<Property Name="InitialValue" Type="Real64" Value="0"/>
+						<Property Name="Max" Type="Real64" Value="35"/>
+					</PropertyList>
+				</GameParameter>
+				<GameParameter Name="Swing_Hold_Time" ID="{228F65E7-750C-464E-945C-671D35060A88}">
+					<PropertyList>
+						<Property Name="InitialValue" Type="Real64" Value="0"/>
+					</PropertyList>
+				</GameParameter>
+			</ChildrenList>
+		</WorkUnit>
+	</GameParameters>
+</WwiseDocument>

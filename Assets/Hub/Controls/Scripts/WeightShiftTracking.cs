@@ -14,16 +14,31 @@ public class WeightShiftTracking : MonoBehaviour
     [SerializeField] private string pelvisName = "Hips";
 
     [Header("Weight Shift Settings")]
-    [SerializeField] private float weightShiftThreshold = 0.15f; // adjust based on testing
-    [SerializeField] private float neutralZoneWidth = 0.05f; // dead zone around center
-    [SerializeField] private float calibrationDelay = 2.0f; // time to wait before calibrating
-    [SerializeField] private int calibrationFrames = 30; // frames to average for calibration
+    [SerializeField] private bool enableWeightShiftTracking = true;
+    [SerializeField] private float weightShiftThreshold = 0.15f;
+    [SerializeField] private float neutralZoneWidth = 0.05f;
 
+    [Header("Squat Tracking Settings")]
+    [SerializeField] private bool enableSquatTracking = false;
+    [SerializeField] private float squatThresholdPercentage = 0.075f; // how much should pelvis drop
+    [SerializeField] private float standingThreshold = 0.2f;
+
+    [Header("Calibration")]
+    [SerializeField] private float calibrationDelay = 2.0f; // time to wait before calibrating
+    [SerializeField] private int calibrationFrames = 30;
+
+    // weight shift variables
     private float neutralPelvisPosition = 0f;
     private bool isShiftingLeft = false;
     private bool isShiftingRight = false;
-    private bool isCalibrated = false;
 
+    // squat tracking variables
+    private float standingPelvisHeight = 0f;
+    private bool isInSquat = false;
+    private bool wasInSquat = false;
+
+    // general variables
+    private bool isCalibrated = false;
     private CapturyInput capturyInput;
     private Vector3 initialPelvisPosition; // for calibration
 
@@ -36,25 +51,23 @@ public class WeightShiftTracking : MonoBehaviour
         if (capturyInput == null)
         {
             CapturyInput.Register();
-
             capturyInput = InputSystem.AddDevice<CapturyInput>();
-            Debug.Log($"WeightShiftTracking: Created new CapturyInput device with ID: {capturyInput.deviceId}");
+            Debug.Log("MotionTracking: Created new CapturyInput device");
         }
         else
         {
-            Debug.Log($"WeightShiftTracking: Using existing CapturyInput device with ID: {capturyInput.deviceId}");
+            Debug.Log("MotionTracking: Found existing CapturyInput device");
         }
 
         CapturyNetworkPlugin networkPlugin = FindObjectOfType<CapturyNetworkPlugin>();
         if (networkPlugin != null)
         {
-            Debug.Log("WeightShiftTracking: Subscribing to CapturyNetworkPlugin.SkeletonFound...");
             networkPlugin.SkeletonFound -= OnSkeletonFound;
             networkPlugin.SkeletonFound += OnSkeletonFound;
         }
         else
         {
-            Debug.LogError("WeightShiftTracking: Could not find CapturyNetworkPlugin!");
+            Debug.LogError("MotionTracking: Could not find CapturyNetworkPlugin!");
         }
     }
 
@@ -69,7 +82,7 @@ public class WeightShiftTracking : MonoBehaviour
 
     private void OnSkeletonFound(CapturySkeleton skeleton)
     {
-        Debug.Log("WeightShiftTracking received Skeleton: " + skeleton.name);
+        Debug.Log("MotionTracking received Skeleton: " + skeleton.name);
 
         // wait until SetTargetSkeleton() finishes
         skeleton.OnSkeletonSetupComplete += OnSkeletonSetupComplete;
@@ -77,17 +90,17 @@ public class WeightShiftTracking : MonoBehaviour
 
     private void OnSkeletonSetupComplete(CapturySkeleton skeleton)
     {
-        Debug.Log("Skeleton setup complete for weight shift tracking!");
+        Debug.Log("Skeleton setup complete for motion tracking!");
 
         pelvis = FindJointByExactName(skeleton, pelvisName);
 
         if (pelvis == null)
         {
-            Debug.LogError("WeightShiftTracking: Could not find the pelvis bone! Check the name in the Inspector.");
+            Debug.LogError("MotionTracking: Could not find the pelvis bone! Check the name in the Inspector.");
         }
         else
         {
-            Debug.Log("WeightShiftTracking: Found pelvis: " + pelvis.name);
+            Debug.Log("MotionTracking: Found pelvis: " + pelvis.name);
             // start calibration coroutine
             StartCoroutine(CalibrateNeutralPosition());
         }
@@ -95,7 +108,8 @@ public class WeightShiftTracking : MonoBehaviour
 
     IEnumerator CalibrateNeutralPosition()
     {
-        Debug.Log("Starting weight shift calibration. Please stand in neutral position...");
+        // calibrate to find neutral position
+        Debug.Log("Starting motion tracking calibration. Please stand in neutral position...");
         yield return new WaitForSeconds(calibrationDelay); // give time for user to get in position
 
         if (pelvis != null)
@@ -105,15 +119,34 @@ public class WeightShiftTracking : MonoBehaviour
 
             for (int i = 0; i < calibrationFrames; i++)
             {
-                sum += pelvis.position;
-                yield return null; // wait a frame
+                if (pelvis != null)
+                {
+                    sum += pelvis.position;
+                    yield return null; // wait a frame
+                }
             }
 
             initialPelvisPosition = sum / calibrationFrames;
-            neutralPelvisPosition = initialPelvisPosition.x;
+
+            // set up weight shift calibration
+            if (enableWeightShiftTracking)
+            {
+                neutralPelvisPosition = initialPelvisPosition.x;
+            }
+
+            // set up squat calibration
+            if (enableSquatTracking)
+            {
+                standingPelvisHeight = pelvis.localPosition.y;
+            }
+
             isCalibrated = true;
 
-            Debug.Log($"Weight shift calibration complete. Neutral position: {neutralPelvisPosition}");
+            Debug.Log($"Motion tracking calibration complete.");
+            if (enableWeightShiftTracking)
+                Debug.Log($"Weight shift neutral position: {neutralPelvisPosition}");
+            if (enableSquatTracking)
+                Debug.Log($"Standing height: {standingPelvisHeight:F3}m");
         }
     }
 
@@ -135,17 +168,27 @@ public class WeightShiftTracking : MonoBehaviour
     {
         if (!isCalibrated || pelvis == null || capturyInput == null) return;
 
+        CapturyInputState state = new CapturyInputState();
+
+        if (enableWeightShiftTracking)
+        {
+            UpdateWeightShiftTracking(ref state);
+        }
+
+        if (enableSquatTracking)
+        {
+            UpdateSquatTracking(ref state);
+        }
+
+        // send state to input system
+        InputSystem.QueueStateEvent(capturyInput, state);
+    }
+
+    private void UpdateWeightShiftTracking(ref CapturyInputState state)
+    {
         // calculate lateral shift from neutral position
         float currentPosition = pelvis.position.x;
         float shiftAmount = currentPosition - neutralPelvisPosition;
-
-        // debug info
-        if (debugMode && Time.frameCount % 30 == 0)
-        {
-            //Debug.Log($"Weight shift: {shiftAmount:F3}m from neutral");
-        }
-
-        CapturyInputState state = new CapturyInputState();
 
         // normalize shift amount to [-1, 1] range for the axis
         state.weightShiftX = Mathf.Clamp(shiftAmount / weightShiftThreshold, -1f, 1f);
@@ -192,9 +235,46 @@ public class WeightShiftTracking : MonoBehaviour
                 Debug.Log("Weight returned to NEUTRAL");
             }
         }
+        // maintain current button states when not changing
+        else
+        {
+            state.weightShiftLeft = isShiftingLeft ? 1.0f : 0.0f;
+            state.weightShiftRight = isShiftingRight ? 1.0f : 0.0f;
+        }
+    }
 
-        // queue the state event
-        InputSystem.QueueStateEvent(capturyInput, state);
+    private void UpdateSquatTracking(ref CapturyInputState state)
+    {
+        // calculate how much the pelvis drops
+        float currentPelvisHeight = pelvis.localPosition.y;
+        float squatDepth = standingPelvisHeight - currentPelvisHeight;
+        float squatThreshold = standingPelvisHeight * squatThresholdPercentage;
+
+        wasInSquat = isInSquat;
+        isInSquat = squatDepth > squatThreshold;
+
+        // y position tracking for continuous squat depth
+        state.squatTrackingY = Mathf.Clamp01(squatDepth / (standingPelvisHeight * 0.3f)); // Normalize to 0-1 range
+
+        // squat started
+        if (isInSquat && !wasInSquat)
+        {
+            state.squatStarted = 1.0f;
+            if (debugMode)
+            {
+                Debug.Log("Squat started!");
+            }
+        }
+
+        // squat complete
+        if (!isInSquat && wasInSquat && squatDepth <= standingThreshold)
+        {
+            state.squatCompleted = 1.0f;
+            if (debugMode)
+            {
+                Debug.Log("Squat completed!");
+            }
+        }
     }
 
     // helper method to recalibrate the neutral position if needed

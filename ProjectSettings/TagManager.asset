@@ -4,17 +4,24 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - golfBall
+  - Lake
+  - Fish
+  - Wall
+  - LeftAnkle
+  - RightAnkle
+  - ClosestTrigger
+  - MiddleTrigger
+  - FarthestTrigger
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Volume
   - Water
   - UI
-  - 
-  - 
-  - 
+  - Lake
+  - Fish
+  - Captury
   - 
   - 
   - 
@@ -41,4 +48,28 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Background
+    uniqueID: 2000521595
+    locked: 0
+  - name: Lake
+    uniqueID: 869772749
+    locked: 0
+  - name: LakeShine
+    uniqueID: 1996787379
+    locked: 0
+  - name: LakeLeaves + Spawner
+    uniqueID: 348100921
+    locked: 0
+  - name: LakeFlowers
+    uniqueID: 2935050069
+    locked: 0
+  - name: Fish
+    uniqueID: 4199367359
+    locked: 0
+  - name: Collision
+    uniqueID: 575323901
+    locked: 0
+  - name: Player
+    uniqueID: 2054899809
     locked: 0

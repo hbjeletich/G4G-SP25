@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4d5748161b5143d46b1c92a56f555f87, type: 3}
+  m_Name: 01 MainLevel
+  m_EditorClassIdentifier: 
+  roomName: ShipMainLevel
+  music: {fileID: 8300000, guid: 6b7fb073c5a3be449a0ff19f7ea21ce8, type: 3}
+  ambientSound: {fileID: 8300000, guid: cb72bcdcbdde668428852d76b7df36f7, type: 3}
+  musicVolume: 0.721
+  ambientVolume: 0.595
+  spawnPointName: SpawnPoint
+  exits:
+  - exitingTo: ShipTitleScreen
+    spawnPointName: SpawnPoint
+    targetRoom: {fileID: 11400000, guid: 8ae0bcd8098c2d44d9dce821fd2868f0, type: 2}

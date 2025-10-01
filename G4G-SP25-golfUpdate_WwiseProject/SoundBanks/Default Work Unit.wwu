@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<WwiseDocument Type="WorkUnit" ID="{CDF01E52-9227-4F93-B7DA-34FBE3D3BF92}" SchemaVersion="123">
+	<SoundBanks>
+		<WorkUnit Name="Default Work Unit" ID="{CDF01E52-9227-4F93-B7DA-34FBE3D3BF92}" PersistMode="Standalone">
+			<ChildrenList>
+				<SoundBank Name="Main_Golf" ID="{880BDAA7-4472-4D12-B23C-AD433AA1C943}">
+					<ObjectInclusionList>
+						<ObjectRef Name="Golf_Wind_Up" ID="{E4BBB0E3-6C72-41DE-9083-3EA3E7884548}" WorkUnitID="{D95F97DF-94F3-4C2B-8D79-32BE6360789D}" Origin="Manual" Filter="7"/>
+						<ObjectRef Name="Golf_BGM" ID="{3A6ADD90-92F4-4391-8D86-3CAAB4F70A88}" WorkUnitID="{D95F97DF-94F3-4C2B-8D79-32BE6360789D}" Origin="Manual" Filter="7"/>
+						<ObjectRef Name="Golf_Swing_Tick" ID="{2ED107E5-B633-4508-8A40-1EC94429D123}" WorkUnitID="{D95F97DF-94F3-4C2B-8D79-32BE6360789D}" Origin="Manual" Filter="7"/>
+						<ObjectRef Name="Golf_Impact" ID="{CE71186E-B980-4541-A4A2-874BFC0029D3}" WorkUnitID="{D95F97DF-94F3-4C2B-8D79-32BE6360789D}" Origin="Manual" Filter="7"/>
+						<ObjectRef Name="Golf_Environment" ID="{F27077A2-7FE0-472D-A14D-46CB6F197E9B}" WorkUnitID="{D95F97DF-94F3-4C2B-8D79-32BE6360789D}" Origin="Manual" Filter="7"/>
+						<ObjectRef Name="Golf_Score" ID="{F642801D-A5CE-480E-AD7B-4AE6A5AF966C}" WorkUnitID="{D95F97DF-94F3-4C2B-8D79-32BE6360789D}" Origin="Manual" Filter="7"/>
+						<ObjectRef Name="Golf_Start" ID="{0F013E3F-A2C3-4990-BB62-F165E261C043}" WorkUnitID="{D95F97DF-94F3-4C2B-8D79-32BE6360789D}" Origin="Manual" Filter="7"/>
+						<ObjectRef Name="Wind_Noise" ID="{420BACCF-E730-4A56-87BD-10C7774B5B9A}" WorkUnitID="{D95F97DF-94F3-4C2B-8D79-32BE6360789D}" Origin="Manual" Filter="7"/>
+						<ObjectRef Name="Golf_Transition" ID="{3EF0166C-3F01-4A78-9CD6-426FEF05FBA5}" WorkUnitID="{D95F97DF-94F3-4C2B-8D79-32BE6360789D}" Origin="Manual" Filter="7"/>
+						<ObjectRef Name="Golf_Swing" ID="{D083B40A-E90A-4BFD-959F-BB70BE8C09CF}" WorkUnitID="{D95F97DF-94F3-4C2B-8D79-32BE6360789D}" Origin="Manual" Filter="7"/>
+						<ObjectRef Name="Golf_Environment_Impact" ID="{95C1C2F7-0C92-4F77-9976-928528999AEE}" WorkUnitID="{D95F97DF-94F3-4C2B-8D79-32BE6360789D}" Origin="Manual" Filter="7"/>
+					</ObjectInclusionList>
+					<ObjectExclusionList/>
+					<GameSyncExclusionList/>
+				</SoundBank>
+			</ChildrenList>
+		</WorkUnit>
+	</SoundBanks>
+</WwiseDocument>

@@ -1,25 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class HighestScoreIndicator : MonoBehaviour
 {
     public static Vector3 golfScoreIndicatorPos = new Vector3(0, 0, 0);
 
     public GameObject floorIndicator;
+    public TextMeshProUGUI floorScore;
 
     public Animator anim;
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    public AK.Wwise.Event JingleSound;
 
     public void updateIndicatorPos(float posZ){
         golfScoreIndicatorPos = new Vector3(0, floorIndicator.transform.position.y, posZ);
@@ -32,12 +24,17 @@ public class HighestScoreIndicator : MonoBehaviour
         }
 
         floorIndicator.transform.position = golfScoreIndicatorPos;
+        floorScore.text = GolfScoreManager.highestGolfScore + " m";
     }
 
     public void placeIndicatorWithAnim(){
         this.gameObject.SetActive(true);
 
         floorIndicator.transform.position = golfScoreIndicatorPos;
+
+        floorScore.text = GolfScoreManager.highestGolfScore + " m";
+
         anim.CrossFadeInFixedTime("FadeIn", 0);
+        JingleSound.Post(gameObject);
     }
 }
