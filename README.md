@@ -1,4 +1,4 @@
 # G4G-SP25
-Games for Good Spring 2025 Project
+Games for Good 2025 
 
-Oh no! I hope I didn't break it!
+Sorry this is the worst readme of all time can someone else make this good
