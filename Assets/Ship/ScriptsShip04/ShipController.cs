@@ -50,7 +50,7 @@ namespace Ship
             // Input system setup
             capturyInputManager = FindObjectOfType<CapturyInputManager>();
 
-            var motionMap = playerInput.FindActionMap("MotionTracking");
+            var motionMap = playerInput.FindActionMap("Torso");
             if (motionMap != null)
             {
                 motionMap.Enable();

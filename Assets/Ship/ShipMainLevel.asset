@@ -15,18 +15,18 @@ MonoBehaviour:
   configurationName: Default
   description: Default motion tracking setup for basic foot and torso tracking with
     optional walk analysis.
-  calibrationDelay: 2
+  calibrationDelay: 0
   calibrationFrames: 30
   enableTorsoModule: 1
   torsoSensitivity: 1
   torsoDebugMode: 0
   isShiftTracked: 1
-  weightShiftThreshold: 0.15
-  neutralZoneWidth: 0.05
+  weightShiftThreshold: 0.05
+  neutralZoneWidth: 0.02
   wholeBodyMovementThreshold: 0.8
-  isBendTracked: 1
+  isBendTracked: 0
   bentOverAngleThreshold: 30
-  enableFootModule: 1
+  enableFootModule: 0
   footSensitivity: 1
   footDebugMode: 0
   isFootRaiseTracked: 1
