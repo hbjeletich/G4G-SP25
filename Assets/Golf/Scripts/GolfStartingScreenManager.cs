@@ -19,8 +19,8 @@ public class GolfStartingScreenManager : MonoBehaviour
     {
         hasFootRaise = false;
 
-        var actionMap = inputActions.FindActionMap("MotionTracking");
-        footRaiseAction = actionMap.FindAction("FootRaise");
+        var actionMap = inputActions.FindActionMap("Foot");
+        footRaiseAction = actionMap.FindAction("FootRaised");
 
         //footRaiseAction.performed += startGolfGame;
         TitleBGM.Post(gameObject);
