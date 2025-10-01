@@ -1,0 +1,76 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3c0ac5af9e504174082cd7401bffa208, type: 3}
+  m_Name: Swimming Config
+  m_EditorClassIdentifier: 
+  configurationName: Swimming Config
+  description: Swimming configuration
+  calibrationDelay: 0
+  calibrationFrames: 30
+  enableTorsoModule: 1
+  torsoSensitivity: 1
+  torsoDebugMode: 0
+  isShiftTracked: 1
+  weightShiftThreshold: 0.05
+  neutralZoneWidth: 0.02
+  wholeBodyMovementThreshold: 0.8
+  isBendTracked: 0
+  bentOverAngleThreshold: 30
+  enableFootModule: 1
+  footSensitivity: 1
+  footDebugMode: 0
+  isFootRaiseTracked: 1
+  footRaiseThreshold: 0.1
+  isHipAbductionTracked: 0
+  minAbductionDistance: 0.2
+  minLiftHeight: 0.05
+  isFootPositionTracked: 0
+  useRelativeFootPosition: 0
+  enableWalkTracking: 0
+  walkSpeedThreshold: 0.3
+  minimumWalkDuration: 2
+  walkStopThreshold: 0.1
+  enableGaitAnalysis: 0
+  minimumCyclesForAnalysis: 3
+  maxReasonableStepTime: 2
+  minReasonableStepTime: 0.3
+  positionHistoryFrames: 300
+  eventHistoryCount: 20
+  enableArmsModule: 0
+  armsSensitivity: 1
+  armsDebugMode: 0
+  isHandPositionTracked: 1
+  useRelativeHandPosition: 1
+  isHandRaiseTracked: 1
+  handRaiseThreshold: 0.3
+  handRaiseMinHeight: 0.1
+  enableHeadModule: 0
+  headSensitivity: 1
+  headDebugMode: 0
+  isHeadPositionTracked: 1
+  useRelativeHeadPosition: 1
+  isHeadRotationTracked: 1
+  isHeadDirectionEnabled: 1
+  headUpThreshold: 15
+  headDownThreshold: 15
+  headLeftThreshold: 20
+  headRightThreshold: 20
+  pelvisJointName: Hips
+  spineJointName: Spine4
+  headJointName: Head
+  neckJointName: Neck
+  leftShoulderJointName: LeftShoulder
+  rightShoulderJointName: RightShoulder
+  leftFootJointName: LeftFoot
+  rightFootJointName: RightFoot
+  leftHandJointName: LeftHand
+  rightHandJointName: RightHand

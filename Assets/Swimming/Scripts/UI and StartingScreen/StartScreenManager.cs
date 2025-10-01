@@ -20,8 +20,8 @@ namespace Swimming
 
         void Awake()
         {
-            var motionMap = inputActions.FindActionMap("MotionTracking");
-            raiseFootAction = motionMap.FindAction("FootRaise");
+            var motionMap = inputActions.FindActionMap("Foot");
+            raiseFootAction = motionMap.FindAction("FootRaised");
 
             if (liftLegText != null)
             {

@@ -1946,7 +1946,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 92039b1e40f2a934786f72c6c60601e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inputActions: {fileID: -944628639613478452, guid: 788d0aee30682674880f11ca6a0b3013,
+  inputActions: {fileID: -944628639613478452, guid: 4370f1ac1c7a2bf419a9f76eca4e970d,
     type: 3}
   moveSpeed: 10
   swimForce: 30
@@ -1954,6 +1954,9 @@ MonoBehaviour:
   sinkForce: 15
   maxSinkVelocity: 3
   waterDrag: 1.5
+  footHeightForce: 10
+  squatForce: 12
+  continuousMotionThreshold: 0.1
   debugMode: 0
   debugActions: {fileID: -944628639613478452, guid: f00c78adf1bfe904583a89aa9904ba72,
     type: 3}
@@ -2021,53 +2024,6 @@ CapsuleCollider2D:
   m_Offset: {x: 0, y: 1.6995411}
   m_Size: {x: 4.0939665, y: 7.5309234}
   m_Direction: 0
---- !u!1 &665945003
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 665945005}
-  - component: {fileID: 665945004}
-  m_Layer: 0
-  m_Name: Foot Tracking
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &665945004
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 665945003}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 30d7d1861a591e14f91441894855845a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  raiseThreshold: 0.1
-  leftAnkleName: LeftFoot
-  rightAnkleName: RightFoot
---- !u!4 &665945005
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 665945003}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -26.70704, y: -4.3057394, z: -0.941606}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -3704,6 +3660,53 @@ CapsuleCollider2D:
   m_Offset: {x: 1.246088, y: 7.004833}
   m_Size: {x: 2.1334565, y: 16.319065}
   m_Direction: 0
+--- !u!1 &1063620762
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1063620764}
+  - component: {fileID: 1063620763}
+  m_Layer: 0
+  m_Name: Motion Tracking Manager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1063620763
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1063620762}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e3466cb74b4047d4aa95a8ce25b905ed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  config: {fileID: 11400000, guid: 9819d603eb3397440b053577ea10c57d, type: 2}
+  dontDestroyOnLoad: 0
+  enableDebugLogging: 1
+--- !u!4 &1063620764
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1063620762}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -20.43708, y: 40.771168, z: 87.09809}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1109236625
 GameObject:
   m_ObjectHideFlags: 0
@@ -5650,61 +5653,6 @@ MonoBehaviour:
     type: 3}
   minFishPerSchool: 3
   maxFishPerSchool: 5
---- !u!1 &1916071113
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1916071115}
-  - component: {fileID: 1916071116}
-  m_Layer: 0
-  m_Name: Weight Shift
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1916071115
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1916071113}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.016566537, y: -0.8703817, z: -0.088799775}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1916071116
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1916071113}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dbb57af1a018b4840a88d1bb09421f7c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  pelvis: {fileID: 0}
-  pelvisName: Hips
-  enableWeightShiftTracking: 1
-  weightShiftThreshold: 0.15
-  neutralZoneWidth: 0.05
-  enableSquatTracking: 1
-  squatThresholdPercentage: 0.075
-  standingThreshold: 0.2
-  calibrationDelay: 0
-  calibrationFrames: 30
-  debugMode: 1
 --- !u!1 &1937652331
 GameObject:
   m_ObjectHideFlags: 0
@@ -6341,5 +6289,4 @@ SceneRoots:
   - {fileID: 235395107}
   - {fileID: 6758509}
   - {fileID: 894272536}
-  - {fileID: 1916071115}
-  - {fileID: 665945005}
+  - {fileID: 1063620764}
