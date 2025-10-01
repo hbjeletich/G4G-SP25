@@ -29,7 +29,7 @@ namespace Sewing {
         void Awake()
         {
             animator = GetComponent<Animator>();
-            var actionMap = inputActions.FindActionMap("MotionTracking");
+            var actionMap = inputActions.FindActionMap("Foot");
             leftHipAction = actionMap.FindAction("LeftHipAbducted");
             rightHipAction = actionMap.FindAction("RightHipAbducted");
             //footRaiseAction = actionMap.FindAction("FootRaise");
