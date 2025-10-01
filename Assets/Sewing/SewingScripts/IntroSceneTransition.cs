@@ -14,8 +14,8 @@ namespace Sewing
         // Start is called before the first frame update
         void Awake()
         {
-            var actionMap = inputActions.FindActionMap("MotionTracking");
-            footRaiseAction = actionMap.FindAction("FootRaise");
+            var actionMap = inputActions.FindActionMap("Foot");
+            footRaiseAction = actionMap.FindAction("FootRaised");
             footRaiseAction.performed += OnFootRaise;
             SoundManager.StartBGM();
         }

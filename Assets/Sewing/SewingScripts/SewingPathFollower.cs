@@ -28,9 +28,9 @@ namespace Sewing{
 
         void Awake()
         {   
-            var actionMap = inputActions.FindActionMap("MotionTracking");
-            footRaiseAction = actionMap.FindAction("FootRaise");
-            footLowerAction = actionMap.FindAction("FootLower");
+            var actionMap = inputActions.FindActionMap("Foot");
+            footRaiseAction = actionMap.FindAction("FootRaised");
+            footLowerAction = actionMap.FindAction("FootLowered");
             footRaiseAction.performed += OnFootRaise;
             footLowerAction.performed += OnFootLower;
         }

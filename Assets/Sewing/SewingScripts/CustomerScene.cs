@@ -36,8 +36,8 @@ namespace Sewing
             //Debug.Log($"[{Time.time:F2}] CustomerScene Awake called on {gameObject.name}");
             //Debug.Log($"Awake Stack Trace:\n{System.Environment.StackTrace}");
 
-            var actionMap = inputActions.FindActionMap("MotionTracking");
-            footRaiseAction = actionMap.FindAction("FootRaise");
+            var actionMap = inputActions.FindActionMap("Foot");
+            footRaiseAction = actionMap.FindAction("FootRaised");
             footRaiseAction.performed += OnFootRaise;
         }
         void Start ()

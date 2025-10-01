@@ -598,55 +598,6 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 2026463715}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &665945003
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 665945005}
-  - component: {fileID: 665945004}
-  m_Layer: 0
-  m_Name: Foot Tracking
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &665945004
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 665945003}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 30d7d1861a591e14f91441894855845a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  leftAnkle: {fileID: 0}
-  rightAnkle: {fileID: 0}
-  raiseThreshold: 0.1
-  leftAnkleName: LeftFoot
-  rightAnkleName: RightFoot
---- !u!4 &665945005
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 665945003}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -26.70704, y: -4.3057394, z: -0.941606}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &679001775
 GameObject:
   m_ObjectHideFlags: 0
@@ -1164,7 +1115,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a91f65bcfcc2b544f97e6b4d124a672a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inputActions: {fileID: -944628639613478452, guid: 788d0aee30682674880f11ca6a0b3013,
+  inputActions: {fileID: -944628639613478452, guid: 4370f1ac1c7a2bf419a9f76eca4e970d,
     type: 3}
   debugMode: 1
   liftLegText: {fileID: 122659233}
@@ -1584,6 +1535,53 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 2026463715}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1977194429
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1977194431}
+  - component: {fileID: 1977194430}
+  m_Layer: 0
+  m_Name: Motion Tracking Manager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1977194430
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1977194429}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e3466cb74b4047d4aa95a8ce25b905ed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  config: {fileID: 11400000, guid: 9819d603eb3397440b053577ea10c57d, type: 2}
+  dontDestroyOnLoad: 0
+  enableDebugLogging: 1
+--- !u!4 &1977194431
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1977194429}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -20.43708, y: 40.771168, z: 87.09809}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &2026463715
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2032,8 +2030,8 @@ SceneRoots:
   - {fileID: 2784823}
   - {fileID: 1743671417}
   - {fileID: 894272536}
-  - {fileID: 665945005}
   - {fileID: 963194228}
   - {fileID: 1858818040}
   - {fileID: 238942495}
   - {fileID: 188975186}
+  - {fileID: 1977194431}

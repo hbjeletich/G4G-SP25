@@ -29,7 +29,8 @@ namespace Swimming
 
         // input actions
         private InputAction weightShiftXAction;
-        private InputAction footHeightAction;
+        private InputAction leftFootHeightAction;
+        private InputAction rightFootHeightAction;
         private InputAction squatTrackingYAction;
 
         // debug input actions
@@ -65,10 +66,12 @@ namespace Swimming
             }
 
             // set up motion tracking actions
-            var motionMap = inputActions.FindActionMap("MotionTracking");
-            weightShiftXAction = motionMap.FindAction("WeightShiftX");
-            footHeightAction = motionMap.FindAction("FootHeight");
-            squatTrackingYAction = motionMap.FindAction("SquatTrackingY");
+            var torsoMap = inputActions.FindActionMap("Torso");
+            var footMap = inputActions.FindActionMap("Foot");
+            weightShiftXAction = torsoMap.FindAction("WeightShiftX");
+            leftFootHeightAction = footMap.FindAction("LeftFootPosition");
+            rightFootHeightAction = footMap.FindAction("RightFootPosition");
+            squatTrackingYAction = torsoMap.FindAction("PelvisPosition");
 
             // set up keyboard input for debug mode
             var playerMap = debugActions.FindActionMap("SwimmingDebug");
@@ -84,7 +87,8 @@ namespace Swimming
         private void OnEnable()
         {
             weightShiftXAction.Enable();
-            footHeightAction.Enable();
+            leftFootHeightAction.Enable();
+            rightFootHeightAction.Enable();
             squatTrackingYAction.Enable();
 
             moveAction.Enable();
@@ -101,7 +105,8 @@ namespace Swimming
         private void OnDisable()
         {
             weightShiftXAction.Disable();
-            footHeightAction.Disable();
+            leftFootHeightAction.Disable();
+            rightFootHeightAction.Disable();
             squatTrackingYAction.Disable();
 
             moveAction.Disable();
@@ -150,10 +155,14 @@ namespace Swimming
 
         private void HandleContinuousVerticalMovement()
         {
-            float footHeight = footHeightAction.ReadValue<float>();
-            float squatDepth = squatTrackingYAction.ReadValue<float>();
+            float leftFootY = leftFootHeightAction.ReadValue<Vector3>().y;
+            float rightFootY = rightFootHeightAction.ReadValue<Vector3>().y;
+            float pelvisY = squatTrackingYAction.ReadValue<Vector3>().y;
 
             float netVerticalForce = 0f;
+
+            // use whichever is higher
+            float footHeight = Mathf.Max(leftFootY, rightFootY);
 
             // 0 = no lift, 1 = maximum lift
             if (footHeight > continuousMotionThreshold)
@@ -162,9 +171,9 @@ namespace Swimming
             }
 
             // 0 = standing, 1 = deep squat
-            if (squatDepth > continuousMotionThreshold)
+            if (pelvisY > continuousMotionThreshold)
             {
-                netVerticalForce -= squatDepth * squatForce;
+                netVerticalForce -= pelvisY * squatForce;
             }
 
             DoContinuousVerticalMovement(netVerticalForce);
