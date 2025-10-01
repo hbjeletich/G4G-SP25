@@ -25,6 +25,7 @@
 
 # Visual Studio cache directory
 .vs/
+.vscode/
 
 # Gradle cache directory
 .gradle/
@@ -87,7 +88,7 @@ Assets/Wwise/Editor/ProjectData/AkWwiseProjectData.asset*
 #    then don't ignore Assets/Wwise/Editor/ProjectData.meta. If AkWwiseProjectData.asset is the only item in there,
 #    then, it's OK to ignore this file.
 # 
-# Assets/Wwise/Editor/ProjectData.meta
+Assets/Wwise/Editor/ProjectData.meta
 
 ## --------------- ##
 ## End WWise Stuff ##
@@ -95,6 +96,12 @@ Assets/Wwise/Editor/ProjectData/AkWwiseProjectData.asset*
 
 # Crashlytics generated file
 crashlytics-build.properties
+
+# temp install files
+WwiseUnityIntegration_*_Src.zip
+
+# Mac stuff
+.DS_store
 
 # Packed Addressables
 /[Aa]ssets/[Aa]ddressable[Aa]ssets[Dd]ata/*/*.bin*
