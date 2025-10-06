@@ -1,0 +1,36 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+namespace constellation
+{
+    public class PlayerController : MonoBehaviour
+    {
+        //Declaration Area
+        [SerializeField] private float rotationMod;
+        [SerializeField] private float speedMod;
+        [SerializeField] private float speedStat = 5.0f;
+        [SerializeField] private float rotateStat = 5.0f;
+
+        private Rigidbody2D charBody;
+
+        // Start is called before the first frame update
+        void Start()
+        {
+            charBody = GetComponent<Rigidbody2D>();
+        }
+
+        // Update is called once per frame
+        void Update()
+        {
+            speedMod = Input.GetAxis("Vertical");
+            rotationMod = Input.GetAxis("Horizontal");
+        }
+
+        void FixedUpdate()
+        {
+            charBody.rotation += (-1 * rotationMod * rotateStat);
+            charBody.AddForce(new Vector2(speedMod * speedStat, 0), ForceMode2D.Impulse);
+        }
+    }
+}
