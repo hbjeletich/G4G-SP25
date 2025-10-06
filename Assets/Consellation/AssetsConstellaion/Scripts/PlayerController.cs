@@ -30,7 +30,7 @@ namespace constellation
         void FixedUpdate()
         {
             charBody.rotation += (-1 * rotationMod * rotateStat);
-            charBody.AddForce(new Vector2(speedMod * speedStat, 0), ForceMode2D.Impulse);
+            charBody.velocity = new Vector2(0, speedStat * speedMod);
         }
     }
 }
