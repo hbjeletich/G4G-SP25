@@ -2,6 +2,8 @@ using UnityEngine;
 using UnityEngine.Splines;
 using Unity.Mathematics;
 
+namespace CameraSnap
+{
 public class CartController : MonoBehaviour
 {
     public SplineContainer splineContainer;
@@ -39,4 +41,5 @@ public class CartController : MonoBehaviour
     {
         isMoving = !isMoving;
     }
+}
 }

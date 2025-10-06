@@ -1,5 +1,7 @@
 using UnityEngine;
 
+namespace CameraSnap
+{
 public class MouseLook : MonoBehaviour
 {
     public float mouseSensitivity = 100f;
@@ -29,4 +31,5 @@ public class MouseLook : MonoBehaviour
         // Apply horizontal rotation (yaw) to the parent (e.g., the cart)
         transform.parent.rotation = Quaternion.Euler(0f, yRotation, 0f);
     }
+}
 }
