@@ -4,42 +4,64 @@ using Unity.Mathematics;
 
 namespace CameraSnap
 {
-public class CartController : MonoBehaviour
-{
-    public SplineContainer splineContainer;
-    public float speed = 5f;
-    private float currentDistance = 0f;
-    private bool isMoving = true;
-
-    void Update()
+    public class CartController : MonoBehaviour
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        public SplineContainer splineContainer; //This is the rails
+        public float speed = 5f;
+
+        private float defaultSpeed;
+        private float currentDistance = 0f;
+        private bool isMoving = true;
+
+        void Start()
         {
-            ToggleMovement();
+            defaultSpeed = speed;
         }
 
-        if (!isMoving) return;
-
-        currentDistance += speed * Time.deltaTime;
-
-        float totalLength = splineContainer.CalculateLength();
-        float t = currentDistance / totalLength;
-
-        if (t <= 1f)
+        void Update()
         {
-            splineContainer.Evaluate(t, out float3 pos, out float3 tangent, out float3 up);
-            transform.position = (Vector3)pos;
+            // Toggle movement on Space key, space makes cart stop and resume
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                ToggleMovement();
+            }
 
-            // Optional: rotate cart only on Y axis (ignore mouse rotation merging for now)
-            Vector3 forward = new Vector3(tangent.x, 0f, tangent.z).normalized;
-            if (forward.sqrMagnitude > 0f)
-                transform.rotation = Quaternion.LookRotation(forward, Vector3.up);
+            if (!isMoving) return;
+
+            currentDistance += speed * Time.deltaTime;
+
+            float totalLength = splineContainer.CalculateLength();
+            float t = currentDistance / totalLength;
+
+            if (t <= 1f)
+            {
+                splineContainer.Evaluate(t, out float3 pos, out float3 tangent, out float3 up);
+                transform.position = (Vector3)pos;
+
+              
+                Vector3 forward = new Vector3(tangent.x, 0f, tangent.z).normalized;
+                if (forward.sqrMagnitude > 0f)
+                {
+                    transform.rotation = Quaternion.LookRotation(forward, Vector3.up);
+                }
+            }
+        }
+
+        public void ToggleMovement()
+        {
+            isMoving = !isMoving;
+        }
+
+        // Called by trigger zone to reduce speed
+        public void SetSpeed(float newSpeed)
+        {
+            speed = newSpeed;
+        }
+
+        // Called by trigger zone to reset to default speed
+        public void ResetSpeed()
+        {
+            speed = defaultSpeed;
         }
     }
-
-    public void ToggleMovement()
-    {
-        isMoving = !isMoving;
-    }
-}
 }
