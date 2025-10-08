@@ -138,8 +138,8 @@ MonoBehaviour:
         guid: 90dd6a3af49291438d863caab4f70a88
       Path: Events\Default Work Unit\Golf_BGM
       maxAttenuation: 0
-      maxDuration: -1
-      minDuration: -1
+      maxDuration: 256
+      minDuration: 256
     - name: Golf_Environment
       guid: a27770f2e07f2d47a14d46cb6f197e9b
       id: 4208230819
@@ -155,8 +155,8 @@ MonoBehaviour:
         guid: a27770f2e07f2d47a14d46cb6f197e9b
       Path: Events\Default Work Unit\Golf_Environment
       maxAttenuation: 0
-      maxDuration: -1
-      minDuration: -1
+      maxDuration: 0
+      minDuration: 0
     - name: Golf_Environment_Impact
       guid: f7c2c195920c774f9976928528999aee
       id: 1621041688
@@ -171,9 +171,9 @@ MonoBehaviour:
         ObjectType: 3
         guid: f7c2c195920c774f9976928528999aee
       Path: Events\Default Work Unit\Golf_Environment_Impact
-      maxAttenuation: 0
-      maxDuration: -1
-      minDuration: -1
+      maxAttenuation: 100
+      maxDuration: 1.052585
+      minDuration: 1.052585
     - name: Golf_Impact
       guid: 6e1871ce80b94145a4a2874bfc0029d3
       id: 1183497998
@@ -188,9 +188,9 @@ MonoBehaviour:
         ObjectType: 3
         guid: 6e1871ce80b94145a4a2874bfc0029d3
       Path: Events\Default Work Unit\Golf_Impact
-      maxAttenuation: 0
-      maxDuration: -1
-      minDuration: -1
+      maxAttenuation: 30
+      maxDuration: 0.74106824
+      minDuration: 0.74106824
     - name: Golf_Score
       guid: 1d8042f6cea50e48ad7b4ae6a5af966c
       id: 3905678478
@@ -206,8 +206,8 @@ MonoBehaviour:
         guid: 1d8042f6cea50e48ad7b4ae6a5af966c
       Path: Events\Default Work Unit\Golf_Score
       maxAttenuation: 0
-      maxDuration: -1
-      minDuration: -1
+      maxDuration: 3.9375057
+      minDuration: 3.9375057
     - name: Golf_Start
       guid: 3f3e010fc3a29049bb62f165e261c043
       id: 1594576204
@@ -223,8 +223,8 @@ MonoBehaviour:
         guid: 3f3e010fc3a29049bb62f165e261c043
       Path: Events\Default Work Unit\Golf_Start
       maxAttenuation: 0
-      maxDuration: -1
-      minDuration: -1
+      maxDuration: 7.7087984
+      minDuration: 7.7087984
     - name: Golf_Swing
       guid: 0ab483d00ae9fd4b959fbb70be8c09cf
       id: 3110887642
@@ -240,8 +240,8 @@ MonoBehaviour:
         guid: 0ab483d00ae9fd4b959fbb70be8c09cf
       Path: Events\Default Work Unit\Golf_Swing
       maxAttenuation: 0
-      maxDuration: -1
-      minDuration: -1
+      maxDuration: 0.6459311
+      minDuration: 0.54328316
     - name: Golf_Swing_Tick
       guid: e507d12e33b608458a401ec94429d123
       id: 320338942
@@ -257,8 +257,8 @@ MonoBehaviour:
         guid: e507d12e33b608458a401ec94429d123
       Path: Events\Default Work Unit\Golf_Swing_Tick
       maxAttenuation: 0
-      maxDuration: -1
-      minDuration: -1
+      maxDuration: 0
+      minDuration: 0
     - name: Golf_Transition
       guid: 6c16f03e013f784a9cd6426fef05fba5
       id: 4261217065
@@ -274,8 +274,8 @@ MonoBehaviour:
         guid: 6c16f03e013f784a9cd6426fef05fba5
       Path: Events\Default Work Unit\Golf_Transition
       maxAttenuation: 0
-      maxDuration: -1
-      minDuration: -1
+      maxDuration: 3.0112472
+      minDuration: 3.0112472
     - name: Golf_Wind_Up
       guid: e3b0bbe4726cde4190833ea3e7884548
       id: 271725226
@@ -290,9 +290,9 @@ MonoBehaviour:
         ObjectType: 3
         guid: e3b0bbe4726cde4190833ea3e7884548
       Path: Events\Default Work Unit\Golf_Wind_Up
-      maxAttenuation: 0
-      maxDuration: -1
-      minDuration: -1
+      maxAttenuation: 30
+      maxDuration: 1.1875057
+      minDuration: 1.1875057
     - name: Wind_Noise
       guid: cfac0b4230e7564a87bd10c7774b5b9a
       id: 650903076
@@ -308,8 +308,8 @@ MonoBehaviour:
         guid: cfac0b4230e7564a87bd10c7774b5b9a
       Path: Events\Default Work Unit\Wind_Noise
       maxAttenuation: 0
-      maxDuration: -1
-      minDuration: -1
+      maxDuration: 0
+      minDuration: 0
   - PhysicalPath: Events\Swimming.wwu
     PathAndIcons:
     - ElementName: Events
@@ -338,8 +338,8 @@ MonoBehaviour:
         guid: 76c8d78466eb694885f62a457d5debcf
       Path: Events\Swimming\Ambience_Play
       maxAttenuation: 0
-      maxDuration: -1
-      minDuration: -1
+      maxDuration: 0
+      minDuration: 0
     - name: Collectable
       guid: 75e6519ab2491043a70447ab7e7b6068
       id: 1330284301
@@ -355,8 +355,8 @@ MonoBehaviour:
         guid: 75e6519ab2491043a70447ab7e7b6068
       Path: Events\Swimming\Collectable
       maxAttenuation: 0
-      maxDuration: -1
-      minDuration: -1
+      maxDuration: 2.0228333
+      minDuration: 1.001875
     - name: MUS_Play
       guid: 8677196fe703d841854e690e40a07d2d
       id: 1280297747
@@ -372,8 +372,8 @@ MonoBehaviour:
         guid: 8677196fe703d841854e690e40a07d2d
       Path: Events\Swimming\MUS_Play
       maxAttenuation: 0
-      maxDuration: -1
-      minDuration: -1
+      maxDuration: 0
+      minDuration: 0
   RtpcWwu:
   - PhysicalPath: Game Parameters\Default Work Unit.wwu
     PathAndIcons:
