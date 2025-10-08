@@ -7,41 +7,41 @@ namespace constellation
     public class PlayerController : MonoBehaviour
     {
         //Declaration Area
+        //rotation mod gathered by input
         [SerializeField] private float rotationMod;
+        //speed mod gathered by input
         [SerializeField] private float speedMod;
+        //speed stat handles movement
         [SerializeField] private float speedStat = 5.0f;
+        //how fast guy rotates
         [SerializeField] private float rotateStat = 5.0f;
-        [SerializeField] private float maxSpeed = 5.0f;
 
+        //THE RIGID BODY
         private Rigidbody2D charBody;
 
 
         // Start is called before the first frame update
         void Start()
         {
+            //Gather Body
             charBody = GetComponent<Rigidbody2D>();
         }
 
         // Update is called once per frame
         void Update()
         {
+            //take input should ne changed with movement aspects
             speedMod = Input.GetAxis("Vertical");
             rotationMod = Input.GetAxis("Horizontal");
         }
 
         void FixedUpdate()
         {
+            //applay input
+            //actulaly spins character, by changing rotation by rotation mod& rotation speed stat, the -1 makes the character feel uninversed
             charBody.rotation += (-1 * rotationMod * rotateStat);
-            //if (speedMod > 0)
-            //{
+            //This moves guy forward based on speedMod and Stat
             charBody.AddForce(transform.up*speedMod*speedStat, ForceMode2D.Impulse);
-            //}
-            /*
-            else if (speedMod < 0)
-            {
-                charBody.AddForce(transform.up*-1, ForceMode2D.Impulse);
-            }
-            */
         }
     }
 }
