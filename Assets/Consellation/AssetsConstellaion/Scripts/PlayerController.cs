@@ -32,14 +32,16 @@ namespace constellation
         void FixedUpdate()
         {
             charBody.rotation += (-1 * rotationMod * rotateStat);
-            if (speedMod > 0)
-            {
-                charBody.AddForce(transform.up, ForceMode2D.Impulse);
-            }
+            //if (speedMod > 0)
+            //{
+            charBody.AddForce(transform.up*speedMod*speedStat, ForceMode2D.Impulse);
+            //}
+            /*
             else if (speedMod < 0)
             {
                 charBody.AddForce(transform.up*-1, ForceMode2D.Impulse);
             }
+            */
         }
     }
 }
