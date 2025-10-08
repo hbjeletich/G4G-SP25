@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using uintyEngine.SceneManagement;
+using UnityEngine.SceneManagement;
 
 public class Settings_Script : MonoBehaviour
 {
