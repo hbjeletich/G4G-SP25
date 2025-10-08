@@ -11,8 +11,10 @@ namespace constellation
         [SerializeField] private float speedMod;
         [SerializeField] private float speedStat = 5.0f;
         [SerializeField] private float rotateStat = 5.0f;
+        [SerializeField] private float maxSpeed = 5.0f;
 
         private Rigidbody2D charBody;
+
 
         // Start is called before the first frame update
         void Start()
@@ -30,7 +32,14 @@ namespace constellation
         void FixedUpdate()
         {
             charBody.rotation += (-1 * rotationMod * rotateStat);
-            charBody.velocity = new Vector2(0, speedStat * speedMod);
+            if (speedMod > 0)
+            {
+                charBody.AddForce(transform.up, ForceMode2D.Impulse);
+            }
+            else if (speedMod < 0)
+            {
+                charBody.AddForce(transform.up*-1, ForceMode2D.Impulse);
+            }
         }
     }
 }
