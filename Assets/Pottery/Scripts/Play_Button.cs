@@ -33,5 +33,4 @@ public class Settings_Script : MonoBehaviour
         Debug.Log("Galary Button Clicked");
     }
 
-    
 }
