@@ -6,12 +6,14 @@ namespace CameraSnap
 {
     public class CartController : MonoBehaviour
     {
-        public SplineContainer splineContainer; //This is the rails
+        public SplineContainer splineContainer;
         public float speed = 5f;
 
         private float defaultSpeed;
         private float currentDistance = 0f;
         private bool isMoving = true;
+        private bool canStop = false;  
+        private bool isStopped = false; 
 
         void Start()
         {
@@ -20,13 +22,17 @@ namespace CameraSnap
 
         void Update()
         {
-            // Toggle movement on Space key, space makes cart stop and resume
-            if (Input.GetKeyDown(KeyCode.Space))
+            // Press SPACE to stop/resume, but only allowed if inside slowdown zone
+            if (Input.GetKeyDown(KeyCode.Space) && canStop)
             {
-                ToggleMovement();
+                if (isStopped)
+                    ResumeCart();
+                else
+                    StopCart();
             }
 
-            if (!isMoving) return;
+            if (!isMoving || isStopped)
+                return;
 
             currentDistance += speed * Time.deltaTime;
 
@@ -38,7 +44,6 @@ namespace CameraSnap
                 splineContainer.Evaluate(t, out float3 pos, out float3 tangent, out float3 up);
                 transform.position = (Vector3)pos;
 
-              
                 Vector3 forward = new Vector3(tangent.x, 0f, tangent.z).normalized;
                 if (forward.sqrMagnitude > 0f)
                 {
@@ -47,21 +52,41 @@ namespace CameraSnap
             }
         }
 
-        public void ToggleMovement()
-        {
-            isMoving = !isMoving;
-        }
-
-        // Called by trigger zone to reduce speed
         public void SetSpeed(float newSpeed)
         {
             speed = newSpeed;
         }
 
-        // Called by trigger zone to reset to default speed
         public void ResetSpeed()
         {
             speed = defaultSpeed;
+            isStopped = false;
+            isMoving = true;
+            canStop = false;
         }
+
+        // Called by slowdown zones
+        public void AllowStop(bool value)
+        {
+            canStop = value;
+            if (!value)
+                ResumeCart();
+        }
+
+        public void StopCart()
+        {
+            if (!canStop) return;
+            isStopped = true;
+            isMoving = false;
+        }
+
+        public void ResumeCart()
+        {
+            isStopped = false;
+            isMoving = true;
+        }
+
+        public bool IsStopped() => isStopped;
+        public bool CanStop() => canStop;
     }
 }

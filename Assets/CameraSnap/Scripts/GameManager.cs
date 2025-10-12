@@ -1,4 +1,3 @@
-
 using UnityEngine;
 using System.Collections.Generic;
 
@@ -9,45 +8,49 @@ namespace CameraSnap
         public static GameManager Instance;
 
         [Header("All Animals")]
+        [Tooltip("List of all animal types available in the game.")]
         public List<AnimalData> allAnimals;
-
-        private AnimalData[] mysteryAnimals = new AnimalData[3];
 
         void Awake()
         {
-            if (Instance == null) Instance = this;
-            else Destroy(gameObject);
+            // Singleton setup
+            if (Instance == null)
+                Instance = this;
+            else
+            {
+                Destroy(gameObject);
+                return;
+            }
 
             DontDestroyOnLoad(gameObject);
-            PickMysteryAnimals();
+
+            Debug.Log("[GameManager] Initialized with " + allAnimals.Count + " animals available.");
         }
 
-        void PickMysteryAnimals()
+       
+        /// Returns the full list of animals that can appear anywhere.
+        
+        public List<AnimalData> GetAllAnimals()
         {
-            for (int zone = 0; zone < 3; zone++)
+            return allAnimals;
+        }
+
+      
+        /// Returns a random animal from the full list.
+        /// Useful if you want to spawn a random animal anywhere.
+       
+        public AnimalData GetRandomAnimal()
+        {
+            if (allAnimals == null || allAnimals.Count == 0)
             {
-                List<AnimalData> animalsInZone = GetAnimalsForZone(zone);
-                if (animalsInZone.Count > 0)
-                {
-                    mysteryAnimals[zone] = animalsInZone[Random.Range(0, animalsInZone.Count)];
-                    Debug.Log($"[GameManager] Picked mystery animal for zone {zone}: {mysteryAnimals[zone].animalName}");
-                }
-                else
-                {
-                    Debug.LogWarning($"[GameManager] No animals found for zone {zone}!");
-                }
+                Debug.LogWarning("[GameManager] No animals available!");
+                return null;
             }
+
+            int index = Random.Range(0, allAnimals.Count);
+            return allAnimals[index];
         }
 
-        public AnimalData GetMysteryAnimalForZone(int zoneIndex)
-        {
-            if (zoneIndex < 0 || zoneIndex >= mysteryAnimals.Length) return null;
-            return mysteryAnimals[zoneIndex];
-        }
-
-        public List<AnimalData> GetAnimalsForZone(int zoneIndex)
-        {
-            return allAnimals.FindAll(animal => animal.zoneIndex == zoneIndex);
-        }
+       
     }
 }

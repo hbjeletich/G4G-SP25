@@ -5,48 +5,64 @@ namespace CameraSnap
 {
     public class AnimalSpawner : MonoBehaviour
     {
-        [Tooltip("Which zone this spawner represents (e.g., 0, 1, 2)")]
-        public int zoneIndex;
-
-        [Tooltip("Where animals will spawn")]
+        [Header("Spawn Settings")]
+        [Tooltip("Points in the scene where animals can spawn.")]
         public List<Transform> spawnPoints = new List<Transform>();
+
+        [Tooltip("Maximum number of animals to spawn.")]
+        public int maxAnimals = 5;
 
         private List<GameObject> spawnedAnimals = new List<GameObject>();
 
-
-        //MYSTERY ANIMAL in this context is about the specific animal the player has to find and photograph
-        //in this zone. Parts of this code will make sure that this animal is always spawned in the zone
-
-        public void SpawnAnimals(AnimalData mysteryAnimal)
+        
+        /// Spawns unique random animals (no repeats) in this zone.
+        
+        public void SpawnAnimals()
         {
             ClearPreviousAnimals();
 
-            List<AnimalData> animalsToSpawn = GameManager.Instance.GetAnimalsForZone(zoneIndex);
-
-            
-            if (mysteryAnimal != null && !animalsToSpawn.Contains(mysteryAnimal))
+            if (GameManager.Instance == null || GameManager.Instance.GetAllAnimals().Count == 0)
             {
-                animalsToSpawn.Add(mysteryAnimal);
-                Debug.Log($"[AnimalSpawner] Added mystery animal: {mysteryAnimal.animalName}");
+                Debug.LogWarning("[AnimalSpawner] No animals available to spawn!");
+                return;
             }
-            //•Loops through each animal to spawn, up to the number of available spawn points.
-            for (int i = 0; i < Mathf.Min(animalsToSpawn.Count, spawnPoints.Count); i++)
+
+            List<AnimalData> allAnimals = new List<AnimalData>(GameManager.Instance.GetAllAnimals());
+
+            if (allAnimals.Count == 0)
             {
-                GameObject prefab = animalsToSpawn[i].animalPrefab;
-                if (prefab != null)
+                Debug.LogWarning("[AnimalSpawner] No animals to spawn!");
+                return;
+            }
+
+            int spawnCount = Mathf.Min(maxAnimals, spawnPoints.Count, allAnimals.Count);
+
+            // Shuffle the animal list so each spawn is random and unique
+            Shuffle(allAnimals);
+
+            for (int i = 0; i < spawnCount; i++)
+            {
+                AnimalData animalToSpawn = allAnimals[i]; // unique selection
+                if (animalToSpawn == null || animalToSpawn.animalPrefab == null)
                 {
-                    Vector3 pos = spawnPoints[i].position;
-                    GameObject animal = Instantiate(prefab, pos, Quaternion.identity);
-                    spawnedAnimals.Add(animal);
-                    Debug.Log($"[AnimalSpawner] Spawned: {animalsToSpawn[i].animalName} at {pos}");
+                    Debug.LogWarning("[AnimalSpawner] Missing animal prefab.");
+                    continue;
                 }
-                else
-                {
-                    Debug.LogWarning($"[AnimalSpawner] Prefab missing for animal: {animalsToSpawn[i].animalName}");
-                }
+
+                Transform spawnPoint = spawnPoints[i];
+                Vector3 pos = spawnPoint.position;
+                Quaternion rot = spawnPoint.rotation;
+
+                GameObject animal = Instantiate(animalToSpawn.animalPrefab, pos, rot);
+                spawnedAnimals.Add(animal);
+
+                Debug.Log($"[AnimalSpawner] Spawned unique animal: {animalToSpawn.animalName} at {pos}");
             }
         }
 
+      
+        /// Clears previously spawned animals before respawning.
+      
         public void ClearPreviousAnimals()
         {
             foreach (var animal in spawnedAnimals)
@@ -54,8 +70,21 @@ namespace CameraSnap
                 if (animal != null)
                     Destroy(animal);
             }
+
             spawnedAnimals.Clear();
             Debug.Log("[AnimalSpawner] Cleared previous animals");
+        }
+
+        
+        /// Helper function to shuffle a list 
+        
+        private void Shuffle<T>(List<T> list)
+        {
+            for (int i = list.Count - 1; i > 0; i--)
+            {
+                int j = Random.Range(0, i + 1);
+                (list[i], list[j]) = (list[j], list[i]);
+            }
         }
     }
 }

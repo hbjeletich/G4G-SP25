@@ -17,21 +17,14 @@ namespace CameraSnap
 
             if (cart != null)
             {
-                // Slow down cart
                 cart.SetSpeed(slowedSpeed);
+                cart.AllowStop(true); // allow stopping only in zone
 
-                // Show UI icon
                 if (uiIcon != null)
-                {
                     uiIcon.SetActive(true);
-                }
 
-                // Spawn animals
                 if (animalSpawner != null)
-                {
-                    AnimalData mysteryAnimal = GameManager.Instance.GetMysteryAnimalForZone(animalSpawner.zoneIndex);
-                    animalSpawner.SpawnAnimals(mysteryAnimal);
-                }
+                    animalSpawner.SpawnAnimals();
             }
         }
 
@@ -41,22 +34,15 @@ namespace CameraSnap
 
             if (cart != null)
             {
-                // Reset speed
-                cart.ResetSpeed();
+                cart.ResetSpeed();   //  resumes normal movement
+                cart.AllowStop(false);
 
-                // Hide UI icon
                 if (uiIcon != null)
-                {
                     uiIcon.SetActive(false);
-                }
 
-                // Clear spawned animals
                 if (animalSpawner != null)
-                {
                     animalSpawner.ClearPreviousAnimals();
-                }
             }
         }
     }
 }
-
