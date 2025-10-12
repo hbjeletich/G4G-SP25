@@ -6,9 +6,15 @@ using UnityEngine.SceneManagement;
 
 public class Settings_Script : MonoBehaviour
 {
-   public void playGame()
+    public void playGame()
     {
         SceneManager.LoadScene("SelectionMenu");
+        Debug.Log("Play Button Clicked");
+    }
+
+    public void startGame()
+    {
+        SceneManager.LoadScene("Game");
         Debug.Log("Play Button Clicked");
     }
 
@@ -33,4 +39,29 @@ public class Settings_Script : MonoBehaviour
         Debug.Log("Galary Button Clicked");
     }
 
+    public void ButtonCheck()
+    {
+        Debug.Log("Button Clicked");
+    }
+
+    //public void Slidercontrol()
+    //{
+    //    int progress = 0;
+    //    public Slider slider; 
+    //}
+
+    //public void UpdateSlider()
+    //{
+    //    if (Input.GetKeyDown(KeyCode.Space))
+    //    {
+    //        progress++;
+    //    }
+
+    //    slider.value = progress;
+    //}
 }
+
+
+    
+  
+
