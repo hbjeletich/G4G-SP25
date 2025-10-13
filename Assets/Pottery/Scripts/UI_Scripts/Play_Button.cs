@@ -22,7 +22,7 @@ public class Settings_Script : MonoBehaviour
 
     public void startGame()
     {
-        SceneManager.LoadScene("Game");
+        SceneManager.LoadScene("Gamestage_1");
         Debug.Log("Play Button Clicked");
     }
 
@@ -52,15 +52,27 @@ public class Settings_Script : MonoBehaviour
         Debug.Log("Button Clicked");
     }
 
+    public void updateGamestate()
+    {
+       
+            SceneManager.LoadScene("Gamestage_2");
+            Debug.Log("Next Stage Loaded");
+      
+    }
+
+
+
+
     void update()
     {
         UpdateSlider();
         Debug.Log("progress: " + progress);
     }
 
+
     public void UpdateSlider()
     {
-       if (Input.GetKeyDown(KeyCode.Space))
+       if (Input.GetKey(KeyCode.Space))
         {
             progress++;
             slider.value = progress;
@@ -70,11 +82,12 @@ public class Settings_Script : MonoBehaviour
 
        if (slider.value == 10)
         {
-            Debug.Log("Slider Full");
+            Debug.Log("Slider Full, nextStage = true");
             nextStage = true;
-
         }
     }
+
+   
 
 }
 
