@@ -6,6 +6,14 @@ using UnityEngine.SceneManagement;
 
 public class Settings_Script : MonoBehaviour
 {
+
+    int progress = 0;
+
+    public Slider slider;
+
+    bool nextStage = false;
+
+
     public void playGame()
     {
         SceneManager.LoadScene("SelectionMenu");
@@ -44,21 +52,30 @@ public class Settings_Script : MonoBehaviour
         Debug.Log("Button Clicked");
     }
 
-    //public void Slidercontrol()
-    //{
-    //    int progress = 0;
-    //    public Slider slider; 
-    //}
+    void update()
+    {
+        UpdateSlider();
+        Debug.Log("progress: " + progress);
+    }
 
-    //public void UpdateSlider()
-    //{
-    //    if (Input.GetKeyDown(KeyCode.Space))
-    //    {
-    //        progress++;
-    //    }
+    public void UpdateSlider()
+    {
+       if (Input.GetKeyDown(KeyCode.Space))
+        {
+            progress++;
+            slider.value = progress;
 
-    //    slider.value = progress;
-    //}
+            Debug.Log("Space Key Pressed");
+        }
+
+       if (slider.value == 10)
+        {
+            Debug.Log("Slider Full");
+            nextStage = true;
+
+        }
+    }
+
 }
 
 
