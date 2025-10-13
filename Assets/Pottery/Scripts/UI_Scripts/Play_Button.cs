@@ -11,6 +11,8 @@ public class Settings_Script : MonoBehaviour
 
     public Slider slider;
 
+    public float fillspeed;
+
     bool nextStage = false;
 
 
@@ -18,6 +20,12 @@ public class Settings_Script : MonoBehaviour
     {
         SceneManager.LoadScene("SelectionMenu");
         Debug.Log("Play Button Clicked");
+    }
+
+    public void confirmscreen()
+    {
+        SceneManager.LoadScene("ConfirmationScreen");
+        Debug.Log("Confirm Screen loaded");
     }
 
     public void startGame()
