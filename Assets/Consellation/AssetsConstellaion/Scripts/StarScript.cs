@@ -5,6 +5,7 @@ namespace constellation
 {
     public class StarScript : MonoBehaviour
     {
+
         // Start is called before the first frame update
         void Start()
         {
@@ -17,10 +18,18 @@ namespace constellation
 
         }
 
-        void OnCollisionEnter2D(Collision2D collision)
+        void OnTriggerStay2D(Collider2D other)
         {
-            Destroy(gameObject);
-            print("Hit");
+            print("hit");
+            /*
+            if (other.gameObject.tag == "Player")
+            {
+                GameObject player=GameObject.FindGameObjectWithTag("Player");
+                PlayerController playerComp = player.GetComponent<PlayerController>();
+                if (playerComp.isGrabbing)
+                    print("star hit");
+            }
+            */
         }
     }
 }

@@ -15,6 +15,8 @@ namespace constellation
         [SerializeField] private float speedStat = 5.0f;
         //how fast guy rotates
         [SerializeField] private float rotateStat = 5.0f;
+        //if the player is grabbing
+        public bool isGrabbing = false;
 
         //THE RIGID BODY
         private Rigidbody2D charBody;
@@ -33,6 +35,10 @@ namespace constellation
             //take input should ne changed with movement aspects
             speedMod = Input.GetAxis("Vertical");
             rotationMod = Input.GetAxis("Horizontal");
+            if (Input.GetKeyDown("space"))
+            {
+                isGrabbing = true;
+            }
         }
 
         void FixedUpdate()
@@ -42,6 +48,12 @@ namespace constellation
             charBody.rotation += (-1 * rotationMod * rotateStat);
             //This moves guy forward based on speedMod and Stat
             charBody.AddForce(transform.up*speedMod*speedStat, ForceMode2D.Impulse);
+            if (isGrabbing)
+            {
+                print("player hit");
+                isGrabbing = false;
+            }
+
         }
     }
 }
