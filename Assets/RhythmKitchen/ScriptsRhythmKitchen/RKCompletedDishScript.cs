@@ -3,16 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class RKSongSelectScript : MonoBehaviour
+public class RKCompletedDishScript : MonoBehaviour
 {
     public void BackMainMenu()
     {
         SceneManager.LoadScene("RKMainMenu");
     }
 
-    public void SelectSong(string songName)
+    public void GoToSongSelect()
     {
-        SceneManager.LoadScene(songName);
-        RKDataManager.instance.CurRecipe = songName;
+        SceneManager.LoadScene("RKSongSelectMenu");
     }
+
 }
+
