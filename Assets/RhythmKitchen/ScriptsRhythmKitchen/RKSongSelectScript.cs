@@ -13,6 +13,5 @@ public class RKSongSelectScript : MonoBehaviour
     public void SelectSong(string songName)
     {
         SceneManager.LoadScene(songName);
-        RKDataManager.instance.CurRecipe = songName;
     }
 }
