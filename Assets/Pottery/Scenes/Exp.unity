@@ -267,8 +267,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5bb6625763e1f4f469413524cb5ae884, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mesh01: {fileID: 0}
-  mesh02: {fileID: 0}
+  mesh01: {fileID: -2232952877369940510, guid: b8c0ff2fa7b84854988655872130267a, type: 3}
+  mesh02: {fileID: -2128599272216676504, guid: 2ae543e9e6c087a4aa0c0981957ae075, type: 3}
+  mesh03: {fileID: 8245426573784773463, guid: 26813cc6ebf34ce4b85a0345f3ef047a, type: 3}
+  mesh04: {fileID: -5208879343037863941, guid: 12b3f811924942e4698e774a17aa0926, type: 3}
 --- !u!1 &1234315364
 GameObject:
   m_ObjectHideFlags: 0
@@ -466,7 +468,7 @@ Transform:
   m_GameObject: {fileID: 1639550163}
   serializedVersion: 2
   m_LocalRotation: {x: -0.12627023, y: -0.0050629377, z: 0.00064140745, w: -0.9919828}
-  m_LocalPosition: {x: -0.03291417, y: 0.35055858, z: -9.660531}
+  m_LocalPosition: {x: -0.03291417, y: 0.35055858, z: -9.789}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -589,6 +591,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mesh01: {fileID: 0}
   mesh02: {fileID: 0}
+  mesh03: {fileID: 0}
+  mesh04: {fileID: 0}
 --- !u!23 &2035464300
 MeshRenderer:
   m_ObjectHideFlags: 0
