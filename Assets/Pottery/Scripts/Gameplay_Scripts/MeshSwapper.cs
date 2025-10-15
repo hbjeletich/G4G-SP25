@@ -55,6 +55,8 @@ public class MeshSwapper : MonoBehaviour
 
     void updateMesh()
     {
+
+        //If key is pressed, increase slidervalue by 1
         if (Input.GetKeyDown(KeyCode.Space))
         {
             slidervalue = (slidervalue + 1);
@@ -65,6 +67,7 @@ public class MeshSwapper : MonoBehaviour
         Debug.Log("slidervalue: " + slidervalue);
 
 
+        //when slidervalue = #, change mesh to mesh#
         switch (slidervalue)
         {
             case 0:
