@@ -625,6 +625,7 @@ GameObject:
   m_Component:
   - component: {fileID: 864417859}
   - component: {fileID: 864417860}
+  - component: {fileID: 864417861}
   m_Layer: 0
   m_Name: GameView
   m_TagString: Untagged
@@ -661,8 +662,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0122df1351847c446badea2601e965e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  progress: 0
   slider: {fileID: 0}
   fillspeed: 0
+--- !u!114 &864417861
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 864417858}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 751c1c54d742b944d8ca0928366eb161, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetRenderer: {fileID: 944350296}
+  materials:
+  - {fileID: 2100000, guid: 43c1a7cf7f279ba4c828a76e40e833a0, type: 2}
+  - {fileID: 2100000, guid: 75a7e2c970696e34c90630e1fb73c72c, type: 2}
+  - {fileID: 2100000, guid: 32838aebd8f81074bad0bc97c385223b, type: 2}
+  - {fileID: 2100000, guid: d2b2525ae663d2c4f84f63ae51d9f322, type: 2}
 --- !u!1 &901849099
 GameObject:
   m_ObjectHideFlags: 0
@@ -801,6 +821,12 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 901849099}
   m_CullTransparentMesh: 1
+--- !u!23 &944350296 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: -7511558181221131132, guid: 12b3f811924942e4698e774a17aa0926,
+    type: 3}
+  m_PrefabInstance: {fileID: 378086467}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &978630260
 GameObject:
   m_ObjectHideFlags: 0
@@ -944,7 +970,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 864417860}
         m_TargetAssemblyTypeName: Settings_Script, Assembly-CSharp
-        m_MethodName: startGame
+        m_MethodName: updateGamestate
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
