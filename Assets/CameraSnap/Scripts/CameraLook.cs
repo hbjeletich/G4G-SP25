@@ -1,5 +1,9 @@
 using UnityEngine;
 
+//This is the script to allow the player to look left and right. The player is restricted to how much they can look left and right
+//so that they are not able to do a full 360, so they can use both feet to look left and right instead of one foot to go all the way
+//around
+
 namespace CameraSnap
 {
     public class CameraPan : MonoBehaviour
@@ -33,5 +37,12 @@ namespace CameraSnap
             // Apply yaw to camera (local Y rotation)
             transform.localRotation = Quaternion.Euler(0f, currentYaw, 0f);
         }
+        public void ManualPan(float input)
+{
+    currentYaw += input * panSpeed * Time.deltaTime;
+    currentYaw = Mathf.Clamp(currentYaw, -maxYaw, maxYaw);
+    transform.localRotation = Quaternion.Euler(0f, currentYaw, 0f);
+}
+
     }
 }

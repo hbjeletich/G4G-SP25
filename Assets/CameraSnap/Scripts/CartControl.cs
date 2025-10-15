@@ -2,6 +2,11 @@ using UnityEngine;
 using UnityEngine.Splines;
 using Unity.Mathematics;
 
+
+//This script allows the cart to move along a spline. This allows for easily editing the spline in the scene and it working
+// without issue.
+
+
 namespace CameraSnap
 {
     public class CartController : MonoBehaviour
@@ -9,16 +14,19 @@ namespace CameraSnap
         public SplineContainer splineContainer;
         public float speed = 5f;
 
+
         private float defaultSpeed;
         private float currentDistance = 0f;
         private bool isMoving = true;
         private bool canStop = false;  
-        private bool isStopped = false; 
+        private bool isStopped = false;
+
 
         void Start()
         {
             defaultSpeed = speed;
         }
+
 
         void Update()
         {
@@ -31,18 +39,23 @@ namespace CameraSnap
                     StopCart();
             }
 
+
             if (!isMoving || isStopped)
                 return;
 
+
             currentDistance += speed * Time.deltaTime;
+
 
             float totalLength = splineContainer.CalculateLength();
             float t = currentDistance / totalLength;
+
 
             if (t <= 1f)
             {
                 splineContainer.Evaluate(t, out float3 pos, out float3 tangent, out float3 up);
                 transform.position = (Vector3)pos;
+
 
                 Vector3 forward = new Vector3(tangent.x, 0f, tangent.z).normalized;
                 if (forward.sqrMagnitude > 0f)
@@ -52,10 +65,12 @@ namespace CameraSnap
             }
         }
 
+
         public void SetSpeed(float newSpeed)
         {
             speed = newSpeed;
         }
+
 
         public void ResetSpeed()
         {
@@ -65,6 +80,7 @@ namespace CameraSnap
             canStop = false;
         }
 
+
         // Called by slowdown zones
         public void AllowStop(bool value)
         {
@@ -73,6 +89,7 @@ namespace CameraSnap
                 ResumeCart();
         }
 
+
         public void StopCart()
         {
             if (!canStop) return;
@@ -80,11 +97,13 @@ namespace CameraSnap
             isMoving = false;
         }
 
+
         public void ResumeCart()
         {
             isStopped = false;
             isMoving = true;
         }
+
 
         public bool IsStopped() => isStopped;
         public bool CanStop() => canStop;

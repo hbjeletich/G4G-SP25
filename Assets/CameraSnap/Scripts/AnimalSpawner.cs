@@ -1,16 +1,24 @@
 using UnityEngine;
 using System.Collections.Generic;
 
+//This script controls the animal spawning. The main idea is that there are two animals that spawn in each zone. They spawn 
+//on the left and right of the player. In the zones, there are multiple spawn points that the animals will randomly choose
+//to appear in. The important thing is that there is one animal on the left and right that the player photographs. 
+//Animals will not appear twice in a zone, so there are no repeats. 
+
+//NOTE: make sure animals will spawn on both the left and right side. maybe differentiate the spawn points to show
+//which is left and right!!!
+
 namespace CameraSnap
 {
     public class AnimalSpawner : MonoBehaviour
     {
         [Header("Spawn Settings")]
-        [Tooltip("Points in the scene where animals can spawn.")]
+        [Tooltip("Points in the scene where animals can spawn.")]  //manually put in spawn points in scene
         public List<Transform> spawnPoints = new List<Transform>();
 
-        [Tooltip("Maximum number of animals to spawn.")]
-        public int maxAnimals = 5;
+        [Tooltip("Maximum number of animals to spawn.")] //Changeable but it should just stay 2
+        public int maxAnimals = 2;
 
         private List<GameObject> spawnedAnimals = new List<GameObject>();
 
@@ -76,7 +84,7 @@ namespace CameraSnap
         }
 
         
-        /// Helper function to shuffle a list 
+        /// Helper function to shuffle a list  
         
         private void Shuffle<T>(List<T> list)
         {
