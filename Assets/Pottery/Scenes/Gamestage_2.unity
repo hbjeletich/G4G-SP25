@@ -672,11 +672,26 @@ PrefabInstance:
       propertyPath: m_Name
       value: Prototype_Sculpt_Phase03
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 12b3f811924942e4698e774a17aa0926,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 12b3f811924942e4698e774a17aa0926,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1666696414}
   m_SourcePrefab: {fileID: 100100000, guid: 12b3f811924942e4698e774a17aa0926, type: 3}
+--- !u!1 &378086468 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 12b3f811924942e4698e774a17aa0926,
+    type: 3}
+  m_PrefabInstance: {fileID: 378086467}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &393638365
 GameObject:
   m_ObjectHideFlags: 0
@@ -2036,6 +2051,22 @@ MeshRenderer:
     type: 3}
   m_PrefabInstance: {fileID: 378086467}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1666696414
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 378086468}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5bb6625763e1f4f469413524cb5ae884, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mesh01: {fileID: -2232952877369940510, guid: b8c0ff2fa7b84854988655872130267a, type: 3}
+  mesh02: {fileID: -2128599272216676504, guid: 2ae543e9e6c087a4aa0c0981957ae075, type: 3}
+  mesh03: {fileID: 8245426573784773463, guid: 26813cc6ebf34ce4b85a0345f3ef047a, type: 3}
+  mesh04: {fileID: -5208879343037863941, guid: 12b3f811924942e4698e774a17aa0926, type: 3}
 --- !u!1 &1682459150
 GameObject:
   m_ObjectHideFlags: 0
@@ -2584,6 +2615,7 @@ GameObject:
   - component: {fileID: 2143483932}
   - component: {fileID: 2143483931}
   - component: {fileID: 2143483930}
+  - component: {fileID: 2143483934}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -2676,6 +2708,22 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &2143483934
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2143483929}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5bb6625763e1f4f469413524cb5ae884, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mesh01: {fileID: 0}
+  mesh02: {fileID: 0}
+  mesh03: {fileID: 0}
+  mesh04: {fileID: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

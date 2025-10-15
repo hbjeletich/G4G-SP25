@@ -7,7 +7,7 @@ using UnityEngine.SceneManagement;
 public class Settings_Script : MonoBehaviour
 {
 
-    int progress = 0;
+    public int progress = 0;
 
     public Slider slider;
 

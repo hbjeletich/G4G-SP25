@@ -2,8 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
+
 public class MeshSwitcher4 : MonoBehaviour
 {
+    
+    Settings_Script settingsscript;
+
     [Header("Assign your 4 meshes here")]
     public Mesh mesh01;
     public Mesh mesh02;
@@ -13,8 +18,26 @@ public class MeshSwitcher4 : MonoBehaviour
     private MeshFilter meshFilter;
     private int currentMeshIndex = 0;
 
+    void Awake()
+    {
+        GameObject go = GameObject.Find("GameView");
+        if (go != null)
+        {
+            settingsscript = go.GetComponent<Settings_Script>();
+            if (settingsscript == null)
+            {
+                Debug.LogError("Settings_Script not found on GameView.");
+            }
+        }
+        else
+        {
+            Debug.LogError("GameObject named 'GameView' not found in scene.");
+        }
+    }
+
     void Start()
     {
+
         meshFilter = GetComponent<MeshFilter>();
 
         if (meshFilter == null)
@@ -30,7 +53,7 @@ public class MeshSwitcher4 : MonoBehaviour
     void Update()
     {
         // Press Right Arrow to advance
-        if (Input.GetKeyDown(KeyCode.RightArrow))
+        if (Input.GetKeyDown(KeyCode.Space))
         {
             SwitchToNextMesh();
         }
@@ -41,6 +64,25 @@ public class MeshSwitcher4 : MonoBehaviour
         if (meshFilter == null) return;
 
         currentMeshIndex++;
+
+        //if (settingsscript.progress == 0)
+        //{
+        //    meshFilter.mesh = mesh01;
+        //}
+        //else if (settingsscript.progress == 3)
+        //{
+        //    meshFilter.mesh = mesh02;
+        //}
+        //else if (settingsscript.progress == 6)
+        //{
+        //    meshFilter.mesh = mesh03;
+        //}
+        //else if (settingsscript.progress == 10)
+        //{
+        //    meshFilter.mesh = mesh04;
+        //}
+
+
 
         switch (currentMeshIndex)
         {
