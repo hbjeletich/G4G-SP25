@@ -2,12 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-
-
-public class MeshSwitcher4 : MonoBehaviour
+public class MeshSwapper : MonoBehaviour
 {
-    
+
     Settings_Script settingsscript;
+
+    public int slidervalue = 0;
 
     [Header("Assign your 4 meshes here")]
     public Mesh mesh01;
@@ -35,69 +35,73 @@ public class MeshSwitcher4 : MonoBehaviour
         }
     }
 
-    void Start()
+  void Start()
     {
-
         meshFilter = GetComponent<MeshFilter>();
-
         if (meshFilter == null)
         {
             Debug.LogError("No MeshFilter found on this GameObject!");
             return;
         }
-
         // Start with mesh01
         meshFilter.mesh = mesh01;
     }
 
+
     void Update()
     {
-
-        //Press Right Arrow to advance
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            SwitchToNextMesh();
-        }
+        updateMesh();
     }
 
-    void SwitchToNextMesh()
+    void updateMesh()
     {
-        if (meshFilter == null) return;
-
-        currentMeshIndex++;
-
-        //if (settingsscript.progress == 0)
-        //{
-        //    meshFilter.mesh = mesh01;
-        //}
-        //else if (settingsscript.progress == 3)
-        //{
-        //    meshFilter.mesh = mesh02;
-        //}
-        //else if (settingsscript.progress == 6)
-        //{
-        //    meshFilter.mesh = mesh03;
-        //}
-        //else if (settingsscript.progress == 10)
-        //{
-        //    meshFilter.mesh = mesh04;
-        //}
-
-        switch (currentMeshIndex)
+        if (Input.GetKeyDown(KeyCode.Space))
         {
-            case 1:
-                meshFilter.mesh = mesh02;
-                break;
-            case 2:
-                meshFilter.mesh = mesh03;
+            slidervalue = (slidervalue + 1);
+
+            Debug.Log("space pressed");
+        }
+
+        Debug.Log("slidervalue: " + slidervalue);
+
+
+        switch (slidervalue)
+        {
+            case 0:
+                meshFilter.mesh = mesh01;
                 break;
             case 3:
+                meshFilter.mesh = mesh02;
+                break;
+            case 6:
+                meshFilter.mesh = mesh03;
+                break;
+            case 10:
                 meshFilter.mesh = mesh04;
                 break;
             default:
-                // Stop at mesh04 (no cycling)
-                currentMeshIndex = 3;
+                Debug.LogWarning("Invalid slidervalue: " + slidervalue);
                 break;
         }
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }

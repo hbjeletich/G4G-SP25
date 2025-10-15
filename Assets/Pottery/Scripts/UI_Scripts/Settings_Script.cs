@@ -7,7 +7,7 @@ using UnityEngine.SceneManagement;
 public class Settings_Script : MonoBehaviour
 {
 
-    public int progress = 0;
+    public float progress = 0;
 
     public Slider slider;
 
@@ -71,18 +71,19 @@ public class Settings_Script : MonoBehaviour
 
 
 
-    void update()
+    void Update()
     {
         UpdateSlider();
         Debug.Log("progress: " + progress);
+
     }
 
 
     public void UpdateSlider()
     {
-       if (Input.GetKey(KeyCode.Space))
+       if (Input.GetKeyDown(KeyCode.Space))
         {
-            progress++;
+            progress ++;
             slider.value = progress;
 
             Debug.Log("Space Key Pressed");
