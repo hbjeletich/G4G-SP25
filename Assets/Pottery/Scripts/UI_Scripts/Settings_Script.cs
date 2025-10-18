@@ -74,7 +74,7 @@ public class Settings_Script : MonoBehaviour
     void Update()
     {
         UpdateSlider();
-        Debug.Log("progress: " + progress);
+        //Debug.Log("progress: " + progress);
 
     }
 
