@@ -1,12 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
-namespace constellation
+namespace Constellation
 {
     public class PlayerController : MonoBehaviour
     {
         //Declaration Area
+        
+        //STATISTICS
         //rotation mod gathered by input
         [SerializeField] private float rotationMod;
         //speed mod gathered by input
@@ -15,13 +18,17 @@ namespace constellation
         [SerializeField] private float speedStat = 5.0f;
         //how fast guy rotates
         [SerializeField] private float rotateStat = 5.0f;
-        //if the player is grabbing
-        public bool isGrabbing = false;
 
+        //The Event to try and grab
+        public UnityEvent interact;
+        
         //THE RIGID BODY
         private Rigidbody2D charBody;
 
+        public GameObject tailSpot;
 
+        public GameObject grabedStar;
+        
         // Start is called before the first frame update
         void Start()
         {
@@ -35,9 +42,11 @@ namespace constellation
             //take input should ne changed with movement aspects
             speedMod = Input.GetAxis("Vertical");
             rotationMod = Input.GetAxis("Horizontal");
+            
+            
             if (Input.GetKeyDown("space"))
             {
-                isGrabbing = true;
+                interact.Invoke();
             }
         }
 
@@ -48,11 +57,6 @@ namespace constellation
             charBody.rotation += (-1 * rotationMod * rotateStat);
             //This moves guy forward based on speedMod and Stat
             charBody.AddForce(transform.up*speedMod*speedStat, ForceMode2D.Impulse);
-            if (isGrabbing)
-            {
-                print("player hit");
-                isGrabbing = false;
-            }
 
         }
     }
