@@ -312,11 +312,11 @@ Transform:
   m_GameObject: {fileID: 342932062}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.94819313, y: 0.8575033, z: 0.00086484005}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 2017775699}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &365896131
 GameObject:
@@ -329,7 +329,7 @@ GameObject:
   - component: {fileID: 365896132}
   m_Layer: 0
   m_Name: JudgementLine
-  m_TagString: Activator
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1272,6 +1272,7 @@ Transform:
   - {fileID: 1022452817}
   - {fileID: 236374426}
   - {fileID: 498506434}
+  - {fileID: 342932063}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2036241736
@@ -1586,4 +1587,3 @@ SceneRoots:
   m_Roots:
   - {fileID: 1566619268}
   - {fileID: 2017775699}
-  - {fileID: 342932063}
