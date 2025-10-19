@@ -24,7 +24,8 @@ public class MaterialSwitcher : MonoBehaviour
     public Material blueDecalSMaterial;
 
 
-
+    
+    public static Material selectedMaterial; // ? This will persist between scenes
 
     public static int selectedMaterialIndex = 0; // <-- persists across scenes
     public static Material selectedODecal;
@@ -32,10 +33,19 @@ public class MaterialSwitcher : MonoBehaviour
 
     void Start()
     {
-        // Apply the previously selected material
-        if (targetRenderer != null && materials != null && materials.Length > 0)
+        if (targetRenderer != null)
         {
-            targetRenderer.material = materials[selectedMaterialIndex];
+            if (selectedMaterial != null)
+            {
+                targetRenderer.material = selectedMaterial; // ? Load previously applied material
+                Debug.Log("Loaded selected material from previous scene.");
+            }
+            else if (materials != null && materials.Length > 0)
+            {
+                targetRenderer.material = materials[selectedMaterialIndex];
+                selectedMaterial = materials[selectedMaterialIndex]; // Save it as fallback
+                Debug.Log("Applied default material from index.");
+            }
         }
     }
 
@@ -81,7 +91,8 @@ public class MaterialSwitcher : MonoBehaviour
         if (targetRenderer != null && redDecalOMaterial != null)
         {
             targetRenderer.material = redDecalOMaterial;
-            selectedODecal = redDecalOMaterial; // <-- Save for next scene
+            selectedODecal = redDecalOMaterial;
+            selectedMaterial = redDecalOMaterial; // ? Save the applied material
             Debug.Log("Red O Decal Material applied.");
         }
         else
@@ -95,8 +106,9 @@ public class MaterialSwitcher : MonoBehaviour
         if (!isDecalRed) return;
         if (targetRenderer != null && redDecalSMaterial != null)
         {
-            // Set ONLY the red decal material (overwrite all materials)
             targetRenderer.material = redDecalSMaterial;
+            selectedSDecal = redDecalSMaterial;
+            selectedMaterial = redDecalSMaterial; // ? Save the applied material
             Debug.Log("Red S Decal Material applied.");
         }
         else
@@ -110,8 +122,9 @@ public class MaterialSwitcher : MonoBehaviour
         if (!isDecalGreen) return;
         if (targetRenderer != null && greenDecalOMaterial != null)
         {
-            // Set ONLY the green decal material (overwrite all materials)
             targetRenderer.material = greenDecalOMaterial;
+            selectedODecal = greenDecalOMaterial;
+            selectedMaterial = greenDecalOMaterial; // ? Save the applied material
             Debug.Log("Green O Decal Material applied.");
         }
         else
@@ -125,8 +138,9 @@ public class MaterialSwitcher : MonoBehaviour
         if (!isDecalGreen) return;
         if (targetRenderer != null && greenDecalSMaterial != null)
         {
-            // Set ONLY the green decal material (overwrite all materials)
             targetRenderer.material = greenDecalSMaterial;
+            selectedSDecal = greenDecalSMaterial;
+            selectedMaterial = greenDecalSMaterial; // ? Save the applied material
             Debug.Log("Green S Decal Material applied.");
         }
         else
@@ -140,8 +154,9 @@ public class MaterialSwitcher : MonoBehaviour
         if (!isDecalBlue) return;
         if (targetRenderer != null && blueDecalOMaterial != null)
         {
-            // Set ONLY the blue decal material (overwrite all materials)
             targetRenderer.material = blueDecalOMaterial;
+            selectedODecal = blueDecalOMaterial;
+            selectedMaterial = blueDecalOMaterial; // ? Save the applied material
             Debug.Log("Blue O Decal Material applied.");
         }
         else
@@ -155,8 +170,9 @@ public class MaterialSwitcher : MonoBehaviour
         if (!isDecalBlue) return;
         if (targetRenderer != null && blueDecalSMaterial != null)
         {
-            // Set ONLY the blue decal material (overwrite all materials)
             targetRenderer.material = blueDecalSMaterial;
+            selectedSDecal = blueDecalSMaterial;
+            selectedMaterial = blueDecalSMaterial; // ? Save the applied material
             Debug.Log("Blue S Decal Material applied.");
         }
         else
@@ -170,13 +186,14 @@ public class MaterialSwitcher : MonoBehaviour
 
 
 
+
     public void SwitchMaterial(int materialIndex)
     {
         if (materials != null && materialIndex >= 0 && materialIndex < materials.Length)
         {
-
-            selectedMaterialIndex = materialIndex; // Store the selection globally
-            targetRenderer.material = materials[materialIndex];
+            selectedMaterialIndex = materialIndex;
+            selectedMaterial = materials[materialIndex]; // ? Save the selected material
+            targetRenderer.material = selectedMaterial;
         }
         else
         {
