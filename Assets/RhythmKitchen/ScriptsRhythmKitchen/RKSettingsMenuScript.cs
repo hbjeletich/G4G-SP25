@@ -22,4 +22,9 @@ public class RKSettingsMenuScript : MonoBehaviour
         Debug.Log("volume: " + volume);
         audioMixer.SetFloat("RKVolume", volume);
     }
+
+    public void BackMainMenu()
+    {
+        RKAudioManager.Instance.PlaySFX("ButtonPress");
+    }
 }
