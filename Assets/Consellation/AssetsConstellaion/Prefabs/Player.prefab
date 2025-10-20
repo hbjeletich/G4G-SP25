@@ -132,7 +132,7 @@ GameObject:
   - component: {fileID: 6056647722924486743}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -297,7 +297,8 @@ MonoBehaviour:
   speedMod: 0
   speedStat: 1
   rotateStat: 5
-  tryGrab:
+  interact:
     m_PersistentCalls:
       m_Calls: []
   tailSpot: {fileID: 1140722789916528015}
+  grabedStar: {fileID: 0}
