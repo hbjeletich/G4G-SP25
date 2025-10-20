@@ -7,8 +7,22 @@ public class RKGameplayUI : MonoBehaviour
 {
     public void CompleteDish()
     {
-        RKAudioManager.Instance.PlaySFX("ButtonPress");
-        RKAudioManager.Instance.PlaySFX("Shimmer");
-        SceneManager.LoadScene("RKCompletedDish");
+        // RKAudioManager.Instance.PlaySFX("ButtonPress");
+        // RKAudioManager.Instance.PlaySFX("Shimmer");
+        // SceneManager.LoadScene("RKCompletedDish");
+
+        var am = RKAudioManager.Instance;
+        {
+            if (am != null) // is not empty
+            {
+                am.PlaySFX("ButtonPress");
+                am.PlaySFX("Shimmer");
+            }
+            else
+            {
+                Debug.LogWarning("[RKGameplayUI] AudioManager missing: loading scene anyway.");
+            }
+            SceneManager.LoadScene("RKCompletedDish");
+        }
     }
 }
