@@ -11,38 +11,73 @@ namespace CameraSnap
         [Header("Animal Spawning")]
         public AnimalSpawner animalSpawner;
 
+        
+
         private void OnTriggerEnter(Collider other)
+{
+    CartController cart = other.GetComponentInParent<CartController>();
+    if (cart != null)
+    {
+        cart.currentZone = this; // <── add this line
+        cart.SetSpeed(slowedSpeed);
+        cart.AllowStop(true);
+        if (uiIcon != null) uiIcon.SetActive(true);
+        if (animalSpawner != null) animalSpawner.SpawnAnimals();
+    }
+}
+
+private void OnTriggerExit(Collider other)
+{
+    CartController cart = other.GetComponentInParent<CartController>();
+    if (cart != null)
+    {
+        if (cart.currentZone == this) cart.currentZone = null; // clear it
+        cart.ResetSpeed();
+        cart.AllowStop(false);
+        if (uiIcon != null) uiIcon.SetActive(false);
+        if (animalSpawner != null) animalSpawner.ClearPreviousAnimals();
+    }
+}
+
+        public void CheckForZoneCompletion()
+{
+    if (animalSpawner == null || GameManager.Instance == null)
+        return;
+
+    var animals = animalSpawner.GetSpawnedAnimals();
+    if (animals == null || animals.Count == 0)
+        return;
+
+    int capturedCount = 0;
+
+    foreach (var a in animals)
+    {
+        if (a == null) continue;
+        var id = a.GetComponent<AnimalIdentifier>();
+        if (id != null && GameManager.Instance.HasCaptured(id.animalData.animalName))
+            capturedCount++;
+    }
+
+    if (capturedCount >= animals.Count)
+    {
+        Debug.Log("[SlowdownZone] All zone animals (2) captured! Resuming cart...");
+
+        CartController cart = FindObjectOfType<CartController>();
+        if (cart != null)
         {
-            CartController cart = other.GetComponentInParent<CartController>();
-
-            if (cart != null)
-            {
-                cart.SetSpeed(slowedSpeed);
-                cart.AllowStop(true); // allow stopping only in zone
-
-                if (uiIcon != null)
-                    uiIcon.SetActive(true);
-
-                if (animalSpawner != null)
-                    animalSpawner.SpawnAnimals();
-            }
+            cart.ResetSpeed();    // back to normal
+            cart.AllowStop(false);
         }
 
-        private void OnTriggerExit(Collider other)
-        {
-            CartController cart = other.GetComponentInParent<CartController>();
+        if (uiIcon != null)
+            uiIcon.SetActive(false);
 
-            if (cart != null)
-            {
-                cart.ResetSpeed();   //  resumes normal movement
-                cart.AllowStop(false);
+        this.enabled = false;
+        animalSpawner.ClearPreviousAnimals();
+    }
+}
 
-                if (uiIcon != null)
-                    uiIcon.SetActive(false);
 
-                if (animalSpawner != null)
-                    animalSpawner.ClearPreviousAnimals();
-            }
-        }
+
     }
 }

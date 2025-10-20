@@ -51,6 +51,27 @@ namespace CameraSnap
             return allAnimals[index];
         }
 
+        // Keeps track of all animals the player has photographed
+private HashSet<string> capturedAnimals = new HashSet<string>();
+
+public void RegisterCapturedAnimal(string animalName)
+{
+    if (string.IsNullOrEmpty(animalName)) return;
+    capturedAnimals.Add(animalName);
+    Debug.Log($"[GameManager] Added captured animal: {animalName}");
+}
+
+public bool HasCaptured(string animalName)
+{
+    return capturedAnimals.Contains(animalName);
+}
+
+public HashSet<string> GetCapturedAnimals()
+{
+    return capturedAnimals;
+}
+
+
        
     }
 }

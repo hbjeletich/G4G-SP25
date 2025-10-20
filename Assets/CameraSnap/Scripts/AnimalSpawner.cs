@@ -94,5 +94,10 @@ namespace CameraSnap
                 (list[i], list[j]) = (list[j], list[i]);
             }
         }
+        public List<GameObject> GetSpawnedAnimals()
+{
+    return spawnedAnimals;
+}
+
     }
 }

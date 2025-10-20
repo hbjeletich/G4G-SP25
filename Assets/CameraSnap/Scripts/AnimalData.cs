@@ -14,5 +14,7 @@ namespace CameraSnap
 
         [Header("In-Game Prefab")]
         public GameObject animalPrefab;
+
+        
     }
 }

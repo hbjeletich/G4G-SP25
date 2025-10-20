@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &4504198827028436830
+--- !u!1 &2744537029944195555
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,39 +8,39 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 8674548632032307744}
-  - component: {fileID: 5190543555024438692}
-  - component: {fileID: 4424546065481775954}
+  - component: {fileID: 4846037231664367321}
+  - component: {fileID: 4848108070801321136}
+  - component: {fileID: 7493774725946303616}
   m_Layer: 9
-  m_Name: OwlDeer
+  m_Name: Roly Poly Log
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &8674548632032307744
+--- !u!4 &4846037231664367321
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4504198827028436830}
+  m_GameObject: {fileID: 2744537029944195555}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -9.879738, y: 0.00000047683716, z: -19.096027}
-  m_LocalScale: {x: 0.55806, y: 0.55806, z: 0.55806}
+  m_LocalPosition: {x: -11.999789, y: 0.000002861023, z: -11.872293}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 8595048348095948158}
+  - {fileID: 2122568557361461137}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &5190543555024438692
+--- !u!65 &4848108070801321136
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4504198827028436830}
+  m_GameObject: {fileID: 2744537029944195555}
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -53,22 +53,22 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 9.24605, y: 8.720666, z: 0.78297806}
-  m_Center: {x: -1.3609841, y: 4.6438084, z: 0.108510986}
---- !u!114 &4424546065481775954
+  m_Size: {x: 5.3245373, y: 3.4237611, z: 1}
+  m_Center: {x: 0.111270905, y: 1.6820389, z: 0}
+--- !u!114 &7493774725946303616
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4504198827028436830}
+  m_GameObject: {fileID: 2744537029944195555}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 063ab1405151dcd4aa09cc4af849b957, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  animalData: {fileID: 11400000, guid: fb3be1cdb6ac6ae42985b5c46316e373, type: 2}
---- !u!1 &4755457340466887487
+  animalData: {fileID: 11400000, guid: 1443561035ef9034996c75cdc379af0e, type: 2}
+--- !u!1 &3056710359713222833
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -76,37 +76,37 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 8595048348095948158}
-  - component: {fileID: 2909937796664688562}
+  - component: {fileID: 2122568557361461137}
+  - component: {fileID: 2198710936968567691}
   m_Layer: 9
-  m_Name: OwlDeer
+  m_Name: Roly Poly Log
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &8595048348095948158
+--- !u!4 &2122568557361461137
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4755457340466887487}
+  m_GameObject: {fileID: 3056710359713222833}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 5.46, z: 0}
-  m_LocalScale: {x: 1.1061, y: 1.1061, z: 1.1061}
+  m_LocalPosition: {x: 0, y: 0.95, z: 0}
+  m_LocalScale: {x: 0.31591594, y: 0.31591594, z: 0.31591594}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 8674548632032307744}
+  m_Father: {fileID: 4846037231664367321}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!212 &2909937796664688562
+--- !u!212 &2198710936968567691
 SpriteRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4755457340466887487}
+  m_GameObject: {fileID: 3056710359713222833}
   m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0
@@ -143,7 +143,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: c14ded2e884ba394c9481403002ad2b4, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 937e889b417759146b4a0ab068aa0924, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0

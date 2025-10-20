@@ -14,6 +14,7 @@ namespace CameraSnap
         public SplineContainer splineContainer;
         public float speed = 5f;
 
+public SlowdownZone currentZone;
 
         private float defaultSpeed;
         private float currentDistance = 0f;

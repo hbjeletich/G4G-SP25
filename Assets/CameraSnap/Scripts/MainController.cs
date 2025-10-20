@@ -6,14 +6,12 @@ namespace CameraSnap
 {
     public class PlayerController : MonoBehaviour
     {
+        [Header("Motion Tracking Configuration")]
+        public MotionTrackingConfiguration motionConfig;
+
         [Header("Captury Input Settings")]
         [Tooltip("If left empty, will auto-load CapturyInputActions from Resources.")]
         [SerializeField] private InputActionAsset inputActions;
-
-        [Header("Sensitivity Settings")]
-        public float squatThreshold = 0.2f;
-        public float weightShiftSensitivity = 30f;
-        public float squatCooldown = 1.0f;
 
         private CartController cart;
         private CameraMode cameraMode;
@@ -49,35 +47,29 @@ namespace CameraSnap
             {
                 inputActions = Resources.Load<InputActionAsset>("CapturyInputActions");
                 if (inputActions == null)
+                {
                     Debug.LogWarning("[PlayerController] Could not find CapturyInputActions asset in Resources folder!");
+                    enabled = false;
+                    return;
+                }
             }
-            // If using keyboard, don't enable Captury input
-if (inputActions == null)
-{
-    enabled = false;
-    return;
-}
 
-            if (inputActions != null)
+            var torsoMap = inputActions.FindActionMap("Torso");
+            var footMap = inputActions.FindActionMap("Foot");
+
+            if (torsoMap != null)
             {
-                var torsoMap = inputActions.FindActionMap("Torso");
-                var footMap = inputActions.FindActionMap("Foot");
+                weightShiftXAction = torsoMap.FindAction("WeightShiftX");
+                pelvisPositionAction = torsoMap.FindAction("PelvisPosition");
+            }
 
-                if (torsoMap != null)
-                {
-                    weightShiftXAction = torsoMap.FindAction("WeightShiftX");
-                    pelvisPositionAction = torsoMap.FindAction("PelvisPosition");
-                }
-
-                if (footMap != null)
-                {
-                    leftHipAbductedAction = footMap.FindAction("LeftHipAbducted");
-                    rightHipAbductedAction = footMap.FindAction("RightHipAbducted");
-                    footRaisedAction = footMap.FindAction("FootRaised");
-                }
+            if (footMap != null)
+            {
+                leftHipAbductedAction = footMap.FindAction("LeftHipAbducted");
+                rightHipAbductedAction = footMap.FindAction("RightHipAbducted");
+                footRaisedAction = footMap.FindAction("FootRaised");
             }
         }
-
 
         void OnEnable()
         {
@@ -91,22 +83,31 @@ if (inputActions == null)
 
         private void EnableCapturyActions()
         {
-            if (weightShiftXAction != null) weightShiftXAction.Enable();
-            if (pelvisPositionAction != null) pelvisPositionAction.Enable();
+            if (motionConfig == null)
+            {
+                Debug.LogWarning("[PlayerController] No MotionTrackingConfiguration assigned!");
+                return;
+            }
 
-            if (leftHipAbductedAction != null)
+            if (motionConfig.enableTorsoModule && weightShiftXAction != null)
+                weightShiftXAction.Enable();
+
+            if (motionConfig.enableTorsoModule && pelvisPositionAction != null)
+                pelvisPositionAction.Enable();
+
+            if (motionConfig.isHipAbductionTracked && leftHipAbductedAction != null)
             {
                 leftHipAbductedAction.Enable();
                 leftHipAbductedAction.performed += OnHipAbducted;
             }
 
-            if (rightHipAbductedAction != null)
+            if (motionConfig.isHipAbductionTracked && rightHipAbductedAction != null)
             {
                 rightHipAbductedAction.Enable();
                 rightHipAbductedAction.performed += OnHipAbducted;
             }
 
-            if (footRaisedAction != null)
+            if (motionConfig.isFootRaiseTracked && footRaisedAction != null)
             {
                 footRaisedAction.Enable();
                 footRaisedAction.performed += OnFootRaised;
@@ -137,24 +138,32 @@ if (inputActions == null)
 
         private void HandleLookInput()
         {
-            if (cameraPan == null) return;
+            if (cameraPan == null || motionConfig == null) return;
+            if (!motionConfig.enableTorsoModule || !motionConfig.isShiftTracked) return;
 
             float shiftValue = weightShiftXAction != null ? weightShiftXAction.ReadValue<float>() : 0f;
             float horizontalInput = 0f;
 
-            if (Mathf.Abs(shiftValue) > 0.05f) // avoid jitter
-                horizontalInput = Mathf.Clamp(shiftValue * weightShiftSensitivity, -1f, 1f);
+            if (Mathf.Abs(shiftValue) > motionConfig.weightShiftThreshold)
+            {
+                horizontalInput = Mathf.Clamp(
+                    shiftValue * motionConfig.torsoSensitivity,
+                    -1f,
+                    1f
+                );
+            }
 
             cameraPan.ManualPan(horizontalInput);
         }
 
         private void HandleSquatInput()
         {
-            if (cart == null || pelvisPositionAction == null) return;
+            if (cart == null || pelvisPositionAction == null || motionConfig == null) return;
+            if (!motionConfig.enableTorsoModule) return;
 
             Vector3 pelvisPos = pelvisPositionAction.ReadValue<Vector3>();
 
-            if (pelvisPos.y < squatThreshold && canToggleStop)
+            if (pelvisPos.y < motionConfig.footRaiseThreshold && canToggleStop)
             {
                 if (cart.CanStop())
                 {
@@ -166,24 +175,35 @@ if (inputActions == null)
                 }
             }
 
-            if (!canToggleStop && Time.time - lastSquatTime > squatCooldown)
+            if (!canToggleStop && Time.time - lastSquatTime > motionConfig.calibrationDelay)
                 canToggleStop = true;
         }
 
         private void OnHipAbducted(InputAction.CallbackContext ctx)
         {
+            if (motionConfig == null || !motionConfig.isHipAbductionTracked) return;
             if (cameraMode != null && cart != null && cart.IsStopped())
-            {
                 cameraMode.TryToggleCameraMode();
-            }
         }
 
-        private void OnFootRaised(InputAction.CallbackContext ctx)
-        {
-            if (cameraMode != null && cameraMode.IsInCameraMode())
-            {
-                cameraMode.TryTakePhoto();
-            }
-        }
+       private void OnFootRaised(InputAction.CallbackContext ctx)
+{
+    if (motionConfig == null || !motionConfig.isFootRaiseTracked) return;
+
+    //  Check if the game is currently paused (end summary active)
+    if (Time.timeScale == 0f)
+    {
+        Debug.Log("[PlayerController] Foot raise detected - restarting game.");
+        Time.timeScale = 1f;
+        UnityEngine.SceneManagement.SceneManager.LoadScene(
+            UnityEngine.SceneManagement.SceneManager.GetActiveScene().name);
+        return;
+    }
+
+    //  Normal in-game foot raise (photo capture)
+    if (cameraMode != null && cameraMode.IsInCameraMode())
+        cameraMode.TryTakePhoto();
+}
+
     }
 }

@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &2948296452628671848
+--- !u!1 &1300762647600231932
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,37 +8,37 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 2631153565179633207}
-  - component: {fileID: 6429420640983011552}
+  - component: {fileID: 8910293828752005253}
+  - component: {fileID: 3498564112749729662}
   m_Layer: 9
-  m_Name: Sprite
+  m_Name: Ferret Skunk
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &2631153565179633207
+--- !u!4 &8910293828752005253
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2948296452628671848}
+  m_GameObject: {fileID: 1300762647600231932}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 2.96, z: 0}
-  m_LocalScale: {x: 0.6001023, y: 0.6001023, z: 0.6001023}
+  m_LocalPosition: {x: 0, y: 0.98, z: 0}
+  m_LocalScale: {x: 0.13818385, y: 0.13818385, z: 0.13818385}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 8423293657599645982}
+  m_Father: {fileID: 2307148712640715858}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!212 &6429420640983011552
+--- !u!212 &3498564112749729662
 SpriteRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2948296452628671848}
+  m_GameObject: {fileID: 1300762647600231932}
   m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0
@@ -75,7 +75,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 0e7356b73a3529d4ea155753cc59045d, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 9e63adfdecedc2c4db73d604171b9712, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -86,7 +86,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!1 &5515645937414062392
+--- !u!1 &8599985485466058626
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -94,43 +94,43 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 8423293657599645982}
-  - component: {fileID: 7785054514679378157}
-  - component: {fileID: 5789789749855276006}
+  - component: {fileID: 2307148712640715858}
+  - component: {fileID: 8745574200710128096}
+  - component: {fileID: 4879766987690340241}
   m_Layer: 9
-  m_Name: Bear
+  m_Name: Ferret Skunk
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &8423293657599645982
+--- !u!4 &2307148712640715858
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5515645937414062392}
+  m_GameObject: {fileID: 8599985485466058626}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -15.308119, y: 0, z: -16.176682}
+  m_LocalPosition: {x: -7.4362597, y: -0.00000047683716, z: -18.82666}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 2631153565179633207}
+  - {fileID: 8910293828752005253}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &7785054514679378157
+--- !u!65 &8745574200710128096
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5515645937414062392}
+  m_GameObject: {fileID: 8599985485466058626}
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
-    m_Bits: 512
+    m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -139,18 +139,18 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 3.6685429, y: 5.7635937, z: 1}
-  m_Center: {x: -0.40089703, y: 2.911415, z: 0}
---- !u!114 &5789789749855276006
+  m_Size: {x: 3.8887296, y: 3.8763416, z: 1}
+  m_Center: {x: -0.29188943, y: 1.8725363, z: 0}
+--- !u!114 &4879766987690340241
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5515645937414062392}
+  m_GameObject: {fileID: 8599985485466058626}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 063ab1405151dcd4aa09cc4af849b957, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  animalData: {fileID: 11400000, guid: 04256f769d7bc5d469a0cb78a4340dec, type: 2}
+  animalData: {fileID: 11400000, guid: 6c7adae3ea50a914c83b14eea51b43db, type: 2}
