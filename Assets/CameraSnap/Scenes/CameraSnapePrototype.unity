@@ -2698,7 +2698,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 086a399939e6c094886da367ef9f81ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  host: 127.0.0.1
+  host: 192.168.10.106
   port: 2101
   scaleFactor: 0.001
   actorCheckTimeout: 500
@@ -2951,8 +2951,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d7a27fc943e8735468770d50b503bde6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  motionConfig: {fileID: 0}
-  inputActions: {fileID: 0}
+  motionConfig: {fileID: 11400000, guid: 5cb9df4a78b5a0c4dbf012bb27fdb47c, type: 2}
+  inputActions: {fileID: -944628639613478452, guid: 4370f1ac1c7a2bf419a9f76eca4e970d,
+    type: 3}
 --- !u!1 &1324917900
 GameObject:
   m_ObjectHideFlags: 0
@@ -3320,7 +3321,7 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: ab78030e69a85bd4fa93d69411643cb1,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -1.8393438
+      value: -0.76
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: ab78030e69a85bd4fa93d69411643cb1,
         type: 3}
@@ -3370,7 +3371,7 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: ab78030e69a85bd4fa93d69411643cb1,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
