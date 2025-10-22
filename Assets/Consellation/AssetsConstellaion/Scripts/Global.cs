@@ -10,6 +10,8 @@ namespace Constellation
 
         public static GameObject player;
         public static PlayerController playerCont;
+
+        public static bool debugControls = false;
         
         private void Awake() 
         { 

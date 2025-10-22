@@ -40,14 +40,48 @@ namespace Constellation
         void Update()
         {
             //take input should ne changed with movement aspects
-            speedMod = Input.GetAxis("Vertical");
-            rotationMod = Input.GetAxis("Horizontal");
-            
-            
-            if (Input.GetKeyDown("space"))
+            if (Global.debugControls)
             {
-                interact.Invoke();
+                speedMod = Input.GetAxis("Vertical");
+                rotationMod = Input.GetAxis("Horizontal");
+
+
+                if (Input.GetKeyDown("space"))
+                {
+                    interact.Invoke();
+                }
             }
+            else
+            {
+                if (Input.GetKeyDown("w"))
+                {
+                    speedMod = 1;
+                }
+                if (Input.GetKeyUp("w"))
+                {
+                    speedMod = 0;
+                }
+
+
+                if (Input.GetKeyDown("a"))
+                {
+                    rotationMod = -1;
+                }
+                if (Input.GetKeyDown("d"))
+                {
+                    rotationMod = 1;
+                }
+                if (Input.GetKeyUp("d")||Input.GetKeyUp("a"))
+                {
+                    rotationMod = 0;
+                }
+
+                if (Input.GetKeyDown("space"))
+                {
+                    interact.Invoke();
+                }
+            }
+
         }
 
         void FixedUpdate()
