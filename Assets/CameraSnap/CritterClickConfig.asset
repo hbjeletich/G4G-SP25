@@ -18,19 +18,19 @@ MonoBehaviour:
   calibrationDelay: 2
   calibrationFrames: 30
   enableTorsoModule: 1
-  torsoSensitivity: 1.42
+  torsoSensitivity: 1.45
   torsoDebugMode: 1
   isShiftTracked: 1
   weightShiftThreshold: 0.15
   neutralZoneWidth: 0.05
-  wholeBodyMovementThreshold: 0
+  wholeBodyMovementThreshold: 3
   isBendTracked: 1
   bentOverAngleThreshold: 30
   enableFootModule: 1
-  footSensitivity: 1.47
+  footSensitivity: 1
   footDebugMode: 1
   isFootRaiseTracked: 1
-  footRaiseThreshold: 0.3
+  footRaiseThreshold: 0.1
   isHipAbductionTracked: 1
   minAbductionDistance: 0.2
   minLiftHeight: 0.05
