@@ -7,18 +7,35 @@ public class RKCompletedDishScript : MonoBehaviour
 {
     void Start()
     {
-        RKAudioManager.Instance.PlayMusic("Ambience");
+        var am = RKAudioManager.Instance;
+
+        if (am != null)
+            am.PlayMusic("Ambience");
+        else
+            Debug.LogWarning("[RKCompletedDishScript] AudioManager missing: loading scene anyway.");
     }
     
     public void BackMainMenu()
     {
-        RKAudioManager.Instance.PlaySFX("ButtonPress");
+        var am = RKAudioManager.Instance;
+
+        if (am != null)
+            am.PlaySFX("ButtonPress");
+        else
+            Debug.LogWarning("[RKCompletedDishScript] AudioManager missing: loading scene anyway.");
+        
         SceneManager.LoadScene("RKMainMenu");
     }
 
     public void GoToSongSelect()
     {
-        RKAudioManager.Instance.PlaySFX("ButtonPress");
+        var am = RKAudioManager.Instance;
+
+        if (am != null)
+            am.PlaySFX("ButtonPress");
+        else
+            Debug.LogWarning("[RKCompletedDishScript] AudioManager missing: loading scene anyway.");
+
         SceneManager.LoadScene("RKSongSelectMenu");
     }
 
