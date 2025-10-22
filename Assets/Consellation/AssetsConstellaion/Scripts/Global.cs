@@ -8,9 +8,11 @@ namespace Constellation
     {
         public static Global Instance { get; private set; }
 
+        //THe player
         public static GameObject player;
+        //The Players script
         public static PlayerController playerCont;
-
+        //if the game is using keyboard or lim controls
         public static bool debugControls = false;
         
         private void Awake() 
@@ -30,6 +32,7 @@ namespace Constellation
         // Start is called before the first frame update
         void Start()
         {
+            //grab player and player controler
             player=GameObject.FindGameObjectWithTag("Player");
             playerCont = player.GetComponent<PlayerController>();
         }

@@ -25,8 +25,10 @@ namespace Constellation
         //THE RIGID BODY
         private Rigidbody2D charBody;
 
+        //The invisible gameobject that acts purly as a position to hold the grabbed star, SHOULD BE IMPROVED
         public GameObject tailSpot;
 
+        // The storage spot so that the player knows which star is currently held
         public GameObject grabedStar;
         
         // Start is called before the first frame update
@@ -40,6 +42,8 @@ namespace Constellation
         void Update()
         {
             //take input should ne changed with movement aspects
+
+            //this movement is used when the keyboard is wanted to test features
             if (Global.debugControls)
             {
                 speedMod = Input.GetAxis("Vertical");
@@ -51,7 +55,7 @@ namespace Constellation
                     interact.Invoke();
                 }
             }
-            else
+            else     //THis branch is used when caputry movemnt is used MUST BE TESTED IN LIM
             {
                 if (Input.GetKeyDown("w"))
                 {
