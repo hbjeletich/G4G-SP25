@@ -14,8 +14,14 @@ public class UIManager : MonoBehaviour
     public GameObject SelectionPanel;
     public GameObject gameStage_1_Panel;
     public GameObject gameStage_2_Panel;
+    public GameObject confirmation_Panel;
 
     private bool gameStage1Completed = false;
+
+    //void Start()
+    //{
+    //    ShowMainMenu();
+    //}
 
 
     public void ShowMainMenu()
@@ -45,6 +51,7 @@ public class UIManager : MonoBehaviour
         SetActivePanel(gameStage_1_Panel);
     }
 
+   
     public void ShowGameStage2()
     {
 
@@ -60,6 +67,10 @@ public class UIManager : MonoBehaviour
         //}
     }
 
+    public void ShowConfirmationMenu()
+    {
+        SetActivePanel(confirmation_Panel);
+    }
 
     private void SetActivePanel(GameObject activePanel)
     {
@@ -69,6 +80,8 @@ public class UIManager : MonoBehaviour
         SelectionPanel.SetActive(false);
         gameStage_1_Panel.SetActive(false);
         gameStage_2_Panel.SetActive(false);
+        confirmation_Panel.SetActive(false);
+
 
         activePanel.SetActive(true);
     }
