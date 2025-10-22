@@ -233,7 +233,7 @@ GameObject:
   - component: {fileID: 269701241}
   - component: {fileID: 269701242}
   m_Layer: 0
-  m_Name: SettingsMenu
+  m_Name: GalleryMenu
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -268,7 +268,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0122df1351847c446badea2601e965e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  progress: 0
   slider: {fileID: 0}
+  fillspeed: 0
 --- !u!1 &515346430
 GameObject:
   m_ObjectHideFlags: 0

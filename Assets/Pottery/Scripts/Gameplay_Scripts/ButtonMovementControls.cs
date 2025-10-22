@@ -1,8 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.UI;
-using UnityEngine.InputSystem;
+//using System.Collections;
+//using System.Collections.Generic;
+//using UnityEngine;
+//using UnityEngine.UI;
+//using UnityEngine.InputSystem;
 
 //public class ButtonMovementControls : MonoBehaviour
 //{
@@ -10,7 +10,6 @@ using UnityEngine.InputSystem;
 
 //    public InputActionAsset inputActionAsset;
 //    private InputAction leftFootHeightAction;
-    
 
 
 
@@ -35,12 +34,12 @@ using UnityEngine.InputSystem;
 //        leftFootHeightAction.Disable();
 //    }
 
-//        // Update is called once per frame
+//    // Update is called once per frame
 //    void Update()
 //    {
 //        float leftFootY = leftFootHeightAction.ReadValue<Vector3>().y;
 
-//        if(leftFootY > .5)
+//        if (leftFootY > .5)
 //        {
 //            OnButtonClick();
 //        }
