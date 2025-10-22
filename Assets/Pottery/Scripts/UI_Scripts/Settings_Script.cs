@@ -19,33 +19,33 @@ public class Settings_Script : MonoBehaviour
 
     public int resolution = 512; // 512x512 is fine for thumbnails
 
-    public void takeScreenshot(string fileName)
-    {
-        RenderTexture rt = new RenderTexture(resolution, resolution, 24);
-        captureCamera.targetTexture = rt;
+    //public void takeScreenshot(string fileName)
+    //{
+    //    RenderTexture rt = new RenderTexture(resolution, resolution, 24);
+    //    captureCamera.targetTexture = rt;
 
-        Texture2D screenshot = new Texture2D(resolution, resolution, TextureFormat.RGB24, false);
-        captureCamera.Render();
+    //    Texture2D screenshot = new Texture2D(resolution, resolution, TextureFormat.RGB24, false);
+    //    captureCamera.Render();
 
-        RenderTexture.active = rt;
-        screenshot.ReadPixels(new Rect(0, 0, resolution, resolution), 0, 0);
-        screenshot.Apply();
+    //    RenderTexture.active = rt;
+    //    screenshot.ReadPixels(new Rect(0, 0, resolution, resolution), 0, 0);
+    //    screenshot.Apply();
 
-        captureCamera.targetTexture = null;
-        RenderTexture.active = null;
-        Destroy(rt);
+    //    captureCamera.targetTexture = null;
+    //    RenderTexture.active = null;
+    //    Destroy(rt);
 
-        byte[] bytes = screenshot.EncodeToPNG();
-        string path = Path.Combine(Application.persistentDataPath, fileName + ".png");
-        File.WriteAllBytes(path, bytes);
+    //    byte[] bytes = screenshot.EncodeToPNG();
+    //    string path = Path.Combine(Application.persistentDataPath, fileName + ".png");
+    //    File.WriteAllBytes(path, bytes);
 
-        Debug.Log($"Saved screenshot: {path}");
-    }
+    //    Debug.Log($"Saved screenshot: {path}");
+    //}
 
-    public void gamefinish()
-    {
-        FindObjectOfType<PotteryScreenshot>().CaptureAndSave("pottery_" + System.DateTime.Now.ToFileTime());
-    }
+    //public void gamefinish()
+    //{
+    //    //FindObjectOfType<PotteryScreenshot>().CaptureAndSave("pottery_" + System.DateTime.Now.ToFileTime());
+    //}
 
     public void playGame()
     {
@@ -106,7 +106,7 @@ public class Settings_Script : MonoBehaviour
     {
         UpdateSlider();
         //Debug.Log("progress: " + progress);
-        gamefinish();
+        //gamefinish();
 
     }
 
