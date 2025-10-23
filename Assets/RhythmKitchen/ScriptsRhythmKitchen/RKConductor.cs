@@ -10,7 +10,7 @@ namespace RhythmKitchen
     {
         [Header("Music Settings")]
         public AudioSource musicSource;
-        public float BPM = 80f; // BPM of tutorial song specifically
+        [SerializeField] private float BPM = 80f; // BPM of tutorial song specifically
         public float offsetMs = 0f; // this is calibration to nudge timing if it feels early/late (positive = judge later, negative = judge earlier)
         public double leadInSeconds = 1f; // this is a small delay so we can schedule precisely
         public float songTime { get; private set; } // this is seconds since scheduled start (+ offset)
@@ -55,10 +55,6 @@ namespace RhythmKitchen
                 _nextLog += 1; // schedule next log 1 sec later
             }
         }
-
-
-
-
     }
 }
 
