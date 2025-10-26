@@ -58,7 +58,7 @@ namespace CameraSnap
 
             Vector3 scale = animal.transform.localScale;
 
-            // ✅ Correct naming swap (same logic as before but with LEFT name)
+            
             bool shouldFaceLeft = !spawnOnRightSide;
 
             if (animalData.spriteFacesLeft)

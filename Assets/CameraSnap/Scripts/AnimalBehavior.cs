@@ -32,7 +32,7 @@ namespace CameraSnap
                 animator = GetComponent<Animator>();
 
 
-            // get sprite child safely (keeps your original approach but avoids null crash)
+            // get sprite child safely 
             SpriteRenderer sr = GetComponentInChildren<SpriteRenderer>();
             if (sr != null)
             {
@@ -44,7 +44,7 @@ namespace CameraSnap
                 Debug.LogWarning($"{gameObject.name}: No SpriteRenderer found in children.");
             }
 
-            // INITIAL FLIP WITH DEFAULT FACING RESPECTED (inline like your original)
+            // INITIAL FLIP WITH DEFAULT FACING RESPECTED 
             bool defaultFacesLeft = animalData != null && animalData.spriteFacesLeft;
 
             // If sprite default matches movement - positive scale
