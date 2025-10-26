@@ -14,6 +14,8 @@ namespace CameraSnap
         public SplineContainer splineContainer;
         public float speed = 5f;
 
+        public GameObject stopCartObject;
+
 public SlowdownZone currentZone;
 
         private float defaultSpeed;
@@ -31,7 +33,7 @@ public SlowdownZone currentZone;
 
         void Update()
         {
-            // Press SPACE to stop/resume, but only allowed if inside slowdown zone
+            // Press SPACE to stop/resume, but only allowed if inside slowdown zone, fix to incorporate main controller too
             if (Input.GetKeyDown(KeyCode.Space) && canStop)
             {
                 if (isStopped)
@@ -96,6 +98,7 @@ public SlowdownZone currentZone;
             if (!canStop) return;
             isStopped = true;
             isMoving = false;
+             if (stopCartObject != null) stopCartObject.SetActive(true);
         }
 
 
@@ -103,6 +106,7 @@ public SlowdownZone currentZone;
         {
             isStopped = false;
             isMoving = true;
+             if (stopCartObject != null) stopCartObject.SetActive(false);
         }
 
 

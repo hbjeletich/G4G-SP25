@@ -15,6 +15,10 @@ namespace CameraSnap
         [Header("In-Game Prefab")]
         public GameObject animalPrefab;
 
+[Header("Sprite Facing Settings")]
+[Tooltip("Check this if the animal's sprite faces LEFT by default. Uncheck if it faces RIGHT.")]
+public bool spriteFacesLeft = true;
+
         
     }
 }

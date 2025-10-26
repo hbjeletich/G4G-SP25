@@ -87,8 +87,8 @@ namespace CameraSnap
             Ray ray = cam.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0f));
             if (Physics.Raycast(ray, out RaycastHit hit, detectionRange, animalLayer))
             {
-                var animal = hit.collider.GetComponentInParent<AnimalIdentifier>();
-                if (animal != null)
+               var animal = hit.collider.GetComponentInParent<AnimalBehavior>();
+if (animal != null)
                 {
                     if (overlayImage != null)
                         overlayImage.color = readyColor;
@@ -111,10 +111,11 @@ namespace CameraSnap
             Ray ray = cam.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0f));
             if (Physics.Raycast(ray, out RaycastHit hit, detectionRange, animalLayer))
             {
-                var animal = hit.collider.GetComponentInParent<AnimalIdentifier>();
-                if (animal != null)
-                {
-                    string name = animal.animalData.animalName;
+               var animal = hit.collider.GetComponentInParent<AnimalBehavior>();
+if (animal != null && animal.animalData != null)
+{
+    animal.isCaptured = true;
+    string name = animal.animalData.animalName;
                     Debug.Log($"Captured photo of: {name}");
                     StartCoroutine(ShowPhotoMessage(name));
 

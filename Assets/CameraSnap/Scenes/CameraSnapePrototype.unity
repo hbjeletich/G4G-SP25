@@ -1355,9 +1355,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bda62251cb18d064b9e5e688369b5272, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spawnPoints:
-  - {fileID: 1793091348}
+  leftSpawnPoints:
   - {fileID: 388179937}
+  rightSpawnPoints:
+  - {fileID: 1793091348}
   maxAnimals: 2
 --- !u!1 &410087039
 GameObject:
@@ -2951,8 +2952,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d7a27fc943e8735468770d50b503bde6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  motionConfig: {fileID: 0}
-  inputActions: {fileID: 0}
+  motionConfig: {fileID: 11400000, guid: 5cb9df4a78b5a0c4dbf012bb27fdb47c, type: 2}
+  inputActions: {fileID: -944628639613478452, guid: 4370f1ac1c7a2bf419a9f76eca4e970d,
+    type: 3}
 --- !u!1 &1324917900
 GameObject:
   m_ObjectHideFlags: 0
@@ -2986,9 +2988,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bda62251cb18d064b9e5e688369b5272, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spawnPoints:
-  - {fileID: 1960077922}
-  - {fileID: 695313905}
+  leftSpawnPoints: []
+  rightSpawnPoints: []
   maxAnimals: 2
 --- !u!114 &1324917902
 MonoBehaviour:
@@ -3679,7 +3680,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1613603853
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4152,6 +4153,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   allAnimals:
   - {fileID: 11400000, guid: 1443561035ef9034996c75cdc379af0e, type: 2}
+  - {fileID: 11400000, guid: 04256f769d7bc5d469a0cb78a4340dec, type: 2}
+  - {fileID: 11400000, guid: 6c7adae3ea50a914c83b14eea51b43db, type: 2}
+  - {fileID: 11400000, guid: 0832ec0a45d1a96458ce46a4310dbf79, type: 2}
+  - {fileID: 11400000, guid: fb3be1cdb6ac6ae42985b5c46316e373, type: 2}
   - {fileID: 11400000, guid: bd169d4c33ec9804f901f6aa8e9c53a1, type: 2}
 --- !u!1001 &1749394705
 PrefabInstance:
@@ -5624,6 +5629,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 4428134369497399985, guid: ef6c008a42bfa2e4cbeb8055402515fc,
+        type: 3}
+      propertyPath: stopCartObject
+      value: 
+      objectReference: {fileID: 1613603852}
     - target: {fileID: 4428134369497399985, guid: ef6c008a42bfa2e4cbeb8055402515fc,
         type: 3}
       propertyPath: splineContainer

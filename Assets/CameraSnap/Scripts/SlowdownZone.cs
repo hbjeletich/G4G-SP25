@@ -18,7 +18,7 @@ namespace CameraSnap
     CartController cart = other.GetComponentInParent<CartController>();
     if (cart != null)
     {
-        cart.currentZone = this; // <── add this line
+        cart.currentZone = this; 
         cart.SetSpeed(slowedSpeed);
         cart.AllowStop(true);
         if (uiIcon != null) uiIcon.SetActive(true);
@@ -53,9 +53,10 @@ private void OnTriggerExit(Collider other)
     foreach (var a in animals)
     {
         if (a == null) continue;
-        var id = a.GetComponent<AnimalIdentifier>();
-        if (id != null && GameManager.Instance.HasCaptured(id.animalData.animalName))
-            capturedCount++;
+        var behavior = a.GetComponent<AnimalBehavior>();
+if (behavior != null && GameManager.Instance.HasCaptured(behavior.animalData.animalName))
+    capturedCount++;
+
     }
 
     if (capturedCount >= animals.Count)

@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8674548632032307744}
   - component: {fileID: 5190543555024438692}
-  - component: {fileID: 4424546065481775954}
+  - component: {fileID: 3952043665877842119}
   m_Layer: 9
   m_Name: OwlDeer
   m_TagString: Untagged
@@ -55,7 +55,7 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 9.24605, y: 8.720666, z: 0.78297806}
   m_Center: {x: -1.3609841, y: 4.6438084, z: 0.108510986}
---- !u!114 &4424546065481775954
+--- !u!114 &3952043665877842119
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -64,10 +64,20 @@ MonoBehaviour:
   m_GameObject: {fileID: 4504198827028436830}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 063ab1405151dcd4aa09cc4af849b957, type: 3}
+  m_Script: {fileID: 11500000, guid: e9bd3937450f86d4988540858b4a6b1f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   animalData: {fileID: 11400000, guid: fb3be1cdb6ac6ae42985b5c46316e373, type: 2}
+  isCaptured: 0
+  animator: {fileID: 0}
+  walkBool: isWalking
+  hideTrigger: Hide
+  canWalk: 1
+  canHideInBush: 0
+  moveSpeed: 1
+  patrolDistance: 2
+  idleTime: 2
+  walkTime: 3
 --- !u!1 &4755457340466887487
 GameObject:
   m_ObjectHideFlags: 0

@@ -96,7 +96,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8423293657599645982}
   - component: {fileID: 7785054514679378157}
-  - component: {fileID: 5789789749855276006}
+  - component: {fileID: -2761444779183971532}
   m_Layer: 9
   m_Name: Bear
   m_TagString: Untagged
@@ -141,7 +141,7 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 3.6685429, y: 5.7635937, z: 1}
   m_Center: {x: -0.40089703, y: 2.911415, z: 0}
---- !u!114 &5789789749855276006
+--- !u!114 &-2761444779183971532
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -150,7 +150,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 5515645937414062392}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 063ab1405151dcd4aa09cc4af849b957, type: 3}
+  m_Script: {fileID: 11500000, guid: e9bd3937450f86d4988540858b4a6b1f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   animalData: {fileID: 11400000, guid: 04256f769d7bc5d469a0cb78a4340dec, type: 2}
+  isCaptured: 0
+  animator: {fileID: 0}
+  walkBool: isWalking
+  hideTrigger: Hide
+  canWalk: 0
+  canHideInBush: 0
+  moveSpeed: 1
+  patrolDistance: 2
+  idleTime: 2
+  walkTime: 3
