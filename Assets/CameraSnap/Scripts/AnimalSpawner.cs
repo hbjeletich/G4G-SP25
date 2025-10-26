@@ -45,6 +45,8 @@ namespace CameraSnap
                 SpawnAnimalAt(rightSpawnPoints[Random.Range(0, rightSpawnPoints.Count)], allAnimals[animalsSpawned], true);
                 animalsSpawned++;
             }
+            Debug.Log($"Spawning animals... Left:{leftSpawnPoints.Count}, Right:{rightSpawnPoints.Count}, Max:{maxAnimals}, TotalAnimals:{allAnimals.Count}");
+
         }
 
         private void SpawnAnimalAt(Transform spawnPoint, AnimalData animalData, bool spawnOnRightSide)
@@ -74,6 +76,8 @@ namespace CameraSnap
             }
 
             Debug.Log($"[AnimalSpawner] Spawned {animalData.animalName} at {spawnPoint.position}, facingLeft={shouldFaceLeft}");
+            Debug.Log($"Spawned {animalData.animalName} at {(spawnOnRightSide ? "RIGHT" : "LEFT")}");
+
         }
 
         public void ClearPreviousAnimals()

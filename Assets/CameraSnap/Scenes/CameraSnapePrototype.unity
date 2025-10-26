@@ -2988,8 +2988,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bda62251cb18d064b9e5e688369b5272, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  leftSpawnPoints: []
-  rightSpawnPoints: []
+  leftSpawnPoints:
+  - {fileID: 695313905}
+  rightSpawnPoints:
+  - {fileID: 1960077922}
   maxAnimals: 2
 --- !u!114 &1324917902
 MonoBehaviour:
@@ -4152,11 +4154,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   allAnimals:
-  - {fileID: 11400000, guid: 1443561035ef9034996c75cdc379af0e, type: 2}
   - {fileID: 11400000, guid: 04256f769d7bc5d469a0cb78a4340dec, type: 2}
   - {fileID: 11400000, guid: 6c7adae3ea50a914c83b14eea51b43db, type: 2}
   - {fileID: 11400000, guid: 0832ec0a45d1a96458ce46a4310dbf79, type: 2}
   - {fileID: 11400000, guid: fb3be1cdb6ac6ae42985b5c46316e373, type: 2}
+  - {fileID: 11400000, guid: 1443561035ef9034996c75cdc379af0e, type: 2}
   - {fileID: 11400000, guid: bd169d4c33ec9804f901f6aa8e9c53a1, type: 2}
 --- !u!1001 &1749394705
 PrefabInstance:

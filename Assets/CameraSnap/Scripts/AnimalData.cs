@@ -1,24 +1,30 @@
 using UnityEngine;
 
-//This is to create a scriptable object for the animals that appear in game. I used this idea from seeing the fishing game in 
-//previous g4g projects. This includes data like the animal name and the prefab that the animal uses so I can use it in code to 
-//spawn animals.
-
 namespace CameraSnap
 {
     [CreateAssetMenu(fileName = "AnimalData", menuName = "PhotoGame/Animal")]
     public class AnimalData : ScriptableObject
     {
-        [Header("Animal Info")]
+        [Header("Basic Info")]
         public string animalName;
-
-        [Header("In-Game Prefab")]
         public GameObject animalPrefab;
 
-[Header("Sprite Facing Settings")]
-[Tooltip("Check this if the animal's sprite faces LEFT by default. Uncheck if it faces RIGHT.")]
-public bool spriteFacesLeft = true;
+        [Header("Animation")]
+        public bool spriteFacesLeft = true;
 
-        
+        [Header("Behavior Settings")]
+        public bool canWalk = true;
+        public bool canHideInBush = false;
+
+        [Header("Walking Settings")]
+        public float moveSpeed = 1f;
+        public float patrolDistance = 2f;
+        public float idleTime = 2f;
+        public float walkTime = 3f;
+
+        [Header("UI Settings")]
+        public Sprite foundImage;
+        public Sprite silhouetteImage;
+        public AudioClip captureSound;
     }
 }
