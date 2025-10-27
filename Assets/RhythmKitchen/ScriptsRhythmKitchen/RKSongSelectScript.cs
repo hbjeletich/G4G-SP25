@@ -16,10 +16,10 @@ public class RKSongSelectScript : MonoBehaviour
         SceneManager.LoadScene("RKMainMenu");
     }
 
-    public void SelectSong(string songName)
+    public void SelectSong(string sceneName)
     {
         var am = RKAudioManager.Instance;
-        
+
         if (am != null)
         {
             RKAudioManager.Instance.PlaySFX("RecordScratch");
@@ -28,6 +28,6 @@ public class RKSongSelectScript : MonoBehaviour
         else
             Debug.LogWarning("[RKSongSelectScript] AudioManager missing: loading scene anyway.");
 
-        SceneManager.LoadScene(songName);
+        SceneManager.LoadScene(sceneName);
     }
 }
