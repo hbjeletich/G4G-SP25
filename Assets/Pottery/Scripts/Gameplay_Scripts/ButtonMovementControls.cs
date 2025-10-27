@@ -6,48 +6,63 @@ using UnityEngine.InputSystem;
 
 public class ButtonMovementControls : MonoBehaviour
 {
-    private Button myButton;
-
     public InputActionAsset inputActionAsset;
     private InputAction leftFootHeightAction;
+    private InputAction leftHipAbducted;
 
+    public GameObject settingsPanel;
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
-        myButton = GetComponent<Button>();
-
-        myButton.onClick.AddListener(OnButtonClick);
-
-        var footMap = inputActionAsset.FindActionMap("Foot");
+        var footMap = inputActionAsset.FindActionMap("Foot"); //plugin unity captury 
+        if (footMap == null) Debug.LogWarning("Pottery: Foot map not found!");
+        if (footMap != null) Debug.Log("Pottery: Foot map found!");
         //var footMap = inputActions.FindActionMap("Foot");
-        leftFootHeightAction = footMap.FindAction("LeftFootPosition");
+
+        leftHipAbducted = footMap.FindAction("LeftHipAbducted");
+        if (leftHipAbducted == null) Debug.LogWarning("Pottery: Left Hip Abducted not found!");
+        if (leftHipAbducted != null) Debug.Log("Pottery: Left Hip Abducted found!");
     }
 
     void OnEnable()
     {
-        leftFootHeightAction.Enable();
+        leftHipAbducted.Enable();
+        Debug.Log("Pottery: OnEnable");
+        leftHipAbducted.performed += OnLeftHip;
     }
 
     void OnDisable()
     {
-        leftFootHeightAction.Disable();
+        leftHipAbducted.Disable();
+        Debug.Log("Potteru: OnDisable");
+        leftHipAbducted.performed -= OnLeftHip;
     }
 
     // Update is called once per frame
 
     void Update()
     {
-        float leftFootY = leftFootHeightAction.ReadValue<Vector3>().y;
 
-        if (leftFootY > .5)
-        {
-            OnButtonClick();
-        }
     }
 
-    void OnButtonClick()
+    public void ShowSettings()
     {
-        Debug.Log("Button was clicked!");
+        SetActivePanel(settingsPanel);
+    }
+
+    private void SetActivePanel(GameObject activePanel)
+    {
+        settingsPanel.SetActive(false);
+
+        activePanel.SetActive(true);
+    }
+
+
+    void OnLeftHip(InputAction.CallbackContext context)
+    {
+        Debug.Log("Pottery: OnLeftHip");
+        // whatever you write here happens when left hip abducted
+        ShowSettings();
     }
 }

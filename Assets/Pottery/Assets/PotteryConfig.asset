@@ -10,16 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3c0ac5af9e504174082cd7401bffa208, type: 3}
-  m_Name: MotionConfig
+  m_Name: PotteryConfig
   m_EditorClassIdentifier: 
-  configurationName: Default
-  description: Default motion tracking setup for basic foot and torso tracking with
-    optional walk analysis.
+  configurationName: Pottery
+  description: Poterry :)
   calibrationDelay: 2
   calibrationFrames: 30
-  enableTorsoModule: 1
+  enableTorsoModule: 0
   torsoSensitivity: 1
-  torsoDebugMode: 0
+  torsoDebugMode: 1
   isShiftTracked: 1
   weightShiftThreshold: 0.15
   neutralZoneWidth: 0.05
@@ -28,7 +27,7 @@ MonoBehaviour:
   bentOverAngleThreshold: 30
   enableFootModule: 1
   footSensitivity: 1
-  footDebugMode: 0
+  footDebugMode: 1
   isFootRaiseTracked: 1
   footRaiseThreshold: 0.1
   isHipAbductionTracked: 1
