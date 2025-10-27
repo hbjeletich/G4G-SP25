@@ -17,6 +17,7 @@ namespace CameraSnap
         public Color readyColor = Color.green;
         public float detectionRange = 100f;
         public LayerMask animalLayer;
+        public AudioSource audioSource;
 
         [Header("Photo UI Feedback")]
         public float messageDuration = 2f;
@@ -115,6 +116,7 @@ if (animal != null)
 if (animal != null && animal.animalData != null)
 {
     animal.isCaptured = true;
+    audioSource.Play();
     string name = animal.animalData.animalName;
                     Debug.Log($"Captured photo of: {name}");
                     StartCoroutine(ShowPhotoMessage(name));
@@ -130,6 +132,7 @@ if (animal != null && animal.animalData != null)
                         currentZone.CheckForZoneCompletion();
                 }
             }
+            
         }
 
         public bool IsInCameraMode() => inCameraMode;

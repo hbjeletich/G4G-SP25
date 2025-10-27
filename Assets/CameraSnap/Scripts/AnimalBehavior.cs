@@ -144,7 +144,7 @@ namespace CameraSnap
         {
             movingLeft = isMovingLeft;
 
-            // Also flip the sprite immediately to match movement (uses transform.localScale like you originally had)
+            // Also flip the sprite immediately to match movement 
             Vector3 scale = transform.localScale;
             scale.x = isMovingLeft ? Mathf.Abs(scale.x) : -Mathf.Abs(scale.x);
             transform.localScale = scale;
