@@ -1,52 +1,53 @@
-//using System.Collections;
-//using System.Collections.Generic;
-//using UnityEngine;
-//using UnityEngine.UI;
-//using UnityEngine.InputSystem;
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.InputSystem;
 
-//public class ButtonMovementControls : MonoBehaviour
-//{
-//    private Button myButton;
+public class ButtonMovementControls : MonoBehaviour
+{
+    private Button myButton;
 
-//    public InputActionAsset inputActionAsset;
-//    private InputAction leftFootHeightAction;
+    public InputActionAsset inputActionAsset;
+    private InputAction leftFootHeightAction;
 
 
+    // Start is called before the first frame update
+    void Start()
+    {
+        myButton = GetComponent<Button>();
 
-//    // Start is called before the first frame update
-//    void Start()
-//    {
-//        myButton = GetComponent<Button>();
+        myButton.onClick.AddListener(OnButtonClick);
 
-//        myButton.onClick.AddListener(OnButtonClick);
+        var footMap = inputActionAsset.FindActionMap("Foot");
+        //var footMap = inputActions.FindActionMap("Foot");
+        leftFootHeightAction = footMap.FindAction("LeftFootPosition");
+    }
 
-//        var footMap = inputActions.FindActionMap("Foot");
-//        leftFootHeightAction = footMap.FindAction("LeftFootPosition");
-//    }
+    void OnEnable()
+    {
+        leftFootHeightAction.Enable();
+    }
 
-//    void OnEnable()
-//    {
-//        leftFootHeightAction.Enable();
-//    }
+    void OnDisable()
+    {
+        leftFootHeightAction.Disable();
+    }
 
-//    void OnDisable()
-//    {
-//        leftFootHeightAction.Disable();
-//    }
+    // Update is called once per frame
 
-//    // Update is called once per frame
-//    void Update()
-//    {
-//        float leftFootY = leftFootHeightAction.ReadValue<Vector3>().y;
+    void Update()
+    {
+        float leftFootY = leftFootHeightAction.ReadValue<Vector3>().y;
 
-//        if (leftFootY > .5)
-//        {
-//            OnButtonClick();
-//        }
-//    }
+        if (leftFootY > .5)
+        {
+            OnButtonClick();
+        }
+    }
 
-//    void OnButtonClick()
-//    {
-//        Debug.Log("Button was clicked!");
-//    }
-//}
+    void OnButtonClick()
+    {
+        Debug.Log("Button was clicked!");
+    }
+}

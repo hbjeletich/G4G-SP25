@@ -1,0 +1,54 @@
+{
+    "name": "Pottery_Captury",
+    "maps": [
+        {
+            "name": "Captury",
+            "id": "f35b8a59-92fa-4706-8c67-0aaaba5fdbb9",
+            "actions": [
+                {
+                    "name": "New action",
+                    "type": "Button",
+                    "id": "3ec4ddbf-0322-440b-9f02-d29521f1fabd",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "LeftFootRaised",
+                    "type": "Button",
+                    "id": "674d681c-aa50-47d3-849d-c0b2f1d7467f",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "f3618da5-67ca-46d4-a7aa-1bd8735bdc16",
+                    "path": "",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "New action",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "2851359f-5d46-4bce-a2e1-e11f9ba5eeb1",
+                    "path": "<SwitchProControllerHID>/capture",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "LeftFootRaised",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}
