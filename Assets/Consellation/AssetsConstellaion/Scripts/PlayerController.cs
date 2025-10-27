@@ -79,6 +79,7 @@ namespace Constellation
             }
             else     //THis branch is used when caputry movemnt is used MUST BE TESTED IN LIM
             {
+
                 if (Input.GetKeyDown("w"))
                 {
                     speedMod = 1;
