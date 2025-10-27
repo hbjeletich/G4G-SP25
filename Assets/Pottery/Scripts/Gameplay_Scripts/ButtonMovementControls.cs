@@ -118,6 +118,7 @@ public class ButtonMovementControls : MonoBehaviour
 
     void onLeftFoot (InputAction.CallbackContext context)
     {
+
         Debug.Log("Left Foot raised");
         ShowSelection();
 
