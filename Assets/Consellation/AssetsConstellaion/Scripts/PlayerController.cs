@@ -12,6 +12,9 @@ namespace Constellation
 
 
         [SerializeField] private InputActionAsset inputActions;
+
+        private InputAction isWalking;
+
         //STATISTICS
         //rotation mod gathered by input
         [SerializeField] private float rotationMod;
@@ -33,7 +36,23 @@ namespace Constellation
 
         // The storage spot so that the player knows which star is currently held
         public GameObject grabedStar;
-        
+
+        void Awake()
+        { 
+            var footMap= inputActions.FindActionMap("Foot");
+            isWalking = footMap.FindAction("IsWalking");
+        }
+
+        void OnEnable()
+        {
+            isWalking.Enable();
+        }
+
+        void OnDisable()
+        { 
+            isWalking.Disable();
+        }
+
         // Start is called before the first frame update
         void Start()
         {
