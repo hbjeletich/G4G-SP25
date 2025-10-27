@@ -1,6 +1,18 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+
+
+
+//THE ORDER OF MOVEMENT!: In game, player enters a slowdown zone where a camera ui appears. They need to squat to stop the cart
+//Once squat is performed, they must do a hip abduction to enter camera mode. When in camera mode, they cannot exit the camera
+//mode unless they squat to resume cart movement, then they can do a hip abduction to re-enter camera mode. In camera mode,
+//It is likely that any lifting of the foot will count as a foot raised, which is for taking photographs. The player must
+//be looking at the animal, and the camera overlay turns green, then they raise foot to capture photo and text will appear
+// to state what animal is captured and a camera click sound will happen.. Then, the cart automatically resumes and they will
+//auto-exit camera mode. 
+
+
 namespace CameraSnap
 {
     public class PlayerController : MonoBehaviour

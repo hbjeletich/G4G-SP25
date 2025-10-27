@@ -6,6 +6,7 @@ namespace CameraSnap
     // This lets the player access camera mode. The player will open the camera and it will
     // indicate to the player that there is no animals detected until the player has an animal in view.
     // Note: If doing zoom in and out, maybe detection range will change depending on zoom.
+
     public class CameraMode : MonoBehaviour
     {
         [Header("Camera Settings")]

@@ -1,6 +1,10 @@
 using UnityEngine;
 using System.Collections.Generic;
 
+//Maybe change this script to an animal manager and then game manager is for main menu, tutorial or main stage, end screen or 
+//gallery!! note this..
+
+
 namespace CameraSnap
 {
     public class GameManager : MonoBehaviour
