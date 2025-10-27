@@ -17,7 +17,8 @@ namespace CameraSnap
 
         void Awake()
         {
-            // Singleton setup
+            // Singleton setup... Only one game manager exists across scenes, so it persists when switching scenes.. Other
+            //scripts can easily access it by gamemanager.instance.. It is a global system.....
             if (Instance == null)
                 Instance = this;
             else
@@ -32,7 +33,7 @@ namespace CameraSnap
         }
 
        
-        /// Returns the full list of animals that can appear anywhere.
+        /// Returns the full list of animals that can appear anywhere. Used for spawning animals.
         
         public List<AnimalData> GetAllAnimals()
         {
@@ -41,7 +42,7 @@ namespace CameraSnap
 
       
         /// Returns a random animal from the full list.
-        /// Useful if you want to spawn a random animal anywhere.
+        /// Picks a random one for spawning
        
         public AnimalData GetRandomAnimal()
         {
@@ -55,21 +56,23 @@ namespace CameraSnap
             return allAnimals[index];
         }
 
-        // Keeps track of all animals the player has photographed
+        // Keeps track of all animals the player has photographed. HashSet ensures no duplicates. Uses the animal
+        //name as a key..
 private HashSet<string> capturedAnimals = new HashSet<string>();
 
+//Marks animals as captured.
 public void RegisterCapturedAnimal(string animalName)
 {
     if (string.IsNullOrEmpty(animalName)) return;
     capturedAnimals.Add(animalName);
     Debug.Log($"[GameManager] Added captured animal: {animalName}");
 }
-
+//Checks if player has photographed the animal already
 public bool HasCaptured(string animalName)
 {
     return capturedAnimals.Contains(animalName);
 }
-
+//Gets the whole collection of captured animals 
 public HashSet<string> GetCapturedAnimals()
 {
     return capturedAnimals;

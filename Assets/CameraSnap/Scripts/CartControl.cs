@@ -11,23 +11,23 @@ namespace CameraSnap
 {
     public class CartController : MonoBehaviour
     {
-        public SplineContainer splineContainer;
-        public float speed = 5f;
+        public SplineContainer splineContainer;  //path cart follows
+        public float speed = 5f;  //how fast it travels
 
-        public GameObject stopCartObject;
+        public GameObject stopCartObject;  //text ui to show cart has stopped
 
-public SlowdownZone currentZone;
+public SlowdownZone currentZone;  //tracks which slowdown zone cart is in.
 
         private float defaultSpeed;
         private float currentDistance = 0f;
-        private bool isMoving = true;
-        private bool canStop = false;  
-        private bool isStopped = false;
+        private bool isMoving = true;  //cart is actively progressing
+        private bool canStop = false;    //true in slowdown zone
+        private bool isStopped = false;  //cart is stopped
 
 
         void Start()
         {
-            defaultSpeed = speed;
+            defaultSpeed = speed;  //stores original speed to be restored when cart is resumed.
         }
 
 
@@ -42,18 +42,19 @@ public SlowdownZone currentZone;
                     StopCart();
             }
 
-
+ //Allows movement if:
             if (!isMoving || isStopped)
                 return;
 
-
+ //Increase distance travelled, calculate progress along the spline, position and rotate
+  //based on spline
             currentDistance += speed * Time.deltaTime;
 
 
             float totalLength = splineContainer.CalculateLength();
             float t = currentDistance / totalLength;
 
-
+ //if cart reaches end of spline, the movement stops
             if (t <= 1f)
             {
                 splineContainer.Evaluate(t, out float3 pos, out float3 tangent, out float3 up);
@@ -68,7 +69,7 @@ public SlowdownZone currentZone;
             }
         }
 
-
+//The speed control is used by slowdown zone and other scripts...
         public void SetSpeed(float newSpeed)
         {
             speed = newSpeed;
@@ -84,7 +85,8 @@ public SlowdownZone currentZone;
         }
 
 
-        // Called by slowdown zones
+        // Called by slowdown zones. When entering a zone, allow stopping. When leaving, disable stopping and resume
+        //cart
         public void AllowStop(bool value)
         {
             canStop = value;
@@ -92,7 +94,7 @@ public SlowdownZone currentZone;
                 ResumeCart();
         }
 
-
+//Handles the stopping and starting, shows and hides the UI indicator for showing if the cart is stopped.
         public void StopCart()
         {
             if (!canStop) return;
@@ -109,7 +111,7 @@ public SlowdownZone currentZone;
              if (stopCartObject != null) stopCartObject.SetActive(false);
         }
 
-
+//Used by other scripts such as camera mode to check if player can take photos.
         public bool IsStopped() => isStopped;
         public bool CanStop() => canStop;
     }

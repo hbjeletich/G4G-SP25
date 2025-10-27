@@ -10,22 +10,22 @@ namespace CameraSnap
     public class CameraMode : MonoBehaviour
     {
         [Header("Camera Settings")]
-        public Animator playerAnimator;
-        public GameObject cameraOverlayUI;
-        public KeyCode toggleKey = KeyCode.C;
-        public KeyCode photoKey = KeyCode.Mouse0;
-        public Color normalColor = Color.white;
-        public Color readyColor = Color.green;
-        public float detectionRange = 100f;
-        public LayerMask animalLayer;
-        public AudioSource audioSource;
+        public Animator playerAnimator;  //Animator for camera coming up screen
+        public GameObject cameraOverlayUI; //Overlay that turns green and red
+        public KeyCode toggleKey = KeyCode.C; //Key for entering camera mode
+        public KeyCode photoKey = KeyCode.Mouse0; //Key for taking photo
+        public Color normalColor = Color.white; //Normal color of overlay
+        public Color readyColor = Color.green; //Color of overlay detects animal
+        public float detectionRange = 100f; //How far camera mode can see the animal
+        public LayerMask animalLayer; //Camera mode uses this to detect animal
+        public AudioSource audioSource; //Camera click sound
 
         [Header("Photo UI Feedback")]
         public float messageDuration = 2f;
 
         private bool inCameraMode = false;
-        private Camera cam;
-        private UnityEngine.UI.Image overlayImage;
+        private Camera cam; //get main cam
+        private UnityEngine.UI.Image overlayImage; //UI element that changes color
         private CartController cart;
         public TMPro.TMP_Text photoText;
 
@@ -35,6 +35,8 @@ namespace CameraSnap
             overlayImage = cameraOverlayUI.GetComponent<UnityEngine.UI.Image>();
             cart = FindObjectOfType<CartController>();
         }
+//Checks for entering or exiting camera mode, continuously detects animals in view, allows
+//taking photos, auto-exits if cart starts moving
 
         void Update()
         {
@@ -53,7 +55,8 @@ namespace CameraSnap
             if (cart != null && !cart.IsStopped() && inCameraMode)
                 ForceExitCameraMode();
         }
-
+//Turn camera mode off and on, plays animation of camera coming in, shows or hides overlay UI,
+//prevents entering when cart is moving
         public void TryToggleCameraMode()
         {
             if (cart == null || !cart.IsStopped()) return;
@@ -81,7 +84,8 @@ namespace CameraSnap
             if (cameraOverlayUI != null)
                 cameraOverlayUI.SetActive(false);
         }
-
+//Uses raycast from center of screen. If it hits an object on the animal layer, it checks the animal
+//behavior script of the prefab. If animal is found, overlay gets green and if not it stays normal color
         void DetectAnimalInView()
         {
             if (cam == null) return;
@@ -101,7 +105,8 @@ if (animal != null)
             if (overlayImage != null)
                 overlayImage.color = normalColor;
         }
-
+//If ray hits animal, it marks that animal as captured. Plays camera shutter sound, shows captured message
+//reports the capture to game manager( change to animal manager), notifies slowdown zone
         public void TryTakePhoto()
         {
             if (cart == null || !cart.IsStopped()) return;
@@ -137,7 +142,8 @@ if (animal != null && animal.animalData != null)
         }
 
         public bool IsInCameraMode() => inCameraMode;
-
+//Shows a message for a few seconds and then fades out smoothly. The message shows what animal is
+//captured.
         private IEnumerator ShowPhotoMessage(string animalName)
         {
             if (photoText == null) yield break;
