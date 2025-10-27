@@ -13,49 +13,38 @@ public class ButtonMovementControls : MonoBehaviour
     public GameObject settingsPanel;
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         var footMap = inputActionAsset.FindActionMap("Foot"); //plugin unity captury 
-        if (footMap == null) Debug.LogWarning("Foot map not found!");
+        if (footMap == null) Debug.LogWarning("Pottery: Foot map not found!");
+        if (footMap != null) Debug.Log("Pottery: Foot map found!");
         //var footMap = inputActions.FindActionMap("Foot");
-        leftFootHeightAction = footMap.FindAction("LeftFootPosition");
+
         leftHipAbducted = footMap.FindAction("LeftHipAbducted");
+        if (leftHipAbducted == null) Debug.LogWarning("Pottery: Left Hip Abducted not found!");
+        if (leftHipAbducted != null) Debug.Log("Pottery: Left Hip Abducted found!");
     }
 
     void OnEnable()
     {
-        if (leftFootHeightAction != null) leftFootHeightAction.Enable();
-        
-        if(leftHipAbducted != null) leftHipAbducted.performed += OnLeftHip;
+        leftHipAbducted.Enable();
+        Debug.Log("Pottery: OnEnable");
+        leftHipAbducted.performed += OnLeftHip;
     }
 
     void OnDisable()
     {
-        if(leftFootHeightAction != null) leftFootHeightAction.Disable();
-
-        if (leftHipAbducted != null)  leftHipAbducted.performed -= OnLeftHip;
+        leftHipAbducted.Disable();
+        Debug.Log("Potteru: OnDisable");
+        leftHipAbducted.performed -= OnLeftHip;
     }
 
     // Update is called once per frame
 
     void Update()
     {
-        if (leftFootHeightAction != null)
-        {
-            float leftFootY = leftFootHeightAction.ReadValue<Vector3>().y;
 
-            if (leftFootY > .5)
-            {
-                OnButtonClick();
-            }
-        }
     }
-
-    void OnButtonClick()
-    {
-        Debug.Log("Button was clicked!");
-    }
-
 
     public void ShowSettings()
     {
@@ -75,6 +64,5 @@ public class ButtonMovementControls : MonoBehaviour
         Debug.Log("Pottery: OnLeftHip");
         // whatever you write here happens when left hip abducted
         ShowSettings();
-        OnButtonClick();
     }
 }
