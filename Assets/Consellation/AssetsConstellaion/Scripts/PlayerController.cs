@@ -2,13 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.InputSystem;
 
 namespace Constellation
 {
     public class PlayerController : MonoBehaviour
     {
         //Declaration Area
-        
+
+
+        [SerializeField] private InputActionAsset inputActions;
         //STATISTICS
         //rotation mod gathered by input
         [SerializeField] private float rotationMod;
