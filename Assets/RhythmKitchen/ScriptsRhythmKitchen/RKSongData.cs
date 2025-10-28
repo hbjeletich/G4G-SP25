@@ -15,14 +15,14 @@ namespace RhythmKitchen
         [SerializeField] public float[] songBeats; // the beats of the inputs
 
         public float secondsPerBeat { get; private set; } // this is 60/BPM
-        public float timeAdjustment { get; private set; } // the time adjustment from when scene starts when the note should spawn to the hit lane
-        public float[] spawnTimes { get; private set; } // the spawn timings for each song beat
+        public double timeAdjustment { get; private set; } // the time adjustment from when scene starts when the note should spawn to the hit lane
+        public double[] spawnTimes { get; private set; } // the spawn timings for each song beat
                                                         // songBeats[index]*secondsPerBeat+timeAdjustment = time in seconds when to spawn songBeats[index]
 
         void Awake() // might need to be start, or Init or some other way of setting the variables
         {
-            secondsPerBeat = 60f / Mathf.Max(1f, BPM); // this is clamp to avoid divided-by-zero
-            Debug.Log($"[Conductor] BPM={BPM} spb={secondsPerBeat:F3}"); // current song is BPM and each beat lasts X secs
+            secondsPerBeat = 60f / Mathf.Max(1f, bpm); // this is clamp to avoid divided-by-zero
+            Debug.Log($"[Conductor] BPM={bpm} spb={secondsPerBeat:F3}"); // current song is BPM and each beat lasts X secs
 
             timeAdjustment = offsetMs - leadInSeconds - travelTime + songStartDspTime; // Might not need songStartDspTime
 
