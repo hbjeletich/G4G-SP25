@@ -12,6 +12,12 @@ using UnityEngine.InputSystem;
 // to state what animal is captured and a camera click sound will happen.. Then, the cart automatically resumes and they will
 //auto-exit camera mode. 
 
+//note: expose threshold for torso y value for squatting
+//note: fix movement for taking photos.. Right now, it is difficult to take photos whilst weight shift is moving camera around.
+//goal for now: fix squatting TUESDAY
+// next if fixed fast is figure out taking photos!!
+
+
 
 namespace CameraSnap
 {
@@ -103,32 +109,33 @@ namespace CameraSnap
         // Track whether player returned to a standing position
 private bool isSquatReady = true;
 
+// Tunable normalized thresholds (0 = standing, 1 = full squat)
+[SerializeField, Range(0f, 1f)] private float squatThreshold = 0.35f;   // how far down to count as squat
+[SerializeField, Range(0f, 1f)] private float standUpThreshold = 0.15f; // how high to count as standing again
+
 private void HandleSquat()
 {
     if (!motionConfig.enableTorsoModule || cart == null) return;
 
     float pelvisY = pelvisPositionAction.ReadValue<Vector3>().y;
-    float squatThreshold = motionConfig.footRaiseThreshold;  // In the config
-    float standUpThreshold = squatThreshold + 0.05f;         // Small buffer to confirm standing
 
-    //  Player must be standing above threshold before squat is allowed again
-    if (!isSquatReady && pelvisY > standUpThreshold)
+    //  Player returned to standing 
+    if (!isSquatReady && pelvisY < standUpThreshold)
     {
         isSquatReady = true;
-        // Debug Player returned to standing. Squat is ready again;
+        Debug.Log("[Squat] Player stood up — squat ready again");
     }
 
-    //  If pelvis goes low AND squat is allowed - Trigger once
-    if (isSquatReady && pelvisY < squatThreshold && cart.CanStop())
+    //  Player squatted down 
+    if (isSquatReady && pelvisY > squatThreshold && cart.CanStop())
     {
         if (cart.IsStopped())
             cart.ResumeCart();
         else
             cart.StopCart();
 
-        Debug.Log($"Squat Triggered Once → PelvisY={pelvisY}, CartStopped={cart.IsStopped()}");
-
-        isSquatReady = false; // Block until standing happens again
+        Debug.Log($"[Squat Triggered] PelvisY={pelvisY:F3}");
+        isSquatReady = false;
     }
 }
 

@@ -4,7 +4,9 @@ using Unity.Mathematics;
 
 
 //This script allows the cart to move along a spline. This allows for easily editing the spline in the scene and it working
-// without issue.
+// without issue. 
+
+//add audio for cart sounds
 
 
 namespace CameraSnap
@@ -23,6 +25,7 @@ public SlowdownZone currentZone;  //tracks which slowdown zone cart is in.
         private bool isMoving = true;  //cart is actively progressing
         private bool canStop = false;    //true in slowdown zone
         private bool isStopped = false;  //cart is stopped
+        public AudioSource audioSource;
 
 
         void Start()
@@ -45,6 +48,7 @@ public SlowdownZone currentZone;  //tracks which slowdown zone cart is in.
  //Allows movement if:
             if (!isMoving || isStopped)
                 return;
+               
 
  //Increase distance travelled, calculate progress along the spline, position and rotate
   //based on spline
@@ -101,6 +105,8 @@ public SlowdownZone currentZone;  //tracks which slowdown zone cart is in.
             isStopped = true;
             isMoving = false;
              if (stopCartObject != null) stopCartObject.SetActive(true);
+             audioSource.Stop();
+              
         }
 
 
@@ -109,6 +115,7 @@ public SlowdownZone currentZone;  //tracks which slowdown zone cart is in.
             isStopped = false;
             isMoving = true;
              if (stopCartObject != null) stopCartObject.SetActive(false);
+              audioSource.Play();
         }
 
 //Used by other scripts such as camera mode to check if player can take photos.
