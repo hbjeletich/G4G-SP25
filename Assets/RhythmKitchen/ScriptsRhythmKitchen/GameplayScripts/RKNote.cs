@@ -7,7 +7,7 @@ using UnityEngine;
 namespace RhythmKitchen
 { public class RKNote : MonoBehaviour
     {
-        public enum Type { Cucumber, Tomato, Lettuce, Crouton } // this defines the note type
+        public enum Type { Lane1, Lane2, Lane3, Lane4 } // this defines the note type
         public Type noteType; // this is set in prefab
 
         [HideInInspector] public float targetTime; // when it should HIT the line

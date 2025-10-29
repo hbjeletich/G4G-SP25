@@ -15,7 +15,7 @@ namespace RhythmKitchen
         private float BPM; // BPM of tutorial song specifically
         private float offsetMs; // this is calibration to nudge timing if it feels early/late (positive = judge later, negative = judge earlier)
         private double leadInSeconds; // this is a small delay so we can schedule precisely
-        public float songLength; // this is length of the song
+        private float songLength; // this is length of the song
         private float secondsPerBeat; // this is 60/BPM
         private float[] songBeats; // this is the beat position
         public float curSongBeat => secondsPerBeat > 0f ? songTime / secondsPerBeat : 0f; // this is the beat position

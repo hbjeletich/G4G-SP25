@@ -22,16 +22,16 @@ namespace RhythmKitchen
         [SerializeField] private float travelTime = 1.00f; // this is seconds it should take from spawn to hit
 
         [Header("Spawn Points (by lane)")]
-        public Transform spawnCucumber;
-        public Transform spawnTomato;
-        public Transform spawnLettuce;
-        public Transform spawnCrouton;
+        public Transform spawnLane1;
+        public Transform spawnLane2;
+        public Transform spawnLane3;
+        public Transform spawnLane4;
 
         [Header("Prefabs (by type)")]
-        public RKNote prefabCucumber;
-        public RKNote prefabTomato;
-        public RKNote prefabLettuce;
-        public RKNote prefabCrouton;
+        public RKNote prefabLane1;
+        public RKNote prefabLane2;
+        public RKNote prefabLane3;
+        public RKNote prefabLane4;
 
         void Start()
         {
@@ -54,14 +54,14 @@ namespace RhythmKitchen
         {
             switch (noteType)
             {
-                case RKNote.Type.Cucumber:
-                    return spawnCucumber;
-                case RKNote.Type.Tomato:
-                    return spawnTomato;
-                case RKNote.Type.Lettuce:
-                    return spawnLettuce;
-                case RKNote.Type.Crouton:
-                    return spawnCrouton;
+                case RKNote.Type.Lane1:
+                    return spawnLane1;
+                case RKNote.Type.Lane2:
+                    return spawnLane2;
+                case RKNote.Type.Lane3:
+                    return spawnLane3;
+                case RKNote.Type.Lane4:
+                    return spawnLane4;
                 default:
                     Debug.LogWarning("[Spawner] NO spawn point found for " + noteType);
                     return null;
@@ -71,14 +71,14 @@ namespace RhythmKitchen
         {
             switch (noteType)
             {
-                case RKNote.Type.Cucumber:
-                    return prefabCucumber;
-                case RKNote.Type.Tomato:
-                    return prefabTomato;
-                case RKNote.Type.Lettuce:
-                    return prefabLettuce;
-                case RKNote.Type.Crouton:
-                    return prefabCrouton;
+                case RKNote.Type.Lane1:
+                    return prefabLane1;
+                case RKNote.Type.Lane2:
+                    return prefabLane2;
+                case RKNote.Type.Lane3:
+                    return prefabLane3;
+                case RKNote.Type.Lane4:
+                    return prefabLane4;
                 default:
                     Debug.LogWarning("[Spawner] NO prefab found for " + noteType);
                     return null;
@@ -94,7 +94,7 @@ namespace RhythmKitchen
             {
                 return laneByBeat[i];
             }
-            return RKNote.Type.Cucumber; // just a fallback here
+            return RKNote.Type.Lane1; // just a fallback here
         }
         public void SpawnAt(RKNote.Type noteType, float targetTime)
         {

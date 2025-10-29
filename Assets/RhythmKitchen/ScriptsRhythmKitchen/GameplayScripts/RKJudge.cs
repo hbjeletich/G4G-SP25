@@ -13,10 +13,10 @@ namespace RhythmKitchen
         [SerializeField] private RKSpawner spawner;
 
         [Header("Keys (A/W/S/D by lane)")]
-        public KeyCode keyCucumber = KeyCode.A;
-        public KeyCode keyTomato = KeyCode.W;
-        public KeyCode keyLettuce = KeyCode.S;
-        public KeyCode keyCrouton = KeyCode.D;
+        public KeyCode keyLane1 = KeyCode.A;
+        public KeyCode keyLane2 = KeyCode.W;
+        public KeyCode keyLane3 = KeyCode.S;
+        public KeyCode keyLane4 = KeyCode.D;
 
         [Header("Windows (seconds)")]
         public float missWindow = 0.250f;

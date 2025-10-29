@@ -196,7 +196,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   songData: {fileID: 342932064}
   musicSource: {fileID: 1073685471}
-  songLength: 0
 --- !u!1 &80931442
 GameObject:
   m_ObjectHideFlags: 0
@@ -482,7 +481,7 @@ GameObject:
   m_Component:
   - component: {fileID: 236374426}
   m_Layer: 0
-  m_Name: SpawnPoint_Lettuce
+  m_Name: SpawnPoint_Lane3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1210,7 +1209,7 @@ GameObject:
   m_Component:
   - component: {fileID: 498506434}
   m_Layer: 0
-  m_Name: SpawnPoint_Crouton
+  m_Name: SpawnPoint_Lane4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2028,7 +2027,7 @@ GameObject:
   m_Component:
   - component: {fileID: 833825316}
   m_Layer: 0
-  m_Name: SpawnPoint_Cucumber
+  m_Name: SpawnPoint_Lane1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2337,20 +2336,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f42d96fb4b1847c59c010ea5405edfb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  songData: {fileID: 342932064}
+  laneByBeat: 0100000001000000010000000000000000000000020000000300000001000000000000000200000003000000
+  useRandom: 0
   conductor: {fileID: 72580114}
   hitLine: {fileID: 419094087}
   travelTime: 1
-  spawnCucumber: {fileID: 833825316}
-  spawnTomato: {fileID: 1022452817}
-  spawnLettuce: {fileID: 236374426}
-  spawnCrouton: {fileID: 498506434}
-  prefabCucumber: {fileID: -3255067723890866071, guid: 350cddb93a3034aff882b22ab9596e88,
+  spawnLane1: {fileID: 833825316}
+  spawnLane2: {fileID: 1022452817}
+  spawnLane3: {fileID: 236374426}
+  spawnLane4: {fileID: 498506434}
+  prefabLane1: {fileID: -3255067723890866071, guid: 350cddb93a3034aff882b22ab9596e88,
     type: 3}
-  prefabTomato: {fileID: 4929244203717805733, guid: df8e7df64221f49018489b377ac61a2c,
+  prefabLane2: {fileID: 4929244203717805733, guid: df8e7df64221f49018489b377ac61a2c,
     type: 3}
-  prefabLettuce: {fileID: 4699669364837225305, guid: f25d429d95a87474cb7b05a7680c9bdb,
+  prefabLane3: {fileID: 4699669364837225305, guid: f25d429d95a87474cb7b05a7680c9bdb,
     type: 3}
-  prefabCrouton: {fileID: 1173823889380547401, guid: 0b703aad03b0b482194dc5f7c7fbc266,
+  prefabLane4: {fileID: 1173823889380547401, guid: 0b703aad03b0b482194dc5f7c7fbc266,
     type: 3}
 --- !u!1 &959363154
 GameObject:
@@ -2547,7 +2549,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1022452817}
   m_Layer: 0
-  m_Name: SpawnPoint_Tomato
+  m_Name: SpawnPoint_Lane2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
