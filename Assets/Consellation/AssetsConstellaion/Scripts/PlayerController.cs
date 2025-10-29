@@ -117,7 +117,7 @@ namespace Constellation
         {
             //applay input
             //actulaly spins character, by changing rotation by rotation mod& rotation speed stat, the -1 makes the character feel uninversed
-            charBody.rotation += (-1 * rotationMod * rotateStat);
+            charBody.rotation = (-1 * rotationMod * rotateStat);
             //This moves guy forward based on speedMod and Stat
             charBody.AddForce(transform.up*speedMod*speedStat, ForceMode2D.Impulse);
 
