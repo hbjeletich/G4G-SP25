@@ -24,7 +24,6 @@ namespace Constellation
 
         void clickStuff()
         {
-            Global.debugControls = isDebug;
             SceneManager.LoadScene("BigDipper", LoadSceneMode.Additive);
         }
     }

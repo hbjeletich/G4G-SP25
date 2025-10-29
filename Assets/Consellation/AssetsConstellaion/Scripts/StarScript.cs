@@ -73,20 +73,17 @@ namespace Constellation
             {
                 //set me home and drop star
                 foundHome = true;
-                Global.hit(" home"+starName);
                 playerCont.grabedStar = null;
             }
             else if (playerCont.grabedStar == gameObject && !foundHome)     // if player has star and not home
             {
                 //drop star
                 playerCont.grabedStar = null;
-                Global.hit(" drop "+starName);
             }
             else if (playerTouch&&playerCont.grabedStar==null&&!foundHome)     //if player doesn't have a star and is touching me
             {
                 //grab star
                 playerCont.grabedStar = gameObject;
-                Global.hit(" grab"+starName);
             }
         }
     }

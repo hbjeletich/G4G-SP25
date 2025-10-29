@@ -37,6 +37,8 @@ namespace Constellation
         // The storage spot so that the player knows which star is currently held
         public GameObject grabedStar;
 
+        public bool debugControls = false;
+
         void Awake()
         { 
             var footMap= inputActions.FindActionMap("Foot");
@@ -66,7 +68,7 @@ namespace Constellation
             //take input should ne changed with movement aspects
 
             //this movement is used when the keyboard is wanted to test features
-            if (Global.debugControls)
+            if (debugControls)
             {
                 speedMod = Input.GetAxis("Vertical");
                 rotationMod = Input.GetAxis("Horizontal");
