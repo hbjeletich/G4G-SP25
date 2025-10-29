@@ -54,5 +54,23 @@ namespace RhythmKitchen
                 SceneManager.LoadScene("RKCompletedDish");
             }
         }
+
+        public void Pause()
+        {
+            clickButton();
+            AudioListener.pause = true;
+            Time.timeScale = 0f; 
+        }
+
+        private void clickButton()
+    {
+        var am = RKAudioManager.Instance;
+
+        if (am != null)
+            am.PlaySFX("ButtonPress");
+        else
+            Debug.LogWarning("[RKCompletedDishScript] AudioManager missing: loading scene anyway.");
+    
+    }
     }
 }
