@@ -2,23 +2,57 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
-public class RKGameplayUI : MonoBehaviour
+namespace RhythmKitchen
 {
-    public void CompleteDish()
+    public class RKGameplayUI : MonoBehaviour
     {
-        var am = RKAudioManager.Instance;
+        public Slider slider;
+        public RKSongData songData;
+
+        private float songLength;
+
+        private float songTime;
+
+        private float fillSpeed;
+        private float targetProgress = 0;
+        private float _nextLog;
+        private float startTime;
+
+        void Awake()
         {
-            if (am != null) // is not empty
+            songLength = songData.songLength;
+            slider.maxValue = songLength;
+            startTime = Time.time;
+        }
+
+        void Update()
+        {
+            float time = Time.time - startTime;
+
+            if (time >= songLength)
             {
-                am.PlaySFX("ButtonPress");
-                am.PlaySFX("Shimmer");
+                Invoke("CompleteDish", .5f);
             }
-            else
+
+            slider.value = time;
+        }
+
+        public void CompleteDish()
+        {
+            var am = RKAudioManager.Instance;
             {
-                Debug.LogWarning("[RKGameplayUI] AudioManager missing: loading scene anyway.");
+                if (am != null) // is not empty
+                {
+                    am.PlaySFX("Shimmer");
+                }
+                else
+                {
+                    Debug.LogWarning("[RKGameplayUI] AudioManager missing: loading scene anyway.");
+                }
+                SceneManager.LoadScene("RKCompletedDish");
             }
-            SceneManager.LoadScene("RKCompletedDish");
         }
     }
 }

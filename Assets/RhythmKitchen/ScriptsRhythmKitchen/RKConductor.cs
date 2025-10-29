@@ -8,26 +8,32 @@ using UnityEngine;
 namespace RhythmKitchen
 { public class RKConductor : MonoBehaviour
     {
+        public RKSongData songData;
+
         [Header("Music Settings")]
         public AudioSource musicSource;
-        [SerializeField] private float BPM = 80f; // BPM of tutorial song specifically
-        public float offsetMs = 0f; // this is calibration to nudge timing if it feels early/late (positive = judge later, negative = judge earlier)
-        public double leadInSeconds = 1f; // this is a small delay so we can schedule precisely
+        private float BPM; // BPM of tutorial song specifically
+        private float offsetMs; // this is calibration to nudge timing if it feels early/late (positive = judge later, negative = judge earlier)
+        private double leadInSeconds; // this is a small delay so we can schedule precisely
+        public float songLength; // this is length of the song
+        private float secondsPerBeat; // this is 60/BPM
+        private float[] songBeats; // this is the beat position
+        public float curSongBeat => secondsPerBeat > 0f ? songTime / secondsPerBeat : 0f; // this is the beat position
         public float songTime { get; private set; } // this is seconds since scheduled start (+ offset)
-        public float secondsPerBeat { get; private set; } // this is 60/BPM
-        public float songBeats => secondsPerBeat > 0f ? songTime / secondsPerBeat : 0f; // this is the beat position
-
+        
         private float _nextLog; // this is throttle so logs print ~1/sec 
         private double songStartDspTime; // this is the DSP timestamp when the song will start
 
-        void Awake()
-        {
-            secondsPerBeat = 60f / Mathf.Max(1f, BPM); // this is clamp to avoid divided-by-zero
-            Debug.Log($"[Conductor] BPM={BPM} spb={secondsPerBeat:F3}"); // current song is BPM and each beat lasts X secs
-        }
-
         void Start()
         {
+            BPM = songData.bpm;
+            offsetMs = songData.offsetMs;
+            leadInSeconds = songData.leadInSeconds;
+            songLength = songData.songLength;
+            secondsPerBeat = songData.secondsPerBeat;
+            songBeats = songData.songBeats;
+            songStartDspTime = songData.songStartDspTime; 
+
             if (!musicSource || !musicSource.clip) // this is a safety check for missing references
             {
                 Debug.LogError("[Conductor] Missing AudioSource or clip.");
@@ -51,7 +57,7 @@ namespace RhythmKitchen
 
             if (songTime >= _nextLog) // logs once per sec to make sure time and beat calculations stay in sync
             {
-                Debug.Log($"[Conductor] t={songTime:0.000}s beat={songBeats:0,00}"); // every sec, log prints the current song and beat count
+                Debug.Log($"[Conductor] t={songTime:0.000}s beat={curSongBeat:0,00}"); // every sec, log prints the current song and beat count
                 _nextLog += 1; // schedule next log 1 sec later
             }
         }

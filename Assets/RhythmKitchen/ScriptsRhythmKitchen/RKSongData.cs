@@ -11,7 +11,7 @@ namespace RhythmKitchen
         public float travelTime; // how long it takes the beat to travel from spawn point to hit lane
         public float leadInSeconds; // this is a small delay so we can schedule precisely
         public float offsetMs; // this is calibration to nudge timing if it feels early/late (positive = judge later, negative = judge earlier)
-        public float songTime; // the length on seconds of the song
+        public float songLength; // the length on seconds of the song
         public string songBeatString;
 
 
@@ -22,7 +22,7 @@ namespace RhythmKitchen
         public double[] spawnTimes { get; private set; } // the spawn timings for each song beat
                                                          // songBeats[index]*secondsPerBeat+timeAdjustment = time in seconds when to spawn songBeats[index]
 
-        void Start() // Start because data will change between scenes
+        void Awake()
         {
             string[] tempSongBeats = songBeatString.Replace(" ", "").Split(","); //Removes spaces from the songBeatString and splits at commas to create a string array
             songBeats = new float[tempSongBeats.Length]; // Setting songBeats to an empty array
