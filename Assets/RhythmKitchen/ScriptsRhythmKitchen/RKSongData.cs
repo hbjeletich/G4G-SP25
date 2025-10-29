@@ -22,7 +22,8 @@ namespace RhythmKitchen
         public double[] spawnTimes { get; private set; } // the spawn timings for each song beat
                                                          // songBeats[index]*secondsPerBeat+timeAdjustment = time in seconds when to spawn songBeats[index]
 
-        void Awake()
+        // leia's awake
+        /*void Awake()
         {
             string[] tempSongBeats = songBeatString.Replace(" ", "").Split(","); //Removes spaces from the songBeatString and splits at commas to create a string array
             songBeats = new float[tempSongBeats.Length]; // Setting songBeats to an empty array
@@ -47,6 +48,28 @@ namespace RhythmKitchen
             {
                 spawnTimes[i] = songBeats[i] * secondsPerBeat + timeAdjustment; // populates spawn times with the spawn timing of each beat
                 Debug.Log($"[SongData] Spawn Time [{i}] = {spawnTimes[i]}");
+            }
+        } */
+
+        void Awake()
+        {
+            secondsPerBeat = 60f / Mathf.Max(1f, bpm);
+            songStartDspTime = AudioSettings.dspTime + leadInSeconds;
+
+            // this is to parse beats
+            var parts = songBeatString.Replace(" ", "").Split(',');
+            songBeats = new float[parts.Length];
+            spawnTimes = new double[parts.Length];
+            for (int i = 0; i < parts.Length; i++)
+            {
+                songBeats[i] = float.Parse(parts[i]);
+            }
+
+            for (int i = 0; i < songBeats.Length; i++) // spawn exactly travelTime seconds before each beat plus offsetMs
+            {
+                double beatTime = songBeats[i] * secondsPerBeat + songStartDspTime + (offsetMs / 1000f);
+                spawnTimes[i] = beatTime - travelTime; // spawn time
+                                            
             }
         }
     }

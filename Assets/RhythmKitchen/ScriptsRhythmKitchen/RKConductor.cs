@@ -57,7 +57,7 @@ namespace RhythmKitchen
 
             if (songTime >= _nextLog) // logs once per sec to make sure time and beat calculations stay in sync
             {
-                Debug.Log($"[Conductor] t={songTime:0.000}s beat={curSongBeat:0,00}"); // every sec, log prints the current song and beat count
+                Debug.Log($"[Conductor] t={songTime:0.000}s beat={curSongBeat:0.00}"); // every sec, log prints the current song and beat count
                 _nextLog += 1; // schedule next log 1 sec later
             }
         }

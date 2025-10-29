@@ -8,6 +8,12 @@ namespace RhythmKitchen
 // this is the runtime spawner that instantiates notes and tells them when/where to land
 {public class RKSpawner : MonoBehaviour
     {
+        [SerializeField] private RKSongData songData;
+        [Header("Song Chart")]
+        [SerializeField] private RKNote.Type[] laneByBeat; // per-beat type (same length as songBeats)
+        [SerializeField] private bool useRandom = false;
+        private int nextIndex = 0;
+
         [Header("Refs")]
         [SerializeField] private RKConductor conductor; // this is beat/time source 
         [SerializeField] private Transform hitLine; // this is target Y position
@@ -27,6 +33,23 @@ namespace RhythmKitchen
         public RKNote prefabLettuce;
         public RKNote prefabCrouton;
 
+        void Start()
+        {
+            if (songData == null || songData.spawnTimes == null || songData.spawnTimes.Length == 0)
+            {
+                Debug.LogError("[Spawner] Missing SongData or SpawnTimes");
+                enabled = false;
+                return;
+            }
+
+            travelTime = songData.travelTime;
+
+            if (!useRandom && (laneByBeat == null || laneByBeat.Length != songData.spawnTimes.Length))
+            {
+                Debug.LogWarning($"[Spawner] laneByBeat length {laneByBeat?.Length ?? 0} != beats {songData.spawnTimes.Length}");
+            }
+            nextIndex = 0;
+        }
         private Transform GetSpawnPoint(RKNote.Type noteType)
         {
             switch (noteType)
@@ -51,7 +74,7 @@ namespace RhythmKitchen
                 case RKNote.Type.Cucumber:
                     return prefabCucumber;
                 case RKNote.Type.Tomato:
-                    return prefabLettuce;
+                    return prefabTomato;
                 case RKNote.Type.Lettuce:
                     return prefabLettuce;
                 case RKNote.Type.Crouton:
@@ -61,7 +84,18 @@ namespace RhythmKitchen
                     return null;
             }
         }
-
+        private RKNote.Type ChooseType(int i)
+        {
+            if (useRandom)
+            {
+                return (RKNote.Type)Random.Range(0, 4);
+            }
+            if (laneByBeat != null && i < laneByBeat.Length)
+            {
+                return laneByBeat[i];
+            }
+            return RKNote.Type.Cucumber; // just a fallback here
+        }
         public void SpawnAt(RKNote.Type noteType, float targetTime)
         {
             Transform spawn = GetSpawnPoint(noteType); // gets which spawn point to use
@@ -82,17 +116,20 @@ namespace RhythmKitchen
         }
         void Update()
         {
-            if (conductor == null)
+            if (conductor == null || songData == null)
             {
                 return;
             }
-            // TEMPORARY TEST: Press 'C' to spawn a note scheduled 1 sec later
-            if (Input.GetKeyDown(KeyCode.C))
-            {
-                float targetTime = conductor.songTime + 1f;
-                SpawnAt(RKNote.Type.Cucumber, targetTime);
-            }
+            double dspNow = AudioSettings.dspTime;
 
+            while (nextIndex < songData.spawnTimes.Length && dspNow >= songData.spawnTimes[nextIndex])
+            {
+                var type = ChooseType(nextIndex);
+
+                float targetTime = (float)(songData.spawnTimes[nextIndex] + songData.travelTime);
+                SpawnAt(type, targetTime);
+                nextIndex++;
+            }
         }
     }
 }
