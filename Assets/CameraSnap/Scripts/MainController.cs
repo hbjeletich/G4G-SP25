@@ -9,7 +9,7 @@ namespace CameraSnap
         public MotionTrackingConfiguration motionConfig;
         [SerializeField] private InputActionAsset inputActions;
 
-        [Header("Camera Settings")]
+        [Header("Settings")]
         [SerializeField] private float panSpeed = 3f;           
         [SerializeField] private float shiftThreshold = 0.25f;  // Lean amount to trigger left/right
 
