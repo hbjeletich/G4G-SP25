@@ -18,8 +18,7 @@ namespace CameraSnap
         private CameraPan cameraPan;
 
         // Input Actions
-        private InputAction weightShiftLeftAction;
-private InputAction weightShiftRightAction;
+       private InputAction weightShiftXAction;
         private InputAction pelvisPositionAction;
         private InputAction leftHipAbductedAction;
         private InputAction rightHipAbductedAction;
@@ -46,8 +45,7 @@ private InputAction weightShiftRightAction;
             var torsoMap = inputActions.FindActionMap("Torso");
             var footMap = inputActions.FindActionMap("Foot");
 
-            weightShiftLeftAction  = torsoMap?.FindAction("WeightShiftLeft");
-    weightShiftRightAction = torsoMap?.FindAction("WeightShiftRight");
+            weightShiftXAction     = torsoMap?.FindAction("WeightShiftX");
             pelvisPositionAction   = torsoMap?.FindAction("PelvisPosition");
 
             leftHipAbductedAction  = footMap?.FindAction("LeftHipAbducted");
@@ -57,8 +55,7 @@ private InputAction weightShiftRightAction;
 
         private void OnEnable()
         {
-           weightShiftLeftAction?.Enable();
-    weightShiftRightAction?.Enable();
+          weightShiftXAction?.Enable();
             pelvisPositionAction?.Enable();
             leftHipAbductedAction?.Enable();
             rightHipAbductedAction?.Enable();
@@ -67,8 +64,7 @@ private InputAction weightShiftRightAction;
 
         private void OnDisable()
         {
-            weightShiftLeftAction?.Disable();
-    weightShiftRightAction?.Disable();
+            weightShiftXAction?.Disable();
             pelvisPositionAction?.Disable();
             leftHipAbductedAction?.Disable();
             rightHipAbductedAction?.Disable();
@@ -86,21 +82,18 @@ private InputAction weightShiftRightAction;
         }
 
        private void HandleWeightShift()
-{
-    if (!motionConfig.enableTorsoModule || cameraPan == null)
-        return;
+        {
+            if (!motionConfig.enableTorsoModule || !motionConfig.isShiftTracked) return;
 
-    if (weightShiftLeftAction != null && weightShiftLeftAction.WasPerformedThisFrame())
-    {
-        cameraPan.ManualPan(-panSpeed * Time.deltaTime);
-        Debug.Log("[WeightShift] Left lean detected");
-    }
-    else if (weightShiftRightAction != null && weightShiftRightAction.WasPerformedThisFrame())
-    {
-        cameraPan.ManualPan(panSpeed * Time.deltaTime);
-        Debug.Log("[WeightShift] Right lean detected");
-    }
-}
+
+            float shift = weightShiftXAction.ReadValue<float>();
+            if (Mathf.Abs(shift) > motionConfig.weightShiftThreshold)
+            {
+                float input = Mathf.Clamp(shift * motionConfig.torsoSensitivity, -1f, 1f);
+                cameraPan?.ManualPan(input);
+            }
+        }
+
 
 [SerializeField, Tooltip("How far below neutral pelvis Y counts as a squat (meters)")]
 private float squatThreshold = 0.10f;
