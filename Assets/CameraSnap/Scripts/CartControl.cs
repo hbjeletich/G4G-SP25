@@ -2,12 +2,8 @@ using UnityEngine;
 using UnityEngine.Splines;
 using Unity.Mathematics;
 
-
 //This script allows the cart to move along a spline. This allows for easily editing the spline in the scene and it working
-// without issue. 
-
-//add audio for cart sounds
-
+//without issue.
 
 namespace CameraSnap
 {
@@ -16,54 +12,53 @@ namespace CameraSnap
         public SplineContainer splineContainer;  //path cart follows
         public float speed = 5f;  //how fast it travels
 
-        public GameObject stopCartObject;  //text ui to show cart has stopped
-
-public SlowdownZone currentZone;  //tracks which slowdown zone cart is in.
+        public GameObject stopCartObject;  //text UI to show cart has stopped
+        public SlowdownZone currentZone;   //tracks which slowdown zone cart is in.
 
         private float defaultSpeed;
         private float currentDistance = 0f;
-        private bool isMoving = true;  //cart is actively progressing
-        private bool canStop = false;    //true in slowdown zone
-        private bool isStopped = false;  //cart is stopped
+        private bool isMoving = true;   //cart is actively progressing
+        private bool canStop = false;   //true in slowdown zone
+        private bool isStopped = false; //cart is stopped
         public AudioSource audioSource;
-
 
         void Start()
         {
             defaultSpeed = speed;  //stores original speed to be restored when cart is resumed.
         }
 
-
         void Update()
         {
-            // Press SPACE to stop/resume, but only allowed if inside slowdown zone, fix to incorporate main controller too
+            // Simulate squat stop using keyboard (matches motion capture behavior)
             if (Input.GetKeyDown(KeyCode.Space) && canStop)
             {
-                if (isStopped)
-                    ResumeCart();
-                else
+                // Only allow stopping, not resuming
+                if (!isStopped)
+                {
                     StopCart();
+                    Debug.Log("[Keyboard] Space pressed → Cart stopped (squat simulated)");
+                }
+                else
+                {
+                    Debug.Log("[Keyboard] Space pressed but cart already stopped. Waiting for zone completion to auto-resume.");
+                }
             }
 
- //Allows movement if:
+            //Allows movement if:
             if (!isMoving || isStopped)
                 return;
-               
 
- //Increase distance travelled, calculate progress along the spline, position and rotate
-  //based on spline
+            //Increase distance travelled, calculate progress along the spline, position and rotate
             currentDistance += speed * Time.deltaTime;
-
 
             float totalLength = splineContainer.CalculateLength();
             float t = currentDistance / totalLength;
 
- //if cart reaches end of spline, the movement stops
+            //if cart reaches end of spline, the movement stops
             if (t <= 1f)
             {
                 splineContainer.Evaluate(t, out float3 pos, out float3 tangent, out float3 up);
                 transform.position = (Vector3)pos;
-
 
                 Vector3 forward = new Vector3(tangent.x, 0f, tangent.z).normalized;
                 if (forward.sqrMagnitude > 0f)
@@ -73,12 +68,11 @@ public SlowdownZone currentZone;  //tracks which slowdown zone cart is in.
             }
         }
 
-//The speed control is used by slowdown zone and other scripts...
+        //The speed control is used by slowdown zone and other scripts...
         public void SetSpeed(float newSpeed)
         {
             speed = newSpeed;
         }
-
 
         public void ResetSpeed()
         {
@@ -88,9 +82,7 @@ public SlowdownZone currentZone;  //tracks which slowdown zone cart is in.
             canStop = false;
         }
 
-
-        // Called by slowdown zones. When entering a zone, allow stopping. When leaving, disable stopping and resume
-        //cart
+        // Called by slowdown zones. When entering a zone, allow stopping. When leaving, disable stopping and resume cart
         public void AllowStop(bool value)
         {
             canStop = value;
@@ -98,27 +90,34 @@ public SlowdownZone currentZone;  //tracks which slowdown zone cart is in.
                 ResumeCart();
         }
 
-//Handles the stopping and starting, shows and hides the UI indicator for showing if the cart is stopped.
+        //Handles the stopping and starting, shows and hides the UI indicator for showing if the cart is stopped.
         public void StopCart()
         {
             if (!canStop) return;
+
             isStopped = true;
             isMoving = false;
-             if (stopCartObject != null) stopCartObject.SetActive(true);
-             audioSource.Stop();
-              
-        }
 
+            if (stopCartObject != null)
+                stopCartObject.SetActive(true);
+
+            if (audioSource != null)
+                audioSource.Stop();
+        }
 
         public void ResumeCart()
         {
             isStopped = false;
             isMoving = true;
-             if (stopCartObject != null) stopCartObject.SetActive(false);
-              audioSource.Play();
+
+            if (stopCartObject != null)
+                stopCartObject.SetActive(false);
+
+            if (audioSource != null)
+                audioSource.Play();
         }
 
-//Used by other scripts such as camera mode to check if player can take photos.
+        //Used by other scripts such as camera mode to check if player can take photos.
         public bool IsStopped() => isStopped;
         public bool CanStop() => canStop;
     }

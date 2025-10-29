@@ -890,6 +890,7 @@ GameObject:
   - component: {fileID: 330585552}
   - component: {fileID: 330585551}
   - component: {fileID: 330585553}
+  - component: {fileID: 330585554}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -1205,6 +1206,14 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!81 &330585554
+AudioListener:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 330585543}
+  m_Enabled: 1
 --- !u!4 &378392673 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 42c844bae6ec16c4ba34e7d1e3073279,
@@ -3025,7 +3034,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1140830817}
   - component: {fileID: 1140830816}
-  - component: {fileID: 1140830815}
   m_Layer: 0
   m_Name: Bg Audio
   m_TagString: Untagged
@@ -3033,14 +3041,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!81 &1140830815
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1140830814}
-  m_Enabled: 1
 --- !u!82 &1140830816
 AudioSource:
   m_ObjectHideFlags: 0
@@ -3192,8 +3192,8 @@ MonoBehaviour:
   motionConfig: {fileID: 11400000, guid: 5cb9df4a78b5a0c4dbf012bb27fdb47c, type: 2}
   inputActions: {fileID: -944628639613478452, guid: 4370f1ac1c7a2bf419a9f76eca4e970d,
     type: 3}
-  squatThreshold: 0.35
-  standUpThreshold: 0.45
+  panSpeed: 3
+  shiftThreshold: 0.25
 --- !u!82 &1254731938
 AudioSource:
   m_ObjectHideFlags: 0
@@ -3654,7 +3654,7 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: ab78030e69a85bd4fa93d69411643cb1,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 33.143402
+      value: -22.2
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: ab78030e69a85bd4fa93d69411643cb1,
         type: 3}
@@ -3664,7 +3664,7 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: ab78030e69a85bd4fa93d69411643cb1,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 79.96232
+      value: 117
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: ab78030e69a85bd4fa93d69411643cb1,
         type: 3}
@@ -3710,6 +3710,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5866666021909216657, guid: ab78030e69a85bd4fa93d69411643cb1,
+        type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 5866666021909216657, guid: ab78030e69a85bd4fa93d69411643cb1,
+        type: 3}
+      propertyPath: m_WarningMessage
+      value: 
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -5971,7 +5981,7 @@ PrefabInstance:
         type: 3}
       propertyPath: audioSource
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1254731938}
     - target: {fileID: 4428134369497399985, guid: ef6c008a42bfa2e4cbeb8055402515fc,
         type: 3}
       propertyPath: stopCartObject
