@@ -32,8 +32,18 @@ namespace CameraSnap
         void Start()
         {
             cam = Camera.main;
-            overlayImage = cameraOverlayUI.GetComponent<UnityEngine.UI.Image>();
             cart = FindObjectOfType<CartController>();
+
+            // UIManager is required: CameraMode uses it exclusively for overlay and photo messages
+            if (UIManager.Instance == null)
+            {
+                Debug.LogError("[CameraMode] UIManager not found in scene. Add a UIManager GameObject and assign UI references.");
+                return;
+            }
+
+            overlayImage = UIManager.Instance.overlayImage;
+            cameraOverlayUI = UIManager.Instance.cameraOverlayUI;
+            photoText = UIManager.Instance.photoText;
         }
 //Checks for entering or exiting camera mode, continuously detects animals in view, allows
 //taking photos, auto-exits if cart starts moving
@@ -70,8 +80,13 @@ namespace CameraSnap
             if (playerAnimator != null)
                 playerAnimator.SetBool("IsHoldingCamera", inCameraMode);
 
-            if (cameraOverlayUI != null)
-                cameraOverlayUI.SetActive(inCameraMode);
+            if (UIManager.Instance == null)
+            {
+                Debug.LogError("[CameraMode] UIManager not found; cannot toggle overlay.");
+                return;
+            }
+
+            UIManager.Instance.SetOverlayActive(inCameraMode);
         }
 
         void ForceExitCameraMode()
@@ -81,8 +96,13 @@ namespace CameraSnap
             if (playerAnimator != null)
                 playerAnimator.SetBool("IsHoldingCamera", false);
 
-            if (cameraOverlayUI != null)
-                cameraOverlayUI.SetActive(false);
+            if (UIManager.Instance == null)
+            {
+                Debug.LogError("[CameraMode] UIManager not found; cannot force-exit overlay.");
+                return;
+            }
+
+            UIManager.Instance.SetOverlayActive(false);
         }
 //Uses raycast from center of screen. If it hits an object on the animal layer, it checks the animal
 //behavior script of the prefab. If animal is found, overlay gets green and if not it stays normal color
@@ -93,17 +113,26 @@ namespace CameraSnap
             Ray ray = cam.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0f));
             if (Physics.Raycast(ray, out RaycastHit hit, detectionRange, animalLayer))
             {
-               var animal = hit.collider.GetComponentInParent<AnimalBehavior>();
-if (animal != null)
+                var animal = hit.collider.GetComponentInParent<AnimalBehavior>();
+                if (animal != null)
                 {
-                    if (overlayImage != null)
-                        overlayImage.color = readyColor;
+                    if (UIManager.Instance == null)
+                    {
+                        Debug.LogError("[CameraMode] UIManager missing; cannot set overlay ready state.");
+                        return;
+                    }
+
+                    UIManager.Instance.SetOverlayReady(true);
                     return;
                 }
             }
+            if (UIManager.Instance == null)
+            {
+                Debug.LogError("[CameraMode] UIManager missing; cannot set overlay ready state.");
+                return;
+            }
 
-            if (overlayImage != null)
-                overlayImage.color = normalColor;
+            UIManager.Instance.SetOverlayReady(false);
         }
 //If ray hits animal, it marks that animal as captured. Plays camera shutter sound, shows captured message
 //reports the capture to game manager( change to animal manager), notifies slowdown zone
@@ -118,14 +147,23 @@ if (animal != null)
             Ray ray = cam.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0f));
             if (Physics.Raycast(ray, out RaycastHit hit, detectionRange, animalLayer))
             {
-               var animal = hit.collider.GetComponentInParent<AnimalBehavior>();
-if (animal != null && animal.animalData != null)
-{
-    animal.isCaptured = true;
-    audioSource.Play();
-    string name = animal.animalData.animalName;
+                var animal = hit.collider.GetComponentInParent<AnimalBehavior>();
+                if (animal != null && animal.animalData != null)
+                {
+                    animal.isCaptured = true;
+                    if (audioSource != null)
+                        audioSource.Play();
+
+                    string name = animal.animalData.animalName;
                     Debug.Log($"Captured photo of: {name}");
-                    StartCoroutine(ShowPhotoMessage(name));
+
+                    if (UIManager.Instance == null)
+                    {
+                        Debug.LogError("[CameraMode] UIManager not found; cannot show photo message.");
+                        return;
+                    }
+
+                    UIManager.Instance.ShowPhotoMessage(name, messageDuration);
 
                     // Register capture globally
                     if (GameManager.Instance != null)

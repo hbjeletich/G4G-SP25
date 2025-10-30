@@ -22,7 +22,20 @@ namespace CameraSnap
         cart.currentZone = this; 
         cart.SetSpeed(slowedSpeed);
         cart.AllowStop(true);
-        if (uiIcon != null) uiIcon.SetActive(true);
+            if (uiIcon != null)
+            {
+                if (UIManager.Instance == null)
+                {
+                    Debug.LogError("[SlowdownZone] UIManager not found; cannot show zone icon.");
+                }
+                else
+                {
+                    UIManager.Instance.SetZoneIcon(uiIcon);
+                    UIManager.Instance.SetZoneIconVisible(true);
+                    // Show the guide squat animation when entering zone
+                    UIManager.Instance.SetGuideState(UIManager.GuideState.Squat);
+                }
+            }
         if (animalSpawner != null) animalSpawner.SpawnAnimals();
     }
 }
@@ -35,7 +48,18 @@ private void OnTriggerExit(Collider other)
         if (cart.currentZone == this) cart.currentZone = null; // clear it
         cart.ResetSpeed();
         cart.AllowStop(false);
-        if (uiIcon != null) uiIcon.SetActive(false);
+            if (uiIcon != null)
+            {
+                if (UIManager.Instance == null)
+                {
+                    Debug.LogError("[SlowdownZone] UIManager not found; cannot hide zone icon.");
+                }
+                else
+                {
+                    UIManager.Instance.SetZoneIconVisible(false);
+                    UIManager.Instance.HideGuide();
+                }
+            }
         if (animalSpawner != null) animalSpawner.ClearPreviousAnimals();
     }
 }
@@ -77,7 +101,17 @@ if (behavior != null && GameManager.Instance.HasCaptured(behavior.animalData.ani
         }
 //hide zone UI
         if (uiIcon != null)
-            uiIcon.SetActive(false);
+        {
+            if (UIManager.Instance == null)
+            {
+                Debug.LogError("[SlowdownZone] UIManager not found; cannot hide zone icon or guide.");
+            }
+            else
+            {
+                UIManager.Instance.SetZoneIconVisible(false);
+                UIManager.Instance.HideGuide();
+            }
+        }
 //Deactivate zone and clear animals.
         this.enabled = false;
         animalSpawner.ClearPreviousAnimals();
