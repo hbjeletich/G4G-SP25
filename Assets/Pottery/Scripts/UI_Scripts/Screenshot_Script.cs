@@ -29,5 +29,6 @@ public class PotteryScreenshot : MonoBehaviour
         File.WriteAllBytes(path, bytes);
 
         Debug.Log($"Saved screenshot: {path}");
+        Debug.Log(Application.persistentDataPath);
     }
 }

@@ -3,26 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using System.IO;
-using System.Linq;
 
 public class GalleryLoader : MonoBehaviour
 {
-    public Transform galleryParent; // Grid Layout Group object
-    public GameObject imagePrefab; // Prefab with Image component
-    public int maxScreenshots = 6; // memory-safe limit
+    public Transform galleryParent; // assign your Grid Layout Group object
+    public GameObject imagePrefab; // UI prefab with an Image component
 
     void Start()
     {
-        LoadGallery();
-    }
-
-    void LoadGallery()
-    {
-        // Get all .png files and sort by newest first
-        var files = Directory.GetFiles(Application.persistentDataPath, "*.png")
-                             .OrderByDescending(f => File.GetCreationTime(f))
-                             .Take(maxScreenshots) // limit to 6 most recent
-                             .ToArray();
+        string[] files = Directory.GetFiles(Application.persistentDataPath, "*.png");
 
         foreach (var file in files)
         {
