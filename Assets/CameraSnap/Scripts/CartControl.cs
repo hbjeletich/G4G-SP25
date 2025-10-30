@@ -98,8 +98,15 @@ namespace CameraSnap
             isStopped = true;
             isMoving = false;
 
-            if (stopCartObject != null)
-                stopCartObject.SetActive(true);
+            // Rely on UIManager to control stop-cart UI
+            if (UIManager.Instance == null)
+            {
+                Debug.LogError("[CartController] UIManager not found; stop cart UI cannot be shown.");
+            }
+            else
+            {
+                UIManager.Instance.SetStopCartVisible(true);
+            }
 
             if (audioSource != null)
                 audioSource.Stop();
@@ -110,8 +117,15 @@ namespace CameraSnap
             isStopped = false;
             isMoving = true;
 
-            if (stopCartObject != null)
-                stopCartObject.SetActive(false);
+            // Rely on UIManager to control stop-cart UI
+            if (UIManager.Instance == null)
+            {
+                Debug.LogError("[CartController] UIManager not found; stop cart UI cannot be hidden.");
+            }
+            else
+            {
+                UIManager.Instance.SetStopCartVisible(false);
+            }
 
             if (audioSource != null)
                 audioSource.Play();

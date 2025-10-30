@@ -36,41 +36,17 @@ namespace CameraSnap
                 return;
             }
 
-            List<AnimalData> allAnimals = GameManager.Instance.GetAllAnimals();
-            HashSet<string> captured = GameManager.Instance.GetCapturedAnimals();
+            var allAnimals = GameManager.Instance.GetAllAnimals();
+            var captured = GameManager.Instance.GetCapturedAnimals();
 
-            StringBuilder summary = new StringBuilder();
-            summary.AppendLine("<b> Photo Summary</b>\n");
-
-            summary.AppendLine("<color=green><b>Captured:</b></color>");
-            int capturedCount = 0;
-            foreach (var animal in allAnimals)
+            if (UIManager.Instance == null)
             {
-                if (captured.Contains(animal.animalName))
-                {
-                    summary.AppendLine($" {animal.animalName}");
-                    capturedCount++;
-                }
+                Debug.LogError("[EndGameTrigger] UIManager not found in scene. Add a UIManager GameObject and assign UI references.");
+                return;
             }
 
-            summary.AppendLine("\n<color=red><b>Missed:</b></color>");
-            foreach (var animal in allAnimals)
-            {
-                if (!captured.Contains(animal.animalName))
-                    summary.AppendLine($" {animal.animalName}");
-            }
-
-            summary.AppendLine($"\n<b>Total Captured:</b> {capturedCount}/{allAnimals.Count}");
-summary.AppendLine("<b> End game. Press R or raise foot to restart</b>\n");
-
-            if (endGameText != null)
-                endGameText.text = summary.ToString();
-
-            if (endGamePanel != null)
-                endGamePanel.SetActive(true);
-                 Time.timeScale = 0f;
-
-            Debug.Log("[EndGameTrigger] End summary displayed. Press R to restart.");
+            UIManager.Instance.ShowEndSummary(allAnimals, captured);
+            Debug.Log("[EndGameTrigger] End summary displayed via UIManager.");
         }
 //If end has been triggered and player presses R, it resumes the time and reloads the same scene 
         private void Update()
