@@ -3,91 +3,53 @@ using System.Collections;
 
 namespace CameraSnap
 {
+    // Simple animal behavior - walks back and forth, faces camera, plays animations
     public class AnimalBehavior : MonoBehaviour
     {
-        [Header("Link to Animal Data")]
+        [Header("Settings")]
         public AnimalData animalData;
-        [HideInInspector] public bool isCaptured = false;
-
-        [Header("Animation Settings")]
         public Animator animator;
-        public string walkBool = "isWalking";
-        public string hideTrigger = "Hide";   //maybe change to bool, animal will pop up a few seconds and then go back down
 
-        private Vector3 spawnPoint;
-        private bool isWalking = false;
-        private bool movingLeft = true;
-        private Transform spriteChild;
-        private Vector3 originalScale;
+        [HideInInspector] 
+        public bool isCaptured = false;
 
-        private Camera mainCamera;
+        private Vector3 startPosition;
+        private bool isWalking;
+        private bool isMovingLeft;
 
         void Start()
         {
-            mainCamera = Camera.main;
-            spawnPoint = transform.position;
-
-           
-          if (animator == null)
+            startPosition = transform.position;
+            isMovingLeft = animalData != null && animalData.spriteFacesLeft;
+            
+            if (animator == null)
                 animator = GetComponent<Animator>();
 
-
-            // get sprite child safely 
-            SpriteRenderer sr = GetComponentInChildren<SpriteRenderer>();
-            if (sr != null)
-            {
-                spriteChild = sr.transform;
-                originalScale = spriteChild.localScale;
-            }
-            else
-            {
-                Debug.LogWarning($"{gameObject.name}: No SpriteRenderer found in children.");
-            }
-
-            // INITIAL FLIP WITH DEFAULT FACING RESPECTED 
-            bool defaultFacesLeft = animalData != null && animalData.spriteFacesLeft;
-
-            // If sprite default matches movement - positive scale
-            // If sprite default is opposite movement - negative scale
-            int sign = (defaultFacesLeft == movingLeft) ? 1 : -1;
-
-            if (spriteChild != null)
-            {
-                Vector3 s = originalScale;
-                s.x = Mathf.Abs(originalScale.x) * sign;
-                spriteChild.localScale = s;
-            }
-
-            StartCoroutine(BehaviorLoop());
+            StartCoroutine(SimpleBehaviorLoop());
         }
 
-        IEnumerator BehaviorLoop()
+        IEnumerator SimpleBehaviorLoop()
         {
             while (true)
             {
-                // Idle
-                SetWalking(false);
+                // Stand still
+                animator?.SetBool("isWalking", false);
+                yield return new WaitForSeconds(2f);
 
-                // use animalData idleTime (guard if animalData missing)
-                float idle = (animalData != null) ? animalData.idleTime : 2f;
-                yield return new WaitForSeconds(idle);
-
-                // Walk if allowed (uses animalData.canWalk)
-                bool canWalk = (animalData != null) ? animalData.canWalk : false;
-                float walkTime = (animalData != null) ? animalData.walkTime : 3f;
-
-                if (canWalk)
+                if (animalData?.canWalk ?? false)
                 {
-                    SetWalking(true);
-                    yield return new WaitForSeconds(walkTime);
-                    SetWalking(false);
+                    // Walk for a bit
+                    animator?.SetBool("isWalking", true);
+                    isWalking = true;
+                    yield return new WaitForSeconds(3f);
+                    isWalking = false;
+                    animator?.SetBool("isWalking", false);
                 }
 
-                // Hide animation if enabled
-                bool canHide = (animalData != null) ? animalData.canHideInBush : false;
-                if (canHide && animator != null)
+                // Maybe hide
+                if (animalData?.canHideInBush ?? false)
                 {
-                    animator.SetTrigger(hideTrigger);
+                    animator?.SetTrigger("Hide");
                     yield return new WaitForSeconds(1f);
                 }
             }
@@ -95,59 +57,41 @@ namespace CameraSnap
 
         void Update()
         {
-            bool canWalk = (animalData != null) ? animalData.canWalk : false;
-            if (!canWalk || !isWalking) return;
+            if (!isWalking) return;
 
-            float direction = movingLeft ? 1f : -1f;
-            float moveSpeed = (animalData != null) ? animalData.moveSpeed : 1f;
-            transform.position += new Vector3(direction * moveSpeed * Time.deltaTime, 0, 0);
+            // Simple movement
+            float direction = isMovingLeft ? -1f : 1f;
+            float speed = animalData?.moveSpeed ?? 1f;
+            transform.position += new Vector3(direction * speed * Time.deltaTime, 0, 0);
 
-            float patrolDistance = (animalData != null) ? animalData.patrolDistance : 2f;
-
-            // Turn around at patrol edges so it does not walk off too far
-            if (Vector3.Distance(transform.position, spawnPoint) >= patrolDistance)
+            // Turn around if too far
+            float maxDistance = animalData?.patrolDistance ?? 2f;
+            if (Mathf.Abs(transform.position.x - startPosition.x) >= maxDistance)
             {
-                movingLeft = !movingLeft;
-
-                // flip sprite inline (like original)
-                if (spriteChild != null)
-                {
-                    bool defaultFacesLeft = animalData != null && animalData.spriteFacesLeft;
-                    int sign = (defaultFacesLeft == movingLeft) ? 1 : -1;
-
-                    Vector3 s = originalScale;
-                    s.x = Mathf.Abs(originalScale.x) * sign;
-                    spriteChild.localScale = s;
-                }
+                isMovingLeft = !isMovingLeft;
+                Vector3 scale = transform.localScale;
+                scale.x = -scale.x;
+                transform.localScale = scale;
             }
         }
 
-        void SetWalking(bool walking)
+        public void SetStartDirection(bool facingLeft)
         {
-            isWalking = walking;
-            if (animator != null && !string.IsNullOrEmpty(walkBool))
-                animator.SetBool(walkBool, walking);
+            isMovingLeft = facingLeft;
+            Vector3 scale = transform.localScale;
+            scale.x = facingLeft ? -Mathf.Abs(scale.x) : Mathf.Abs(scale.x);
+            transform.localScale = scale;
         }
 
         void LateUpdate()
         {
-            if (mainCamera == null)
-                return;
-
-            // Make sure animal faces the camera
-            Vector3 direction = mainCamera.transform.position - transform.position;
-            direction.y = 0f; // keep upright
-            transform.rotation = Quaternion.LookRotation(-direction);
-        }
-
-        public void SetMovingDirection(bool isMovingLeft)
-        {
-            movingLeft = isMovingLeft;
-
-            // Also flip the sprite immediately to match movement 
-            Vector3 scale = transform.localScale;
-            scale.x = isMovingLeft ? Mathf.Abs(scale.x) : -Mathf.Abs(scale.x);
-            transform.localScale = scale;
+            // Billboard effect - make sprite always face the camera
+            if (Camera.main != null)
+            {
+                Vector3 dirToCamera = Camera.main.transform.position - transform.position;
+                dirToCamera.y = 0; // Keep the sprite upright
+                transform.rotation = Quaternion.LookRotation(-dirToCamera);
+            }
         }
     }
 }

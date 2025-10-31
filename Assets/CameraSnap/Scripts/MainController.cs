@@ -84,9 +84,18 @@ namespace CameraSnap
        private void HandleWeightShift()
         {
             if (!motionConfig.enableTorsoModule || !motionConfig.isShiftTracked) return;
-
+            if (weightShiftXAction == null) return;
 
             float shift = weightShiftXAction.ReadValue<float>();
+            
+            // Use neutralZoneWidth as deadzone to prevent drift when standing still
+            if (Mathf.Abs(shift) <= motionConfig.neutralZoneWidth)
+            {
+                cameraPan?.ManualPan(0f);
+                return;
+            }
+
+            // Outside deadzone - pan camera
             if (Mathf.Abs(shift) > motionConfig.weightShiftThreshold)
             {
                 float input = Mathf.Clamp(shift * motionConfig.torsoSensitivity, -1f, 1f);
@@ -123,15 +132,7 @@ private void HandleSquat()
         cart.StopCart();
         squatTriggered = true;
         Debug.Log($"[Squat Detected] PelvisY={pelvisY:F3} (< {neutralPelvisY - squatThreshold:F3})");
-        // Advance guide to hip abduction prompt
-        if (UIManager.Instance == null)
-        {
-            Debug.LogError("[PlayerController] UIManager not found; cannot advance guide state to HipAbduction.");
-        }
-        else
-        {
-            UIManager.Instance.SetGuideState(UIManager.GuideState.HipAbduction);
-        }
+      
     }
 
     // Reset when returning above threshold
@@ -155,15 +156,7 @@ private void HandleSquat()
             {
                 cameraMode.TryToggleCameraMode();
                 Debug.Log("[Hip Abduction] - Camera Mode toggled");
-                    // Advance guide to foot raise prompt (take photo)
-                    if (UIManager.Instance == null)
-                    {
-                        Debug.LogError("[PlayerController] UIManager not found; cannot advance guide to FootRaise.");
-                    }
-                    else
-                    {
-                        UIManager.Instance.SetGuideState(UIManager.GuideState.FootRaise);
-                    }
+                  
             }
         }
 

@@ -34,10 +34,10 @@ namespace CameraSnap
 
        
         /// Returns the full list of animals that can appear anywhere. Used for spawning animals.
-        
         public List<AnimalData> GetAllAnimals()
         {
-            return allAnimals;
+            // Defensive: ensure callers always get a valid list
+            return allAnimals ?? new List<AnimalData>();
         }
 
       
@@ -46,37 +46,33 @@ namespace CameraSnap
        
         public AnimalData GetRandomAnimal()
         {
-            if (allAnimals == null || allAnimals.Count == 0)
+            var list = GetAllAnimals();
+            if (list.Count == 0)
             {
                 Debug.LogWarning("[GameManager] No animals available!");
                 return null;
             }
 
-            int index = Random.Range(0, allAnimals.Count);
-            return allAnimals[index];
+            return list[Random.Range(0, list.Count)];
         }
 
         // Keeps track of all animals the player has photographed. HashSet ensures no duplicates. Uses the animal
         //name as a key..
 private HashSet<string> capturedAnimals = new HashSet<string>();
 
-//Marks animals as captured.
-public void RegisterCapturedAnimal(string animalName)
-{
-    if (string.IsNullOrEmpty(animalName)) return;
-    capturedAnimals.Add(animalName);
-    Debug.Log($"[GameManager] Added captured animal: {animalName}");
-}
-//Checks if player has photographed the animal already
-public bool HasCaptured(string animalName)
-{
-    return capturedAnimals.Contains(animalName);
-}
-//Gets the whole collection of captured animals 
-public HashSet<string> GetCapturedAnimals()
-{
-    return capturedAnimals;
-}
+        // Marks animals as captured.
+        public void RegisterCapturedAnimal(string animalName)
+        {
+            if (string.IsNullOrEmpty(animalName)) return;
+            capturedAnimals.Add(animalName);
+            Debug.Log($"[GameManager] Added captured animal: {animalName}");
+        }
+
+        // Checks if player has photographed the animal already
+        public bool HasCaptured(string animalName) => capturedAnimals.Contains(animalName);
+
+        // Gets the whole collection of captured animals
+        public HashSet<string> GetCapturedAnimals() => capturedAnimals;
 
 
        

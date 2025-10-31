@@ -67,23 +67,14 @@ namespace CameraSnap
             GameObject animal = Instantiate(animalData.animalPrefab, spawnPoint.position, spawnPoint.rotation);
             spawnedAnimals.Add(animal);
 
-            Vector3 scale = animal.transform.localScale;
-
-            
+            // Let the AnimalBehavior set sprite direction to avoid duplicating scale logic here.
             bool shouldFaceLeft = !spawnOnRightSide;
-
-            if (animalData.spriteFacesLeft)
-                scale.x = shouldFaceLeft ? Mathf.Abs(scale.x) : -Mathf.Abs(scale.x);
-            else
-                scale.x = shouldFaceLeft ? -Mathf.Abs(scale.x) : Mathf.Abs(scale.x);
-
-            animal.transform.localScale = scale;
 
             var behavior = animal.GetComponent<AnimalBehavior>();
             if (behavior != null)
             {
                 behavior.animalData = animalData;
-                behavior.SetMovingDirection(shouldFaceLeft);
+                behavior.SetStartDirection(shouldFaceLeft);
             }
 
             Debug.Log($"[AnimalSpawner] Spawned {animalData.animalName} at {spawnPoint.position}, facingLeft={shouldFaceLeft}");

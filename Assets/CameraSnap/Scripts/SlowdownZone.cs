@@ -11,6 +11,7 @@ namespace CameraSnap
         [Header("Components")]
         public AnimalSpawner animalSpawner;
         private ZoneStopTimer zoneTimer;
+    private UIManager ui => UIManager.Instance;
 
         
 //Cart is reduced to slowed speed. The player is allowed to stop the cart. UI icon appears to indicate you need to press key
@@ -42,16 +43,13 @@ namespace CameraSnap
                 cart.SetSpeed(slowedSpeed);
                 cart.AllowStop(true);
 
-                if (UIManager.Instance == null)
-                {
+                // Show zone UI and prompt the player
+                if (ui == null)
                     Debug.LogError("[SlowdownZone] UIManager not found; cannot show zone icon or guide.");
-                }
                 else
                 {
-                    // UIManager uses a shared zone icon for all slowdown zones
-                    UIManager.Instance.SetZoneIconVisible(true);
-                    // Show the guide squat animation when entering zone
-                    UIManager.Instance.SetGuideState(UIManager.GuideState.Squat);
+                    ui.SetZoneIconVisible(true);
+                    ui.SetGuideState(UIManager.GuideState.Squat);
                 }
 
                 if (animalSpawner != null)
@@ -71,15 +69,15 @@ private void OnTriggerExit(Collider other)
         cart.ResetSpeed();
         cart.AllowStop(false);
 
-        if (UIManager.Instance == null)
+        if (ui == null)
         {
             Debug.LogError("[SlowdownZone] UIManager not found; cannot hide zone icon or guide.");
         }
         else
         {
-            UIManager.Instance.SetZoneIconVisible(false);
-            UIManager.Instance.HideGuide();
-            UIManager.Instance.HideStopCountdown();
+            ui.SetZoneIconVisible(false);
+            ui.HideGuide();
+            ui.HideStopCountdown();
         }
 
         if (animalSpawner != null) animalSpawner.ClearPreviousAnimals();
@@ -125,15 +123,15 @@ if (behavior != null && GameManager.Instance.HasCaptured(behavior.animalData.ani
             cart.AllowStop(false);
         }
 //hide zone UI
-        if (UIManager.Instance == null)
+        if (ui == null)
         {
             Debug.LogError("[SlowdownZone] UIManager not found; cannot hide zone icon or guide.");
         }
         else
         {
-            UIManager.Instance.SetZoneIconVisible(false);
-            UIManager.Instance.HideGuide();
-            UIManager.Instance.HideStopCountdown();
+            ui.SetZoneIconVisible(false);
+            ui.HideGuide();
+            ui.HideStopCountdown();
         }
 //Deactivate zone and clear animals.
         this.enabled = false;
@@ -152,11 +150,11 @@ if (behavior != null && GameManager.Instance.HasCaptured(behavior.animalData.ani
                 cart.AllowStop(false);
             }
 
-            if (UIManager.Instance != null)
+            if (ui != null)
             {
-                UIManager.Instance.SetZoneIconVisible(false);
-                UIManager.Instance.HideGuide();
-                UIManager.Instance.HideStopCountdown();
+                ui.SetZoneIconVisible(false);
+                ui.HideGuide();
+                ui.HideStopCountdown();
             }
             else
             {
