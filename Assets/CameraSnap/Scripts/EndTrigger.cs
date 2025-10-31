@@ -6,9 +6,7 @@ namespace CameraSnap
 {
     public class EndGameTrigger : MonoBehaviour
     {
-        [Header("UI Settings")]
-        public TMPro.TMP_Text endGameText;  //UI text box shows summary
-        public GameObject endGamePanel;     //panel shows when game ends
+        [Header("Settings")]
         public KeyCode restartKey = KeyCode.R;  // Press R to restart
 
         private bool hasEnded = false;

@@ -30,6 +30,10 @@ namespace CameraSnap
         public TMP_Text photoText;
         public float defaultMessageDuration = 2f;
 
+    [Header("Stop Countdown")]
+    [Tooltip("Screen UI text that shows remaining time until auto-resume")]
+    public TMP_Text stopCountdownText;
+
         [Header("Misc UI")]
         public GameObject stopCartObject;
         public GameObject zoneIcon;
@@ -156,6 +160,30 @@ namespace CameraSnap
             if (photoText == null) return;
             if (duration <= 0f) duration = defaultMessageDuration;
             StartCoroutine(PhotoMessageRoutine(animalName, duration));
+        }
+
+        /// <summary>
+        /// Update the stop countdown UI. remaining and total are in seconds.
+        /// Pass remaining <= 0 to hide the countdown.
+        /// </summary>
+        public void UpdateStopCountdown(float remaining, float total)
+        {
+            if (stopCountdownText == null) return;
+
+            if (remaining <= 0f)
+            {
+                HideStopCountdown();
+                return;
+            }
+
+            // Ensure visible and update text
+            stopCountdownText.gameObject.SetActive(true);
+            stopCountdownText.text = $"{Mathf.CeilToInt(remaining)}";
+        }
+
+        public void HideStopCountdown()
+        {
+            if (stopCountdownText != null) stopCountdownText.gameObject.SetActive(false);
         }
 
         IEnumerator PhotoMessageRoutine(string animalName, float duration)

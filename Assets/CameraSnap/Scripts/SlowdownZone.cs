@@ -6,39 +6,61 @@ namespace CameraSnap
     {
         [Header("Slowdown Settings")]
         public float slowedSpeed = 1f;
-        public GameObject uiIcon;
+        // Timer logic moved to ZoneStopTimer component
 
-        [Header("Animal Spawning")]
+        [Header("Components")]
         public AnimalSpawner animalSpawner;
+        private ZoneStopTimer zoneTimer;
 
         
 //Cart is reduced to slowed speed. The player is allowed to stop the cart. UI icon appears to indicate you need to press key
 //or do movement to stop cart. Animals for the zone is spawned in..
-        private void OnTriggerEnter(Collider other)
-{
-    CartController cart = other.GetComponentInParent<CartController>();
-    if (cart != null)
-    {
-        cart.currentZone = this; 
-        cart.SetSpeed(slowedSpeed);
-        cart.AllowStop(true);
-            if (uiIcon != null)
+        private void Awake()
+        {
+            // Automatically add ZoneStopTimer if missing
+            zoneTimer = GetComponent<ZoneStopTimer>();
+            if (zoneTimer == null)
             {
+                zoneTimer = gameObject.AddComponent<ZoneStopTimer>();
+                Debug.Log($"[SlowdownZone] Added ZoneStopTimer to {gameObject.name}");
+            }
+            zoneTimer.OnTimeout += HandleTimerTimeout;
+        }
+
+        private void OnDestroy()
+        {
+            if (zoneTimer != null)
+                zoneTimer.OnTimeout -= HandleTimerTimeout;
+        }
+
+        private void OnTriggerEnter(Collider other)
+        {
+            CartController cart = other.GetComponentInParent<CartController>();
+            if (cart != null)
+            {
+                cart.currentZone = this;
+                cart.SetSpeed(slowedSpeed);
+                cart.AllowStop(true);
+
                 if (UIManager.Instance == null)
                 {
-                    Debug.LogError("[SlowdownZone] UIManager not found; cannot show zone icon.");
+                    Debug.LogError("[SlowdownZone] UIManager not found; cannot show zone icon or guide.");
                 }
                 else
                 {
-                    UIManager.Instance.SetZoneIcon(uiIcon);
+                    // UIManager uses a shared zone icon for all slowdown zones
                     UIManager.Instance.SetZoneIconVisible(true);
                     // Show the guide squat animation when entering zone
                     UIManager.Instance.SetGuideState(UIManager.GuideState.Squat);
                 }
+
+                if (animalSpawner != null)
+                    animalSpawner.SpawnAnimals();
+
+                // start the stop timer tracking if timer component exists
+                zoneTimer?.StartTracking(cart);
             }
-        if (animalSpawner != null) animalSpawner.SpawnAnimals();
-    }
-}
+        }
 //Resets speed to normal, the player can no longer stop. The UI icon disappears, and the remaining animals in the zone are removed.
 private void OnTriggerExit(Collider other)
 {
@@ -48,19 +70,22 @@ private void OnTriggerExit(Collider other)
         if (cart.currentZone == this) cart.currentZone = null; // clear it
         cart.ResetSpeed();
         cart.AllowStop(false);
-            if (uiIcon != null)
-            {
-                if (UIManager.Instance == null)
-                {
-                    Debug.LogError("[SlowdownZone] UIManager not found; cannot hide zone icon.");
-                }
-                else
-                {
-                    UIManager.Instance.SetZoneIconVisible(false);
-                    UIManager.Instance.HideGuide();
-                }
-            }
+
+        if (UIManager.Instance == null)
+        {
+            Debug.LogError("[SlowdownZone] UIManager not found; cannot hide zone icon or guide.");
+        }
+        else
+        {
+            UIManager.Instance.SetZoneIconVisible(false);
+            UIManager.Instance.HideGuide();
+            UIManager.Instance.HideStopCountdown();
+        }
+
         if (animalSpawner != null) animalSpawner.ClearPreviousAnimals();
+
+        // stop timer tracking
+        zoneTimer?.StopTracking();
     }
 }
 //Get list of animals spawned in zone, count how many are captured, if every animal is captured, restore cart ot normal.
@@ -100,23 +125,61 @@ if (behavior != null && GameManager.Instance.HasCaptured(behavior.animalData.ani
             cart.AllowStop(false);
         }
 //hide zone UI
-        if (uiIcon != null)
+        if (UIManager.Instance == null)
         {
-            if (UIManager.Instance == null)
-            {
-                Debug.LogError("[SlowdownZone] UIManager not found; cannot hide zone icon or guide.");
-            }
-            else
-            {
-                UIManager.Instance.SetZoneIconVisible(false);
-                UIManager.Instance.HideGuide();
-            }
+            Debug.LogError("[SlowdownZone] UIManager not found; cannot hide zone icon or guide.");
+        }
+        else
+        {
+            UIManager.Instance.SetZoneIconVisible(false);
+            UIManager.Instance.HideGuide();
+            UIManager.Instance.HideStopCountdown();
         }
 //Deactivate zone and clear animals.
         this.enabled = false;
         animalSpawner.ClearPreviousAnimals();
+        // stop timer tracking and clear countdown
+        zoneTimer?.StopTracking();
     }
 }
+
+        private void HandleTimerTimeout(CartController cart)
+        {
+            // Auto-resume cart after timeout
+            if (cart != null)
+            {
+                cart.ResetSpeed();
+                cart.AllowStop(false);
+            }
+
+            if (UIManager.Instance != null)
+            {
+                UIManager.Instance.SetZoneIconVisible(false);
+                UIManager.Instance.HideGuide();
+                UIManager.Instance.HideStopCountdown();
+            }
+            else
+            {
+                Debug.LogError("[SlowdownZone] UIManager not found; cannot hide zone icon after timeout.");
+            }
+
+            if (animalSpawner != null)
+                animalSpawner.ClearPreviousAnimals();
+        }
+
+        /// <summary>
+        /// Called when a photo of an animal is captured while the cart is in this zone.
+        /// Forwards to the timer so it can reset on *new* captures, then checks zone completion.
+        /// </summary>
+        public void NotifyAnimalCaptured(string animalName)
+        {
+            if (string.IsNullOrEmpty(animalName)) return;
+
+            if (zoneTimer != null)
+                zoneTimer.NotifyCaptured(animalName);
+
+            CheckForZoneCompletion();
+        }
 
 
 

@@ -12,7 +12,6 @@ namespace CameraSnap
         public SplineContainer splineContainer;  //path cart follows
         public float speed = 5f;  //how fast it travels
 
-        public GameObject stopCartObject;  //text UI to show cart has stopped
         public SlowdownZone currentZone;   //tracks which slowdown zone cart is in.
 
         private float defaultSpeed;

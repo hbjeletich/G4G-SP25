@@ -11,11 +11,8 @@ namespace CameraSnap
     {
         [Header("Camera Settings")]
         public Animator playerAnimator;  //Animator for camera coming up screen
-        public GameObject cameraOverlayUI; //Overlay that turns green and red
         public KeyCode toggleKey = KeyCode.C; //Key for entering camera mode
         public KeyCode photoKey = KeyCode.Mouse0; //Key for taking photo
-        public Color normalColor = Color.white; //Normal color of overlay
-        public Color readyColor = Color.green; //Color of overlay detects animal
         public float detectionRange = 100f; //How far camera mode can see the animal
         public LayerMask animalLayer; //Camera mode uses this to detect animal
         public AudioSource audioSource; //Camera click sound
@@ -25,25 +22,18 @@ namespace CameraSnap
 
         private bool inCameraMode = false;
         private Camera cam; //get main cam
-        private UnityEngine.UI.Image overlayImage; //UI element that changes color
         private CartController cart;
-        public TMPro.TMP_Text photoText;
 
         void Start()
         {
             cam = Camera.main;
             cart = FindObjectOfType<CartController>();
 
-            // UIManager is required: CameraMode uses it exclusively for overlay and photo messages
             if (UIManager.Instance == null)
             {
                 Debug.LogError("[CameraMode] UIManager not found in scene. Add a UIManager GameObject and assign UI references.");
                 return;
             }
-
-            overlayImage = UIManager.Instance.overlayImage;
-            cameraOverlayUI = UIManager.Instance.cameraOverlayUI;
-            photoText = UIManager.Instance.photoText;
         }
 //Checks for entering or exiting camera mode, continuously detects animals in view, allows
 //taking photos, auto-exits if cart starts moving
@@ -169,31 +159,16 @@ namespace CameraSnap
                     if (GameManager.Instance != null)
                         GameManager.Instance.RegisterCapturedAnimal(name);
 
-                    // Notify slowdown zone to check if both animals are captured
+                    // Notify slowdown zone about the capture (it will handle completion and timeout reset)
                     SlowdownZone currentZone = cart.currentZone;
 
                     if (currentZone != null)
-                        currentZone.CheckForZoneCompletion();
+                        currentZone.NotifyAnimalCaptured(name);
                 }
             }
             
         }
 
         public bool IsInCameraMode() => inCameraMode;
-//Shows a message for a few seconds and then fades out smoothly. The message shows what animal is
-//captured.
-        private IEnumerator ShowPhotoMessage(string animalName)
-        {
-            if (photoText == null) yield break;
-
-            photoText.text = $"Captured photo of {animalName}!";
-            photoText.canvasRenderer.SetAlpha(1f);
-
-            // Show for messageDuration seconds
-            yield return new WaitForSeconds(messageDuration);
-
-            // Fade out smoothly
-            photoText.CrossFadeAlpha(0f, 1f, false);
-        }
     }
 }
