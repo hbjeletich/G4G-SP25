@@ -77,6 +77,16 @@ namespace CameraSnap
             }
 
             UIManager.Instance.SetOverlayActive(inCameraMode);
+
+            // When entering camera mode, show the weight shift animation
+            if (inCameraMode)
+            {
+                if (UIManager.Instance != null)
+                {
+                    Debug.Log("[CameraMode] Entered camera mode -> showing weight shift animation");
+                    UIManager.Instance.SetGuideState(UIManager.GuideState.WeightShift);
+                }
+            }
         }
 
         void ForceExitCameraMode()
@@ -113,9 +123,18 @@ namespace CameraSnap
                     }
 
                     UIManager.Instance.SetOverlayReady(true);
+                    // Show foot raise guide when animal is detected
+                    UIManager.Instance.SetGuideState(UIManager.GuideState.FootRaise);
                     return;
                 }
             }
+
+            // Return to weight shift animation when no animal is detected
+            if (UIManager.Instance != null)
+            {
+                UIManager.Instance.SetGuideState(UIManager.GuideState.WeightShift);
+            }
+            
             if (UIManager.Instance == null)
             {
                 Debug.LogError("[CameraMode] UIManager missing; cannot set overlay ready state.");

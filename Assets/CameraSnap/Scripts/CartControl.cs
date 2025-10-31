@@ -107,6 +107,13 @@ namespace CameraSnap
                 UIManager.Instance.SetStopCartVisible(true);
             }
 
+            // If stopping inside a slowdown zone, advance the player guide to the next step
+            if (currentZone != null && UIManager.Instance != null)
+            {
+                Debug.Log("[CartController] Stopped in zone -> advancing guide to HipAbduction");
+                UIManager.Instance.SetGuideState(UIManager.GuideState.HipAbduction);
+            }
+
             if (audioSource != null)
                 audioSource.Stop();
         }

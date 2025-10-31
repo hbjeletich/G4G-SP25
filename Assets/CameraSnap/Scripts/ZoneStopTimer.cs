@@ -3,14 +3,14 @@ using UnityEngine;
 
 namespace CameraSnap
 {
-    /// <summary>
-    /// Handles the stop timeout for a slowdown zone.
-    /// Responsibilities:
-    /// - Track a CartController while stopped and advance a timer
-    /// - Reset timer when a new (unique) animal is captured
-    /// - Update UIManager countdown UI
-    /// - Invoke OnTimeout when the timer expires
-    /// </summary>
+    
+    // Handles the stop timeout for a slowdown zone.
+    // Responsibilities:
+    // Track a CartController while stopped and advance a timer
+    // Reset timer when a new (unique) animal is captured
+    // Update UIManager countdown UI
+    // Invoke OnTimeout when the timer expires
+    
     public class ZoneStopTimer : MonoBehaviour
     {
         [Tooltip("Seconds allowed while stopped before the zone auto-resumes the cart")]
@@ -45,10 +45,10 @@ namespace CameraSnap
                 UIManager.Instance.HideStopCountdown();
         }
 
-        /// <summary>
-        /// Notify the timer that an animal was captured while stopped in this zone.
-        /// Returns true if the animal was new for this stop period.
-        /// </summary>
+        
+        // Notify the timer that an animal was captured while stopped in this zone.
+        // Returns true if the animal was new for this stop period.
+        
         public bool NotifyCaptured(string animalName)
         {
             if (string.IsNullOrEmpty(animalName)) return false;

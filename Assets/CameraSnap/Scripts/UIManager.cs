@@ -7,11 +7,11 @@ using UnityEngine.UI;
 
 namespace CameraSnap
 {
-    /// <summary>
-    /// Centralized UI manager. Exposes simple methods for showing/hiding UI and
-    /// displaying short messages. Intended to be a single source of truth for
-    /// UI manipulations so other game scripts don't directly toggle UI objects.
-    /// </summary>
+    
+    // Centralized UI manager. Exposes simple methods for showing/hiding UI and
+    // displaying short messages. Intended to be a single source of truth for
+    // UI manipulations so other game scripts don't directly toggle UI objects.
+    
     public class UIManager : MonoBehaviour
     {
         public static UIManager Instance;
@@ -47,6 +47,7 @@ namespace CameraSnap
 
         public enum GuideState
         {
+            WeightShift = 0,
             Squat = 1,
             HipAbduction = 2,
             FootRaise = 3
