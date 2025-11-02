@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
 
-public class PotteryScreenshot : MonoBehaviour
+public class ScreenshotScript : MonoBehaviour
 {
     public Camera captureCamera; // assign your capture cam in the Inspector
     public int resolution = 512; // 512x512 is fine for thumbnails
