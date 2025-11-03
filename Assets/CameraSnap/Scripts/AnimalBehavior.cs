@@ -69,8 +69,9 @@ namespace CameraSnap
             if (Mathf.Abs(transform.position.x - startPosition.x) >= maxDistance)
             {
                 isMovingLeft = !isMovingLeft;
+                // Use same flipping logic as SetStartDirection to respect spriteFacesLeft
                 Vector3 scale = transform.localScale;
-                scale.x = -scale.x;
+                scale.x = isMovingLeft ? -Mathf.Abs(scale.x) : Mathf.Abs(scale.x);
                 transform.localScale = scale;
             }
         }
