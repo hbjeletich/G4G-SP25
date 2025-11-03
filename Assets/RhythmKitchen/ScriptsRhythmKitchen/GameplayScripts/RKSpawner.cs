@@ -9,16 +9,16 @@ namespace RhythmKitchen
 {public class RKSpawner : MonoBehaviour
     {
         [SerializeField] private RKSongData songData;
+
         [Header("Song Chart")]
         [SerializeField] private RKNote.Type[] laneByBeat; // per-beat type (same length as songBeats)
         [SerializeField] private bool useRandom = false;
-        private int nextIndex = 0;
 
         [Header("Refs")]
         [SerializeField] private RKConductor conductor; // this is beat/time source 
         [SerializeField] private Transform hitLine; // this is target Y position
 
-        [Header("Travel")]
+        [Header("Travel")] // comes from SongData... usually
         [SerializeField] private float travelTime = 1.00f; // this is seconds it should take from spawn to hit
 
         [Header("Spawn Points (by lane)")]
@@ -33,6 +33,9 @@ namespace RhythmKitchen
         public RKNote prefabLane3;
         public RKNote prefabLane4;
 
+
+        [SerializeField] private Transform notesParent; // parent object for spawned notes
+        int nextIndex;
         void Start()
         {
             if (songData == null || songData.spawnTimes == null || songData.spawnTimes.Length == 0)
@@ -43,12 +46,57 @@ namespace RhythmKitchen
             }
 
             travelTime = songData.travelTime;
+            nextIndex = 0;
 
-            if (!useRandom && (laneByBeat == null || laneByBeat.Length != songData.spawnTimes.Length))
+            /* if (!useRandom && (laneByBeat == null || laneByBeat.Length != songData.spawnTimes.Length))
             {
                 Debug.LogWarning($"[Spawner] laneByBeat length {laneByBeat?.Length ?? 0} != beats {songData.spawnTimes.Length}");
             }
-            nextIndex = 0;
+            nextIndex = 0; */
+        }
+        void Update()
+        {
+            if (conductor == null || songData == null)
+            {
+                return;
+            }
+            double dspNow = AudioSettings.dspTime;
+
+            // spawn any notes whose spawn DSP time has arrived
+            while (nextIndex < songData.spawnTimes.Length && dspNow >= songData.spawnTimes[nextIndex])
+            {
+                var type = ChooseType(nextIndex);
+                float targetTimeSongSec = songData.targetTimes[nextIndex];
+                SpawnAt(type, targetTimeSongSec);
+                nextIndex++;
+            }
+
+            /*// TEMPORARY HERE
+            if (Input.GetKeyDown(KeyCode.T))
+            {
+                float now = conductor.songTime;
+                // spawn a note that should hit exactly travelTime seconds from now
+                SpawnAt(RKNote.Type.Lane1, now + songData.travelTime);
+            } */
+        }
+        private RKNote.Type ChooseType(int i)
+        {
+            /*if (useRandom)
+            {
+                return (RKNote.Type)Random.Range(0, 4);
+            }
+            if (laneByBeat != null && i < laneByBeat.Length)
+            {
+                return laneByBeat[i];
+            }
+            return RKNote.Type.Lane1; // just a fallback here */
+
+            var chart = songData.chartByBeat;
+            if (chart != null && i < chart.Length)
+            {
+                return chart[i];
+            }
+            return (RKNote.Type)Random.Range(0, 4); // random fallback
         }
         private Transform GetSpawnPoint(RKNote.Type noteType)
         {
@@ -84,52 +132,19 @@ namespace RhythmKitchen
                     return null;
             }
         }
-        private RKNote.Type ChooseType(int i)
+        public void SpawnAt(RKNote.Type noteType, float targetTimeSongSec)
         {
-            if (useRandom)
+            var spawn = GetSpawnPoint(noteType);
+            var prefab = GetPrefab(noteType);
+            if (!spawn || !prefab)
             {
-                return (RKNote.Type)Random.Range(0, 4);
-            }
-            if (laneByBeat != null && i < laneByBeat.Length)
-            {
-                return laneByBeat[i];
-            }
-            return RKNote.Type.Lane1; // just a fallback here
-        }
-        public void SpawnAt(RKNote.Type noteType, float targetTime)
-        {
-            Transform spawn = GetSpawnPoint(noteType); // gets which spawn point to use
-            if (spawn == null)
-            {
+                Debug.LogWarning("[Spawner] Missing spawn or prefab");
                 return;
             }
-            RKNote prefab = GetPrefab(noteType); // gets which prefab to use
-            if (prefab == null)
-            {
-                return;
-            }
-            // instantiate note and parent under NotesRuntime 
-            RKNote note = Instantiate(prefab, spawn.position, Quaternion.identity);
-            note.transform.SetParent(GameObject.Find("NotesRuntime").transform);
+            var note = Instantiate(prefab, spawn.position, Quaternion.identity);
+            note.transform.SetParent(notesParent, true); // grouping
 
-            note.Init(conductor, spawn.position, hitLine.position.y, targetTime, travelTime); // initialize with target info
-        }
-        void Update()
-        {
-            if (conductor == null || songData == null)
-            {
-                return;
-            }
-            double dspNow = AudioSettings.dspTime;
-
-            while (nextIndex < songData.spawnTimes.Length && dspNow >= songData.spawnTimes[nextIndex])
-            {
-                var type = ChooseType(nextIndex);
-
-                float targetTime = (float)(songData.spawnTimes[nextIndex] + songData.travelTime);
-                SpawnAt(type, targetTime);
-                nextIndex++;
-            }
+            note.Init(conductor, spawn.position, hitLine.position.y, targetTimeSongSec, travelTime);
         }
     }
 }

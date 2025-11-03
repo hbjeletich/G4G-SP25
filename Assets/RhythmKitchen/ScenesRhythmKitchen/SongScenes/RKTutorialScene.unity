@@ -614,11 +614,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bpm: 80
-  travelTime: 3
-  leadInSeconds: 1
-  offsetMs: 0
+  travelTime: 2
+  leadInSeconds: 2
+  offsetMs: 6000
   songLength: 147.33
   songBeatString: 8,24,40,56,72,88,104,120,136,152,168
+  chartString: a/w/s/d
 --- !u!1 &357678965
 GameObject:
   m_ObjectHideFlags: 0
@@ -2341,7 +2342,7 @@ MonoBehaviour:
   useRandom: 0
   conductor: {fileID: 72580114}
   hitLine: {fileID: 419094087}
-  travelTime: 1
+  travelTime: 2
   spawnLane1: {fileID: 833825316}
   spawnLane2: {fileID: 1022452817}
   spawnLane3: {fileID: 236374426}
@@ -2354,6 +2355,7 @@ MonoBehaviour:
     type: 3}
   prefabLane4: {fileID: 1173823889380547401, guid: 0b703aad03b0b482194dc5f7c7fbc266,
     type: 3}
+  notesParent: {fileID: 959363155}
 --- !u!1 &959363154
 GameObject:
   m_ObjectHideFlags: 0
@@ -2379,11 +2381,11 @@ Transform:
   m_GameObject: {fileID: 959363154}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 4.355014, y: 7.3175464, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 2017775699}
+  m_Father: {fileID: 1566619268}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &980889045
 GameObject:
@@ -3561,6 +3563,7 @@ Transform:
   - {fileID: 72580113}
   - {fileID: 944187660}
   - {fileID: 342932063}
+  - {fileID: 959363155}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1642593186
@@ -3817,7 +3820,6 @@ Transform:
   - {fileID: 1022452817}
   - {fileID: 236374426}
   - {fileID: 498506434}
-  - {fileID: 959363155}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2036241736
