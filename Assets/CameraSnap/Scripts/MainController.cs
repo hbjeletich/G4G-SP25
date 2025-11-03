@@ -9,9 +9,6 @@ namespace CameraSnap
         public MotionTrackingConfiguration motionConfig;
         [SerializeField] private InputActionAsset inputActions;
 
-        [Header("Settings")]
-        [SerializeField] private float panSpeed = 3f;           
-        [SerializeField] private float shiftThreshold = 0.25f;  // Lean amount to trigger left/right
 
         private CartController cart;
         private CameraMode cameraMode;
@@ -25,13 +22,7 @@ namespace CameraSnap
         private InputAction footRaisedAction;
 
         
-       // private bool isSquatReady = true;
-       // private float standingPelvisY = -999f; // Calibration baseline
-       // private const float squatDropAmount = 0.15f; // How far down to count as squat
-
-       
-       // private enum ShiftState { Center, Left, Right }
-       // private ShiftState currentShiftState = ShiftState.Center;
+    
 
         private void Awake()
         {
@@ -104,7 +95,7 @@ namespace CameraSnap
         }
 
 
-[SerializeField, Tooltip("How far below neutral pelvis Y counts as a squat (meters)")]
+[SerializeField, Tooltip("How far below neutral pelvis Y counts as a squat")]
 private float squatThreshold = 0.10f;
 
 private float neutralPelvisY;
