@@ -159,7 +159,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 27.143282, y: -0.0000009536743, z: 24.940845}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.44846, y: 0.44846, z: 0.44846}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5466167488725448481}
@@ -178,10 +178,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animalData: {fileID: 11400000, guid: 2751cfbf4d031694b86f88ea28fc9bd3, type: 2}
-  isCaptured: 0
   animator: {fileID: 1126396557814644889}
-  walkBool: isWalking
-  hideTrigger: Hide
+  isCaptured: 0
 --- !u!65 &1527471277049989164
 BoxCollider:
   m_ObjectHideFlags: 0
