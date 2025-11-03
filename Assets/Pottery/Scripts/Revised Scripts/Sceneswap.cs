@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using UnityEngine.EventSystems;
+using UnityEngine.Events;
+
 
 public class UIManager : MonoBehaviour
 {
@@ -29,14 +32,31 @@ public class UIManager : MonoBehaviour
         SetActivePanel(mainMenuPanel);
     }
 
+
+    public void SelectButton(GameObject button)
+    {
+        StartCoroutine(SelectAfterFrame(button));
+    }
+
+
+    private IEnumerator SelectAfterFrame(GameObject button)
+    {
+        yield return null; // wait 1 frame so UI activates
+        EventSystem.current.SetSelectedGameObject(null); // optional: clear previous selection
+        EventSystem.current.SetSelectedGameObject(button); // now select
+    }
+
+
     public void ShowSettings()
     {
         SetActivePanel(settingsPanel);
+        
     }
 
     public void ShowGallery()
     {
         SetActivePanel(galleryPanel);
+      
     }
 
     public void ShowSelection()

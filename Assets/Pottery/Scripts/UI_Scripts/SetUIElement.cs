@@ -2,57 +2,38 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
 public class SetUIElement : MonoBehaviour
 {
-
-    [Header("Setup")]
-    [SerializeField] private EventSystem eventSystem;
-    [SerializeField] private Selectable elementToSelect;
-
     [Header("Visualization")]
     [SerializeField] private bool showVisualization;
     [SerializeField] private Color navigationColor = Color.cyan;
+    [SerializeField] private GameObject Back;
+    [SerializeField] private GameObject Play;
 
-    private void onDrawGizmos()
+    //private void onDrawGizmos()
+    //{
+    //    if (!showVisualization)
+    //        return;
+
+    //    if (elementToSelect == null)
+    //        return;
+
+    //    Gizmos.color = navigationColor;
+    //    Gizmos.DrawLine(gameObject.transform.position, elementToSelect.gameObject.transform.position);
+    //}
+
+    public void SetSelectedUIElementPlay()
     {
-        if (!showVisualization)
-            return;
-
-        if (elementToSelect == null)
-            return;
-
-        Gizmos.color = navigationColor;
-        Gizmos.DrawLine(gameObject.transform.position, elementToSelect.gameObject.transform.position);
+        EventSystem.current.SetSelectedGameObject(Play);
     }
 
-
-    private void Reset() 
+    public void SetSelectedUIElementBack()
     {
-    
-        eventSystem = FindObjectOfType<EventSystem>();
-
-        if (eventSystem == null)
-        Debug.Log("did not find Event System in your scene, please add one");
-
+        EventSystem.current.SetSelectedGameObject(Back);
     }
-
-    public void SetSelectedUIElement()
-    {
-        if (eventSystem == null)
-            return;
-            Debug.Log("Event System is null");
-
-        if (elementToSelect == null)
-            return;
-
-           Debug.Log("Element to select is null");
-
-
-        eventSystem.SetSelectedGameObject(elementToSelect.gameObject);
-    }
-
 
 
 
