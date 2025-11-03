@@ -23,78 +23,78 @@ namespace RhythmKitchen
         public KeyCode keyLane4 = KeyCode.D;
 
         [Header("Captury Inputs")]
-        [SerializeField] private InputActionAsset inputActions;
+        // [SerializeField] private InputActionAsset inputActions;
         
-        private InputAction leftHipAction;
-        private InputAction leftFootRaised;
-        private InputAction rightFootRaised;
-        private InputAction rightHipAction;
+        // private InputAction leftHipAction;
+        // private InputAction leftFootRaised;
+        // private InputAction rightFootRaised;
+        // private InputAction rightHipAction;
 
-        private bool isLeftHipAbduct = false;
-        private bool isLeftLegLift = false;
-        private bool isRightLegLift = false;
-        private bool isRightHipAbduct = false;
+        // private bool isLeftHipAbduct = false;
+        // private bool isLeftLegLift = false;
+        // private bool isRightLegLift = false;
+        // private bool isRightHipAbduct = false;
 
         [Header("Windows (seconds)")]
         public float missWindow;
         public float goodWindow;
         public float perfectWindow;
 
-        void Awake()
-        {
-            var actionMap = inputActions.FindActionMap("Foot");
-            leftHipAction = actionMap.FindAction("LeftHipAbducted");
-            leftFootRaised = actionMap.FindAction("LeftFootRaised");
-            rightFootRaised = actionMap.FindAction("RightFootRaised");
-            rightHipAction = actionMap.FindAction("RightHipAbducted");
-        }
+        // void Awake()
+        // {
+        //     var actionMap = inputActions.FindActionMap("Foot");
+        //     leftHipAction = actionMap.FindAction("LeftHipAbducted");
+        //     leftFootRaised = actionMap.FindAction("LeftFootRaised");
+        //     rightFootRaised = actionMap.FindAction("RightFootRaised");
+        //     rightHipAction = actionMap.FindAction("RightHipAbducted");
+        // }
 
-        private void OnEnable()
-        {
+        // private void OnEnable()
+        // {
             
-            leftHipAction.Enable();
-            leftFootRaised.Enable();
-            rightFootRaised.Enable();
-            rightHipAction.Enable();
+        //     leftHipAction.Enable();
+        //     leftFootRaised.Enable();
+        //     rightFootRaised.Enable();
+        //     rightHipAction.Enable();
 
-            leftHipAction.performed += OnLeftHipAbduction;
-            leftFootRaised.performed += OnLeftFootRaised;
-            rightFootRaised.performed += OnRightFootRaised;
-            rightHipAction.performed += OnRightHipAbduction;
-        }
+        //     leftHipAction.performed += OnLeftHipAbduction;
+        //     leftFootRaised.performed += OnLeftFootRaised;
+        //     rightFootRaised.performed += OnRightFootRaised;
+        //     rightHipAction.performed += OnRightHipAbduction;
+        // }
 
-        private void OnDisable()
-        {
-            leftHipAction.Disable();
-            leftFootRaised.Disable();
-            rightFootRaised.Disable();
-            rightHipAction.Disable();
+        // private void OnDisable()
+        // {
+        //     leftHipAction.Disable();
+        //     leftFootRaised.Disable();
+        //     rightFootRaised.Disable();
+        //     rightHipAction.Disable();
 
-            leftHipAction.performed -= OnLeftHipAbduction;
-            leftFootRaised.performed -= OnLeftFootRaised;
-            rightFootRaised.performed -= OnRightFootRaised;
-            rightHipAction.performed -= OnRightHipAbduction;
-        }
+        //     leftHipAction.performed -= OnLeftHipAbduction;
+        //     leftFootRaised.performed -= OnLeftFootRaised;
+        //     rightFootRaised.performed -= OnRightFootRaised;
+        //     rightHipAction.performed -= OnRightHipAbduction;
+        // }
 
-        private void OnLeftHipAbduction(InputAction.CallbackContext contex)
-        {
-            isLeftHipAbduct = true;
-        }
+        // private void OnLeftHipAbduction(InputAction.CallbackContext contex)
+        // {
+        //     isLeftHipAbduct = true;
+        // }
 
-        private void OnLeftFootRaised(InputAction.CallbackContext contex)
-        {
-            isLeftLegLift = true;
-        }
+        // private void OnLeftFootRaised(InputAction.CallbackContext contex)
+        // {
+        //     isLeftLegLift = true;
+        // }
         
-        private void OnRightFootRaised(InputAction.CallbackContext contex)
-        {
-            isRightLegLift = true;
-        }
+        // private void OnRightFootRaised(InputAction.CallbackContext contex)
+        // {
+        //     isRightLegLift = true;
+        // }
 
-        private void OnRightHipAbduction(InputAction.CallbackContext contex)
-        {
-            isRightHipAbduct = true;
-        }
+        // private void OnRightHipAbduction(InputAction.CallbackContext contex)
+        // {
+        //     isRightHipAbduct = true;
+        // }
 
         void Update()
         {
@@ -121,33 +121,33 @@ namespace RhythmKitchen
                     TryHit(RKNote.Type.Lane4);
                 }
             }
-            else
-            {
-                if (conductor == null || notesRuntime == null)
-                {
-                    return;
-                }
-                if (isLeftHipAbduct)
-                {
-                    TryHit(RKNote.Type.Lane1);
-                    isLeftHipAbduct = false;
-                }
-                if (isLeftLegLift)
-                {
-                    TryHit(RKNote.Type.Lane2);
-                    isLeftLegLift = false;
-                }
-                if (isRightLegLift)
-                {
-                    TryHit(RKNote.Type.Lane3);
-                    isRightLegLift = false;
-                }
-                if (isRightHipAbduct)
-                {
-                    TryHit(RKNote.Type.Lane4);
-                    isRightHipAbduct = false;
-                }
-            }
+            // else
+            // {
+            //     if (conductor == null || notesRuntime == null)
+            //     {
+            //         return;
+            //     }
+            //     if (isLeftHipAbduct)
+            //     {
+            //         TryHit(RKNote.Type.Lane1);
+            //         isLeftHipAbduct = false;
+            //     }
+            //     if (isLeftLegLift)
+            //     {
+            //         TryHit(RKNote.Type.Lane2);
+            //         isLeftLegLift = false;
+            //     }
+            //     if (isRightLegLift)
+            //     {
+            //         TryHit(RKNote.Type.Lane3);
+            //         isRightLegLift = false;
+            //     }
+            //     if (isRightHipAbduct)
+            //     {
+            //         TryHit(RKNote.Type.Lane4);
+            //         isRightHipAbduct = false;
+            //     }
+            // }
         }
 
         private void TryHit(RKNote.Type type)
