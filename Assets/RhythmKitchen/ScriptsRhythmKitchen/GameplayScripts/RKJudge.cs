@@ -10,7 +10,7 @@ using UnityEngine.Events;
 namespace RhythmKitchen
 { public class RKJudge : MonoBehaviour
     {
-        private bool debugOn = false;
+        [SerializeField] private bool debugOn;
 
         [Header("Refs")]
         [SerializeField] private RKConductor conductor;

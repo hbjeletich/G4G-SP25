@@ -8,7 +8,13 @@ namespace RhythmKitchen
 // this is the runtime spawner that instantiates notes and tells them when/where to land
 {public class RKSpawner : MonoBehaviour
     {
-        [SerializeField] private RKSongData songData;
+
+        [Header("Prefabs (by type)")]
+        public RKNote prefabLane1;
+        public RKNote prefabLane2;
+        public RKNote prefabLane3;
+        public RKNote prefabLane4;
+        
 
         [Header("Song Chart")]
         [SerializeField] private RKNote.Type[] laneByBeat; // per-beat type (same length as songBeats)
@@ -17,6 +23,7 @@ namespace RhythmKitchen
         [Header("Refs")]
         [SerializeField] private RKConductor conductor; // this is beat/time source 
         [SerializeField] private Transform hitLine; // this is target Y position
+        [SerializeField] private RKSongData songData;
 
         [Header("Travel")] // comes from SongData... usually
         [SerializeField] private float travelTime = 1.00f; // this is seconds it should take from spawn to hit
@@ -26,12 +33,6 @@ namespace RhythmKitchen
         public Transform spawnLane2;
         public Transform spawnLane3;
         public Transform spawnLane4;
-
-        [Header("Prefabs (by type)")]
-        public RKNote prefabLane1;
-        public RKNote prefabLane2;
-        public RKNote prefabLane3;
-        public RKNote prefabLane4;
 
 
         [SerializeField] private Transform notesParent; // parent object for spawned notes
