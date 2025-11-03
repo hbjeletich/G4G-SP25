@@ -8,6 +8,8 @@ using UnityEngine;
 namespace RhythmKitchen
 {public class RKJudge : MonoBehaviour
     {
+        private bool debugOn = true;
+
         [Header("Refs")]
         [SerializeField] private RKConductor conductor;
         [SerializeField] private Transform notesRuntime; // parent object for spawned notes
@@ -18,32 +20,80 @@ namespace RhythmKitchen
         public KeyCode keyLane3 = KeyCode.S;
         public KeyCode keyLane4 = KeyCode.D;
 
+        [Header("Captury Inputs")]
+        // private InputAction leftHipAction;
+        // private InputAction leftFootRaised;
+        // private InputAction rightFootRaised;
+        // private InputAction rightHipAction;
+
+        // private bool isLeftHipAbduct = false;
+        // private bool isLeftLegLift = false;
+        // private bool isRightLegLift = false;
+        // private bool isLeftHipAbduct = false;
+
         [Header("Windows (seconds)")]
-        public float missWindow = 0.250f;
-        public float goodWindow = 0.220f;
-        public float perfectWindow = 0.120f;
+        public float missWindow;
+        public float goodWindow;
+        public float perfectWindow;
+
+        void Awake()
+        {
+            // var actionMap = inputActions.FindActionMap("Foot");
+            // leftHipAction = actionMap.FindAction("LeftHipAbducted");
+            // leftFootRaised = actionMap.FindAction("LeftFootRaised");
+            // rightFootRaised = actionMap.FindAction("RightFootRaised");
+            // rightHipAction = actionMap.FindAction("RightHipAbducted");
+
+            // leftHipAction.performed += On;
+        }
 
         void Update()
         {
-            if (conductor == null || notesRuntime == null)
+            if (debugOn)
             {
-                return;
+                if (conductor == null || notesRuntime == null)
+                {
+                    return;
+                }
+                if (Input.GetKeyDown(keyLane1))
+                {
+                    TryHit(RKNote.Type.Lane1);
+                }
+                if (Input.GetKeyDown(keyLane2))
+                {
+                    TryHit(RKNote.Type.Lane2);
+                }
+                if (Input.GetKeyDown(keyLane3))
+                {
+                    TryHit(RKNote.Type.Lane3);
+                }
+                if (Input.GetKeyDown(keyLane4))
+                {
+                    TryHit(RKNote.Type.Lane4);
+                }
             }
-            if (Input.GetKeyDown(keyLane1))
+            else
             {
-                TryHit(RKNote.Type.Lane1);
-            }
-            if (Input.GetKeyDown(keyLane2))
-            {
-                TryHit(RKNote.Type.Lane2);
-            }
-            if (Input.GetKeyDown(keyLane3))
-            {
-                TryHit(RKNote.Type.Lane3);
-            }
-            if (Input.GetKeyDown(keyLane4))
-            {
-                TryHit(RKNote.Type.Lane4);
+                if (conductor == null || notesRuntime == null)
+                {
+                    return;
+                }
+                if (Input.GetKeyDown(keyLane1))
+                {
+                    TryHit(RKNote.Type.Lane1);
+                }
+                if (Input.GetKeyDown(keyLane2))
+                {
+                    TryHit(RKNote.Type.Lane2);
+                }
+                if (Input.GetKeyDown(keyLane3))
+                {
+                    TryHit(RKNote.Type.Lane3);
+                }
+                if (Input.GetKeyDown(keyLane4))
+                {
+                    TryHit(RKNote.Type.Lane4);
+                }
             }
         }
 

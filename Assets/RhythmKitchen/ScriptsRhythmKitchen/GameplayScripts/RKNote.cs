@@ -14,6 +14,8 @@ namespace RhythmKitchen
         [HideInInspector] public float targetY; // the Y position of HitLine
         [HideInInspector] public float travelTime; // how long the note should take to fall
 
+        public float waitUntilDestroy = 5f;
+
         private Vector2 spawnPos; // stores the initial spawn position
         private Vector2 targetPos; // stores where are falling TO
         private RKConductor conductor; // this gives us songTime to track progress
@@ -40,9 +42,8 @@ namespace RhythmKitchen
             // (targetTime - now) == remaining time
             transform.position = Vector2.Lerp(spawnPos, targetPos, t); // this moves the note smoothly toward the target position
 
-            if (now > targetTime + 0.25f) // if current time of song is > 250ms after targetTime
+            if (now > targetTime + waitUntilDestroy && gameObject != null) // if current time of song is > 250ms after targetTime
             {
-                Debug.Log($"[Note] MISS {noteType}");
                 Destroy(gameObject);
             }
         }
