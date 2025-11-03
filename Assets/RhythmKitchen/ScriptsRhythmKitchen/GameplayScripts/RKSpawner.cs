@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-// Worked on by: Jovanna Molina
+// Worked on by: Jovanna Molina and Leia Phillips
 // Commented by: Jovanna Molina
 namespace RhythmKitchen
 // this is the runtime spawner that instantiates notes and tells them when/where to land

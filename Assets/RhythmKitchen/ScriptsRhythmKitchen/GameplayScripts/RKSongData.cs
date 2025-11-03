@@ -4,7 +4,7 @@ using UnityEngine;
 using System.IO;
 
 // Worked on by: Jovanna Molina and Leia Phillips 
-// Commented by: Jovanna Molina
+// Commented by: Jovanna Molina and Leia Phillips
 
 namespace RhythmKitchen
 {

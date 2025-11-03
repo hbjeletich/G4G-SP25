@@ -14,7 +14,7 @@ namespace RhythmKitchen
         [HideInInspector] public float targetY; // the Y position of HitLine
         [HideInInspector] public float travelTime; // how long the note should take to fall
 
-        public float waitUntilDestroy = 5f;
+        public float waitUntilDestroy = 2.5f;
 
         private Vector2 spawnPos; // stores the initial spawn position
         private Vector2 targetPos; // stores where are falling TO
