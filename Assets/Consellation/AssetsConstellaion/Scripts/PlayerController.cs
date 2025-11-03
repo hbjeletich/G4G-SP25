@@ -13,6 +13,9 @@ namespace Constellation
 
         [SerializeField] private InputActionAsset inputActions;
 
+        private InputAction leftFootHeightAction;
+        private InputAction rightFootHeightAction;
+
         private InputAction isWalking;
 
         //STATISTICS
@@ -24,6 +27,9 @@ namespace Constellation
         [SerializeField] private float speedStat = 5.0f;
         //how fast guy rotates
         [SerializeField] private float rotateStat = 5.0f;
+
+        //
+        [SerializeField] private float footThreshold = 1;
 
         //The Event to try and grab
         public UnityEvent interact;
@@ -43,10 +49,16 @@ namespace Constellation
         { 
             var footMap= inputActions.FindActionMap("Foot");
             isWalking = footMap.FindAction("IsWalking");
+            leftFootHeightAction = footMap.FindAction("LeftFootPosition");
+            rightFootHeightAction = footMap.FindAction("RightFootPosition");
         }
 
         void OnEnable()
         {
+
+            leftFootHeightAction.Enable();
+            rightFootHeightAction.Enable();
+
             isWalking.Enable();
         }
 
@@ -82,28 +94,35 @@ namespace Constellation
             else     //THis branch is used when caputry movemnt is used MUST BE TESTED IN LIM
             {
 
-                if (Input.GetKeyDown("w"))
+                float leftFootY = leftFootHeightAction.ReadValue<Vector3>().y;
+                float rightFootY = rightFootHeightAction.ReadValue<Vector3>().y;
+
+                if (isWalking.ReadValue<bool>())
                 {
+                    Debug.Log("HIT : walking");
                     speedMod = 1;
                 }
-                if (Input.GetKeyUp("w"))
+                else
                 {
                     speedMod = 0;
                 }
 
 
-                if (Input.GetKeyDown("a"))
+                if (leftFootY>rightFootY && leftFootY>footThreshold)
                 {
+                    Debug.Log("HIT : turn left?");
                     rotationMod = -1;
                 }
-                if (Input.GetKeyDown("d"))
+                else if (rightFootY > leftFootY && rightFootY > footThreshold)
                 {
+                    Debug.Log("HIT : turn right?");
                     rotationMod = 1;
                 }
-                if (Input.GetKeyUp("d")||Input.GetKeyUp("a"))
+                else
                 {
                     rotationMod = 0;
                 }
+
 
                 if (Input.GetKeyDown("space"))
                 {
