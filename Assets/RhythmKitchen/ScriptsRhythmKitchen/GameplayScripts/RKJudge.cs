@@ -1,12 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
+using UnityEngine.Events;
 
 // Worked on by: Jovanna Molina
 // Commented by: Jovanna Molina
 
 namespace RhythmKitchen
-{public class RKJudge : MonoBehaviour
+{ public class RKJudge : MonoBehaviour
     {
         private bool debugOn = true;
 
@@ -21,15 +23,17 @@ namespace RhythmKitchen
         public KeyCode keyLane4 = KeyCode.D;
 
         [Header("Captury Inputs")]
-        // private InputAction leftHipAction;
-        // private InputAction leftFootRaised;
-        // private InputAction rightFootRaised;
-        // private InputAction rightHipAction;
+        [SerializeField] private InputActionAsset inputActions;
+        
+        private InputAction leftHipAction;
+        private InputAction leftFootRaised;
+        private InputAction rightFootRaised;
+        private InputAction rightHipAction;
 
-        // private bool isLeftHipAbduct = false;
-        // private bool isLeftLegLift = false;
-        // private bool isRightLegLift = false;
-        // private bool isLeftHipAbduct = false;
+        private bool isLeftHipAbduct = false;
+        private bool isLeftLegLift = false;
+        private bool isRightLegLift = false;
+        private bool isRightHipAbduct = false;
 
         [Header("Windows (seconds)")]
         public float missWindow;
@@ -38,13 +42,58 @@ namespace RhythmKitchen
 
         void Awake()
         {
-            // var actionMap = inputActions.FindActionMap("Foot");
-            // leftHipAction = actionMap.FindAction("LeftHipAbducted");
-            // leftFootRaised = actionMap.FindAction("LeftFootRaised");
-            // rightFootRaised = actionMap.FindAction("RightFootRaised");
-            // rightHipAction = actionMap.FindAction("RightHipAbducted");
+            var actionMap = inputActions.FindActionMap("Foot");
+            leftHipAction = actionMap.FindAction("LeftHipAbducted");
+            leftFootRaised = actionMap.FindAction("LeftFootRaised");
+            rightFootRaised = actionMap.FindAction("RightFootRaised");
+            rightHipAction = actionMap.FindAction("RightHipAbducted");
+        }
 
-            // leftHipAction.performed += On;
+        private void OnEnable()
+        {
+            
+            leftHipAction.Enable();
+            leftFootRaised.Enable();
+            rightFootRaised.Enable();
+            rightHipAction.Enable();
+
+            leftHipAction.performed += OnLeftHipAbduction;
+            leftFootRaised.performed += OnLeftFootRaised;
+            rightFootRaised.performed += OnRightFootRaised;
+            rightHipAction.performed += OnRightHipAbduction;
+        }
+
+        private void OnDisable()
+        {
+            leftHipAction.Disable();
+            leftFootRaised.Disable();
+            rightFootRaised.Disable();
+            rightHipAction.Disable();
+
+            leftHipAction.performed -= OnLeftHipAbduction;
+            leftFootRaised.performed -= OnLeftFootRaised;
+            rightFootRaised.performed -= OnRightFootRaised;
+            rightHipAction.performed -= OnRightHipAbduction;
+        }
+
+        private void OnLeftHipAbduction(InputAction.CallbackContext contex)
+        {
+            isLeftHipAbduct = true;
+        }
+
+        private void OnLeftFootRaised(InputAction.CallbackContext contex)
+        {
+            isLeftLegLift = true;
+        }
+        
+        private void OnRightFootRaised(InputAction.CallbackContext contex)
+        {
+            isRightLegLift = true;
+        }
+
+        private void OnRightHipAbduction(InputAction.CallbackContext contex)
+        {
+            isRightHipAbduct = true;
         }
 
         void Update()
@@ -78,21 +127,25 @@ namespace RhythmKitchen
                 {
                     return;
                 }
-                if (Input.GetKeyDown(keyLane1))
+                if (isLeftHipAbduct)
                 {
                     TryHit(RKNote.Type.Lane1);
+                    isLeftHipAbduct = false;
                 }
-                if (Input.GetKeyDown(keyLane2))
+                if (isLeftLegLift)
                 {
                     TryHit(RKNote.Type.Lane2);
+                    isLeftLegLift = false;
                 }
-                if (Input.GetKeyDown(keyLane3))
+                if (isRightLegLift)
                 {
                     TryHit(RKNote.Type.Lane3);
+                    isRightLegLift = false;
                 }
-                if (Input.GetKeyDown(keyLane4))
+                if (isRightHipAbduct)
                 {
                     TryHit(RKNote.Type.Lane4);
+                    isRightHipAbduct = false;
                 }
             }
         }
@@ -153,5 +206,5 @@ namespace RhythmKitchen
             Destroy(note.gameObject);
         }
     }
-}
+}  
 
