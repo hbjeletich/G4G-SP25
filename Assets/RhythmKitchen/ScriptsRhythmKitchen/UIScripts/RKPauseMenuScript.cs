@@ -39,6 +39,7 @@ public class RKPauseMenuScript : MonoBehaviour
     {
         Time.timeScale = 1f;
         AudioListener.pause = false;
+        
         clickButton();
     }
 

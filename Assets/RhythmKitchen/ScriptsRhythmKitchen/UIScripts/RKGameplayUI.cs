@@ -8,6 +8,14 @@ namespace RhythmKitchen
 {
     public class RKGameplayUI : MonoBehaviour
     {
+        public GameObject completedDish;
+        public GameObject gameplayUI;
+        public GameObject judgementLine;
+        public GameObject notesRuntime;
+        public GameObject outlines;
+
+        public RKConductor conductor;
+
         public Slider slider;
         public RKSongData songData;
 
@@ -51,15 +59,26 @@ namespace RhythmKitchen
                 {
                     Debug.LogWarning("[RKGameplayUI] AudioManager missing: loading scene anyway.");
                 }
-                SceneManager.LoadScene("RKCompletedDish");
             }
+
+            gameplayUI.SetActive(false);
+            judgementLine.SetActive(false);
+            notesRuntime.SetActive(false);
+            outlines.SetActive(false);
+            completedDish.SetActive(true);
+
+            Time.timeScale = 0f;
+            conductor.musicSource.Stop();
         }
 
         public void Pause()
         {
             clickButton();
+
+            judgementLine.SetActive(false);
+
             AudioListener.pause = true;
-            Time.timeScale = 0f; 
+            Time.timeScale = 0f;
         }
 
         private void clickButton()

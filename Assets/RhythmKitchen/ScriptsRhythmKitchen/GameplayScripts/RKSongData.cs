@@ -11,13 +11,25 @@ namespace RhythmKitchen
     public class RKSongData : MonoBehaviour
     {
         [Header("Authoring")]
+        public string dishName; // Name of the dish
+        public AudioClip audioClip;
+        public float songLength; // the length on seconds of the song
         public float bpm; // BPM of song
         public float travelTime = 1f; // how long it takes the beat to travel from spawn point to hit lane
         public float leadInSeconds = 1f; // this is a small delay so we can schedule precisely
         public float offsetMs = 0f; // this is calibration to nudge timing if it feels early/late (positive = judge later, negative = judge earlier)
-        public float songLength; // the length on seconds of the song
         [TextArea] public string songBeatString;
         [TextArea] public string chartString; // comma-separated list of note types (1,2,3,4)
+
+        [Header("Prefabs (by type)")]
+        public RKNote prefabLane1;
+        public RKNote prefabLane2;
+        public RKNote prefabLane3;
+        public RKNote prefabLane4;
+
+        [Header("Don't Touch!")]
+        public AudioSource audioSource;
+        
 
         // computed and consumed by other scripts
         public float[] songBeats { get; private set; } // the beats of the input
@@ -62,6 +74,8 @@ namespace RhythmKitchen
 
         void Awake()
         {
+            audioSource.clip = audioClip;
+
             // this is the base timing
             secondsPerBeat = 60f / Mathf.Max(1f, bpm); // this just avoids divide by zero
             songStartDspTime = AudioSettings.dspTime + leadInSeconds; // when the AudioSource will start

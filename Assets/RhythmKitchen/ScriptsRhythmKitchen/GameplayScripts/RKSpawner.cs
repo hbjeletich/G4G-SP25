@@ -3,19 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 
 // Worked on by: Jovanna Molina and Leia Phillips
-// Commented by: Jovanna Molina
+// Commented by: Jovanna Molina and Leia Phillips
 namespace RhythmKitchen
 // this is the runtime spawner that instantiates notes and tells them when/where to land
 {public class RKSpawner : MonoBehaviour
     {
-
-        [Header("Prefabs (by type)")]
-        public RKNote prefabLane1;
-        public RKNote prefabLane2;
-        public RKNote prefabLane3;
-        public RKNote prefabLane4;
-        
-
         [Header("Song Chart")]
         [SerializeField] private RKNote.Type[] laneByBeat; // per-beat type (same length as songBeats)
         [SerializeField] private bool useRandom = false;
@@ -34,9 +26,24 @@ namespace RhythmKitchen
         public Transform spawnLane3;
         public Transform spawnLane4;
 
+        [Header("Prefabs (by type)")] // comes from SongData
+        private RKNote prefabLane1;
+        private RKNote prefabLane2;
+        private RKNote prefabLane3;
+        private RKNote prefabLane4;
+
 
         [SerializeField] private Transform notesParent; // parent object for spawned notes
         int nextIndex;
+
+        void Awake()
+        {
+            prefabLane1 = songData.prefabLane1;
+            prefabLane2 = songData.prefabLane2;
+            prefabLane3 = songData.prefabLane3;
+            prefabLane4 = songData.prefabLane4;
+        }
+
         void Start()
         {
             if (songData == null || songData.spawnTimes == null || songData.spawnTimes.Length == 0)

@@ -2,42 +2,69 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
+using TMPro;
 
-public class RKCompletedDishScript : MonoBehaviour
+namespace RhythmKitchen
 {
-    void Start()
+    public class RKCompletedDishScript : MonoBehaviour
     {
-        var am = RKAudioManager.Instance;
+        public Image[] stars;
+        public TMP_Text dishNameText;
+        public TMP_Text comboText;
+        public TMP_Text perfectText;
+        public TMP_Text goodText;
+        public TMP_Text almostText;
+        public RKSongData songData;
 
-        if (am != null)
-            am.PlayMusic("Ambience");
-        else
-            Debug.LogWarning("[RKCompletedDishScript] AudioManager missing: loading scene anyway.");
-    }
-    
-    public void BackMainMenu()
-    {
-        var am = RKAudioManager.Instance;
+        void Start()
+        {
+            var am = RKAudioManager.Instance;
 
-        if (am != null)
-            am.PlaySFX("ButtonPress");
-        else
-            Debug.LogWarning("[RKCompletedDishScript] AudioManager missing: loading scene anyway.");
-        
-        SceneManager.LoadScene("RKMainMenu");
-    }
+            if (am != null)
+                am.PlayMusic("Ambience");
+            else
+                Debug.LogWarning("[RKCompletedDishScript] AudioManager missing: loading scene anyway.");
 
-    public void GoToSongSelect()
-    {
-        var am = RKAudioManager.Instance;
+            dishNameText.text = songData.dishName;
+        }
 
-        if (am != null)
-            am.PlaySFX("ButtonPress");
-        else
-            Debug.LogWarning("[RKCompletedDishScript] AudioManager missing: loading scene anyway.");
+        public void setStars(int rating)
+        {
+            if (rating < 3)
+                stars[2].color = Color.black;
+            else if (rating < 2)
+                stars[1].color = Color.black;
+        }
 
-        SceneManager.LoadScene("RKSongSelectMenu");
+        public void BackMainMenu()
+        {
+            Time.timeScale = 1f;
+
+            var am = RKAudioManager.Instance;
+
+            if (am != null)
+                am.PlaySFX("ButtonPress");
+            else
+                Debug.LogWarning("[RKCompletedDishScript] AudioManager missing: loading scene anyway.");
+
+            SceneManager.LoadScene("RKMainMenu");
+        }
+
+        public void GoToSongSelect()
+        {
+            Time.timeScale = 1f;
+
+            var am = RKAudioManager.Instance;
+
+            if (am != null)
+                am.PlaySFX("ButtonPress");
+            else
+                Debug.LogWarning("[RKCompletedDishScript] AudioManager missing: loading scene anyway.");
+
+            SceneManager.LoadScene("RKSongSelectMenu");
+        }
+
     }
 
 }
-
