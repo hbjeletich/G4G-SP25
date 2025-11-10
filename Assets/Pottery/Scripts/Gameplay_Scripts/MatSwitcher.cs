@@ -12,6 +12,7 @@ public class MaterialSwitcher : MonoBehaviour
     private bool isDecalRed = false;
     private bool isDecalGreen = false;
     private bool isDecalBlue= false;
+    private bool isDecalYellow = false;
 
     [Header("Assign decal materials here")]
     public Material redDecalOMaterial;
@@ -23,8 +24,11 @@ public class MaterialSwitcher : MonoBehaviour
     public Material blueDecalOMaterial;
     public Material blueDecalSMaterial;
 
+    public Material yellowDecalOMaterial;
+    public Material yellowDecalSMaterial;
 
-    
+
+
     public static Material selectedMaterial; // ? This will persist between scenes
 
     public static int selectedMaterialIndex = 0; // <-- persists across scenes
@@ -59,6 +63,7 @@ public class MaterialSwitcher : MonoBehaviour
         isDecalRed = true;
         isDecalGreen = false;
         isDecalBlue = false;
+        isDecalYellow = false;
 
         Debug.Log("Red True");
 
@@ -69,6 +74,7 @@ public class MaterialSwitcher : MonoBehaviour
         isDecalRed = false;
         isDecalGreen = true;
         isDecalBlue = false;
+        isDecalYellow = false;
 
         Debug.Log("Green True");
 
@@ -79,6 +85,20 @@ public class MaterialSwitcher : MonoBehaviour
         isDecalRed = false;
         isDecalGreen = false;
         isDecalBlue = true;
+        isDecalYellow = false;
+
+
+        Debug.Log("Blue True");
+
+    }
+
+    public void Yellowtrigger()
+    {
+        isDecalRed = false;
+        isDecalGreen = false;
+        isDecalBlue = false;
+        isDecalYellow = true;
+
 
         Debug.Log("Blue True");
 
@@ -181,10 +201,38 @@ public class MaterialSwitcher : MonoBehaviour
         }
     }
 
+    private void SetYellowODecals()
+    {
+        if (!isDecalYellow) return;
+        if (targetRenderer != null && yellowDecalOMaterial != null)
+        {
+            targetRenderer.material = yellowDecalOMaterial;
+            selectedODecal = yellowDecalOMaterial;
+            selectedMaterial = yellowDecalOMaterial; // ? Save the applied material
+            Debug.Log("Yellow O Decal Material applied.");
+        }
+        else
+        {
+            Debug.LogWarning("Renderer or yellowDecalOMaterial is missing!");
+        }
+    }
 
 
-
-
+    private void SetYellowSDecals()
+    {
+        if (!isDecalYellow) return;
+        if (targetRenderer != null && yellowDecalSMaterial != null)
+        {
+            targetRenderer.material = yellowDecalSMaterial;
+            selectedSDecal = yellowDecalSMaterial;
+            selectedMaterial = yellowDecalSMaterial; // ? Save the applied material
+            Debug.Log("Yellow S Decal Material applied.");
+        }
+        else
+        {
+            Debug.LogWarning("Renderer or yellowDecalSMaterial is missing!");
+        }
+    }
 
 
     public void SwitchMaterial(int materialIndex)
