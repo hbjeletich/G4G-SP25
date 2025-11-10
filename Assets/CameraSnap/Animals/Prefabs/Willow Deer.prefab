@@ -26,7 +26,7 @@ Transform:
   m_GameObject: {fileID: 2844771175982098282}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.88, z: 3.48}
+  m_LocalPosition: {x: 0, y: 1.88, z: 0.16}
   m_LocalScale: {x: 0.118114434, y: 0.118114434, z: 0.118114434}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -139,8 +139,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 3.5723877, y: 3.8756182, z: 0.6224508}
-  m_Center: {x: 0.086242676, y: 1.8985289, z: 3.6369052}
+  m_Size: {x: 3.5723877, y: 4.1308174, z: 0.4255514}
+  m_Center: {x: 0.086242676, y: 2.0261288, z: 0.1731739}
 --- !u!114 &-1421918015105368481
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -154,13 +154,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animalData: {fileID: 11400000, guid: bd169d4c33ec9804f901f6aa8e9c53a1, type: 2}
-  isCaptured: 0
   animator: {fileID: 0}
-  walkBool: isWalking
-  hideTrigger: Hide
-  canWalk: 1
-  canHideInBush: 0
-  moveSpeed: 1
-  patrolDistance: 2
-  idleTime: 2
-  walkTime: 3
+  isCaptured: 0
