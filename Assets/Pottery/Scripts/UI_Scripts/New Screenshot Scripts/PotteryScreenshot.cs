@@ -6,9 +6,9 @@ using System.Linq;
 
 public class PotteryScreenshot : MonoBehaviour
 {
-    private string screenshotsFolder;
-    private const int maxScreenshots = 6;
-    public Canvas Canvas;
+    public Canvas confirmationCanvas; // assign confirmation UI Canvas
+    public string screenshotsFolder;
+    public int maxScreenshots = 6;
 
     private void Awake()
     {
@@ -19,36 +19,32 @@ public class PotteryScreenshot : MonoBehaviour
 
     public void CaptureScreenshot()
     {
-        // Hide UI
-        if (Canvas != null) Canvas.enabled = false;
+        if (confirmationCanvas != null)
+            confirmationCanvas.enabled = false; // hide UI
 
         string timestamp = System.DateTime.Now.ToString("yyyyMMdd_HHmmss");
         string filePath = Path.Combine(screenshotsFolder, $"Pottery_{timestamp}.png");
 
-        // Schedule screenshot at end of frame
         ScreenCapture.CaptureScreenshot(filePath);
-        Debug.Log($"Scheduled screenshot: {filePath}");
+        Debug.Log($"Screenshot saved: {filePath}");
 
-        // Re-enable UI after a short delay
-        if (Canvas != null) Invoke(nameof(ReenableUI), 0.1f);
-
-        CleanUpOldScreenshots();
+        Invoke(nameof(ReenableUI), 0.1f);
+        Invoke(nameof(CleanUpOldScreenshots), 0.5f);
     }
 
-    // Helper to turn UI back on
     private void ReenableUI()
     {
-        if (Canvas != null) Canvas.enabled = true;
+        if (confirmationCanvas != null)
+            confirmationCanvas.enabled = true;
     }
 
-    private void CleanUpOldScreenshots()
+    public void CleanUpOldScreenshots()
     {
         var files = new DirectoryInfo(screenshotsFolder)
             .GetFiles("*.png")
             .OrderByDescending(f => f.CreationTime)
             .ToList();
 
-        // If there are more than 6, delete the oldest ones
         for (int i = maxScreenshots; i < files.Count; i++)
         {
             try
