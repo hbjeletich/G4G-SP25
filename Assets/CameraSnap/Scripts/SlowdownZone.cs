@@ -13,6 +13,10 @@ namespace CameraSnap
         private ZoneStopTimer zoneTimer;
     private UIManager ui => UIManager.Instance;
 
+        [Header("Assigned Animals (optional)")]
+        [Tooltip("If populated, these AnimalData entries will be used for this zone (in order). If empty, animals are chosen randomly from GameManager.")]
+        public System.Collections.Generic.List<AnimalData> assignedAnimals;
+
         
 //Cart is reduced to slowed speed. The player is allowed to stop the cart. UI icon appears to indicate you need to press key
 //or do movement to stop cart. Animals for the zone is spawned in..
@@ -53,7 +57,7 @@ namespace CameraSnap
                 }
 
                 if (animalSpawner != null)
-                    animalSpawner.SpawnAnimals();
+                    animalSpawner.SpawnAnimals(assignedAnimals);
 
                 // start the stop timer tracking if timer component exists
                 zoneTimer?.StartTracking(cart);
