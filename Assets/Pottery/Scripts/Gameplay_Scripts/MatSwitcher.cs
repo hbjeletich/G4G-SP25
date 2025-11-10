@@ -201,7 +201,7 @@ public class MaterialSwitcher : MonoBehaviour
         }
     }
 
-    private void SetYellowODecals()
+    public void SetYellowODecals()
     {
         if (!isDecalYellow) return;
         if (targetRenderer != null && yellowDecalOMaterial != null)
@@ -218,7 +218,7 @@ public class MaterialSwitcher : MonoBehaviour
     }
 
 
-    private void SetYellowSDecals()
+    public void SetYellowSDecals()
     {
         if (!isDecalYellow) return;
         if (targetRenderer != null && yellowDecalSMaterial != null)
@@ -233,6 +233,9 @@ public class MaterialSwitcher : MonoBehaviour
             Debug.LogWarning("Renderer or yellowDecalSMaterial is missing!");
         }
     }
+
+
+
 
 
     public void SwitchMaterial(int materialIndex)
