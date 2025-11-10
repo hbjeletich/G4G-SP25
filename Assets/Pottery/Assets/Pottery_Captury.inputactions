@@ -1,0 +1,658 @@
+{
+    "name": "Pottery_Captury",
+    "maps": [
+        {
+            "name": "Foot",
+            "id": "3db1dc2f-eb8c-47ad-9502-0d2dfdbc0f70",
+            "actions": [
+                {
+                    "name": "FootRaised",
+                    "type": "Button",
+                    "id": "7ae86693-cfba-4126-9b3a-88ac89ce8796",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "FootLowered",
+                    "type": "Button",
+                    "id": "d01eeb9d-901e-4021-86f8-4936289afabd",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "LeftFootPosition",
+                    "type": "Value",
+                    "id": "ab05d87d-5357-4875-930b-d9fdf86ae01c",
+                    "expectedControlType": "Vector3",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "RightFootPosition",
+                    "type": "Value",
+                    "id": "27e748a9-3265-4687-898d-f0fbff135455",
+                    "expectedControlType": "Vector3",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "LeftHipAbducted",
+                    "type": "Button",
+                    "id": "4e67cbc9-fcbf-486a-a4c6-95e8bc1b8eae",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "RightHipAbducted",
+                    "type": "Button",
+                    "id": "26dca48f-f82d-4993-af18-9e25eb606262",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "IsWalking",
+                    "type": "Button",
+                    "id": "2f1dd229-dc01-428b-9c86-5d261fb0c7c9",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "WalkStarted",
+                    "type": "Button",
+                    "id": "f3340f19-845d-4908-803c-4564cf625d4c",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "WalkStopped",
+                    "type": "Button",
+                    "id": "0d981b09-2094-4fb4-9385-9671890b474b",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "WalkSpeed",
+                    "type": "Value",
+                    "id": "b2756c3e-fed4-408d-b5a1-8162289d28ba",
+                    "expectedControlType": "Axis",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "Cadence",
+                    "type": "Value",
+                    "id": "4ee77e17-0582-4c04-92b5-afefdd598976",
+                    "expectedControlType": "Axis",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "LeftStep",
+                    "type": "Button",
+                    "id": "b83974c7-bb8a-4291-aad8-5e9186a65d57",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "RightStep",
+                    "type": "Button",
+                    "id": "0bfedd58-8995-4ab5-b60f-87668044c31e",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "LeftStepTime",
+                    "type": "Value",
+                    "id": "2e8b59ef-1962-4ef9-a49b-3ace363a8f6c",
+                    "expectedControlType": "Axis",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "RightStepTime",
+                    "type": "Value",
+                    "id": "8c78eaee-3728-4e66-8d2b-a4e999f31c1a",
+                    "expectedControlType": "Axis",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "StepTimeAsymmetry",
+                    "type": "Value",
+                    "id": "397eb9d3-71e4-426a-ac88-c301d9d4a642",
+                    "expectedControlType": "Axis",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "GaitConsistency",
+                    "type": "Value",
+                    "id": "9d143e62-4286-4570-ba0a-1e2d95a45107",
+                    "expectedControlType": "Axis",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "248f8b44-59b2-4502-a91c-8e25f0d9b2fa",
+                    "path": "<CapturyInput>/footRaised",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "FootRaised",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "bf8fe227-0b7b-4ab7-9f8d-a6f4a3181f73",
+                    "path": "<CapturyInput>/footLowered",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "FootLowered",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "1dc74b1c-1641-46ce-9dcf-dfe9356c5f6f",
+                    "path": "<CapturyInput>/leftFootPosition",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "LeftFootPosition",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "82848c5c-5580-456e-b338-e6769052efc8",
+                    "path": "<CapturyInput>/rightFootPosition",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "RightFootPosition",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "59f42fa0-0ac8-4b19-b140-d8237c2d5127",
+                    "path": "<CapturyInput>/leftHipAbducted",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "LeftHipAbducted",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "270cd582-e4f4-475b-a9f0-72e5d362ad21",
+                    "path": "<CapturyInput>/rightHipAbducted",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "RightHipAbducted",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "b24bd393-4b17-4af0-98a4-8519e9a82503",
+                    "path": "<CapturyInput>/isWalking",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "IsWalking",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "3fc22e0c-fc10-428f-9e65-2a43df877be7",
+                    "path": "<CapturyInput>/walkStarted",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "WalkStarted",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "8eb067b1-d60f-4bdb-a76d-2d6f580fb00f",
+                    "path": "<CapturyInput>/walkStopped",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "WalkStopped",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "7d2ac648-1255-4bf6-b4ef-2e52b22dbb9f",
+                    "path": "<CapturyInput>/walkSpeed",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "WalkSpeed",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "e6730d2f-a563-4031-81f7-3d07ce30b827",
+                    "path": "<CapturyInput>/cadence",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Cadence",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "bdc1e42d-6ba9-4c27-8d51-e3eb09c7a990",
+                    "path": "<CapturyInput>/leftStep",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "LeftStep",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "2cce8fab-3191-4fd9-88b1-b045e2a8c636",
+                    "path": "<CapturyInput>/rightStep",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "RightStep",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "f94aa200-945d-4581-a106-8226cbeb035d",
+                    "path": "<CapturyInput>/leftStepTime",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "LeftStepTime",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "90cd0db6-4bc3-4cda-8ea6-f8b3df1fedf8",
+                    "path": "<CapturyInput>/rightStepTime",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "RightStepTime",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "35640119-c02a-4fe8-8e25-578db7c76e91",
+                    "path": "<CapturyInput>/stepTimeAsymmetry",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "StepTimeAsymmetry",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "0eb51ebe-bf19-478a-b1d1-7920b629a26b",
+                    "path": "<CapturyInput>/gaitConsistency",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "GaitConsistency",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        },
+        {
+            "name": "Torso",
+            "id": "74545304-6b73-4cee-b555-425d2b656e4e",
+            "actions": [
+                {
+                    "name": "IsBentOver",
+                    "type": "Button",
+                    "id": "4d68bc90-3736-4bac-b15b-08c3949da580",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "IsUpright",
+                    "type": "Button",
+                    "id": "c9ffcbd7-0210-4fb3-ac4c-9b2d0ac33158",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "WeightShiftLeft",
+                    "type": "Button",
+                    "id": "2e0e53ac-8c0d-40b9-8135-8860b6f28e46",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "WeightShiftRight",
+                    "type": "Button",
+                    "id": "ba0bf51a-85fa-46a3-b174-33dba900a5fb",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "WeightShiftX",
+                    "type": "Value",
+                    "id": "996b8c82-9bb2-419a-908a-0beae92b72c8",
+                    "expectedControlType": "Axis",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "PelvisPosition",
+                    "type": "Value",
+                    "id": "bba10827-552f-424a-83bf-342c03c2b4fe",
+                    "expectedControlType": "Vector3",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "6d7b8528-bccf-44a5-a8ca-e637451fbde6",
+                    "path": "<CapturyInput>/isBentOver",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "IsBentOver",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "3e650813-4574-4ad1-a4fb-4a59b9229fb5",
+                    "path": "<CapturyInput>/isUpright",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "IsUpright",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "00153fef-532a-411c-bde4-fe4cea16cc38",
+                    "path": "<CapturyInput>/weightShiftLeft",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "WeightShiftLeft",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "d833b8cb-e765-4f13-8c23-fb0954bb9fba",
+                    "path": "<CapturyInput>/weightShiftRight",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "WeightShiftRight",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "3e39c928-14e8-49db-8c7d-fa0508b2203f",
+                    "path": "<CapturyInput>/weightShiftX",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "WeightShiftX",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "ebc42291-3f3c-4424-a424-905e88cd68ec",
+                    "path": "<CapturyInput>/pelvisPosition",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "PelvisPosition",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        },
+        {
+            "name": "Arms",
+            "id": "4d0c4840-31c9-4142-af15-9304e35868d8",
+            "actions": [
+                {
+                    "name": "LeftHandPosition",
+                    "type": "Value",
+                    "id": "0263ad37-c5b2-4597-be3a-a82c3c8ae17d",
+                    "expectedControlType": "Vector3",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "RightHandPosition",
+                    "type": "Value",
+                    "id": "1547ab24-9e9a-4c6a-871e-838cf8d82e0b",
+                    "expectedControlType": "Vector3",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "LeftHandRaised",
+                    "type": "Button",
+                    "id": "d046dce4-e73e-47a3-ac30-679e0b5b872a",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "RightHandRaised",
+                    "type": "Button",
+                    "id": "daacbe26-c26d-4547-8718-1655e3dd6300",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "c197166c-807f-47f8-9306-2df50a8119d4",
+                    "path": "<CapturyInput>/leftHandPosition",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "LeftHandPosition",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "8fdae536-612e-4441-83aa-189e14a1e32b",
+                    "path": "<CapturyInput>/rightHandPosition",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "RightHandPosition",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "c12be91e-57eb-42b9-953d-9d49f325dbea",
+                    "path": "<CapturyInput>/leftHandRaised",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "LeftHandRaised",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "d74c7242-1898-4276-9046-703d54b0ff02",
+                    "path": "<CapturyInput>/rightHandRaised",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "RightHandRaised",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        },
+        {
+            "name": "Head",
+            "id": "aec5d1d9-743f-4f81-a50f-ac27552639e9",
+            "actions": [
+                {
+                    "name": "HeadPosition",
+                    "type": "Value",
+                    "id": "cdd8e066-abd6-47cd-a654-668123469bcd",
+                    "expectedControlType": "Vector3",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "HeadRotation",
+                    "type": "Value",
+                    "id": "c471b2f1-bad9-4731-a596-7598755202b0",
+                    "expectedControlType": "Vector3",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "HeadNodding",
+                    "type": "Button",
+                    "id": "c0f0c5e4-0182-4ae5-894e-2afd98a8665b",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "HeadShaking",
+                    "type": "Button",
+                    "id": "cfbf201e-935f-4ccd-9c90-af6ad0a867df",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "a1295afb-4e8a-470f-9ba5-152d52c61142",
+                    "path": "<CapturyInput>/headPosition",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "HeadPosition",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "092e67dd-1a87-490f-ad60-8d390de7ee52",
+                    "path": "<CapturyInput>/headRotation",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "HeadRotation",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "8e6cb8ce-d33c-4f60-be70-20acb6f8b577",
+                    "path": "<CapturyInput>/headNodding",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "HeadNodding",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "2f6de710-75c4-4fe4-860e-6bac1f20efbf",
+                    "path": "<CapturyInput>/headShaking",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "HeadShaking",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}
