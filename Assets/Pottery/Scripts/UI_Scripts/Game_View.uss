@@ -1,0 +1,34 @@
+.panel {
+    background-color: rgba(245, 245, 245, 0.42);
+    display: flex;
+    opacity: 1;
+    align-items: center;
+}
+
+.hide {
+    display: none;
+}
+
+.menu {
+    display: flex;
+    border-top-width: 0;
+}
+
+.unity-button {
+    justify-content: space-around;
+    align-self: center;
+    align-items: center;
+    margin-top: 2px;
+    margin-right: 2px;
+    margin-bottom: 2px;
+    margin-left: 2px;
+    width: 128px;
+    max-width: 82px;
+}
+
+.unity-button:hover {
+    color: rgb(0, 0, 0);
+    -unity-background-image-tint-color: rgb(255, 255, 255);
+    background-color: rgb(255, 255, 255);
+    scale: 1.1 1.1;
+}
