@@ -60,11 +60,17 @@ namespace Constellation
             rightFootHeightAction.Enable();
 
             isWalking.Enable();
+
+            isWalking.started += _ => StartWalking();
+            isWalking.canceled += _ => StopWalking();
         }
 
         void OnDisable()
         { 
             isWalking.Disable();
+
+            isWalking.started -= _ => StartWalking();
+            isWalking.canceled -= _ => StopWalking();
         }
 
         // Start is called before the first frame update
@@ -96,29 +102,32 @@ namespace Constellation
 
                 float leftFootY = leftFootHeightAction.ReadValue<Vector3>().y;
                 float rightFootY = rightFootHeightAction.ReadValue<Vector3>().y;
-                /*
-                //if (isWalking.ReadValue<bool>())
-                //{
-                   // Debug.Log("HIT : walking");
-                   // speedMod = 1;
-                //}
-               /// else
+
+                //int temp = isWalking.ReadValue<int>();
+                //Debug.Log("HIT : " + temp);
+
+                if (false)
+                {
+                    Debug.Log("HIT : walking");
+                    speedMod = 1;
+                }
+                else
                 {
                     speedMod = 0;
                 }
 
-                */
-                if (leftFootY>rightFootY)
+                
+                if (leftFootY>rightFootY && leftFootY>footThreshold)
                 {
                     Debug.Log("HIT : turn left?");
                     rotationMod = -1;
                 }
-                else if (rightFootY > leftFootY)
+                if (rightFootY > leftFootY && rightFootY > footThreshold)
                 {
                     Debug.Log("HIT : turn right?");
                     rotationMod = 1;
                 }
-                else
+                if (leftFootY < footThreshold && rightFootY < footThreshold)
                 {
                     rotationMod = 0;
                 }
@@ -141,6 +150,17 @@ namespace Constellation
             //This moves guy forward based on speedMod and Stat
             charBody.AddForce(transform.up*speedMod*speedStat, ForceMode2D.Impulse);
 
+        }
+
+        void StartWalking()
+        {
+            Debug.Log("HIT : walking");
+            speedMod = 1;
+        }
+
+        void StopWalking()
+        {
+            speedMod = 0;
         }
     }
 }
