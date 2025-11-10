@@ -168,23 +168,13 @@ public void RecalibrateWeightShiftNeutral()
             if (motionConfig == null) return;
             if (!motionConfig.enableTorsoModule || !motionConfig.isShiftTracked) return;
 
-
             // Prefer continuous WeightShiftX if available
             if (weightShiftXAction != null)
             {
-                float ws = weightShiftXAction.ReadValue<float>() - neutralWeightShiftOffset;
-                if (Mathf.Abs(ws) <= motionConfig.neutralZoneWidth)
-                {
-                    cameraPan?.ManualPan(0f);
-                    return;
-                }
-
-
-                // Proportional pan based on continuous WeightShiftX
-                float input = Mathf.Clamp(ws * motionConfig.torsoSensitivity, -1f, 1f);
-                cameraPan?.ManualPan(input);
+                ApplyWeightShift(weightShiftXAction.ReadValue<float>());
                 return;
             }
+
             // If we reach here there is no continuous WeightShiftX
             cameraPan?.ManualPan(0f);
         }
@@ -193,12 +183,26 @@ public void RecalibrateWeightShiftNeutral()
         // as soon as the action produces a value (helps responsiveness).
         private void OnWeightShiftPerformed(InputAction.CallbackContext ctx)
         {
-            if (motionConfig == null) return;
+            ApplyWeightShift(ctx.ReadValue<float>());
+        }
+
+        // Shared implementation for applying raw WeightShiftX values (raw = as-read
+        // from the input action). This centralizes deadzone, neutral offset and
+        // proportional mapping so OnWeightShiftPerformed and Update-driven polling
+        // use identical behavior.
+        private void ApplyWeightShift(float rawWs)
+        {
+            if (motionConfig == null || cameraPan == null) return;
             if (!motionConfig.enableTorsoModule || !motionConfig.isShiftTracked) return;
-            if (cameraPan == null) return;
- float ws = weightShiftXAction.ReadValue<float>() - neutralWeightShiftOffset;
-            float ws = ctx.ReadValue<float>() - neutralWeightShiftOffset;
-            if (Mathf.Abs(ws) <= motionConfig.neutralZoneWidth)
+
+            float ws = rawWs - neutralWeightShiftOffset;
+            float normalizedDeadzone = motionConfig.neutralZoneWidth;
+
+            // Debug: report normalized weight-shift and current lean state
+            string leanState = Mathf.Abs(ws) <= normalizedDeadzone ? "Neutral" : (ws < 0f ? "Left" : "Right");
+            Debug.Log($"[WeightShift] value={ws:F3}, state={leanState}, deadzone={normalizedDeadzone:F3}");
+
+            if (Mathf.Abs(ws) <= normalizedDeadzone)
             {
                 cameraPan.ManualPan(0f);
                 return;
