@@ -18,12 +18,12 @@ MonoBehaviour:
   calibrationDelay: 2
   calibrationFrames: 30
   enableTorsoModule: 1
-  torsoSensitivity: 1.61
+  torsoSensitivity: 1
   torsoDebugMode: 1
   isShiftTracked: 1
-  weightShiftThreshold: 0.05
-  neutralZoneWidth: 0.02
-  wholeBodyMovementThreshold: 1.5
+  weightShiftThreshold: 0.2
+  neutralZoneWidth: 0.1
+  wholeBodyMovementThreshold: 4
   isBendTracked: 1
   bentOverAngleThreshold: 30
   enableFootModule: 1
@@ -32,7 +32,7 @@ MonoBehaviour:
   isFootRaiseTracked: 1
   footRaiseThreshold: 0.05
   isHipAbductionTracked: 1
-  minAbductionDistance: 0.2
+  minAbductionDistance: 0.1
   minLiftHeight: 0.05
   isFootPositionTracked: 1
   useRelativeFootPosition: 1
@@ -54,7 +54,7 @@ MonoBehaviour:
   isHandRaiseTracked: 1
   handRaiseThreshold: 0.3
   handRaiseMinHeight: 0.1
-  enableHeadModule: 0
+  enableHeadModule: 1
   headSensitivity: 1
   headDebugMode: 0
   isHeadPositionTracked: 1

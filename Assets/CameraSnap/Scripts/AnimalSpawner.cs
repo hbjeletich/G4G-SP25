@@ -17,12 +17,10 @@ namespace CameraSnap
 
         private List<GameObject> spawnedAnimals = new List<GameObject>();
 
-// Remove old animals, gets the list of all animals we are using from game manager (maybe change to animal manager), it shuffles 
-//the list of animals so it is different every time. Then, spawn one animal on the left if max is not reached, and spawn
-//one on the right side. This assures there will be at least one animal on each side even if there are multiple right and left
-//spawn points. 
-//VVVVVVVV
-        public void SpawnAnimals()
+
+      
+        /// <param name="assignedAnimals">Optional list of animals assigned to this zone.</param>
+        public void SpawnAnimals(System.Collections.Generic.List<AnimalData> assignedAnimals = null)
         {
             ClearPreviousAnimals();
 
@@ -31,26 +29,47 @@ namespace CameraSnap
                 Debug.LogWarning("[AnimalSpawner] No animals available to spawn!");
                 return;
             }
+            // Build chosen list from assignedAnimals (if provided) then fill from pool
+            List<AnimalData> chosen = new List<AnimalData>();
+            if (assignedAnimals != null && assignedAnimals.Count > 0)
+            {
+                foreach (var a in assignedAnimals)
+                {
+                    if (a != null && !chosen.Contains(a))
+                    {
+                        chosen.Add(a);
+                        if (chosen.Count >= maxAnimals) break;
+                    }
+                }
+            }
 
-            List<AnimalData> allAnimals = new List<AnimalData>(GameManager.Instance.GetAllAnimals());
-            Shuffle(allAnimals);
+            // Fill remaining slots from GameManager pool (randomized)
+            var pool = GameManager.Instance.GetAllAnimals();
+            List<AnimalData> poolCopy = new List<AnimalData>(pool);
+            // remove any already chosen
+            poolCopy.RemoveAll(x => chosen.Contains(x));
+            Shuffle(poolCopy);
+            int need = maxAnimals - chosen.Count;
+            for (int i = 0; i < need && i < poolCopy.Count; i++)
+                chosen.Add(poolCopy[i]);
 
             int animalsSpawned = 0;
 
             // Spawn LEFT
-            if (animalsSpawned < maxAnimals && leftSpawnPoints.Count > 0)
+            if (animalsSpawned < maxAnimals && leftSpawnPoints.Count > 0 && chosen.Count > animalsSpawned)
             {
-                SpawnAnimalAt(leftSpawnPoints[Random.Range(0, leftSpawnPoints.Count)], allAnimals[animalsSpawned], false);
+                SpawnAnimalAt(leftSpawnPoints[Random.Range(0, leftSpawnPoints.Count)], chosen[animalsSpawned], false);
                 animalsSpawned++;
             }
 
             // Spawn RIGHT
-            if (animalsSpawned < maxAnimals && rightSpawnPoints.Count > 0)
+            if (animalsSpawned < maxAnimals && rightSpawnPoints.Count > 0 && chosen.Count > animalsSpawned)
             {
-                SpawnAnimalAt(rightSpawnPoints[Random.Range(0, rightSpawnPoints.Count)], allAnimals[animalsSpawned], true);
+                SpawnAnimalAt(rightSpawnPoints[Random.Range(0, rightSpawnPoints.Count)], chosen[animalsSpawned], true);
                 animalsSpawned++;
             }
-            Debug.Log($"Spawning animals... Left:{leftSpawnPoints.Count}, Right:{rightSpawnPoints.Count}, Max:{maxAnimals}, TotalAnimals:{allAnimals.Count}");
+
+            Debug.Log($"Spawning animals... Left:{leftSpawnPoints.Count}, Right:{rightSpawnPoints.Count}, Max:{maxAnimals}, PoolSize:{pool.Count}, Chosen:{chosen.Count}");
 
         }
 

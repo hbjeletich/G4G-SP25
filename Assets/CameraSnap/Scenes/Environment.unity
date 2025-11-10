@@ -2784,6 +2784,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   slowedSpeed: 0.4
   animalSpawner: {fileID: 274108311}
+  assignedAnimals:
+  - {fileID: 11400000, guid: 2751cfbf4d031694b86f88ea28fc9bd3, type: 2}
+  - {fileID: 11400000, guid: 9e786e70a7761ff42a6db935f693dfb7, type: 2}
 --- !u!65 &274108313
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -4366,7 +4369,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 321, y: -162}
+  m_AnchoredPosition: {x: 374, y: -189}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1001 &397163978
@@ -5768,7 +5771,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 25, y: -158}
+  m_AnchoredPosition: {x: 13, y: -168}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &548998922
@@ -5885,6 +5888,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   slowedSpeed: 0.3
   animalSpawner: {fileID: 555408421}
+  assignedAnimals: []
 --- !u!65 &555408423
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -7133,7 +7137,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -285, y: -188}
+  m_AnchoredPosition: {x: -345, y: -218}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &661141270
@@ -9450,6 +9454,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   slowedSpeed: 0.3
   animalSpawner: {fileID: 899491327}
+  assignedAnimals: []
 --- !u!65 &899491329
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -11684,7 +11689,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 39, y: -185}
+  m_AnchoredPosition: {x: 39, y: -198}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1090631868
@@ -13058,12 +13063,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   allAnimals:
   - {fileID: 11400000, guid: 2751cfbf4d031694b86f88ea28fc9bd3, type: 2}
-  - {fileID: 11400000, guid: 04256f769d7bc5d469a0cb78a4340dec, type: 2}
-  - {fileID: 11400000, guid: 6c7adae3ea50a914c83b14eea51b43db, type: 2}
   - {fileID: 11400000, guid: 9e786e70a7761ff42a6db935f693dfb7, type: 2}
+  - {fileID: 11400000, guid: 6c7adae3ea50a914c83b14eea51b43db, type: 2}
   - {fileID: 11400000, guid: 0832ec0a45d1a96458ce46a4310dbf79, type: 2}
-  - {fileID: 11400000, guid: fb3be1cdb6ac6ae42985b5c46316e373, type: 2}
   - {fileID: 11400000, guid: bd169d4c33ec9804f901f6aa8e9c53a1, type: 2}
+  - {fileID: 11400000, guid: eff1597347a36934a9f7443fe8936487, type: 2}
 --- !u!4 &1197041991
 Transform:
   m_ObjectHideFlags: 0
@@ -15424,6 +15428,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   slowedSpeed: 0.3
   animalSpawner: {fileID: 1420195655}
+  assignedAnimals: []
 --- !u!65 &1420195657
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -16151,6 +16156,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   slowedSpeed: 0.3
   animalSpawner: {fileID: 1494882950}
+  assignedAnimals: []
 --- !u!65 &1494882952
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -20073,6 +20079,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   slowedSpeed: 0.3
   animalSpawner: {fileID: 1873895787}
+  assignedAnimals: []
 --- !u!65 &1873895789
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -21190,6 +21197,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   slowedSpeed: 0.3
   animalSpawner: {fileID: 1957644178}
+  assignedAnimals: []
 --- !u!65 &1957644180
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -22181,6 +22189,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   slowedSpeed: 0.3
   animalSpawner: {fileID: 2053747072}
+  assignedAnimals: []
 --- !u!65 &2053747074
 BoxCollider:
   m_ObjectHideFlags: 0
