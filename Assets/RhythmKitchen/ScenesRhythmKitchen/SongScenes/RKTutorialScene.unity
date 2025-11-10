@@ -819,8 +819,8 @@ Transform:
   m_GameObject: {fileID: 280289049}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 4.68, y: -1.3062501, z: 0}
-  m_LocalScale: {x: 0.6870258, y: 0.48125, z: 0.3318965}
+  m_LocalPosition: {x: 4.6, y: -1.31, z: 0}
+  m_LocalScale: {x: 0.8091164, y: 0.49203, z: 0.3318965}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1104772153}
@@ -905,8 +905,8 @@ Transform:
   m_GameObject: {fileID: 288837339}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -1.6999999, y: -1.3062501, z: 0}
-  m_LocalScale: {x: 0.7227156, y: 0.50625, z: 0.3491379}
+  m_LocalPosition: {x: -1.6432, y: -1.3329, z: 0}
+  m_LocalScale: {x: 0.8181531, y: 0.5118448, z: 0.3491379}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1104772153}
@@ -5361,7 +5361,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1642593188}
-  - component: {fileID: 1642593187}
   m_Layer: 0
   m_Name: WwiseGlobal
   m_TagString: Untagged
@@ -5369,32 +5368,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1642593187
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1642593186}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8f56afb0c2f3e984e852ab8d6ad6c099, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  InitializationSettings: {fileID: 11400000, guid: f3e8f9079477ce64fa0cf8ce02b98ef6,
-    type: 2}
-  basePath: 
-  language: 
-  defaultPoolSize: 0
-  lowerPoolSize: 0
-  streamingPoolSize: 0
-  memoryCutoffThreshold: 0
-  monitorPoolSize: 0
-  monitorQueuePoolSize: 0
-  callbackManagerBufferSize: 0
-  spatialAudioPoolSize: 0
-  maxSoundPropagationDepth: 0
-  engineLogging: 0
 --- !u!4 &1642593188
 Transform:
   m_ObjectHideFlags: 0
@@ -5572,8 +5545,8 @@ Transform:
   m_GameObject: {fileID: 1670594897}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -4.6, y: -1.3357499, z: 0}
-  m_LocalScale: {x: 0.69, y: 0.48333332, z: 0.3333333}
+  m_LocalPosition: {x: -4.6711, y: -1.3269, z: 0}
+  m_LocalScale: {x: 0.8101186, y: 0.5120889, z: 0.3333333}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1104772153}
@@ -6787,6 +6760,64 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1937249887}
   m_CullTransparentMesh: 1
+--- !u!1 &1950587976
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1950587978}
+  - component: {fileID: 1950587977}
+  m_Layer: 0
+  m_Name: WwiseGlobal
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1950587977
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1950587976}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8f56afb0c2f3e984e852ab8d6ad6c099, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  InitializationSettings: {fileID: 11400000, guid: f3e8f9079477ce64fa0cf8ce02b98ef6,
+    type: 2}
+  basePath: 
+  language: 
+  defaultPoolSize: 0
+  lowerPoolSize: 0
+  streamingPoolSize: 0
+  memoryCutoffThreshold: 0
+  monitorPoolSize: 0
+  monitorQueuePoolSize: 0
+  callbackManagerBufferSize: 0
+  spatialAudioPoolSize: 0
+  maxSoundPropagationDepth: 0
+  engineLogging: 0
+--- !u!4 &1950587978
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1950587976}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1961406592
 GameObject:
   m_ObjectHideFlags: 0
@@ -7449,3 +7480,4 @@ SceneRoots:
   - {fileID: 622563925}
   - {fileID: 80931444}
   - {fileID: 1642593188}
+  - {fileID: 1950587978}
