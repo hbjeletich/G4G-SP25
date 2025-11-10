@@ -6,27 +6,24 @@ using System.IO;
 
 public class GalleryStarter : MonoBehaviour
 {
-    public RawImage[] galleryImages;
+    public RawImage[] galleryImages;       // Assign 6 RawImages
     public PotteryScreenshot screenshotManager;
-
-    private void Start()
-    {
-        LoadGallery();
-    }
 
     public void LoadGallery()
     {
-        foreach (var img in galleryImages)
-            img.texture = null; // Clear existing textures
-
         string[] screenshots = screenshotManager.GetLatestScreenshots();
 
+        // Clear old images
+        foreach (var r in galleryImages)
+            if (r != null) r.texture = null;
+
+        // Load images
         for (int i = 0; i < screenshots.Length && i < galleryImages.Length; i++)
         {
-            byte[] imageBytes = File.ReadAllBytes(screenshots[i]);
-            Texture2D texture = new Texture2D(2, 2);
-            texture.LoadImage(imageBytes);
-            galleryImages[i].texture = texture;
+            byte[] bytes = File.ReadAllBytes(screenshots[i]);
+            Texture2D tex = new Texture2D(2, 2);
+            tex.LoadImage(bytes);
+            galleryImages[i].texture = tex;
         }
     }
 }
