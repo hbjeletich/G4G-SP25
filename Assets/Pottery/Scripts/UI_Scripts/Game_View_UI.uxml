@@ -1,0 +1,10 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
+    <Style src="project://database/Assets/Pottery/Scripts/UI_Scripts/Game_View.uss?fileID=7433441132597879392&amp;guid=5b99913bc72830d4da653341159926f3&amp;type=3#Game_View" />
+    <ui:VisualElement name="Panel" class="panel" style="flex-grow: 1; flex-direction: row; justify-content: flex-start; height: 197px; display: flex; background-color: rgba(245, 245, 245, 0);">
+        <ui:VisualElement name="Container" class="menu" style="flex-grow: 1; background-color: rgba(0, 0, 0, 0.74); align-items: center; flex-direction: column; max-width: 89px; align-self: flex-end; height: 207px; width: 116px; top: -17px; justify-content: flex-start; left: 29px; max-height: 137px;">
+            <ui:Button text="1" />
+            <ui:Button text="2" />
+            <ui:Button text="3" />
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

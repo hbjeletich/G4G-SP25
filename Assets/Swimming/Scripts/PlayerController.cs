@@ -8,7 +8,7 @@ namespace Swimming
     public class PlayerController : MonoBehaviour
     {
         // serialized values
-        [SerializeField] private InputActionAsset inputActions;
+        [SerializeField] private InputActionAsset inputActions; // NEED THIS!!
         [SerializeField] private float moveSpeed = 3f;
         [SerializeField] private float swimForce = 20f;
         [SerializeField] private float maxSwimVelocity = 4f;
@@ -27,7 +27,7 @@ namespace Swimming
         // debug mode for using keyboard input
         [SerializeField] private bool debugMode = false;
 
-        // input actions
+        // input actions - NEED THIS
         private InputAction weightShiftXAction;
         private InputAction leftFootHeightAction;
         private InputAction rightFootHeightAction;
@@ -65,6 +65,7 @@ namespace Swimming
                 animator.runtimeAnimatorController = regularAnimator;
             }
 
+            // THIS IS HOW YOU SET UP ACTIONS IN AWAKE!
             // set up motion tracking actions
             var torsoMap = inputActions.FindActionMap("Torso");
             var footMap = inputActions.FindActionMap("Foot");
