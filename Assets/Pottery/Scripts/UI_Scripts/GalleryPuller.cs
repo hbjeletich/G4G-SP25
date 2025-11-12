@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.IO;
 
-public class GalleryLoader : MonoBehaviour
+public class GalleryPuller : MonoBehaviour
 {
     public Transform galleryParent; // assign your Grid Layout Group object
     public GameObject imagePrefab; // UI prefab with an Image component

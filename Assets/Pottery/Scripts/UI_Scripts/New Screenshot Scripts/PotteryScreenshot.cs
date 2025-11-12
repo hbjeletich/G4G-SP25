@@ -7,7 +7,7 @@ using System.Linq;
 public class PotteryScreenshot : MonoBehaviour
 {
     public Canvas confirmationCanvas; // assign confirmation UI Canvas
-    public string screenshotsFolder;
+    private string screenshotsFolder;
     public int maxScreenshots = 6;
 
     private void Awake()

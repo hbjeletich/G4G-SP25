@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.IO;
 
-public class GalleryStarter : MonoBehaviour
+public class GalleryLoader : MonoBehaviour
 {
     public RawImage[] galleryImages;       // Assign 6 RawImages
     public PotteryScreenshot screenshotManager;
