@@ -29,11 +29,31 @@ namespace RhythmKitchen
             dishNameText.text = songData.dishName;
         }
 
+        public void setComboText(int num)
+        {
+            comboText.text = "" + num;
+        }
+
+        public void setPerfectText(int num)
+        {
+            perfectText.text = "" + num;
+        }
+
+        public void setGoodText(int num)
+        {
+            goodText.text = "" + num;
+        }
+        
+        public void setAlmostText (int num)
+        {
+            almostText.text = "" + num;
+        }
+
         public void setStars(int rating)
         {
             if (rating < 3)
                 stars[2].color = Color.black;
-            else if (rating < 2)
+            if (rating < 2)
                 stars[1].color = Color.black;
         }
 

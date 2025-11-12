@@ -40,38 +40,6 @@ namespace RhythmKitchen
 
         public RKNote.Type[] chartByBeat { get; private set; } // the note type per beat parsed from chartString
 
-        //public double timeAdjustment { get; private set; } // the time adjustment from when scene starts when the note should spawn to the hit lane
-        // songBeats[index]*secondsPerBeat+timeAdjustment = time in seconds when to spawn songBeats[index]
-
-        // leia's awake
-        /*void Awake()
-        {
-            string[] tempSongBeats = songBeatString.Replace(" ", "").Split(","); //Removes spaces from the songBeatString and splits at commas to create a string array
-            songBeats = new float[tempSongBeats.Length]; // Setting songBeats to an empty array
-            spawnTimes = new double[tempSongBeats.Length]; // Setting spawnTimes to an empty array
-
-            // populates songBeats with float values of tempSongBeats
-            for (int i = 0; i < tempSongBeats.Length; i++)
-            {
-                songBeats[i] = float.Parse(tempSongBeats[i]);
-                Debug.Log($"[SongData] Song Beat [{i}] = {songBeats[i]}");
-            }
-            
-            secondsPerBeat = 60f / Mathf.Max(1f, bpm); // this is clamp to avoid divided-by-zero
-            Debug.Log($"[SongData] BPM={bpm} spb={secondsPerBeat:F3}"); // current song is BPM and each beat lasts X secs
-
-            songStartDspTime = AudioSettings.dspTime + leadInSeconds;
-
-            timeAdjustment = offsetMs - travelTime + songStartDspTime; // Might not need songStartDspTime
-            Debug.Log($"[SongData] Time Adjustment = {timeAdjustment}");
-
-            for (int i = 0; i < songBeats.Length; i++)
-            {
-                spawnTimes[i] = songBeats[i] * secondsPerBeat + timeAdjustment; // populates spawn times with the spawn timing of each beat
-                Debug.Log($"[SongData] Spawn Time [{i}] = {spawnTimes[i]}");
-            }
-        } */
-
         void Awake()
         {
             audioSource.clip = audioClip;

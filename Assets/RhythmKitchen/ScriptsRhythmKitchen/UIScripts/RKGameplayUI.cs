@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using System.IO;
 
 namespace RhythmKitchen
 {
@@ -26,25 +27,27 @@ namespace RhythmKitchen
         private float fillSpeed;
         private float targetProgress = 0;
         private float _nextLog;
-        private float startTime;
+        private double endTime;
+        private double startTime;
 
         void Awake()
         {
+            startTime = songData.songStartDspTime;
             songLength = songData.songLength;
-            slider.maxValue = songLength;
-            startTime = Time.time;
+            endTime = startTime + songLength;
+            slider.minValue = (float) startTime;
+            slider.maxValue = (float) endTime;
         }
 
         void Update()
         {
-            float time = Time.time - startTime;
-
-            if (time >= songLength)
+            if (endTime <= AudioSettings.dspTime)
             {
                 Invoke("CompleteDish", .5f);
+                Debug.Log("COMPLETETETETETE");
             }
 
-            slider.value = time;
+            slider.value = (float)AudioSettings.dspTime;
         }
 
         public void CompleteDish()
@@ -67,7 +70,6 @@ namespace RhythmKitchen
             outlines.SetActive(false);
             completedDish.SetActive(true);
 
-            Time.timeScale = 0f;
             conductor.musicSource.Stop();
         }
 
@@ -76,9 +78,9 @@ namespace RhythmKitchen
             clickButton();
 
             judgementLine.SetActive(false);
+            //notesRuntime.SetActive(false);
 
             AudioListener.pause = true;
-            Time.timeScale = 0f;
         }
 
         private void clickButton()
