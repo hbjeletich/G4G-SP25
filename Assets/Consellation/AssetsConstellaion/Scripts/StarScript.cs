@@ -16,6 +16,8 @@ namespace Constellation
         private bool playerTouch = false;
         // the attached destination
         public GameObject destination;
+
+        public GameObject[] adjacents;
         // that destinations script
         private DestinationScript destScript;
         // has the star gotten home yet
