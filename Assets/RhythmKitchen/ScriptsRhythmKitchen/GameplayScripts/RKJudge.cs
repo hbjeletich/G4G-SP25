@@ -7,8 +7,11 @@ using UnityEngine.Events;
 // Worked on by: Jovanna Molina and Leia Phillips
 // Commented by: Jovanna Molina
 
+// Script is ONLY attached to Input object under CAPTURY
+
 namespace RhythmKitchen
-{ public class RKJudge : MonoBehaviour
+{
+    public class RKJudge : MonoBehaviour
     {
         [SerializeField] private bool debugOn;
 
@@ -24,7 +27,7 @@ namespace RhythmKitchen
 
         [Header("Captury Inputs")]
         [SerializeField] private InputActionAsset inputActions;
-        
+
         private InputAction leftHipAction;
         private InputAction leftFootRaised;
         private InputAction rightFootRaised;
@@ -51,7 +54,7 @@ namespace RhythmKitchen
 
         private void OnEnable()
         {
-            
+
             leftHipAction.Enable();
             leftFootRaised.Enable();
             rightFootRaised.Enable();
@@ -87,7 +90,7 @@ namespace RhythmKitchen
             isLeftLegLift = true;
             Debug.Log("[Captury] OnLeftFootRaised Called");
         }
-        
+
         private void OnRightFootRaised(InputAction.CallbackContext contex)
         {
             isRightLegLift = true;
