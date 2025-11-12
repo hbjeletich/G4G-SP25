@@ -2836,7 +2836,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &455312591
 RectTransform:
   m_ObjectHideFlags: 0
@@ -11818,7 +11818,7 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 12b3f811924942e4698e774a17aa0926,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: -45
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 12b3f811924942e4698e774a17aa0926,
         type: 3}
@@ -12064,9 +12064,9 @@ Canvas:
   m_GameObject: {fileID: 1920962161}
   m_Enabled: 1
   serializedVersion: 3
-  m_RenderMode: 0
-  m_Camera: {fileID: 0}
-  m_PlaneDistance: 100
+  m_RenderMode: 1
+  m_Camera: {fileID: 298100867}
+  m_PlaneDistance: 200
   m_PixelPerfect: 0
   m_ReceivesEvents: 1
   m_OverrideSorting: 0
@@ -12349,7 +12349,7 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 6b2d34b25da559b40b9f612105352d97,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: -44.999996
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 6b2d34b25da559b40b9f612105352d97,
         type: 3}
