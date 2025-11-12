@@ -1676,6 +1676,7 @@ GameObject:
   - component: {fileID: 298100870}
   - component: {fileID: 298100869}
   - component: {fileID: 298100871}
+  - component: {fileID: 298100872}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -1833,6 +1834,14 @@ MonoBehaviour:
     m_MipBias: 0
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
+--- !u!81 &298100872
+AudioListener:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 298100865}
+  m_Enabled: 1
 --- !u!1 &314554341
 GameObject:
   m_ObjectHideFlags: 0
@@ -2557,7 +2566,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &406086791
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10533,6 +10542,93 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1587554225}
   m_CullTransparentMesh: 1
+--- !u!1 &1597775321
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1597775323}
+  - component: {fileID: 1597775322}
+  m_Layer: 0
+  m_Name: Sound Manager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1597775322
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1597775321}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9fab97d8a978cf141880da7022b8bd38, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sounds:
+  - name: Title Theme
+    clip: {fileID: 8300000, guid: 9a23f6489bf88e54282ef31762888acb, type: 3}
+    volume: 1
+    pitch: 1
+    loop: 1
+    source: {fileID: 0}
+  - name: Cafe Theme
+    clip: {fileID: 8300000, guid: d651e82916fc02c4085d31bbd1f98aa3, type: 3}
+    volume: 0
+    pitch: 0
+    loop: 1
+    source: {fileID: 0}
+  - name: Cafe Confirm
+    clip: {fileID: 8300000, guid: bad09d7ac3f9d064683468a76a368d0a, type: 3}
+    volume: 0
+    pitch: 0
+    loop: 0
+    source: {fileID: 0}
+  - name: Spinning Wheel
+    clip: {fileID: 8300000, guid: bbaaefef211b13f44a1d675a5a7ed0a2, type: 3}
+    volume: 0
+    pitch: 0
+    loop: 0
+    source: {fileID: 0}
+  - name: Pottery Completion
+    clip: {fileID: 8300000, guid: 011bec1a55031734d892f4765b75ce46, type: 3}
+    volume: 0
+    pitch: 0
+    loop: 0
+    source: {fileID: 0}
+  - name: Painting
+    clip: {fileID: 8300000, guid: a1a0e098effc90546bca0e451b195b6c, type: 3}
+    volume: 0
+    pitch: 0
+    loop: 0
+    source: {fileID: 0}
+  - name: Etching
+    clip: {fileID: 8300000, guid: fed3a724c40d2224f878dbea00e3a79b, type: 3}
+    volume: 0
+    pitch: 0
+    loop: 0
+    source: {fileID: 0}
+--- !u!4 &1597775323
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1597775321}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 431.94855, y: 185.45602, z: -23.489616}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1615215304
 GameObject:
   m_ObjectHideFlags: 0
@@ -13932,3 +14028,4 @@ SceneRoots:
   - {fileID: 1080871541}
   - {fileID: 1153683808}
   - {fileID: 1109757796}
+  - {fileID: 1597775323}
