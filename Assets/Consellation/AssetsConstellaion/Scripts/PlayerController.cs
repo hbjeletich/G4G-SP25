@@ -29,7 +29,7 @@ namespace Constellation
         [SerializeField] private float rotateStat = 5.0f;
 
         //
-        [SerializeField] private float footThreshold = .1f;
+        [SerializeField] private float turnFootThreshold = .1f;
 
         //The Event to try and grab
         public UnityEvent interact;
@@ -116,18 +116,24 @@ namespace Constellation
                     speedMod = 0;
                 }
 
+         
+
+
                 
-                if (leftFootY>rightFootY && leftFootY>footThreshold)
+                if (leftFootY>rightFootY && leftFootY>turnFootThreshold)
                 {
                     Debug.Log("HIT : turn left?");
                     rotationMod = -1;
                 }
-                if (rightFootY > leftFootY && rightFootY > footThreshold)
+
+                if (rightFootY > leftFootY && rightFootY > turnFootThreshold)
+
                 {
                     Debug.Log("HIT : turn right?");
                     rotationMod = 1;
                 }
-                if (leftFootY < footThreshold && rightFootY < footThreshold)
+
+                if (leftFootY < turnFootThreshold && rightFootY < turnFootThreshold)
                 {
                     rotationMod = 0;
                 }
