@@ -6425,6 +6425,7 @@ GameObject:
   - component: {fileID: 1028542002}
   - component: {fileID: 1028542001}
   - component: {fileID: 1028542000}
+  - component: {fileID: 1028542003}
   m_Layer: 5
   m_Name: Right_Button
   m_TagString: Untagged
@@ -6520,6 +6521,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1028542003}
+        m_TargetAssemblyTypeName: CaptureButton, Assembly-CSharp
+        m_MethodName: OnClickCapture
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1028542001
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6558,6 +6571,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1028541998}
   m_CullTransparentMesh: 1
+--- !u!114 &1028542003
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1028541998}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 05cde2ece1c90e0408b21318cdc37125, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  screenshotScript: {fileID: 1109757795}
 --- !u!1 &1031252490
 GameObject:
   m_ObjectHideFlags: 0
@@ -7820,8 +7846,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e991eadbb1066684b9c56ccd7b72c4fe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  confirmationCanvas: {fileID: 1920962164}
-  maxScreenshots: 6
 --- !u!4 &1109757796
 Transform:
   m_ObjectHideFlags: 0
@@ -11873,6 +11897,57 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1872384543}
   m_CullTransparentMesh: 1
+--- !u!1 &1888144309
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1888144311}
+  - component: {fileID: 1888144310}
+  m_Layer: 0
+  m_Name: Gallery Manager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1888144310
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1888144309}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1eef5e45ae8cbe64d9bd3b85253c955b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gallerySlots:
+  - {fileID: 1424128895}
+  - {fileID: 721753434}
+  - {fileID: 1722541831}
+  - {fileID: 1513337661}
+  - {fileID: 1895940920}
+  - {fileID: 273392903}
+--- !u!4 &1888144311
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1888144309}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 295.98743, y: 213.58784, z: -5.1354895}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1895940918
 GameObject:
   m_ObjectHideFlags: 0
@@ -13686,7 +13761,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &2098334171
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14089,7 +14164,6 @@ GameObject:
   m_Component:
   - component: {fileID: 2145119837}
   - component: {fileID: 2145119836}
-  - component: {fileID: 2145119838}
   m_Layer: 0
   m_Name: GalleryMenu
   m_TagString: Untagged
@@ -14136,26 +14210,6 @@ Transform:
   - {fileID: 273392902}
   m_Father: {fileID: 1920962165}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2145119838
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2145119835}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1eef5e45ae8cbe64d9bd3b85253c955b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  galleryImages:
-  - {fileID: 1424128895}
-  - {fileID: 721753434}
-  - {fileID: 1722541831}
-  - {fileID: 1513337661}
-  - {fileID: 1895940920}
-  - {fileID: 273392903}
-  screenshotManager: {fileID: 1109757795}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
@@ -14171,4 +14225,5 @@ SceneRoots:
   - {fileID: 197699647}
   - {fileID: 1080871541}
   - {fileID: 1153683808}
+  - {fileID: 1888144311}
   - {fileID: 1109757796}

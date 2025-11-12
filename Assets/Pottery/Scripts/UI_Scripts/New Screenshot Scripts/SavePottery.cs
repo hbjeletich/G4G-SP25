@@ -1,15 +1,23 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+//using System.Collections;
+//using System.Collections.Generic;
+//using UnityEngine;
 
-public class SavePottery : MonoBehaviour
-{
-    public PotteryScreenshot screenshotManager;
+//public class CaptureButton : MonoBehaviour
+//{
+//    [Header("Assign your PotteryScreenshot script here")]
+//    public PotteryScreenshot screenshotScript;
 
-    public void OnSaveButtonClick()
-    {
-        screenshotManager.CaptureScreenshot();
-        Debug.Log("Screenshot saved. You can view it in the gallery scene.");
-    }
-}
+//    // This function will be called by the Button's OnClick
+//    public void OnClickCapture()
+//    {
+//        if (screenshotScript != null)
+//        {
+//            screenshotScript.CaptureScreenshot();
+//        }
+//        else
+//        {
+//            Debug.LogWarning("PotteryScreenshot script not assigned!");
+//        }
+//    }
+//}
 
