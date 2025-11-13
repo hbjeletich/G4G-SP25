@@ -5,14 +5,14 @@ using UnityEngine;
 public class CaptureButton : MonoBehaviour
 {
     [Header("Assign your PotteryScreenshot script here")]
-    public PotteryScreenshot screenshotScript;
+    public PotteryScreenshot PotteryScreenshot;
 
     // This function will be called by the Button's OnClick
     public void OnClickCapture()
     {
-        if (screenshotScript != null)
+        if (PotteryScreenshot != null)
         {
-            screenshotScript.CaptureScreenshot();
+            PotteryScreenshot.CaptureScreenshot();
         }
         else
         {

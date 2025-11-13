@@ -17,6 +17,11 @@ public class GalleryLoader : MonoBehaviour
     {
         screenshotsFolder = Path.Combine(Application.persistentDataPath, "PotteryScreenshots");
         Debug.Log("Looking for screenshots in: " + screenshotsFolder);
+        //LoadGallery(screenshotsFolder);
+    }
+
+    public void UpdateGallery()
+    {
         LoadGallery(screenshotsFolder);
     }
 
