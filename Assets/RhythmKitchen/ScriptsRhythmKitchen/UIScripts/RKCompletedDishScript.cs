@@ -73,7 +73,6 @@ namespace RhythmKitchen
 
         public void GoToSongSelect()
         {
-            Time.timeScale = 1f;
 
             var am = RKAudioManager.Instance;
 

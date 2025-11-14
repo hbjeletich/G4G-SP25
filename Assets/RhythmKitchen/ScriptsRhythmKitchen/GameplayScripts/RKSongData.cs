@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
+using UnityEngine.UI;
 
 // Worked on by: Jovanna Molina and Leia Phillips 
 // Commented by: Jovanna Molina and Leia Phillips
@@ -27,8 +28,18 @@ namespace RhythmKitchen
         public RKNote prefabLane3;
         public RKNote prefabLane4;
 
+        [Header("Outlines")]
+        public Sprite outlineSprite1;
+        public Sprite outlineSprite2;
+        public Sprite outlineSprite3;
+        public Sprite outlineSprite4;
+
         [Header("Don't Touch!")]
         public AudioSource audioSource;
+        public SpriteRenderer outlineHolder1;
+        public SpriteRenderer outlineHolder2;
+        public SpriteRenderer outlineHolder3;
+        public SpriteRenderer outlineHolder4;
         
 
         // computed and consumed by other scripts
@@ -43,6 +54,11 @@ namespace RhythmKitchen
         void Awake()
         {
             audioSource.clip = audioClip;
+
+            outlineHolder1.sprite = outlineSprite1;
+            outlineHolder2.sprite = outlineSprite2;
+            outlineHolder3.sprite = outlineSprite3;
+            outlineHolder4.sprite = outlineSprite4;
 
             // this is the base timing
             secondsPerBeat = 60f / Mathf.Max(1f, bpm); // this just avoids divide by zero

@@ -27,7 +27,6 @@ public class RKPauseMenuScript : MonoBehaviour
 
     public void BackMainMenu()
     {
-        Time.timeScale = 1f;
         AudioListener.pause = false;
 
         clickButton();
