@@ -77,10 +77,9 @@ namespace RhythmKitchen
         {
             clickButton();
 
-            judgementLine.SetActive(false);
-            //notesRuntime.SetActive(false);
-
             AudioListener.pause = true;
+
+            var am = RKAudioManager.Instance;
         }
 
         private void clickButton()

@@ -27,6 +27,7 @@ public class RKAudioManager : MonoBehaviour
     private void Start()
     {
         PlayMusic("Ambience");
+        sfxSource.ignoreListenerPause = true;
     }
 
     public void PlayMusic(string name)

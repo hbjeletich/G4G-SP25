@@ -4,12 +4,20 @@ using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using TMPro;
 
 
 public class RKPauseMenuScript : MonoBehaviour
 {
     public AudioMixer audioMixer;
     public Slider volumeSlider;
+    public TMP_Text countdownText;
+    public GameObject pausePanel;
+    public GameObject judgementLine;
+    public GameObject outlines;
+    public GameObject pauseMenu;
+    public GameObject pauseButton;
+    public GameObject notesRuntime; 
 
     void Start()
     {
@@ -27,19 +35,42 @@ public class RKPauseMenuScript : MonoBehaviour
 
     public void BackMainMenu()
     {
-        AudioListener.pause = false;
-
         clickButton();
+
+        AudioListener.pause = false;
 
         SceneManager.LoadScene("RKMainMenu");
     }
 
     public void ResumeGameplay()
     {
-        Time.timeScale = 1f;
-        AudioListener.pause = false;
-        
         clickButton();
+
+        pausePanel.SetActive(false);
+        
+        StartCoroutine(countdownStart());
+    }
+
+    IEnumerator countdownStart()
+    {
+        int countdownLength = 3;
+
+        for(int i = countdownLength; i > 0; i--)
+        {
+            countdownText.text = "" + i;
+            yield return new WaitForSeconds(1);
+        }
+
+        countdownText.text = "Go!";
+        yield return new WaitForSeconds(1);
+
+        AudioListener.pause = false;
+        judgementLine.SetActive(true);
+        outlines.SetActive(true);
+        pausePanel.SetActive(true);
+        pauseMenu.SetActive(false);
+        notesRuntime.SetActive(true); 
+        pauseButton.SetActive(true);
     }
 
     private void clickButton()
