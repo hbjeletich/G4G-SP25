@@ -108,6 +108,8 @@ namespace CameraSnap
             // Update UI and game state
             ui?.ShowPhotoMessage(name, messageDuration);
             GameManager.Instance?.RegisterCapturedAnimal(name);
+            // Reveal the target in the UI if this animal was one of the session targets
+            UIManager.Instance?.RevealTarget(name);
             cart.currentZone?.NotifyAnimalCaptured(name);
         }
 

@@ -34,6 +34,13 @@ namespace CameraSnap
     [Tooltip("Screen UI text that shows remaining time until auto-resume")]
     public TMP_Text stopCountdownText;
 
+    [Header("Session Target UI")]
+    [Tooltip("Image slots (left->right) that show animal silhouettes and later reveal the full image when captured.")]
+    public List<UnityEngine.UI.Image> targetSlots = new List<UnityEngine.UI.Image>(3);
+
+    // Mapping from animal name -> slot index for quick reveal
+    private System.Collections.Generic.Dictionary<string, int> targetIndexByName = new System.Collections.Generic.Dictionary<string, int>();
+
         [Header("Misc UI")]
         public GameObject stopCartObject;
         public GameObject zoneIcon;
@@ -66,6 +73,16 @@ namespace CameraSnap
             }
 
             DontDestroyOnLoad(gameObject);
+        }
+
+        private void Start()
+        {
+            // Initialize session targets from GameManager if available
+            if (GameManager.Instance != null)
+            {
+                var targets = GameManager.Instance.GetRandomTargets(targetSlots.Count);
+                SetSessionTargets(targets);
+            }
         }
 
         // Shows the end-game summary and pauses the game.
@@ -107,10 +124,8 @@ namespace CameraSnap
             if (stopCartObject != null) stopCartObject.SetActive(visible);
         }
 
-        /// <summary>
-        /// Zone icon is often a per-zone GameObject; UIManager allows a single visible
-        /// slot so scripts can pass ownership when a zone becomes active.
-        /// </summary>
+       
+       
         public void SetZoneIcon(GameObject icon)
         {
             zoneIcon = icon;
@@ -143,6 +158,72 @@ namespace CameraSnap
             guideObject.SetActive(true);
             // Set integer parameter (Animator should handle transitions)
             guideAnimator.SetInteger(guideStateParam, (int)state);
+        }
+
+      
+        /// Set the silhouettes for the current play session. The provided list is
+        /// assigned to `targetSlots` left-to-right. If there are fewer targets than
+        /// slots, the remaining slots are cleared.
+     
+        public void SetSessionTargets(System.Collections.Generic.List<AnimalData> targets)
+        {
+            targetIndexByName.Clear();
+
+            for (int i = 0; i < targetSlots.Count; i++)
+            {
+                var slot = targetSlots[i];
+                if (slot == null) continue;
+
+                if (targets != null && i < targets.Count && targets[i] != null)
+                {
+                    var data = targets[i];
+                    // show silhouette image (fall back to found image if silhouette missing)
+                    slot.sprite = data.silhouetteImage != null ? data.silhouetteImage : data.foundImage;
+                    slot.color = Color.white;
+                    slot.enabled = true;
+                    if (!string.IsNullOrEmpty(data.animalName))
+                        targetIndexByName[data.animalName] = i;
+                }
+                else
+                {
+                    // clear slot when no assigned target
+                    slot.sprite = null;
+                    slot.enabled = false;
+                }
+            }
+        }
+
+    
+        /// Reveal the matched target slot for the given animal name (swap silhouette
+        /// to the found image). Safe to call even if the animal isn't a target.
+     
+        public void RevealTarget(string animalName)
+        {
+            if (string.IsNullOrEmpty(animalName)) return;
+            if (!targetIndexByName.TryGetValue(animalName, out int idx)) return;
+            if (idx < 0 || idx >= targetSlots.Count) return;
+
+            var slot = targetSlots[idx];
+            if (slot == null) return;
+
+            // Find the AnimalData to get its revealed image
+            var data = GameManager.Instance?.GetAllAnimals().Find(a => a != null && a.animalName == animalName);
+            if (data == null)
+            {
+                Debug.LogWarning($"[UIManager] RevealTarget: AnimalData not found for {animalName}");
+                return;
+            }
+
+            if (data.foundImage != null)
+            {
+                slot.sprite = data.foundImage;
+                slot.color = Color.white;
+            }
+            else
+            {
+                // fallback: keep silhouette but tint green to indicate found
+                slot.color = Color.green;
+            }
         }
 
         public void HideGuide()

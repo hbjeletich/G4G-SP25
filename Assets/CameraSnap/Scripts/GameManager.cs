@@ -40,6 +40,25 @@ namespace CameraSnap
             return allAnimals ?? new List<AnimalData>();
         }
 
+       
+     
+        public List<AnimalData> GetRandomTargets(int count)
+        {
+            var pool = GetAllAnimals();
+            List<AnimalData> copy = new List<AnimalData>(pool);
+            List<AnimalData> result = new List<AnimalData>();
+
+            // Fisher-Yates shuffle-like selection: pick random unique entries
+            for (int i = 0; i < count && copy.Count > 0; i++)
+            {
+                int idx = Random.Range(0, copy.Count);
+                result.Add(copy[idx]);
+                copy.RemoveAt(idx);
+            }
+
+            return result;
+        }
+
       
         /// Returns a random animal from the full list.
         /// Picks a random one for spawning
