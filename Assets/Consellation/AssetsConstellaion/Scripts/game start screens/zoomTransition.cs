@@ -10,6 +10,8 @@ public class zoomTransition : MonoBehaviour
     public float zoomAmount = 3f;
     public float duration = 1f;
 
+    public GameObject guideCharacter;
+
     private bool isZooming = false;
     private float startFOV;
 
@@ -17,22 +19,23 @@ public class zoomTransition : MonoBehaviour
     {
         startFOV = mainCam.fieldOfView;
 
-        // Ensure detail screen is hidden
+        // level select screen is hidden
         levelScreen.alpha = 0;
         levelScreen.interactable = false;
         levelScreen.blocksRaycasts = false;
+
     }
 
     public void OnStartButtonClick()
     {
         if (!isZooming)
         {
-            // Immediately hide main screen and show detail screen
+            // hide start screen, show level select screen
             startScreen.alpha = 0;
             startScreen.interactable = false;
             startScreen.blocksRaycasts = false;
 
-            // Start camera zoom
+            // camera zoom 
             StartCoroutine(ZoomIn());
         }
     }
@@ -53,6 +56,8 @@ public class zoomTransition : MonoBehaviour
         levelScreen.alpha = 1;
         levelScreen.interactable = true;
         levelScreen.blocksRaycasts = true;
+
+        guideCharacter.SetActive(true);
 
         isZooming = false;
     }
