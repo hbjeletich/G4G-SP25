@@ -14,6 +14,12 @@ namespace Constellation
         private GameObject player;
         // is the player touching me
         private bool playerTouch = false;
+        //the stars that are adjacent to the star 
+        public GameObject[] nearStars;
+        //the line empty with no stars
+        public GameObject blankLine;
+        //the line once filled by stars
+        public GameObject FullLine;
         // the attached destination
         public GameObject destination;
         // that destinations script
@@ -36,6 +42,17 @@ namespace Constellation
             }
             //gets dest scritp
             destScript = destination.GetComponent<DestinationScript>();
+
+            foreach (var star in nearStars)
+            {
+                StarScript temp = star.GetComponent<StarScript>();
+                //Quaternion looking = 
+                //Quaternion final = Quaternion.Euler(looking.x,-90,-90);
+                //Quaternion.P
+                Instantiate(blankLine, Vector3.Lerp(destination.transform.position, temp.destination.transform.position, .5f),Quaternion.Euler(0,90,90));
+                blankLine.transform.LookAt(destination.transform);
+            }
+            
         }
 
         // Update is called once per frame
