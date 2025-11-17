@@ -12,8 +12,7 @@ namespace Constellation
         
         //the line empty with no stars
         public GameObject blankLine;
-
-        public Material filledMaterial;
+        
         //the line once filled by stars
         public GameObject fullLine;
 
