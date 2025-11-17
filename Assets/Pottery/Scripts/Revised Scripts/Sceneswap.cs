@@ -18,13 +18,17 @@ public class UIManager : MonoBehaviour
     public GameObject gameStage_1_Panel;
     public GameObject gameStage_2_Panel;
     public GameObject confirmation_Panel;
+    public GameObject pot;
+    public GameObject wheel;
 
     private bool gameStage1Completed = false;
 
-    //void Start()
-    //{
-    //    ShowMainMenu();
-    //}
+    void Start()
+    {
+        //ShowMainMenu();
+        pot.SetActive(false);
+        wheel.SetActive(false);
+    }
 
 
     public void ShowMainMenu()
@@ -77,6 +81,7 @@ public class UIManager : MonoBehaviour
 
         SetActivePanel(gameStage_2_Panel);
 
+
         //if (gameStage1Completed)
         //{
         //    SetActivePanel(gameStage_2_Panel);
@@ -105,5 +110,18 @@ public class UIManager : MonoBehaviour
 
         activePanel.SetActive(true);
     }
+
+    public void ShowPot()
+    {
+        pot.SetActive(true);
+        wheel.SetActive(true);
+    }
+
+    public void HidePot()
+    {
+        pot.SetActive(false);
+        wheel.SetActive(false);
+    }
+
 }
 

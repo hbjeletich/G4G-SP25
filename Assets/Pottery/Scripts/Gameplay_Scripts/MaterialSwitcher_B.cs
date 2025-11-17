@@ -13,6 +13,7 @@ public class MaterialSwitcher_B : MonoBehaviour
     public Material solidYellow;
     public Material solidWhite;
 
+    private bool isBaseDecal = false;
     private bool isDecalRed = false;
     private bool isDecalWhite = false;
     private bool isDecalBlue = false;
@@ -56,11 +57,15 @@ public class MaterialSwitcher_B : MonoBehaviour
             }
             else
             {
-                selectedMaterial = solidRed; // default
-                targetRenderer.material = solidRed;
+                selectedMaterial = ClayMaterial; // default
+                targetRenderer.material = ClayMaterial;
             }
         }
+
+
+
     }
+
 
     // -------------------------
     // COLOR BUTTON TRIGGERS
@@ -201,6 +206,7 @@ public class MaterialSwitcher_B : MonoBehaviour
         Material matToApply = solidRed;
 
         // 1. Determine solid color base
+        if (isBaseDecal) matToApply = ClayMaterial;
         if (isDecalRed) matToApply = solidRed;
         if (isDecalWhite) matToApply = solidWhite;
         if (isDecalBlue) matToApply = solidBlue;
