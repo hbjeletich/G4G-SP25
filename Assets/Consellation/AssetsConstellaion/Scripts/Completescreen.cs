@@ -64,16 +64,19 @@ namespace Constellation
         {
             // Directly access its foundHome field
             // If you make it private, add a public getter instead.
+            /*
             var field = typeof(StarScript).GetField("foundHome", 
                 System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
+            field =Sta
 
             if (field == null)
             {
                 Debug.LogError("StarScript missing foundHome field!");
                 return false;
             }
-
-            return (bool)field.GetValue(star);
+            */
+            return star.foundHome;
+            //return (bool)field.GetValue(star);
         }
 
         private void OnLevelComplete()

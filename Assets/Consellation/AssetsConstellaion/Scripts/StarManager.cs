@@ -33,6 +33,7 @@ namespace Constellation
 
         void StarSetup()
         {
+            Debug.Log("HIT : SETUP");
             foreach (var star in stars)
             {
                 starScripts.Add(star.GetComponent<StarScript>());
@@ -41,14 +42,21 @@ namespace Constellation
             foreach (var script in starScripts)
             {
                 script.starPlaced.AddListener(StarPlaced);
-                
+                Debug.Log("HIT : StarScfript");
+
                 foreach (var nearStar in script.nearStars)
                 {
+                    Debug.Log("HIT : if");
                     StarScript nearStarScript = nearStar.GetComponent<StarScript>();
-                    
-                    if (!relationships.Contains((script, nearStarScript,blankLine)) && !relationships.Contains((nearStarScript, script,blankLine)))
+
+                    if (!relationships.Contains((script, nearStarScript, blankLine)) && !relationships.Contains((nearStarScript, script, blankLine)))
                     {
-                        relationships.Add((script, nearStarScript,blankLine));
+                        relationships.Add((script, nearStarScript, blankLine));
+                        Debug.Log("HIT : if");
+                    }
+                    else 
+                    {
+                        Debug.Log("HIT : else");
                     }
                 }
             }
@@ -59,6 +67,7 @@ namespace Constellation
                 LineRenderer tempLine=pair.line.GetComponent<LineRenderer>();
                 tempLine.SetPosition(0,pair.starOne.destination.transform.position);
                 tempLine.SetPosition(1,pair.starTwo.destination.transform.position);
+                Debug.Log("HIT : placed");
             }
         }
 
