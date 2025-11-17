@@ -6,6 +6,9 @@ using System;
 public class SoundManager : MonoBehaviour
 {
     public static SoundManager Instance;
+    public AudioSource Music;
+    public AudioSource SFX;
+
 
     [SerializeField]
     public Sound[] sounds; // Drag all sounds in the Inspector
