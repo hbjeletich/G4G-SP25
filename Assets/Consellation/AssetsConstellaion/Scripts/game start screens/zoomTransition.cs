@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class zoomTransition : MonoBehaviour
 {
+
+    // declaring variables
     public Camera mainCam;
     public CanvasGroup startScreen;
     public CanvasGroup levelScreen;
@@ -17,7 +19,7 @@ public class zoomTransition : MonoBehaviour
 
     void Start()
     {
-        startFOV = mainCam.fieldOfView;
+        startFOV = mainCam.fieldOfView; // original camera field of view 
 
         // level select screen is hidden
         levelScreen.alpha = 0;
@@ -35,7 +37,7 @@ public class zoomTransition : MonoBehaviour
             startScreen.interactable = false;
             startScreen.blocksRaycasts = false;
 
-            // camera zoom 
+            // camera zooming
             StartCoroutine(ZoomIn());
         }
     }
@@ -53,6 +55,7 @@ public class zoomTransition : MonoBehaviour
             yield return null;
         }
 
+        //now show level select screen and character
         levelScreen.alpha = 1;
         levelScreen.interactable = true;
         levelScreen.blocksRaycasts = true;

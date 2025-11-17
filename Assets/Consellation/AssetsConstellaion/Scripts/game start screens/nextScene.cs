@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class nextScene : MonoBehaviour
 {
-    [Header("Name of the scene to load")]
+    [Header("Scene to load")]
     public string sceneName;
 
     public void LoadScene()
