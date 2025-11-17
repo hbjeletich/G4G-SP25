@@ -20,6 +20,9 @@
         },
         {
             "m_Id": "bcb1b73fbdb74bb8af0e4c11b15d6566"
+        },
+        {
+            "m_Id": "4c77efd308434614b160ddbd5715481c"
         }
     ],
     "m_Keywords": [],
@@ -140,6 +143,9 @@
         },
         {
             "m_Id": "b1061221ee3e47b7b14a8403abd4d87b"
+        },
+        {
+            "m_Id": "5f0fd8e8776e490d8d5df54e216de088"
         }
     ],
     "m_GroupDatas": [],
@@ -257,6 +263,20 @@
             "m_InputSlot": {
                 "m_Node": {
                     "m_Id": "8a1cba1fa370401cbd23fa57f5c96de5"
+                },
+                "m_SlotId": 0
+            }
+        },
+        {
+            "m_OutputSlot": {
+                "m_Node": {
+                    "m_Id": "5f0fd8e8776e490d8d5df54e216de088"
+                },
+                "m_SlotId": 0
+            },
+            "m_InputSlot": {
+                "m_Node": {
+                    "m_Id": "14f1780a0cae485fbcb870f80ed3f9f6"
                 },
                 "m_SlotId": 0
             }
@@ -1835,6 +1855,36 @@
 }
 
 {
+    "m_SGVersion": 3,
+    "m_Type": "UnityEditor.ShaderGraph.Internal.ColorShaderProperty",
+    "m_ObjectId": "4c77efd308434614b160ddbd5715481c",
+    "m_Guid": {
+        "m_GuidSerialized": "9fe280cf-7e47-40c8-a0f3-843855335ec3"
+    },
+    "m_Name": "emmisioncolor",
+    "m_DefaultRefNameVersion": 1,
+    "m_RefNameGeneratedByDisplayName": "emmisioncolor",
+    "m_DefaultReferenceName": "_emmisioncolor",
+    "m_OverrideReferenceName": "",
+    "m_GeneratePropertyBlock": true,
+    "m_UseCustomSlotLabel": false,
+    "m_CustomSlotLabel": "",
+    "m_DismissedVersion": 0,
+    "m_Precision": 0,
+    "overrideHLSLDeclaration": false,
+    "hlslDeclarationOverride": 0,
+    "m_Hidden": false,
+    "m_Value": {
+        "r": 0.0,
+        "g": 0.0,
+        "b": 0.0,
+        "a": 0.0
+    },
+    "isMainColor": false,
+    "m_ColorMode": 0
+}
+
+{
     "m_SGVersion": 0,
     "m_Type": "UnityEditor.ShaderGraph.Vector4MaterialSlot",
     "m_ObjectId": "4ddf280cd8294b0ba97950592e17ca40",
@@ -2054,6 +2104,42 @@
     "m_Value": 0.0,
     "m_DefaultValue": 0.0,
     "m_Labels": []
+}
+
+{
+    "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.PropertyNode",
+    "m_ObjectId": "5f0fd8e8776e490d8d5df54e216de088",
+    "m_Group": {
+        "m_Id": ""
+    },
+    "m_Name": "Property",
+    "m_DrawState": {
+        "m_Expanded": true,
+        "m_Position": {
+            "serializedVersion": "2",
+            "x": 215.33335876464845,
+            "y": 418.6667175292969,
+            "width": 153.99998474121095,
+            "height": 36.0
+        }
+    },
+    "m_Slots": [
+        {
+            "m_Id": "a76cf80192b94e71a3cefbe5724c9d30"
+        }
+    ],
+    "synonyms": [],
+    "m_Precision": 0,
+    "m_PreviewExpanded": true,
+    "m_DismissedVersion": 0,
+    "m_PreviewMode": 0,
+    "m_CustomColors": {
+        "m_SerializableColors": []
+    },
+    "m_Property": {
+        "m_Id": "4c77efd308434614b160ddbd5715481c"
+    }
 }
 
 {
@@ -2358,6 +2444,9 @@
         },
         {
             "m_Id": "bcb1b73fbdb74bb8af0e4c11b15d6566"
+        },
+        {
+            "m_Id": "4c77efd308434614b160ddbd5715481c"
         }
     ]
 }
@@ -3021,6 +3110,31 @@
     "m_NormalMapSpace": 0,
     "m_EnableGlobalMipBias": true,
     "m_MipSamplingMode": 0
+}
+
+{
+    "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.Vector4MaterialSlot",
+    "m_ObjectId": "a76cf80192b94e71a3cefbe5724c9d30",
+    "m_Id": 0,
+    "m_DisplayName": "emmisioncolor",
+    "m_SlotType": 1,
+    "m_Hidden": false,
+    "m_ShaderOutputName": "Out",
+    "m_StageCapability": 3,
+    "m_Value": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0,
+        "w": 0.0
+    },
+    "m_DefaultValue": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0,
+        "w": 0.0
+    },
+    "m_Labels": []
 }
 
 {
@@ -4278,9 +4392,9 @@
     "m_ShaderOutputName": "Emission",
     "m_StageCapability": 2,
     "m_Value": {
-        "x": 0.0,
-        "y": 0.0,
-        "z": 0.0
+        "x": 0.7610061764717102,
+        "y": 0.25127553939819338,
+        "z": 0.25127553939819338
     },
     "m_DefaultValue": {
         "x": 0.0,
