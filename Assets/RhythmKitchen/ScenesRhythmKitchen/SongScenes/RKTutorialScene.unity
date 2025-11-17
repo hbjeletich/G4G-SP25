@@ -6146,8 +6146,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 71fd38872f4db4cfe9462687ee8b2618, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  debugOn: 1
+  debugOn: 0
   conductor: {fileID: 72580114}
+  completedDish: {fileID: 1260744398}
   notesRuntime: {fileID: 959363155}
   keyLane1: 97
   keyLane2: 119
@@ -7572,6 +7573,7 @@ MonoBehaviour:
   notesRuntime: {fileID: 959363154}
   outlines: {fileID: 1104772152}
   conductor: {fileID: 72580114}
+  judge: {fileID: 1792470077}
   slider: {fileID: 502385397}
   songData: {fileID: 342932064}
 --- !u!1 &2050551813

@@ -22,8 +22,8 @@ public class RKSongSelectScript : MonoBehaviour
 
         if (am != null)
         {
-            RKAudioManager.Instance.PlaySFX("RecordScratch");
-            RKAudioManager.Instance.StopMusic();
+            am.PlaySFX("ButtonPress");
+            am.StopMusic();
         }
         else
             Debug.LogWarning("[RKSongSelectScript] AudioManager missing: loading scene anyway.");

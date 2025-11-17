@@ -16,6 +16,7 @@ namespace RhythmKitchen
         public GameObject outlines;
 
         public RKConductor conductor;
+        public RKJudge judge;
 
         public Slider slider;
         public RKSongData songData;
@@ -69,6 +70,8 @@ namespace RhythmKitchen
             notesRuntime.SetActive(false);
             outlines.SetActive(false);
             completedDish.SetActive(true);
+
+            judge.starScore();
 
             conductor.musicSource.Stop();
         }

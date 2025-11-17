@@ -18,6 +18,7 @@ namespace RhythmKitchen
 
         [Header("Refs")]
         [SerializeField] private RKConductor conductor;
+        [SerializeField] private RKCompletedDishScript completedDish;
         [SerializeField] private Transform notesRuntime; // parent object for spawned notes
 
         [Header("Keys (A/W/S/D by lane)")]
@@ -28,10 +29,11 @@ namespace RhythmKitchen
 
         [Header("Captury Inputs")]
         [SerializeField] private InputActionAsset inputActions;
+        [SerializeField] private float footThreshold = 0.025f;
 
         private InputAction leftHipAction;
-        private InputAction leftFootRaised;
-        private InputAction rightFootRaised;
+        private InputAction leftFootPositionAction;
+        private InputAction rightFootPositionAction;
         private InputAction rightHipAction;
 
         private bool isLeftHipAbduct = false;
@@ -82,8 +84,8 @@ namespace RhythmKitchen
         {
             var actionMap = inputActions.FindActionMap("Foot");
             leftHipAction = actionMap.FindAction("LeftHipAbducted");
-            leftFootRaised = actionMap.FindAction("LeftStep");
-            rightFootRaised = actionMap.FindAction("RightStep");
+            leftFootPositionAction = actionMap.FindAction("LeftFootPosition");
+            rightFootPositionAction = actionMap.FindAction("RightFootPosition");
             rightHipAction = actionMap.FindAction("RightHipAbducted");
         }
 
@@ -91,26 +93,26 @@ namespace RhythmKitchen
         {
 
             leftHipAction.Enable();
-            leftFootRaised.Enable();
-            rightFootRaised.Enable();
+            leftFootPositionAction.Enable();
+            rightFootPositionAction.Enable();
             rightHipAction.Enable();
 
             leftHipAction.performed += OnLeftHipAbduction;
-            leftFootRaised.performed += OnLeftFootRaised;
-            rightFootRaised.performed += OnRightFootRaised;
+            //leftFootRaised.performed += OnLeftFootRaised;
+            //rightFootRaised.performed += OnRightFootRaised;
             rightHipAction.performed += OnRightHipAbduction;
         }
 
         private void OnDisable()
         {
             leftHipAction.Disable();
-            leftFootRaised.Disable();
-            rightFootRaised.Disable();
+            leftFootPositionAction.Disable();
+            rightFootPositionAction.Disable();
             rightHipAction.Disable();
 
             leftHipAction.performed -= OnLeftHipAbduction;
-            leftFootRaised.performed -= OnLeftFootRaised;
-            rightFootRaised.performed -= OnRightFootRaised;
+            //leftFootRaised.performed -= OnLeftFootRaised;
+            //rightFootRaised.performed -= OnRightFootRaised;
             rightHipAction.performed -= OnRightHipAbduction;
         }
 
@@ -120,13 +122,13 @@ namespace RhythmKitchen
             Debug.Log("[Captury] OnLeftHipAbduction Called");
         }
 
-        private void OnLeftFootRaised(InputAction.CallbackContext contex)
+        private void OnLeftFootRaised()
         {
             isLeftLegLift = true;
             Debug.Log("[Captury] OnLeftFootRaised Called");
         }
 
-        private void OnRightFootRaised(InputAction.CallbackContext contex)
+        private void OnRightFootRaised()
         {
             isRightLegLift = true;
             Debug.Log("[Captury] OnRightFootRaised Called");
@@ -165,6 +167,20 @@ namespace RhythmKitchen
             }
             else
             {
+                // check for position input
+                float rightFootYPos = rightFootPositionAction.ReadValue<Vector3>().y;
+                float leftFootYPos = leftFootPositionAction.ReadValue<Vector3>().y;
+                //Debug.Log($"[Captury] Left Foot Y: {leftFootYPos}, Right Foot Y: {rightFootYPos}");
+
+                if(rightFootYPos > footThreshold)
+                {
+                    OnRightFootRaised();
+                }
+                else if(leftFootYPos > footThreshold)
+                {
+                    OnLeftFootRaised();
+                }
+
                 if (conductor == null || notesRuntime == null)
                 {
                     return;
@@ -179,13 +195,13 @@ namespace RhythmKitchen
                 {
                     TryHit(RKNote.Type.Lane2);
                     isLeftLegLift = false;
-                    Debug.Log("[Captury] Left leg abduct attempt");
+                    Debug.Log("[Captury] Left foot lift attempt");
                 }
                 if (isRightLegLift)
                 {
                     TryHit(RKNote.Type.Lane3);
                     isRightLegLift = false;
-                    Debug.Log("[Captury] Right leg abduct attempt");
+                    Debug.Log("[Captury] Right foot lift attempt");
                 }
                 if (isRightHipAbduct)
                 {
@@ -214,15 +230,19 @@ namespace RhythmKitchen
             {
                 OnHit(target, "GOOD");
             }
-            else if (delta <= missWindow)
+            else
             {
                 OnHit(target, "ALMOST");
             }
-            else
-            {
-                Debug.Log($"[Judge] Too Far Away");
-                // RegisterMiss();
-            }
+            // else if (delta <= missWindow)
+            // {
+            //     OnHit(target, "ALMOST");
+            // }
+            // else
+            // {
+            //     Debug.Log($"[Judge] Too Far Away");
+            //     RegisterMiss();
+            // }
         }
 
         private RKNote FindClosestNoteInLane(RKNote.Type type)
@@ -297,6 +317,20 @@ namespace RhythmKitchen
             }
             //play SFX here:
             // RKAudioManager.Instance.PlaySFX("miss")...;
+        }
+
+        public void starScore()
+        {
+            int totalBeats = perfectCount + goodCount + almostCount;
+
+            int score = 1;
+
+            if (almostCount < 1 && totalBeats/4 <= goodCount)
+                score = 3;
+            else if (totalBeats/2 > almostCount)
+                score = 2;
+
+            completedDish.setStars(score);
         }
     }
 }  
