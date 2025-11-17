@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using NUnit.Framework.Constraints;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace Constellation
 {
@@ -14,14 +15,18 @@ namespace Constellation
         private GameObject player;
         // is the player touching me
         private bool playerTouch = false;
+        //the stars that are adjacent to the star 
+        public GameObject[] nearStars;
         // the attached destination
         public GameObject destination;
         // that destinations script
         private DestinationScript destScript;
         // has the star gotten home yet
-        private bool foundHome = false;
+        public bool foundHome = false;
         //the debug string to test interactions
         public string starName;
+
+        public UnityEvent starPlaced;
         
         // Start is called before the first frame update
         void Start()
@@ -36,6 +41,24 @@ namespace Constellation
             }
             //gets dest scritp
             destScript = destination.GetComponent<DestinationScript>();
+            
+            /*
+            foreach (var star in nearStars)
+            {
+                StarScript temp = star.GetComponent<StarScript>();
+                //Quaternion looking = 
+                //Quaternion final = Quaternion.Euler(looking.x,-90,-90);
+                //Quaternion.P
+                Vector3 midpoint = Vector3.Lerp(destination.transform.position, temp.destination.transform.position, .5f);
+                float arctanVal = Mathf.Atan(destination.transform.position.y / destination.transform.position.x);
+                arctanVal *= 180 / Mathf.PI;
+                Debug.Log("ArcTan" : "+arctanVal);
+                Instantiate(blankLine,midpoint,Quaternion.Euler(arctanVal,90,90));
+                blankLine.transform.LookAt(destination.transform);
+                //
+            }
+            */
+            
         }
 
         // Update is called once per frame
@@ -73,6 +96,7 @@ namespace Constellation
             {
                 //set me home and drop star
                 foundHome = true;
+                starPlaced.Invoke();
                 playerCont.grabedStar = null;
             }
             else if (playerCont.grabedStar == gameObject && !foundHome)     // if player has star and not home
