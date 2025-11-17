@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Events;
+using TMPro;
 
 // Worked on by: Jovanna Molina and Leia Phillips
 // Commented by: Jovanna Molina
@@ -42,6 +43,40 @@ namespace RhythmKitchen
         public float missWindow;
         public float goodWindow;
         public float perfectWindow;
+
+        [Header("Score UI (assign TMP objects)")]
+        [SerializeField] private TMP_Text perfectNum;
+        [SerializeField] private TMP_Text goodNum;
+        [SerializeField] private TMP_Text almostNum;
+        [SerializeField] private TMP_Text comboNum;
+        [SerializeField] private TMP_Text maxComboNum;
+
+        int perfectCount, goodCount, almostCount;
+        int comboCount, maxComboCount;
+
+        void UpdateUI()
+    {
+        if (perfectNum)
+        {
+            perfectNum.text = perfectCount.ToString();
+        }
+        if (goodNum)
+        {
+            goodNum.text = goodCount.ToString();
+        }
+        if (almostNum)
+        {
+            almostNum.text = almostCount.ToString();
+        }
+        if (comboNum)
+        {
+            comboNum.text = comboCount.ToString();
+        }
+        if (maxComboNum)
+        {
+            maxComboNum.text = maxComboCount.ToString();
+        }
+    }
 
         void Awake()
         {
@@ -186,6 +221,7 @@ namespace RhythmKitchen
             else
             {
                 Debug.Log($"[Judge] Too Far Away");
+                // RegisterMiss();
             }
         }
 
@@ -213,8 +249,54 @@ namespace RhythmKitchen
         private void OnHit(RKNote note, string rating)
         {
             // NOTE: expand this to add score, UI, SFX
+
+            switch (rating)
+            {
+                case "PERFECT":
+                    perfectCount++;
+                    comboCount++;
+                    if (comboCount > maxComboCount)
+                    {
+                        maxComboCount = comboCount;
+                    }
+                    break;
+                case "GOOD":
+                    goodCount++;
+                    comboCount++;
+                    if (comboCount > maxComboCount)
+                    {
+                        maxComboCount = comboCount;
+                    }
+                    break;
+                case "ALMOST":
+                    almostCount++;
+                    comboCount = 0; // this resets combo on almost. correct? ask Leia and Katie "want we ALMOST to NOT keep combo?"
+                    break;
+            }
+
+            UpdateUI();
+
+            // play SFX here:
+            // RKAudioManager.Instance.PlaySFX(rating)...;
+
             Debug.Log($"[Judge] {rating} {note.noteType}");
             Destroy(note.gameObject);
+            if (debugOn)
+            {
+                Debug.Log($"[Judge] {rating} {note.noteType} (combo {comboCount})");
+            }
+        }
+
+        void RegisterMiss()
+        {
+            comboCount = 0;
+            UpdateUI();
+            if (debugOn)
+            {
+                Debug.Log("[Judge] MISS (pressed too far from target)");
+            }
+            //play SFX here:
+            // RKAudioManager.Instance.PlaySFX("miss")...;
         }
     }
 }  
