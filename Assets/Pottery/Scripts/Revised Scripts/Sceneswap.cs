@@ -59,8 +59,16 @@ public class UIManager : MonoBehaviour
 
     public void ShowGallery()
     {
+        StartCoroutine(ShowGalleryWithDelay());
+    }
+
+    private IEnumerator ShowGalleryWithDelay()
+    {
+        // Wait 2 frames
+        yield return null;
+        yield return null;
+
         SetActivePanel(galleryPanel);
-      
     }
 
     public void ShowSelection()
@@ -119,6 +127,14 @@ public class UIManager : MonoBehaviour
 
     public void HidePot()
     {
+        StartCoroutine(HidePotWithDelay());
+    }
+
+    private IEnumerator HidePotWithDelay()
+    {
+        yield return null; // frame 1
+        yield return null; // frame 2
+
         pot.SetActive(false);
         wheel.SetActive(false);
     }
