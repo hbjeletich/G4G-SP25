@@ -17,8 +17,10 @@ public class MeshSwapper : MonoBehaviour
     public Mesh mesh05;
     public Mesh mesh06;
 
+
     private MeshFilter meshFilter;
     private int currentMeshIndex = 0;
+
 
     void Awake()
     {
@@ -95,24 +97,4 @@ public class MeshSwapper : MonoBehaviour
                 break;
         }
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 }
