@@ -16,8 +16,6 @@ namespace Constellation
         private InputAction leftFootHeightAction;
         private InputAction rightFootHeightAction;
 
-        private InputAction isWalking;
-
         //STATISTICS
         //rotation mod gathered by input
         [SerializeField] private float rotationMod;
@@ -31,7 +29,13 @@ namespace Constellation
         //
         [SerializeField] private float turnFootThreshold = .2f;
 
-        [SerializeField] private float walkFootThreshold = .07f;
+        [SerializeField] private float walkFootThreshold = .06f;
+
+        [SerializeField] private float jumpThreshold=.1f;
+
+        [SerializeField] private float delayTime=.4f;
+
+        private bool doingSomething=false;
 
         //The Event to try and grab
         public UnityEvent interact;
@@ -50,29 +54,20 @@ namespace Constellation
         void Awake()
         { 
             var footMap= inputActions.FindActionMap("Foot");
-            isWalking = footMap.FindAction("IsWalking");
             leftFootHeightAction = footMap.FindAction("LeftFootPosition");
             rightFootHeightAction = footMap.FindAction("RightFootPosition");
         }
 
         void OnEnable()
         {
-
             leftFootHeightAction.Enable();
             rightFootHeightAction.Enable();
-
-            isWalking.Enable();
-
-            isWalking.started += _ => StartWalking();
-            isWalking.canceled += _ => StopWalking();
         }
 
         void OnDisable()
         { 
-            isWalking.Disable();
-
-            isWalking.started -= _ => StartWalking();
-            isWalking.canceled -= _ => StopWalking();
+            leftFootHeightAction.Disable();
+            rightFootHeightAction.Disable();
         }
 
         // Start is called before the first frame update
@@ -80,6 +75,7 @@ namespace Constellation
         {
             //Gather Body
             charBody = GetComponent<Rigidbody2D>();
+            interact.AddListener(Interact);
         }
 
         // Update is called once per frame
@@ -104,20 +100,9 @@ namespace Constellation
 
                 float leftFootY = leftFootHeightAction.ReadValue<Vector3>().y;
                 float rightFootY = rightFootHeightAction.ReadValue<Vector3>().y;
-                
-                //if (isWalking.ReadValue<bool>())
-                //{
-                   // Debug.Log("HIT : walking");
-                   // speedMod = 1;
-                //}
-               /// else
 
-
-
-                //int temp = isWalking.ReadValue<int>();
-                //Debug.Log("HIT : " + temp);
-                
-                if (leftFootY>walkFootThreshold || rightFootY>walkFootThreshold)
+                //refine the movement
+                if ((leftFootY>walkFootThreshold || rightFootY>walkFootThreshold) && !doingSomething)
                 {
                     Debug.Log("HIT : walking");
                     speedMod = 1;
@@ -133,6 +118,7 @@ namespace Constellation
                 if (leftFootY>rightFootY && leftFootY>turnFootThreshold)
                 {
                     Debug.Log("HIT : turn left?");
+                    doingSomething=true;
                     rotationMod = -1;
                 }
 
@@ -140,22 +126,24 @@ namespace Constellation
 
                 {
                     Debug.Log("HIT : turn right?");
+                    doingSomething=true;
                     rotationMod = 1;
                 }
 
                 if (leftFootY < turnFootThreshold && rightFootY < turnFootThreshold)
                 {
+                    doingSomething=false;
                     rotationMod = 0;
                 }
 
 
-                if (Input.GetKeyDown("space"))
+                if (leftFootY > jumpThreshold && rightFootY > jumpThreshold&& !doingSomething)
                 {
                     Debug.Log("HIT : interact");
+                    doingSomething=true;
                     interact.Invoke();
                 }
             }
-
         }
 
         void FixedUpdate()
@@ -168,15 +156,14 @@ namespace Constellation
 
         }
 
-        void StartWalking()
+        void Interact()
         {
-            Debug.Log("HIT : walking");
-            speedMod = 1;
+            Invoke("delay",delayTime);
         }
 
-        void StopWalking()
+        void delay()
         {
-            speedMod = 0;
+            doingSomething=false;
         }
     }
 }
