@@ -29,9 +29,9 @@ namespace Constellation
         [SerializeField] private float rotateStat = 5.0f;
 
         //
-        [SerializeField] private float turnFootThreshold = .1f;
+        [SerializeField] private float turnFootThreshold = .2f;
 
-        [SerializeField] private float walkFootThreshold = .05f;
+        [SerializeField] private float walkFootThreshold = .07f;
 
         //The Event to try and grab
         public UnityEvent interact;
