@@ -1,7 +1,7 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
+using UnityEngine.UI;
+using TMPro;
 
 namespace Constellation
 {
@@ -9,10 +9,21 @@ namespace Constellation
     {
         [Header("UI")]
         [SerializeField] private GameObject congratsPanel;
-        [SerializeField] private float delayBeforeLoad = 3f;
 
-        [Header("Scene Transition")]
-        [SerializeField] private string nextSceneName;
+        [Header("3D Character - Slides from below into lower left")]
+        [SerializeField] private GameObject character3DModel;
+        [SerializeField] private Vector3 targetPosition = new Vector3(-3f, 1f, 5f);
+        [SerializeField] private float slideUpDistance = 10f;
+        [SerializeField] private float slideDuration = 0.8f;
+        
+        [Header("UI Elements")]
+        [SerializeField] private TextMeshProUGUI dialogueText;
+        [SerializeField] private float dialogueHoldTime = 2f;
+        
+        [SerializeField] private Image popupImage;
+        [SerializeField] private Sprite imageSprite;
+        
+        [SerializeField] private TextMeshProUGUI finalText;
 
         [Header("Debug")]
         [SerializeField] private bool debugMode = true;
@@ -22,11 +33,22 @@ namespace Constellation
 
         void Start()
         {
-            // Hide congrats panel at start
             if (congratsPanel != null)
                 congratsPanel.SetActive(false);
 
-            // Grab all stars in the scene
+            if (character3DModel != null)
+                character3DModel.SetActive(false);
+
+            // Hide UI elements initially
+            if (dialogueText != null)
+                SetAlpha(dialogueText, 0);
+
+            if (popupImage != null)
+                SetAlpha(popupImage, 0);
+
+            if (finalText != null)
+                SetAlpha(finalText, 0);
+
             stars = FindObjectsOfType<StarScript>(true);
             if (stars.Length == 0)
             {
@@ -45,11 +67,10 @@ namespace Constellation
 
             int placedCount = 0;
 
-            // Check all stars’ home status
             foreach (StarScript star in stars)
             {
                 if (star == null) continue;
-                if (IsStarHome(star))
+                if (star.foundHome)
                     placedCount++;
             }
 
@@ -60,61 +81,135 @@ namespace Constellation
                 OnLevelComplete();
         }
 
-        private bool IsStarHome(StarScript star)
-        {
-            // Directly access its foundHome field
-            // If you make it private, add a public getter instead.
-            /*
-            var field = typeof(StarScript).GetField("foundHome", 
-                System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
-            field =Sta
-
-            if (field == null)
-            {
-                Debug.LogError("StarScript missing foundHome field!");
-                return false;
-            }
-            */
-            return star.foundHome;
-            //return (bool)field.GetValue(star);
-        }
-
         private void OnLevelComplete()
         {
             if (congratsPanel == null)
-{
-    Debug.LogError("❌ Congrats panel is NOT assigned in the inspector!");
-    return;
-}
-else
-{
-    Debug.Log($"✅ Congrats panel found: {congratsPanel.name}, activeSelf={congratsPanel.activeSelf}, inHierarchy={congratsPanel.activeInHierarchy}");
-}
+            {
+                Debug.LogError("❌ Congrats panel is NOT assigned in the inspector!");
+                return;
+            }
+            else
+            {
+                Debug.Log($"✅ Congrats panel found: {congratsPanel.name}, activeSelf={congratsPanel.activeSelf}, inHierarchy={congratsPanel.activeInHierarchy}");
+            }
 
             levelCompleted = true;
             Debug.Log("🌟 All stars have found their homes!");
 
             if (congratsPanel != null)
-{
-    congratsPanel.SetActive(true); // 👈 activate it first so coroutine can run
-
-    var fade = congratsPanel.GetComponent<SmoothPanelTransition>();
-    if (fade != null)
-        fade.Show();
-}
-
-
-
-            if (!string.IsNullOrEmpty(nextSceneName))
-                StartCoroutine(LoadNextSceneAfterDelay());
-            else if (debugMode)
-                Debug.LogWarning("Next scene name not specified — staying in current scene.");
+            {
+                congratsPanel.SetActive(true);
+                StartCoroutine(PlaySequence());
+            }
         }
 
-        private IEnumerator LoadNextSceneAfterDelay()
+        private IEnumerator PlaySequence()
         {
-            yield return new WaitForSeconds(delayBeforeLoad);
-            SceneManager.LoadScene(nextSceneName);
+            // Setup character - starts below, ends at target position
+            Vector3 startPos = targetPosition - new Vector3(0, slideUpDistance, 0);
+            
+            if (character3DModel != null)
+            {
+                character3DModel.transform.position = startPos;
+                character3DModel.SetActive(true);
+            }
+
+            // Setup UI elements - make sure they're active and set alpha to 0
+            if (dialogueText != null)
+            {
+                dialogueText.gameObject.SetActive(true);
+                SetAlpha(dialogueText, 0);
+            }
+
+            if (popupImage != null)
+            {
+                popupImage.gameObject.SetActive(true);
+                if (imageSprite != null)
+                    popupImage.sprite = imageSprite;
+                SetAlpha(popupImage, 0);
+            }
+
+            if (finalText != null)
+            {
+                finalText.gameObject.SetActive(true);
+                SetAlpha(finalText, 0);
+            }
+
+            // 1. Character slides UP from below
+            if (character3DModel != null)
+            {
+                float elapsed = 0f;
+                while (elapsed < slideDuration)
+                {
+                    elapsed += Time.deltaTime;
+                    float t = elapsed / slideDuration;
+                    character3DModel.transform.position = Vector3.Lerp(startPos, targetPosition, t);
+                    yield return null;
+                }
+                character3DModel.transform.position = targetPosition;
+            }
+            
+            // 2. Dialogue fades in
+            if (dialogueText != null)
+            {
+                float elapsed = 0f;
+                while (elapsed < 0.5f)
+                {
+                    elapsed += Time.deltaTime;
+                    SetAlpha(dialogueText, elapsed / 0.5f);
+                    yield return null;
+                }
+                SetAlpha(dialogueText, 1);
+            }
+            
+            // 3. Hold dialogue
+            yield return new WaitForSeconds(dialogueHoldTime);
+            
+            // 4. Dialogue fades out
+            if (dialogueText != null)
+            {
+                float elapsed = 0f;
+                while (elapsed < 0.5f)
+                {
+                    elapsed += Time.deltaTime;
+                    SetAlpha(dialogueText, 1 - (elapsed / 0.5f));
+                    yield return null;
+                }
+                SetAlpha(dialogueText, 0);
+            }
+            
+            // 5. Image fades in to 50% opacity
+            if (popupImage != null)
+            {
+                float elapsed = 0f;
+                while (elapsed < 0.5f)
+                {
+                    elapsed += Time.deltaTime;
+                    SetAlpha(popupImage, (elapsed / 0.5f) * 0.5f);
+                    yield return null;
+                }
+                SetAlpha(popupImage, 0.5f);
+            }
+            
+            // 6. Final text fades in
+            if (finalText != null)
+            {
+                float elapsed = 0f;
+                while (elapsed < 0.5f)
+                {
+                    elapsed += Time.deltaTime;
+                    SetAlpha(finalText, elapsed / 0.5f);
+                    yield return null;
+                }
+                SetAlpha(finalText, 1);
+            }
+        }
+
+        private void SetAlpha(Graphic graphic, float alpha)
+        {
+            Color c = graphic.color;
+            c.a = alpha;
+            graphic.color = c;
         }
 
         [ContextMenu("Force Complete Level")]
