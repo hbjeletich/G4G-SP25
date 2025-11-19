@@ -186,10 +186,7 @@ public void RecalibrateWeightShiftNeutral()
             ApplyWeightShift(ctx.ReadValue<float>());
         }
 
-        // Shared implementation for applying raw WeightShiftX values (raw = as-read
-        // from the input action). This centralizes deadzone, neutral offset and
-        // proportional mapping so OnWeightShiftPerformed and Update-driven polling
-        // use identical behavior.
+        
         private void ApplyWeightShift(float rawWs)
         {
             if (motionConfig == null || cameraPan == null) return;
@@ -272,6 +269,25 @@ private void HandleSquat()
 
 
             Debug.Log("[Foot Raise] Detected");
+
+            // If we're currently in the main menu scene, use the SceneTransitionManager
+            // (if present) to start the game. This lets the same input handling drive
+            // menu navigation without adding inspector wiring to SceneTransitionManager.
+            var sceneName = UnityEngine.SceneManagement.SceneManager.GetActiveScene().name;
+            if (sceneName == "MainMenu")
+            {
+                var stm = FindObjectOfType<SceneTransitionManager>();
+                if (stm != null)
+                {
+                    stm.OnFootRaisedExternal();
+                }
+                else
+                {
+                    // fallback: load a scene named 'Gameplay'
+                    UnityEngine.SceneManagement.SceneManager.LoadScene("Gameplay");
+                }
+                return;
+            }
 
 
            
