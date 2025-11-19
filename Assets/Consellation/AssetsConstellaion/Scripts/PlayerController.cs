@@ -29,7 +29,9 @@ namespace Constellation
         [SerializeField] private float rotateStat = 5.0f;
 
         //
-        [SerializeField] private float turnFootThreshold = .1f;
+        [SerializeField] private float turnFootThreshold = .2f;
+
+        [SerializeField] private float walkFootThreshold = .07f;
 
         //The Event to try and grab
         public UnityEvent interact;
@@ -102,11 +104,20 @@ namespace Constellation
 
                 float leftFootY = leftFootHeightAction.ReadValue<Vector3>().y;
                 float rightFootY = rightFootHeightAction.ReadValue<Vector3>().y;
+                
+                //if (isWalking.ReadValue<bool>())
+                //{
+                   // Debug.Log("HIT : walking");
+                   // speedMod = 1;
+                //}
+               /// else
+
+
 
                 //int temp = isWalking.ReadValue<int>();
                 //Debug.Log("HIT : " + temp);
-
-                if (false)
+                
+                if (leftFootY>walkFootThreshold || rightFootY>walkFootThreshold)
                 {
                     Debug.Log("HIT : walking");
                     speedMod = 1;
@@ -116,7 +127,6 @@ namespace Constellation
                     speedMod = 0;
                 }
 
-         
 
 
                 
