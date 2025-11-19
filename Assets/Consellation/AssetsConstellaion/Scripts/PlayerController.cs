@@ -102,6 +102,7 @@ namespace Constellation
                 float rightFootY = rightFootHeightAction.ReadValue<Vector3>().y;
 
                 //refine the movement
+                //Handles Walking
                 if ((leftFootY>walkFootThreshold || rightFootY>walkFootThreshold) && !doingSomething)
                 {
                     Debug.Log("HIT : walking");
@@ -111,32 +112,28 @@ namespace Constellation
                 {
                     speedMod = 0;
                 }
-
-
-
                 
+                //Handles Turning
                 if (leftFootY>rightFootY && leftFootY>turnFootThreshold)
                 {
                     Debug.Log("HIT : turn left?");
                     doingSomething=true;
                     rotationMod = -1;
                 }
-
                 if (rightFootY > leftFootY && rightFootY > turnFootThreshold)
-
                 {
                     Debug.Log("HIT : turn right?");
                     doingSomething=true;
                     rotationMod = 1;
                 }
-
+                //handles stop turning
                 if (leftFootY < turnFootThreshold && rightFootY < turnFootThreshold)
                 {
                     doingSomething=false;
                     rotationMod = 0;
                 }
 
-
+                //handles jump
                 if (leftFootY > jumpThreshold && rightFootY > jumpThreshold&& !doingSomething)
                 {
                     Debug.Log("HIT : interact");
