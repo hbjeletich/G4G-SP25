@@ -4576,6 +4576,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   slowedSpeed: 0.4
+  animalDespawnDelay: 10
   animalSpawner: {fileID: 274108311}
   assignedAnimals: []
 --- !u!65 &274108313
@@ -5915,6 +5916,74 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 342811243}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1001 &342961989
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 5714271474610378144, guid: 69356bc20030f3a4abc930532d07b179,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 13.135871
+      objectReference: {fileID: 0}
+    - target: {fileID: 5714271474610378144, guid: 69356bc20030f3a4abc930532d07b179,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.00000047683716
+      objectReference: {fileID: 0}
+    - target: {fileID: 5714271474610378144, guid: 69356bc20030f3a4abc930532d07b179,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -12.649595
+      objectReference: {fileID: 0}
+    - target: {fileID: 5714271474610378144, guid: 69356bc20030f3a4abc930532d07b179,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5714271474610378144, guid: 69356bc20030f3a4abc930532d07b179,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5714271474610378144, guid: 69356bc20030f3a4abc930532d07b179,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5714271474610378144, guid: 69356bc20030f3a4abc930532d07b179,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5714271474610378144, guid: 69356bc20030f3a4abc930532d07b179,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5714271474610378144, guid: 69356bc20030f3a4abc930532d07b179,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5714271474610378144, guid: 69356bc20030f3a4abc930532d07b179,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6194634898173007223, guid: 69356bc20030f3a4abc930532d07b179,
+        type: 3}
+      propertyPath: m_Name
+      value: Roly Poly Log
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 69356bc20030f3a4abc930532d07b179, type: 3}
 --- !u!1001 &357123015
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -9091,6 +9160,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   slowedSpeed: 0.3
+  animalDespawnDelay: 10
   animalSpawner: {fileID: 555408421}
   assignedAnimals: []
 --- !u!65 &555408423
@@ -14047,6 +14117,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   slowedSpeed: 0.3
+  animalDespawnDelay: 10
   animalSpawner: {fileID: 899491327}
   assignedAnimals: []
 --- !u!65 &899491329
@@ -22493,6 +22564,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   slowedSpeed: 0.3
+  animalDespawnDelay: 10
   animalSpawner: {fileID: 1420195655}
   assignedAnimals: []
 --- !u!65 &1420195657
@@ -23682,6 +23754,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   slowedSpeed: 0.3
+  animalDespawnDelay: 10
   animalSpawner: {fileID: 1494882950}
   assignedAnimals: []
 --- !u!65 &1494882952
@@ -28651,6 +28724,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   slowedSpeed: 0.3
+  animalDespawnDelay: 10
   animalSpawner: {fileID: 1873895787}
   assignedAnimals: []
 --- !u!65 &1873895789
@@ -30061,6 +30135,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   slowedSpeed: 0.3
+  animalDespawnDelay: 10
   animalSpawner: {fileID: 1957644178}
   assignedAnimals: []
 --- !u!65 &1957644180
@@ -31236,6 +31311,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   slowedSpeed: 0.3
+  animalDespawnDelay: 10
   animalSpawner: {fileID: 2053747072}
   assignedAnimals: []
 --- !u!65 &2053747074
@@ -33545,3 +33621,4 @@ SceneRoots:
   - {fileID: 280682445}
   - {fileID: 1677367726}
   - {fileID: 366205545}
+  - {fileID: 342961989}
