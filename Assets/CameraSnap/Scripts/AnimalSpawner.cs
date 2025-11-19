@@ -22,7 +22,14 @@ namespace CameraSnap
         /// <param name="assignedAnimals">Optional list of animals assigned to this zone.</param>
         public void SpawnAnimals(System.Collections.Generic.List<AnimalData> assignedAnimals = null)
         {
-            ClearPreviousAnimals();
+            // If animals are already spawned by this spawner, do not clear or respawn them.
+            // This preserves animals in the scene so they don't vanish when the player
+            // leaves or the zone completes.
+            if (spawnedAnimals != null && spawnedAnimals.Count > 0)
+            {
+                Debug.Log("[AnimalSpawner] SpawnAnimals called but animals already present - skipping spawn.");
+                return;
+            }
 
             if (GameManager.Instance == null || GameManager.Instance.GetAllAnimals().Count == 0)
             {

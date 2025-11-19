@@ -7,11 +7,40 @@ namespace CameraSnap
         [Header("Slowdown Settings")]
         public float slowedSpeed = 1f;
         // Timer logic moved to ZoneStopTimer component
+        [Tooltip("Seconds to wait after exit/completion before despawning animals. Set <= 0 to disable delayed despawn and clear immediately.")]
+        public float animalDespawnDelay = 10f;
 
         [Header("Components")]
         public AnimalSpawner animalSpawner;
         private ZoneStopTimer zoneTimer;
     private UIManager ui => UIManager.Instance;
+    // Delay clearing animals by starting a coroutine. We don't cancel scheduled clears because
+    // the player will not realistically re-enter a zone without restarting the scene.
+    private void ScheduleAnimalClear(float delay)
+    {
+        if (animalSpawner == null)
+        {
+            Debug.LogWarning("[SlowdownZone] No AnimalSpawner assigned; cannot schedule clear.");
+            return;
+        }
+        if (delay <= 0f)
+        {
+            animalSpawner.ClearPreviousAnimals();
+            return;
+        }
+        StartCoroutine(DelayedClearCoroutine(delay));
+    }
+
+    private System.Collections.IEnumerator DelayedClearCoroutine(float delay)
+    {
+        Debug.Log($"[SlowdownZone] Scheduled animal clear in {delay} seconds.");
+        yield return new WaitForSeconds(delay);
+        if (animalSpawner != null)
+        {
+            animalSpawner.ClearPreviousAnimals();
+            Debug.Log("[SlowdownZone] Cleared animals after delay.");
+        }
+    }
 
         [Header("Assigned Animals (optional)")]
         [Tooltip("If populated, these AnimalData entries will be used for this zone (in order). If empty, animals are chosen randomly from GameManager.")]
@@ -43,6 +72,7 @@ namespace CameraSnap
             CartController cart = other.GetComponentInParent<CartController>();
             if (cart != null)
             {
+                // (no cancel needed; re-entering a zone without restarting is unlikely)
                 cart.currentZone = this;
                 cart.SetSpeed(slowedSpeed);
                 cart.AllowStop(true);
@@ -84,7 +114,7 @@ private void OnTriggerExit(Collider other)
             ui.HideStopCountdown();
         }
 
-        if (animalSpawner != null) animalSpawner.ClearPreviousAnimals();
+    if (animalSpawner != null) ScheduleAnimalClear(animalDespawnDelay);
 
         // stop timer tracking
         zoneTimer?.StopTracking();
@@ -137,9 +167,9 @@ if (behavior != null && GameManager.Instance.HasCaptured(behavior.animalData.ani
             ui.HideGuide();
             ui.HideStopCountdown();
         }
-//Deactivate zone and clear animals.
-        this.enabled = false;
-        animalSpawner.ClearPreviousAnimals();
+    
+    // this.enabled = false;
+    ScheduleAnimalClear(animalDespawnDelay);
         // stop timer tracking and clear countdown
         zoneTimer?.StopTracking();
     }
@@ -165,8 +195,8 @@ if (behavior != null && GameManager.Instance.HasCaptured(behavior.animalData.ani
                 Debug.LogError("[SlowdownZone] UIManager not found; cannot hide zone icon after timeout.");
             }
 
-            if (animalSpawner != null)
-                animalSpawner.ClearPreviousAnimals();
+                        // Schedule clearing animals after timeout (instead of immediate). This mirrors OnTriggerExit behavior.
+                        ScheduleAnimalClear(animalDespawnDelay);
         }
 
         /// <summary>
