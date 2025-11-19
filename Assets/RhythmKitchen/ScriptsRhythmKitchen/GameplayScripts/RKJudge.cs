@@ -40,6 +40,11 @@ namespace RhythmKitchen
         private bool isLeftLegLift = false;
         private bool isRightLegLift = false;
         private bool isRightHipAbduct = false;
+        private bool isLeftFootRaised = false;
+        private bool isRightFootRaised = false;
+
+        private float initialLeftFootYPos = 0f;
+        private float initialRightFootYPos = 0f;
 
         [Header("Windows (seconds)")]
         public float missWindow;
@@ -174,11 +179,25 @@ namespace RhythmKitchen
 
                 if(rightFootYPos > footThreshold)
                 {
-                    OnRightFootRaised();
+                    isRightFootRaised = true;
+                    //OnRightFootRaised();
                 }
                 else if(leftFootYPos > footThreshold)
                 {
+                    isLeftFootRaised = true;
+                    //OnLeftFootRaised();
+                }
+
+                if(isRightFootRaised && rightFootYPos <= initialRightFootYPos)
+                {
+                    OnRightFootRaised();
+                    isRightFootRaised = false;
+                }
+
+                if(isLeftFootRaised && leftFootYPos <= initialLeftFootYPos)
+                {
                     OnLeftFootRaised();
+                    isLeftFootRaised = false;
                 }
 
                 if (conductor == null || notesRuntime == null)
