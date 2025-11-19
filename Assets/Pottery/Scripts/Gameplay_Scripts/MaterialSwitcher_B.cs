@@ -70,6 +70,13 @@ public class MaterialSwitcher_B : MonoBehaviour
     // -------------------------
     // COLOR BUTTON TRIGGERS
     // -------------------------
+
+    public void Claytrigger()
+    {
+        selectedMaterial = ClayMaterial;
+        targetRenderer.material = ClayMaterial;
+    }
+
     public void Redtrigger()
     {
         SetColorFlags(true, false, false, false);
