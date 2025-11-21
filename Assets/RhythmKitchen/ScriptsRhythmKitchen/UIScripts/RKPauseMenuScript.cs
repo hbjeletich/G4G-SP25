@@ -6,7 +6,8 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using TMPro;
 
-
+// Worked on by: Leia Phillips
+// Commented by: Leia Phillips
 public class RKPauseMenuScript : MonoBehaviour
 {
     public AudioMixer audioMixer;

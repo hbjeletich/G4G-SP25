@@ -5,55 +5,58 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using System.IO;
 
+// Worked on by: Leia Phillips
+// Commented by: Leia Phillips
 namespace RhythmKitchen
 {
     public class RKGameplayUI : MonoBehaviour
     {
-        public GameObject completedDish;
-        public GameObject gameplayUI;
-        public GameObject judgementLine;
-        public GameObject notesRuntime;
-        public GameObject outlines;
+        [Header("Game Objects")]
+        public GameObject completedDish; // The completedDish panel
+        public GameObject gameplayUI; // The UI for the gameplay
+        public GameObject judgementLine; // The judgement line
+        public GameObject notesRuntime; // The ingredients when they spawn
+        public GameObject outlines; // A reference to the outlines of the ingredients
 
-        public RKConductor conductor;
-        public RKJudge judge;
+        [Header("Refs")]
+        public RKConductor conductor; // A reference to the conductor class
+        public RKJudge judge; // A reference to the judge class
+        public Slider slider; // A reference to the slider class
+        public RKSongData songData; // A reference to the class
 
-        public Slider slider;
-        public RKSongData songData;
-
-        private float songLength;
-
-        private float songTime;
-
-        private float fillSpeed;
-        private float targetProgress = 0;
-        private float _nextLog;
-        private double endTime;
-        private double startTime;
+        [Header("Song Info")] // Comes from SongData
+        private float songLength; // the length of the song
+        private double startTime; // The dspTime for when the song starts
+        private double endTime; // The dspTime for when the song ends
 
         void Awake()
         {
-            startTime = songData.songStartDspTime;
-            songLength = songData.songLength;
-            endTime = startTime + songLength;
-            slider.minValue = (float) startTime;
-            slider.maxValue = (float) endTime;
+            startTime = songData.songStartDspTime; // gets the songStartDspTime from songData
+            songLength = songData.songLength; // gets the songLength from songData
+            endTime = startTime + songLength; // calculates the endTime based on dspTime
+            slider.minValue = (float) startTime; // sets the minValue of the progess bar to the startTime
+            slider.maxValue = (float) endTime; // sets the maxValue of the progess bar to the endTime
         }
 
         void Update()
         {
+            // If the dspTime is at the endTime complete the dish
             if (endTime <= AudioSettings.dspTime)
             {
                 Invoke("CompleteDish", .5f);
-                Debug.Log("COMPLETETETETETE");
+                Debug.Log("[RKGameplayUI] Dish Complete");
             }
 
-            slider.value = (float)AudioSettings.dspTime;
+            slider.value = (float)AudioSettings.dspTime; // Sets the slider value to the dspTime
         }
 
+        /*
+         * Loads the CompletedDishScene
+         */
         public void CompleteDish()
         {
-            var am = RKAudioManager.Instance;
+            // Checks if the AudioManager has been loaded, plays a sound if it has been.
+            var am = RKAudioManager.Instance; 
             {
                 if (am != null) // is not empty
                 {

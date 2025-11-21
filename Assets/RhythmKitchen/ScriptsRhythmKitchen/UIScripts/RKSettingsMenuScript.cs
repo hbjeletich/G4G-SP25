@@ -4,6 +4,8 @@ using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.UI;
 
+// Worked on by: Leia Phillips
+// Commented by: Leia Phillips
 public class RKSettingsMenuScript : MonoBehaviour
 {
     public AudioMixer audioMixer;

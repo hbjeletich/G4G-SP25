@@ -5,6 +5,8 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using TMPro;
 
+// Worked on by: Leia Phillips
+// Commented by: Leia Phillips
 namespace RhythmKitchen
 {
     public class RKCompletedDishScript : MonoBehaviour

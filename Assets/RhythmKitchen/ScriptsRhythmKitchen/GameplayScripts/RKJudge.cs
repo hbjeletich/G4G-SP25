@@ -6,7 +6,7 @@ using UnityEngine.Events;
 using TMPro;
 
 // Worked on by: Jovanna Molina and Leia Phillips
-// Commented by: Jovanna Molina
+// Commented by: Jovanna Molina and Leia Phillips
 
 // Script is ONLY attached to Input object under CAPTURY
 
@@ -253,15 +253,6 @@ namespace RhythmKitchen
             {
                 OnHit(target, "ALMOST");
             }
-            // else if (delta <= missWindow)
-            // {
-            //     OnHit(target, "ALMOST");
-            // }
-            // else
-            // {
-            //     Debug.Log($"[Judge] Too Far Away");
-            //     RegisterMiss();
-            // }
         }
 
         private RKNote FindClosestNoteInLane(RKNote.Type type)
