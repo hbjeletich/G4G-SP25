@@ -102,7 +102,7 @@ namespace RhythmKitchen
             leftFootPositionAction.Enable();
             rightFootPositionAction.Enable();
             rightHipAction.Enable();
-            footLoweredAction.Enable();
+            // footLoweredAction.Enable();
 
             leftHipAction.performed += OnLeftHipAbduction;
             rightHipAction.performed += OnRightHipAbduction;
@@ -115,7 +115,7 @@ namespace RhythmKitchen
             leftFootPositionAction.Disable();
             rightFootPositionAction.Disable();
             rightHipAction.Disable();
-            footLoweredAction.Disable();
+            // footLoweredAction.Disable();
 
             leftHipAction.performed -= OnLeftHipAbduction;
             rightHipAction.performed -= OnRightHipAbduction;
