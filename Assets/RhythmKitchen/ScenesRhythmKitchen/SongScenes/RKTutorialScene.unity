@@ -10947,7 +10947,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 71fd38872f4db4cfe9462687ee8b2618, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  debugOn: 0
+  debugOn: 1
   conductor: {fileID: 72580114}
   completedDish: {fileID: 1260744398}
   notesRuntime: {fileID: 959363155}
@@ -10959,8 +10959,8 @@ MonoBehaviour:
     type: 3}
   footThreshold: 0.05
   missWindow: 7
-  goodWindow: 0.5
-  perfectWindow: 0.25
+  goodWindow: 2
+  perfectWindow: 0.5
   perfectNum: {fileID: 793073163}
   goodNum: {fileID: 1119564532}
   almostNum: {fileID: 1148852725}
