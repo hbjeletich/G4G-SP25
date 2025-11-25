@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static toLevelsFlag;
 
 public class zoomTransition : MonoBehaviour
 {
@@ -20,6 +21,14 @@ public class zoomTransition : MonoBehaviour
     void Start()
     {
         startFOV = mainCam.fieldOfView; // original camera field of view 
+
+        //from a level, show level select directly 
+        if (MenuReturnState.ReturnToLevelSelect)
+        {
+            OnlyLevelSelect();
+            MenuReturnState.ReturnToLevelSelect = false;
+            return;
+        }
 
         // level select screen is hidden
         levelScreen.alpha = 0;
@@ -64,5 +73,24 @@ public class zoomTransition : MonoBehaviour
 
         isZooming = false;
     }
+    // returning to ONLY the level select 
+    public void OnlyLevelSelect()
+    {
+        // Hide start screen
+        startScreen.alpha = 0;
+        startScreen.interactable = false;
+        startScreen.blocksRaycasts = false;
+
+        // Apply zoom instantly
+        mainCam.fieldOfView = startFOV / zoomAmount;
+
+        // Show level select UI
+        levelScreen.alpha = 1;
+        levelScreen.interactable = true;
+        levelScreen.blocksRaycasts = true;
+
+        guideCharacter.SetActive(true);
+    }
 }
+
 
