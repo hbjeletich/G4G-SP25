@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections;
 
 public class SoundManager : MonoBehaviour
 {
@@ -23,6 +24,26 @@ public class SoundManager : MonoBehaviour
     public void PlaySFX(AudioClip clip)
     {
         SFXSource.PlayOneShot(clip);
+    }
+
+    public void FadeOutMusic(float duration = 1f)
+    {
+        StartCoroutine(FadeOutMusicCoroutine(duration));
+    }
+
+    private IEnumerator FadeOutMusicCoroutine(float duration)
+    {
+        float startVol = musicSource.volume;
+        float time = 0f;
+
+        while (time < duration)
+        {
+            time += Time.deltaTime;
+            musicSource.volume = Mathf.Lerp(startVol, 0f, time / duration);
+            yield return null;
+        }
+
+        musicSource.Stop();
     }
 
 }
