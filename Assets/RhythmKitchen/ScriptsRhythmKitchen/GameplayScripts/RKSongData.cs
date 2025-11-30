@@ -69,7 +69,7 @@ namespace RhythmKitchen
             songBeats = new float[parts.Length];
             for (int i = 0; i < parts.Length; i++)
             {
-                songBeats[i] = float.Parse(parts[i])-1; //subtracting one so the first beat would be at 0
+                songBeats[i] = float.Parse(parts[i]) - 1; //subtracting one so the first beat would be at 0
             }
 
             // build per note timing
