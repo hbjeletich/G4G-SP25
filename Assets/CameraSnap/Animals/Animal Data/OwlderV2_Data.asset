@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f89e257a34810b4c9b3a9522ad5dc82, type: 3}
+  m_Name: OwlderV2_Data
+  m_EditorClassIdentifier: 
+  animalName: OwlderV2
+  animalPrefab: {fileID: 26750173632854737, guid: b558fd5ab03d3c2489f9d3454bac4fe2,
+    type: 3}
+  spriteFacesLeft: 1
+  canWalk: 0
+  moveSpeed: 0
+  patrolDistance: 0
+  idleTime: 2
+  walkTime: 3
+  foundImage: {fileID: 21300000, guid: 6c4fa908fd2e9db429454bc48140ee35, type: 3}
+  silhouetteImage: {fileID: 21300000, guid: 6b80a30ad60bf6f44a2a262057b6c988, type: 3}
+  captureSound: {fileID: 0}
+  spawnRarity: 3
