@@ -1201,7 +1201,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 627730038}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 627730036}
+        m_TargetAssemblyTypeName: 
+        m_MethodName: LoadScene
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &627730036
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1214,7 +1226,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1780dd0f77416c844bc143179cc1c0d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sceneName: 
+  sceneName: Cygnus
 --- !u!114 &627730037
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1656,7 +1668,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 867004157}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 867004155}
+        m_TargetAssemblyTypeName: 
+        m_MethodName: LoadScene
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &867004155
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1669,7 +1693,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1780dd0f77416c844bc143179cc1c0d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sceneName: 
+  sceneName: Canis
 --- !u!114 &867004156
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2240,7 +2264,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1469162760}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1469162758}
+        m_TargetAssemblyTypeName: UnityEngine.Object, UnityEngine
+        m_MethodName: LoadScene
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1469162758
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2253,7 +2289,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1780dd0f77416c844bc143179cc1c0d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sceneName: 
+  sceneName: Columba
 --- !u!114 &1469162759
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2696,7 +2732,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1780dd0f77416c844bc143179cc1c0d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sceneName: Level1_Aries
+  sceneName: Aries
 --- !u!114 &1672865252
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2871,7 +2907,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1718009579}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1718009577}
+        m_TargetAssemblyTypeName: 
+        m_MethodName: LoadScene
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1718009577
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2884,7 +2932,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1780dd0f77416c844bc143179cc1c0d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sceneName: 
+  sceneName: Leo
 --- !u!114 &1718009578
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5923481343699020634}
   m_Layer: 0
-  m_Name: Deliete Later - INgameUiOLD
+  m_Name: '- INgameUiOLD'
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -481,8 +481,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   congratsPanel: {fileID: 0}
-  delayBeforeLoad: 3
-  nextSceneName: 
+  character3DModel: {fileID: 0}
+  targetPosition: {x: -6.9, y: -4, z: -4.6}
+  slideUpDistance: 10
+  slideDuration: 1.9
+  dialogueText: {fileID: 0}
+  dialogueHoldTime: 2
+  popupImage: {fileID: 0}
+  imageSprite: {fileID: 0}
+  finalText: {fileID: 0}
   debugMode: 1
 --- !u!1 &7243787910303477809
 GameObject:
