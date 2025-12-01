@@ -29,7 +29,7 @@ namespace CameraSnap
 
             DontDestroyOnLoad(gameObject);
 
-            Debug.Log("[GameManager] Initialized with " + allAnimals.Count + " animals available.");
+            
         }
 
        
@@ -68,7 +68,6 @@ namespace CameraSnap
             var list = GetAllAnimals();
             if (list.Count == 0)
             {
-                Debug.LogWarning("[GameManager] No animals available!");
                 return null;
             }
 
@@ -84,7 +83,6 @@ private HashSet<string> capturedAnimals = new HashSet<string>();
         {
             if (string.IsNullOrEmpty(animalName)) return;
             capturedAnimals.Add(animalName);
-            Debug.Log($"[GameManager] Added captured animal: {animalName}");
         }
 
         // Checks if player has photographed the animal already

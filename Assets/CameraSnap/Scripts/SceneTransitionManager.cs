@@ -53,12 +53,10 @@ namespace CameraSnap
             if (isLoading) return;
             if (string.IsNullOrEmpty(gameplaySceneName))
             {
-                Debug.LogError("[SceneTransitionManager] gameplaySceneName is empty. Set the scene name in the inspector.");
                 return;
             }
 
             isLoading = true;
-            Debug.Log($"[SceneTransitionManager] Loading scene '{gameplaySceneName}'...");
             SceneManager.LoadScene(gameplaySceneName);
         }
     }

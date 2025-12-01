@@ -271,8 +271,7 @@ private void HandleSquat()
             Debug.Log("[Foot Raise] Detected");
 
             // If we're currently in the main menu scene, use the SceneTransitionManager
-            // (if present) to start the game. This lets the same input handling drive
-            // menu navigation without adding inspector wiring to SceneTransitionManager.
+            //  to start the game. 
             var sceneName = UnityEngine.SceneManagement.SceneManager.GetActiveScene().name;
             if (sceneName == "MainMenu")
             {
@@ -283,8 +282,8 @@ private void HandleSquat()
                 }
                 else
                 {
-                    // fallback: load a scene named 'Gameplay'
-                    UnityEngine.SceneManagement.SceneManager.LoadScene("Gameplay");
+                    
+                     Debug.Log("Error scene transition");
                 }
                 return;
             }

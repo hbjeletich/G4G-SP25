@@ -1,6 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Text;
+
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -18,7 +18,7 @@ namespace CameraSnap
 
         [Header("End Game")]
         public GameObject endGamePanel;
-        public TMP_Text endGameText;
+
 
         [Header("Camera Overlay")]
         public GameObject cameraOverlayUI;
@@ -34,12 +34,19 @@ namespace CameraSnap
     [Tooltip("Screen UI text that shows remaining time until auto-resume")]
     public TMP_Text stopCountdownText;
 
-    [Header("Session Target UI")]
-    [Tooltip("Image slots (left->right) that show animal silhouettes and later reveal the full image when captured.")]
+    [Header("Find Animal UI")]
+    [Tooltip("Image slots (left->right) used by the in-game 'find the animal' system; shows silhouettes and reveals found images.")]
     public List<UnityEngine.UI.Image> targetSlots = new List<UnityEngine.UI.Image>(3);
 
     // Mapping from animal name -> slot index for quick reveal
     private System.Collections.Generic.Dictionary<string, int> targetIndexByName = new System.Collections.Generic.Dictionary<string, int>();
+
+    [Header("End Panel")]
+    [Tooltip("Image slots used exclusively on the end-of-run panel. These are populated with all animals (silhouettes by default) and reveal when found.")]
+    public List<UnityEngine.UI.Image> endPanelSlots = new List<UnityEngine.UI.Image>();
+
+    // Mapping for end panel (name -> index)
+    private System.Collections.Generic.Dictionary<string, int> endPanelIndexByName = new System.Collections.Generic.Dictionary<string, int>();
 
         [Header("Misc UI")]
         public GameObject stopCartObject;
@@ -72,7 +79,11 @@ namespace CameraSnap
                 return;
             }
 
-            DontDestroyOnLoad(gameObject);
+        }
+
+        private void OnDestroy()
+        {
+            if (Instance == this) Instance = null;
         }
 
         private void Start()
@@ -85,39 +96,7 @@ namespace CameraSnap
             }
         }
 
-        // Shows the end-game summary and pauses the game.
-        public void ShowEndSummary(List<AnimalData> allAnimals, HashSet<string> captured)
-        {
-            if (endGamePanel == null || endGameText == null) return;
-
-            StringBuilder summary = new StringBuilder();
-            summary.AppendLine("<b> Photo Summary</b>\n");
-
-            summary.AppendLine("<color=green><b>Captured:</b></color>");
-            int capturedCount = 0;
-            foreach (var animal in allAnimals)
-            {
-                if (captured.Contains(animal.animalName))
-                {
-                    summary.AppendLine($" {animal.animalName}");
-                    capturedCount++;
-                }
-            }
-
-            summary.AppendLine("\n<color=red><b>Missed:</b></color>");
-            foreach (var animal in allAnimals)
-            {
-                if (!captured.Contains(animal.animalName))
-                    summary.AppendLine($" {animal.animalName}");
-            }
-
-            summary.AppendLine($"\n<b>Total Captured:</b> {capturedCount}/{allAnimals.Count}");
-            summary.AppendLine("<b> End game. Press R or raise foot to restart</b>\n");
-
-            endGameText.text = summary.ToString();
-            endGamePanel.SetActive(true);
-            Time.timeScale = 0f;
-        }
+        
 
         public void SetStopCartVisible(bool visible)
         {
@@ -151,7 +130,6 @@ namespace CameraSnap
         {
             if (guideObject == null || guideAnimator == null)
             {
-                Debug.LogError("[UIManager] Guide UI or Animator not assigned.");
                 return;
             }
 
@@ -193,6 +171,33 @@ namespace CameraSnap
             }
         }
 
+        
+        public void SetEndPanelAnimals(System.Collections.Generic.List<AnimalData> animals)
+        {
+            endPanelIndexByName.Clear();
+
+            for (int i = 0; i < endPanelSlots.Count; i++)
+            {
+                var slot = endPanelSlots[i];
+                if (slot == null) continue;
+
+                if (animals != null && i < animals.Count && animals[i] != null)
+                {
+                    var data = animals[i];
+                    slot.sprite = data.silhouetteImage != null ? data.silhouetteImage : data.foundImage;
+                    slot.color = Color.white;
+                    slot.enabled = true;
+                    if (!string.IsNullOrEmpty(data.animalName))
+                        endPanelIndexByName[data.animalName] = i;
+                }
+                else
+                {
+                    slot.sprite = null;
+                    slot.enabled = false;
+                }
+            }
+        }
+
     
         /// Reveal the matched target slot for the given animal name (swap silhouette
         /// to the found image). Safe to call even if the animal isn't a target.
@@ -210,7 +215,6 @@ namespace CameraSnap
             var data = GameManager.Instance?.GetAllAnimals().Find(a => a != null && a.animalName == animalName);
             if (data == null)
             {
-                Debug.LogWarning($"[UIManager] RevealTarget: AnimalData not found for {animalName}");
                 return;
             }
 
@@ -224,6 +228,41 @@ namespace CameraSnap
                 // fallback: keep silhouette but tint green to indicate found
                 slot.color = Color.green;
             }
+        }
+
+        
+        public void RevealEndPanelTarget(string animalName)
+        {
+            if (string.IsNullOrEmpty(animalName)) return;
+            if (!endPanelIndexByName.TryGetValue(animalName, out int idx)) return;
+            if (idx < 0 || idx >= endPanelSlots.Count) return;
+
+            var slot = endPanelSlots[idx];
+            if (slot == null) return;
+
+            var data = GameManager.Instance?.GetAllAnimals().Find(a => a != null && a.animalName == animalName);
+            if (data == null) return;
+
+            if (data.foundImage != null)
+            {
+                slot.sprite = data.foundImage;
+                slot.color = Color.white;
+            }
+            else
+            {
+                slot.color = Color.green;
+            }
+        }
+
+       
+        public void ShowEndPanel()
+        {
+            if (endGamePanel != null) endGamePanel.SetActive(true);
+        }
+
+        public void HideEndPanel()
+        {
+            if (endGamePanel != null) endGamePanel.SetActive(false);
         }
 
         public void HideGuide()
@@ -244,10 +283,7 @@ namespace CameraSnap
             StartCoroutine(PhotoMessageRoutine(animalName, duration));
         }
 
-        /// <summary>
-        /// Update the stop countdown UI. remaining and total are in seconds.
-        /// Pass remaining <= 0 to hide the countdown.
-        /// </summary>
+        
         public void UpdateStopCountdown(float remaining, float total)
         {
             if (stopCountdownText == null) return;

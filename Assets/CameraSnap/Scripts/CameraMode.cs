@@ -65,7 +65,6 @@ namespace CameraSnap
             playerAnimator?.SetBool("IsHoldingCamera", true);
             ui?.SetOverlayActive(true);
             ui?.SetGuideState(UIManager.GuideState.WeightShift);
-            Debug.Log("[Camera] Entered camera mode");
         }
 
         private void ExitCameraMode()
@@ -73,7 +72,6 @@ namespace CameraSnap
             isActive = false;
             playerAnimator?.SetBool("IsHoldingCamera", false);
             ui?.SetOverlayActive(false);
-            Debug.Log("[Camera] Exited camera mode");
         }
 
         private void DetectAnimalInView()
@@ -103,7 +101,6 @@ namespace CameraSnap
             audioSource?.Play();
 
             string name = animal.animalData.animalName;
-            Debug.Log($"[Camera] Captured photo of: {name}");
 
             // Update UI and game state
             ui?.ShowPhotoMessage(name, messageDuration);
