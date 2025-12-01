@@ -16,6 +16,9 @@ namespace RhythmKitchen
 
         public float waitUntilDestroy = 2.5f;
 
+        [Header("FX")]
+        [SerializeField] private GameObject hitEffectPrefab; 
+
         private Vector2 spawnPos; // stores the initial spawn position
         private Vector2 targetPos; // stores where are falling TO
         private RKConductor conductor; // this gives us songTime to track progress
@@ -47,6 +50,16 @@ namespace RhythmKitchen
                 Destroy(gameObject);
             }
         }
+
+        public void ExplodeAndDestroy()
+        {
+            if (hitEffectPrefab != null)
+            {
+                GameObject fx = Instantiate(hitEffectPrefab, transform.position, Quaternion.identity); // spawns hit effect at note position
+            }
+            Destroy(gameObject); // destroys the note
+        }
+
     }
 }
 

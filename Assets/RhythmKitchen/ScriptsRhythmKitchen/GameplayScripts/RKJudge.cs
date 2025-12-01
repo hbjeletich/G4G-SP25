@@ -314,7 +314,8 @@ namespace RhythmKitchen
             // RKAudioManager.Instance.PlaySFX(rating)...;
 
             Debug.Log($"[Judge] {rating} {note.noteType}");
-            Destroy(note.gameObject);
+            //Destroy(note.gameObject);
+            note.ExplodeAndDestroy(); // particle effect + destroy
             if (debugOn)
             {
                 Debug.Log($"[Judge] {rating} {note.noteType} (combo {comboCount})");
