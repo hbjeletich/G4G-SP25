@@ -53,8 +53,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 9.36419, y: 5.1589947, z: 1}
-  m_Center: {x: 0.45204273, y: 2.8159904, z: 0}
+  m_Size: {x: 9.36419, y: 7.83844, z: 1}
+  m_Center: {x: 0.45204273, y: 1.4762672, z: 0}
 --- !u!114 &-3206997866965696772
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -68,16 +68,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animalData: {fileID: 11400000, guid: 0832ec0a45d1a96458ce46a4310dbf79, type: 2}
-  isCaptured: 0
   animator: {fileID: 0}
-  walkBool: isWalking
-  hideTrigger: Hide
-  canWalk: 0
-  canHideInBush: 0
-  moveSpeed: 1
-  patrolDistance: 2
-  idleTime: 2
-  walkTime: 3
+  isCaptured: 0
 --- !u!1 &8818399557230238016
 GameObject:
   m_ObjectHideFlags: 0

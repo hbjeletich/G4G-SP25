@@ -10,18 +10,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5f89e257a34810b4c9b3a9522ad5dc82, type: 3}
-  m_Name: Owlder
+  m_Name: DandiBat_Data
   m_EditorClassIdentifier: 
-  animalName: Owlder
-  animalPrefab: {fileID: 2842267890045438571, guid: fb00ef6607f3f4647afc980fd22f1561,
+  animalName: DandiBat
+  animalPrefab: {fileID: 8571429096101923775, guid: 67e6919194802244eb3cbed396da43db,
     type: 3}
   spriteFacesLeft: 1
-  canWalk: 0
-  moveSpeed: 0
-  patrolDistance: 0
-  idleTime: 2
-  walkTime: 0
-  foundImage: {fileID: 21300000, guid: c14ded2e884ba394c9481403002ad2b4, type: 3}
-  silhouetteImage: {fileID: 21300000, guid: ff4bab97088b23d439f7fdebf3a515da, type: 3}
+  canWalk: 1
+  moveSpeed: 4
+  patrolDistance: 4
+  idleTime: 0
+  walkTime: 3
+  foundImage: {fileID: 21300000, guid: 5d624b501c6704b4b8f5e4f417ed4a06, type: 3}
+  silhouetteImage: {fileID: 21300000, guid: e105efffaa8850744be0739cd532e034, type: 3}
   captureSound: {fileID: 0}
-  spawnRarity: 3
+  spawnRarity: 2
