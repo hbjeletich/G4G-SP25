@@ -52,6 +52,7 @@ namespace RhythmKitchen
         public float perfectWindow;
 
         [Header("Score UI (assign TMP objects)")]
+        [SerializeField] private TMP_Text judgmentText;
         [SerializeField] private TMP_Text perfectNum;
         [SerializeField] private TMP_Text goodNum;
         [SerializeField] private TMP_Text almostNum;
@@ -152,6 +153,13 @@ namespace RhythmKitchen
         //     Debug.Log("[Captury] OnFootLowered Called");
         // }
 
+        public void initialFootPositionCallibration()
+        {
+            // Sets the initial foot positions to the current value
+            // The player should be prompted to stand still!
+            initialLeftFootZPos = leftFootPositionAction.ReadValue<Vector3>().z;
+            initialRightFootZPos = rightFootPositionAction.ReadValue<Vector3>().z;
+        }
         void Update()
         {
             if (debugOn)
@@ -195,7 +203,6 @@ namespace RhythmKitchen
                 //     initialRightFootZPos = rightFootPositionAction.ReadValue<Vector3>().z;
                 // }
 
-                if(rightFootZPos >= footThreshold + initialLeftFootZPos)
                 {
                     OnRightFootRaised();
                 }
@@ -293,6 +300,7 @@ namespace RhythmKitchen
                     {
                         maxComboCount = comboCount;
                     }
+                    StartCoroutine(judgementTextDisplay("Perfect!"));
                     break;
                 case "GOOD":
                     goodCount++;
@@ -301,10 +309,12 @@ namespace RhythmKitchen
                     {
                         maxComboCount = comboCount;
                     }
+                    StartCoroutine(judgementTextDisplay("Good"));
                     break;
                 case "ALMOST":
                     almostCount++;
                     comboCount = 0; // this resets combo on almost. correct? ask Leia and Katie "want we ALMOST to NOT keep combo?"
+                    StartCoroutine(judgementTextDisplay("Almost"));
                     break;
             }
 
@@ -346,6 +356,16 @@ namespace RhythmKitchen
                 score = 2;
 
             completedDish.setStars(score);
+        }
+        public IEnumerator judgementTextDisplay(string score)
+        {
+            float duration = 2f; // Length in seconds the text will stay on screen
+            
+            judgmentText.text = score; // Change the text to the string score
+
+            yield return new WaitForSeconds(duration); // wait (duration) seconds
+
+            judgmentText.text = " "; // Empty the text field
         }
     }
 }  
