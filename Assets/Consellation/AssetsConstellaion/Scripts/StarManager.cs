@@ -25,7 +25,7 @@ namespace Constellation
         //private List<(string nameOne, string nameTwo)> relationshipNames = new List<(string nameOne, string nameTwo)>();
     
         // Start is called before the first frame update
-        void Start()
+        void Awake()
         {
             StarSetup();
             //Invoke("StarSetup",setupDelay);
@@ -63,7 +63,7 @@ namespace Constellation
 
             foreach (var pair in relationships)
             {
-                Instantiate(pair.line,transform.position,transform.rotation);
+                Instantiate(pair.line,new Vector3(0,0,0),Quaternion.Euler(0,0,0));
                 LineRenderer tempLine=pair.line.GetComponent<LineRenderer>();
                 tempLine.SetPosition(0,pair.starOne.destination.transform.position);
                 tempLine.SetPosition(1,pair.starTwo.destination.transform.position);
