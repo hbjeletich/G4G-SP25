@@ -27,6 +27,6 @@ public class RKMainMenuScript : MonoBehaviour
     public void LoadCredits()
     {
         RKAudioManager.Instance.PlaySFX("ButtonPress");
-        //SceneManager.LoadScene("RKCredits");
+        SceneManager.LoadScene("RKCredits");
     }
 }

@@ -21,6 +21,7 @@ namespace RhythmKitchen
         [SerializeField] private RKCompletedDishScript completedDish;
         [SerializeField] private Transform notesRuntime; // parent object for spawned notes
 
+
         [Header("Keys (A/W/S/D by lane)")]
         public KeyCode keyLane1 = KeyCode.A;
         public KeyCode keyLane2 = KeyCode.W;
@@ -160,6 +161,7 @@ namespace RhythmKitchen
             initialLeftFootZPos = leftFootPositionAction.ReadValue<Vector3>().z;
             initialRightFootZPos = rightFootPositionAction.ReadValue<Vector3>().z;
         }
+
         void Update()
         {
             if (debugOn)
@@ -203,6 +205,7 @@ namespace RhythmKitchen
                 //     initialRightFootZPos = rightFootPositionAction.ReadValue<Vector3>().z;
                 // }
 
+                if(rightFootZPos >= footThreshold + initialRightFootZPos)
                 {
                     OnRightFootRaised();
                 }
@@ -357,6 +360,7 @@ namespace RhythmKitchen
 
             completedDish.setStars(score);
         }
+
         public IEnumerator judgementTextDisplay(string score)
         {
             float duration = 2f; // Length in seconds the text will stay on screen
