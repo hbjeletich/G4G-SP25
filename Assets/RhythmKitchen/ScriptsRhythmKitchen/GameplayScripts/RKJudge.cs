@@ -335,9 +335,11 @@ namespace RhythmKitchen
             }
         }
 
-        void RegisterMiss()
+        public void RegisterMiss()
         {
+            almostCount++;
             comboCount = 0;
+            StartCoroutine(judgementTextDisplay("Almost"));
             UpdateUI();
             if (debugOn)
             {
