@@ -60,6 +60,7 @@ namespace RhythmKitchen
         [SerializeField] private TMP_Text comboNum;
         [SerializeField] private TMP_Text maxComboNum;
         [SerializeField] private TMP_Text standstillText;
+        [SerializeField] private TMP_Text instructionText;
 
         int perfectCount, goodCount, almostCount;
         int comboCount, maxComboCount;
@@ -393,6 +394,51 @@ namespace RhythmKitchen
 
             judgmentText.text = " "; // Empty the text field
         }
+    
+
+        string GetInstructionForLane(RKNote.Type type)
+    {
+            switch (type) // assigned instructions based on lane type
+        {
+            case RKNote.Type.Lane1:
+                return "Left Hip Abduct";
+            case RKNote.Type.Lane2:
+                return "Left Foot Raise";
+            case RKNote.Type.Lane3:
+                return "Right Foot Raise";
+            case RKNote.Type.Lane4:
+                return "Right Hip Abduct";
+            default:
+                return "";
+        }
     }
-}  
+
+        Coroutine instructionRoutine;
+
+        public void ShowInstruction(RKNote.Type type)
+        {
+            string msg = GetInstructionForLane(type);
+            if (string.IsNullOrEmpty(msg))
+            {
+                return;
+            }
+
+            if (instructionRoutine != null) // if previous is still running, stop it
+            {
+                StopCoroutine(instructionRoutine);
+            }
+            instructionRoutine = StartCoroutine(InstructionRoutine(msg));
+        }
+
+        IEnumerator InstructionRoutine(string msg)
+        {
+            float duration = 3f; 
+            instructionText.text = msg;
+            yield return new WaitForSeconds(duration);
+            instructionText.text = "";
+        }
+    }
+}
+
+ 
 

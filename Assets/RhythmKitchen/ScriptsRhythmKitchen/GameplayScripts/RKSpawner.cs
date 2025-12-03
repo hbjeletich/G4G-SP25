@@ -154,6 +154,11 @@ namespace RhythmKitchen
             note.transform.SetParent(notesParent, true); // grouping
 
             note.Init(conductor, judge, spawn.position, hitLine.position.y, targetTimeSongSec, travelTime);
+
+            if (judge != null)
+            {
+                judge.ShowInstruction(noteType);
+            }
         }
     }
 }
