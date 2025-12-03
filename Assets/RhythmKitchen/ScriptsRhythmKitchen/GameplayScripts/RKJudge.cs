@@ -38,11 +38,15 @@ namespace RhythmKitchen
         private InputAction leftFootPositionAction;
         private InputAction rightFootPositionAction;
         private InputAction rightHipAction;
+        private InputAction footLoweredAction;
+        private InputAction footRaisedAction;
 
         private bool isLeftHipAbduct = false;
         private bool isRightHipAbduct = false;
         private bool isLeftFootRaised = false;
         private bool isRightFootRaised = false;
+        private bool isFootLowered = true;
+        private bool isFootRaised = false;
 
         private float initialLeftFootZPos = 0f;
         private float initialRightFootZPos = 0f;
@@ -96,7 +100,8 @@ namespace RhythmKitchen
             leftFootPositionAction = actionMap.FindAction("LeftFootPosition");
             rightFootPositionAction = actionMap.FindAction("RightFootPosition");
             rightHipAction = actionMap.FindAction("RightHipAbducted");
-            // footLoweredAction = actionMap.FindAction("FootLowered");
+            footLoweredAction = actionMap.FindAction("FootLowered");
+            footRaisedAction = actionMap.FindAction("FootRaised");
         }
 
         private void OnEnable()
@@ -106,11 +111,13 @@ namespace RhythmKitchen
             leftFootPositionAction.Enable();
             rightFootPositionAction.Enable();
             rightHipAction.Enable();
-            // footLoweredAction.Enable();
+            footLoweredAction.Enable();
+            footRaisedAction.Enable();
 
             leftHipAction.performed += OnLeftHipAbduction;
             rightHipAction.performed += OnRightHipAbduction;
-            // footLoweredAction.performed += OnFootLowered;
+            footLoweredAction.performed += OnFootLowered;
+            footRaisedAction.performed += OnFootRaised;
         }
 
         private void OnDisable()
@@ -119,11 +126,13 @@ namespace RhythmKitchen
             leftFootPositionAction.Disable();
             rightFootPositionAction.Disable();
             rightHipAction.Disable();
-            // footLoweredAction.Disable();
+            footLoweredAction.Disable();
+            footRaisedAction.Disable();
 
             leftHipAction.performed -= OnLeftHipAbduction;
             rightHipAction.performed -= OnRightHipAbduction;
-            // footLoweredAction.performed -= OnFootLowered;
+            footLoweredAction.performed -= OnFootLowered;
+            footRaisedAction.performed -= OnFootRaised;
         }
 
         private void OnLeftHipAbduction(InputAction.CallbackContext contex)
@@ -150,11 +159,19 @@ namespace RhythmKitchen
             Debug.Log("[Captury] OnRightHipAbduction Called");
         }
 
-        // private void OnFootLowered(InputAction.CallbackContext contex)
-        // {
-        //     isFootLowered = true;
-        //     Debug.Log("[Captury] OnFootLowered Called");
-        // }
+        private void OnFootLowered(InputAction.CallbackContext contex)
+        {
+            isFootLowered = true;
+            isFootRaised = false;
+            Debug.Log("[Captury] OnFootLowered Called");
+        }
+
+        private void OnFootRaised(InputAction.CallbackContext contex)
+        {
+            isFootRaised = true;
+            isFootLowered = false;
+            Debug.Log("[Captury] OnFootRaised Called");
+        }
 
         public void initialFootPositionCallibration()
         {
@@ -225,14 +242,12 @@ namespace RhythmKitchen
                 //     initialLeftFootZPos = leftFootPositionAction.ReadValue<Vector3>().z;
                 //     initialRightFootZPos = rightFootPositionAction.ReadValue<Vector3>().z;
                 // }
-
-                if(rightFootZPos >= footThreshold + initialRightFootZPos)
+                if(isFootRaised)
                 {
-                    OnRightFootRaised();
-                }
-                else if(leftFootZPos >= footThreshold + initialLeftFootZPos)
-                {
-                    OnLeftFootRaised();
+                    if(rightFootZPos-initialRightFootZPos > leftFootZPos-initialLeftFootZPos)
+                        OnRightFootRaised();
+                    else
+                        OnLeftFootRaised();
                 }
 
                 if (conductor == null || notesRuntime == null)
@@ -361,6 +376,7 @@ namespace RhythmKitchen
             almostCount++;
             comboCount = 0;
             StartCoroutine(judgementTextDisplay("Almost"));
+
             UpdateUI();
             if (debugOn)
             {
@@ -413,30 +429,35 @@ namespace RhythmKitchen
         }
     }
 
-        Coroutine instructionRoutine;
-
         public void ShowInstruction(RKNote.Type type)
         {
-            string msg = GetInstructionForLane(type);
-            if (string.IsNullOrEmpty(msg))
-            {
-                return;
-            }
+            // string msg = GetInstructionForLane(type);
+            // if (string.IsNullOrEmpty(msg))
+            // {
+            //     return;
+            // }
 
-            if (instructionRoutine != null) // if previous is still running, stop it
-            {
-                StopCoroutine(instructionRoutine);
-            }
-            instructionRoutine = StartCoroutine(InstructionRoutine(msg));
+            // if (instructionRoutine != null) // if previous is still running, stop it
+            // {
+            //     StopCoroutine(instructionRoutine);
+            // }
+            // instructionRoutine = StartCoroutine(InstructionRoutine(msg));
+            instructionText.text = GetInstructionForLane(type);
+
         }
 
-        IEnumerator InstructionRoutine(string msg)
+        public void HideInstruction(RKNote.Type type)
         {
-            float duration = 3f; 
-            instructionText.text = msg;
-            yield return new WaitForSeconds(duration);
             instructionText.text = "";
         }
+
+        // IEnumerator InstructionRoutine(string msg)
+        // {
+        //     float duration = 10.5f; 
+        //     instructionText.text = msg;
+        //     yield return new WaitForSeconds(duration);
+        //     instructionText.text = "";
+        // }
     }
 }
 
