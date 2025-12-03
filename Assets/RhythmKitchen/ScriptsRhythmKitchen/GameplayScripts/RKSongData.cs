@@ -12,34 +12,34 @@ namespace RhythmKitchen
     public class RKSongData : MonoBehaviour
     {
         [Header("Authoring")]
-        public string dishName; // Name of the dish
-        public AudioClip audioClip;
-        public float songLength; // the length on seconds of the song
-        public float bpm; // BPM of song
-        public float travelTime = 1f; // how long it takes the beat to travel from spawn point to hit lane
-        public float leadInSeconds = 1f; // this is a small delay so we can schedule precisely
-        public float offsetMs = 0f; // this is calibration to nudge timing if it feels early/late (positive = judge later, negative = judge earlier)
-        [TextArea] public string songBeatString;
+        public string dishName; // Name of the dish, set in Unity
+        public AudioClip audioClip; // the AudioClip for the dish, set in Unity
+        public float songLength; // the length on seconds of the song, set in Unity
+        public float bpm; // BPM of song, set in Unity
+        public float travelTime = 1f; // how long it takes the beat to travel from spawn point to hit lane, set in Unity
+        public float leadInSeconds = 1f; // this is a small delay so we can schedule precisely, set in Unity
+        public float offsetMs = 0f; // this is calibration to nudge timing if it feels early/late (positive = judge later, negative = judge earlier), set in Unity
+        [TextArea] public string songBeatString; // comma-separated list of the songBeats for with the ingredients should hit the judgement line, set in Unity
         [TextArea] public string chartString; // comma-separated list of note types (1,2,3,4)
 
-        [Header("Prefabs (by type)")]
+        [Header("Prefabs (by type)")] // Prefabs for the Lanes, set in Unity
         public RKNote prefabLane1;
         public RKNote prefabLane2;
         public RKNote prefabLane3;
         public RKNote prefabLane4;
 
-        [Header("Outlines")]
+        [Header("Outlines")] // Sprites of the outlines for the ingredients, set in Unity
         public Sprite outlineSprite1;
         public Sprite outlineSprite2;
         public Sprite outlineSprite3;
         public Sprite outlineSprite4;
 
-        [Header("Don't Touch!")]
-        public AudioSource audioSource;
-        public SpriteRenderer outlineHolder1;
-        public SpriteRenderer outlineHolder2;
-        public SpriteRenderer outlineHolder3;
-        public SpriteRenderer outlineHolder4;
+        [Header("Don't Touch!")] // Note for those changing values in Unity
+        public AudioSource audioSource; // The AudioSource for the scene, set in Unity
+        public SpriteRenderer outlineHolder1; // Where the outline for lane1 should be, set in Unity
+        public SpriteRenderer outlineHolder2; // Where the outline for lane2 should be, set in Unity
+        public SpriteRenderer outlineHolder3; // Where the outline for lane3 should be, set in Unity
+        public SpriteRenderer outlineHolder4; // Where the outline for lane4 should be, set in Unity
         
 
         // computed and consumed by other scripts

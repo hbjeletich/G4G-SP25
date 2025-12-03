@@ -14,19 +14,21 @@ namespace RhythmKitchen
 {
     public class RKJudge : MonoBehaviour
     {
-        [SerializeField] private bool debugOn;
+        [Header("Debug")]
+        [SerializeField] private bool debugOn; // Are we playing in Debug or not, set in Unity
 
-        [Header("Refs")]
+        [Header("Refs")] // References to other objects and classes, set in Unity
         [SerializeField] private RKConductor conductor;
         [SerializeField] private RKCompletedDishScript completedDish;
         [SerializeField] private Transform notesRuntime; // parent object for spawned notes
 
 
-        [Header("Keys (A/W/S/D by lane)")]
+        [Header("Keys (A/W/S/D by lane)")] // KeyCodes for each of the Lanes
         public KeyCode keyLane1 = KeyCode.A;
         public KeyCode keyLane2 = KeyCode.W;
         public KeyCode keyLane3 = KeyCode.S;
         public KeyCode keyLane4 = KeyCode.D;
+
 
         [Header("Captury Inputs")]
         [SerializeField] private InputActionAsset inputActions;
@@ -36,13 +38,11 @@ namespace RhythmKitchen
         private InputAction leftFootPositionAction;
         private InputAction rightFootPositionAction;
         private InputAction rightHipAction;
-        // private InputAction footLoweredAction;
 
         private bool isLeftHipAbduct = false;
         private bool isRightHipAbduct = false;
         private bool isLeftFootRaised = false;
         private bool isRightFootRaised = false;
-        // private bool isFootLowered = false;
 
         private float initialLeftFootZPos = 0f;
         private float initialRightFootZPos = 0f;
