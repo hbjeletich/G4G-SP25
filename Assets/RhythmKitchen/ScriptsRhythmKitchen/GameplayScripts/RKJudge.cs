@@ -59,33 +59,34 @@ namespace RhythmKitchen
         [SerializeField] private TMP_Text almostNum;
         [SerializeField] private TMP_Text comboNum;
         [SerializeField] private TMP_Text maxComboNum;
+        [SerializeField] private TMP_Text standstillText;
 
         int perfectCount, goodCount, almostCount;
         int comboCount, maxComboCount;
 
         void UpdateUI()
-    {
-        if (perfectNum)
         {
-            perfectNum.text = perfectCount.ToString();
+            if (perfectNum)
+            {
+                perfectNum.text = perfectCount.ToString();
+            }
+            if (goodNum)
+            {
+                goodNum.text = goodCount.ToString();
+            }
+            if (almostNum)
+            {
+                almostNum.text = almostCount.ToString();
+            }
+            if (comboNum)
+            {
+                comboNum.text = comboCount.ToString();
+            }
+            if (maxComboNum)
+            {
+                maxComboNum.text = maxComboCount.ToString();
+            }
         }
-        if (goodNum)
-        {
-            goodNum.text = goodCount.ToString();
-        }
-        if (almostNum)
-        {
-            almostNum.text = almostCount.ToString();
-        }
-        if (comboNum)
-        {
-            comboNum.text = comboCount.ToString();
-        }
-        if (maxComboNum)
-        {
-            maxComboNum.text = maxComboCount.ToString();
-        }
-    }
 
         void Awake()
         {
@@ -158,8 +159,27 @@ namespace RhythmKitchen
         {
             // Sets the initial foot positions to the current value
             // The player should be prompted to stand still!
+            StartCoroutine(stepCallibration());
+        }
+
+        private IEnumerator stepCallibration()
+        {
+            float waitDuration = 2f; // Length in seconds the text will stay on screen
+            
+            standstillText.text = "Stand still"; // Change the text to the string score
+
+            yield return new WaitForSeconds(waitDuration); // wait (duration) seconds
+
             initialLeftFootZPos = leftFootPositionAction.ReadValue<Vector3>().z;
             initialRightFootZPos = rightFootPositionAction.ReadValue<Vector3>().z;
+
+            standstillText.text = "Done!";
+
+            yield return new WaitForSeconds(1f);
+
+            standstillText.text = "";
+
+            judgmentText.text = " "; // Empty the text field
         }
 
         void Update()
