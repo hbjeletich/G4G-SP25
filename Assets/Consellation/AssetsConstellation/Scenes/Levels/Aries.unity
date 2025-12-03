@@ -3037,6 +3037,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: SaturnBackground
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: cc0ab1e12294e1d4dbbdd53eeeefb106,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4117877210652659062, guid: cc0ab1e12294e1d4dbbdd53eeeefb106,
         type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
@@ -3085,11 +3090,7 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: cc0ab1e12294e1d4dbbdd53eeeefb106,
-        type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1140480013}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cc0ab1e12294e1d4dbbdd53eeeefb106, type: 3}
 --- !u!1 &1042416359
 GameObject:
@@ -3361,34 +3362,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0c95368298bd9064b899aec9b2ea5657, type: 3}
---- !u!1 &1140480011 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: cc0ab1e12294e1d4dbbdd53eeeefb106,
-    type: 3}
-  m_PrefabInstance: {fileID: 1015883008}
-  m_PrefabAsset: {fileID: 0}
---- !u!95 &1140480013
-Animator:
-  serializedVersion: 7
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1140480011}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 8d0329d964118a340b149a864990b8f5, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_AnimatePhysics: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &1155880474 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 67649267816717930, guid: fc11733a05c2fb64cbe5031623450854,
