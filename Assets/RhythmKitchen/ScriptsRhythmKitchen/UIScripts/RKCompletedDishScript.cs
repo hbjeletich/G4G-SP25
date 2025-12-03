@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using TMPro;
+using System.IO;
 
 // Worked on by: Leia Phillips
 // Commented by: Leia Phillips
@@ -12,7 +13,7 @@ namespace RhythmKitchen
     public class RKCompletedDishScript : MonoBehaviour
     {
         [Header("UI elements")] // Set in Unity
-        public Image[] stars;
+        public GameObject[] stars;
         public TMP_Text dishNameText;
         public TMP_Text comboText;
         public TMP_Text perfectText;
@@ -62,9 +63,9 @@ namespace RhythmKitchen
         public void setStars(int rating)
         {
             if (rating < 3)
-                stars[2].color = Color.black;
+                stars[2].SetActive(false);
             if (rating < 2)
-                stars[1].color = Color.black;
+                stars[1].SetActive(false);
         }
 
         // Loads the MainMenu scene, on MainMenu button press
