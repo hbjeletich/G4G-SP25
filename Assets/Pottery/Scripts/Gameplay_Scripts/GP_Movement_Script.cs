@@ -94,13 +94,6 @@ public class GP_Movement_Script : MonoBehaviour
         }
     }
 
-    public void ResetProgress()
-    {
-        Progress = 0;
-        slider.value = 0;
-        slidervalue = 0;
-        UpdateMesh();   // Returns to mesh01
-    }
 
     // ------------------------------------------
     // Main coroutine
