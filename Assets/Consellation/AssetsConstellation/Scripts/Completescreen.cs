@@ -28,6 +28,10 @@ namespace Constellation
         [Header("Debug")]
         [SerializeField] private bool debugMode = true;
 
+        // ⭐ ADDED — just this
+        [Header("Audio")]
+        [SerializeField] private AudioSource completionSound;
+
         private StarScript[] stars;
         private bool levelCompleted = false;
 
@@ -94,6 +98,11 @@ namespace Constellation
             }
 
             levelCompleted = true;
+
+            // ⭐ ADDED — plays the sound
+            if (completionSound != null)
+                completionSound.Play();
+
             Debug.Log("🌟 All stars have found their homes!");
 
             if (congratsPanel != null)
@@ -149,7 +158,20 @@ namespace Constellation
                 character3DModel.transform.position = targetPosition;
             }
             
-            // 2. Dialogue fades in
+            // 2. Image fades in first (to 50% opacity)
+            if (popupImage != null)
+            {
+                float elapsed = 0f;
+                while (elapsed < 0.5f)
+                {
+                    elapsed += Time.deltaTime;
+                    SetAlpha(popupImage, (elapsed / 0.5f) * 0.5f);
+                    yield return null;
+                }
+                SetAlpha(popupImage, 0.5f);
+            }
+            
+            // 3. Dialogue fades in
             if (dialogueText != null)
             {
                 float elapsed = 0f;
@@ -162,10 +184,10 @@ namespace Constellation
                 SetAlpha(dialogueText, 1);
             }
             
-            // 3. Hold dialogue
+            // 4. Hold dialogue
             yield return new WaitForSeconds(dialogueHoldTime);
             
-            // 4. Dialogue fades out
+            // 5. Dialogue fades out
             if (dialogueText != null)
             {
                 float elapsed = 0f;
@@ -176,19 +198,6 @@ namespace Constellation
                     yield return null;
                 }
                 SetAlpha(dialogueText, 0);
-            }
-            
-            // 5. Image fades in to 50% opacity
-            if (popupImage != null)
-            {
-                float elapsed = 0f;
-                while (elapsed < 0.5f)
-                {
-                    elapsed += Time.deltaTime;
-                    SetAlpha(popupImage, (elapsed / 0.5f) * 0.5f);
-                    yield return null;
-                }
-                SetAlpha(popupImage, 0.5f);
             }
             
             // 6. Final text fades in
