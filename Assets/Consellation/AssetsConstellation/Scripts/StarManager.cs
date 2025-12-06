@@ -8,8 +8,6 @@ namespace Constellation
 {
     public class StarManager : MonoBehaviour
     {
-        public float setupDelay=0.1f;
-        
         //the line empty with no stars
         public GameObject blankLine;
         
@@ -17,8 +15,6 @@ namespace Constellation
         public GameObject fullLine;
 
         public List<GameObject> stars =new List<GameObject>();
-
-        private List<StarScript> starScripts =new List<StarScript>();
 
         private List<(StarScript starOne,StarScript starTwo)> relationships =new List<(StarScript starOne, StarScript starTwo)>();
 
@@ -36,17 +32,12 @@ namespace Constellation
             Debug.Log("HIT : SETUP");
             foreach (var star in stars)
             {
-                starScripts.Add(star.GetComponent<StarScript>());
-            }
-
-            foreach (var script in starScripts)
-            {
+                //new
+                StarScript script = star.GetComponent<StarScript>();
                 script.starPlaced.AddListener(StarPlaced);
-                Debug.Log("HIT : StarScfript");
 
                 foreach (var nearStar in script.nearStars)
                 {
-                    Debug.Log("HIT : if");
                     StarScript nearStarScript = nearStar.GetComponent<StarScript>();
                     
                     GameObject temp = Instantiate(blankLine);
@@ -67,17 +58,28 @@ namespace Constellation
                     }
                 }
             }
-
-            foreach (var pair in relationships)
-            {
-                //GameObject tempInst=Instantiate(pair.line,new Vector3(0,0,0),Quaternion.Euler(0,0,0));
-                
-                Debug.Log("HIT : placed");
-            }
         }
 
         void StarPlaced()
         {
+            for (int i = 0; i < relationships.Count; i++)
+            {
+                if (relationships[i].starOne.foundHome && relationships[i].starTwo.foundHome)
+                {
+                    GameObject temp=Instantiate(fullLine,transform.position,transform.rotation);
+                    LineRenderer tempLine=temp.GetComponent<LineRenderer>();
+                    tempLine.SetPosition(0,relationships[i].starOne.destination.transform.position);
+                    tempLine.SetPosition(1,relationships[i].starTwo.destination.transform.position);
+
+                    GameObject toDelete = lines[i];
+                    lines[i] = temp;
+                    Destroy(toDelete);
+                    
+                    
+                }
+            }
+
+            /*
             foreach (var pair in relationships)
             {
                 if (pair.starOne.foundHome&&pair.starTwo.foundHome)
@@ -88,6 +90,7 @@ namespace Constellation
                     tempLine.SetPosition(1,pair.starTwo.destination.transform.position);
                 }
             }
+            */
         }
     }
 }
