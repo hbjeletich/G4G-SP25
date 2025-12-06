@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: fde65df8ae1b86641baddc483e37829d
+guid: 56c400ff8fde4814ab0ce3a3a376625b
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -97,22 +97,43 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: image2_0
+      name: Player_RHA_0
       rect:
         serializedVersion: 2
-        x: 339
+        x: 258
         y: 221
-        width: 378
-        height: 597
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+        width: 523
+        height: 746
+      alignment: 1
+      pivot: {x: 0, y: 1}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 626a76126fa13f64c8ef3c3f98394650
-      internalID: -1376933971
+      spriteID: a0170511a0aca5649917e7ea6cef78fd
+      internalID: -2004864261
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Player_RHA_1
+      rect:
+        serializedVersion: 2
+        x: 335
+        y: 221
+        width: 446
+        height: 597
+      alignment: 1
+      pivot: {x: 0, y: 1}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b428ed64600a035478d47c494e74964e
+      internalID: -561196562
       vertices: []
       indices: 
       edges: []
@@ -120,7 +141,7 @@ TextureImporter:
     outline: []
     physicsShape: []
     bones: []
-    spriteID: b418f49227a10224e8eebc5e241ecc14
+    spriteID: b3ea07fd381916648945e07788b9c09e
     internalID: 0
     vertices: []
     indices: 
@@ -128,7 +149,8 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      image2_0: -1376933971
+      Player_RHA_0: -2004864261
+      Player_RHA_1: -561196562
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

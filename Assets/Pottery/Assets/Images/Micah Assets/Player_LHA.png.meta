@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: fde65df8ae1b86641baddc483e37829d
+guid: 1e16f649c5008a54eb0f23ea8c09ac50
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -97,22 +97,43 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: image2_0
+      name: Player_LHA_0
       rect:
         serializedVersion: 2
-        x: 339
-        y: 221
-        width: 378
-        height: 597
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+        x: 278
+        y: 227
+        width: 526
+        height: 745
+      alignment: 1
+      pivot: {x: 0, y: 1}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 626a76126fa13f64c8ef3c3f98394650
-      internalID: -1376933971
+      spriteID: 099706f7e3dfc1245929d793537f45eb
+      internalID: 1752648338
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Player_LHA_1
+      rect:
+        serializedVersion: 2
+        x: 499
+        y: 797
+        width: 305
+        height: 175
+      alignment: 1
+      pivot: {x: 0, y: 1}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 68d02b3e1d6f0d347a2c29eaf014c764
+      internalID: -1384011221
       vertices: []
       indices: 
       edges: []
@@ -120,7 +141,7 @@ TextureImporter:
     outline: []
     physicsShape: []
     bones: []
-    spriteID: b418f49227a10224e8eebc5e241ecc14
+    spriteID: a7f35651479f0af49b7c45793fd3e0b7
     internalID: 0
     vertices: []
     indices: 
@@ -128,7 +149,8 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      image2_0: -1376933971
+      Player_LHA_0: 1752648338
+      Player_LHA_1: -1384011221
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
