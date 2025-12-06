@@ -20,9 +20,9 @@ namespace Constellation
 
         private List<StarScript> starScripts =new List<StarScript>();
 
-        private List<(StarScript starOne,StarScript starTwo,GameObject line)> relationships =new List<(StarScript starOne, StarScript starTwo,GameObject line)>();
+        private List<(StarScript starOne,StarScript starTwo)> relationships =new List<(StarScript starOne, StarScript starTwo)>();
 
-        //private List<(string nameOne, string nameTwo)> relationshipNames = new List<(string nameOne, string nameTwo)>();
+        private List<GameObject> lines = new List<GameObject>();
     
         // Start is called before the first frame update
         void Awake()
@@ -48,14 +48,21 @@ namespace Constellation
                 {
                     Debug.Log("HIT : if");
                     StarScript nearStarScript = nearStar.GetComponent<StarScript>();
+                    
+                    GameObject temp = Instantiate(blankLine);
+                    LineRenderer tempLine=temp.GetComponent<LineRenderer>();
+                    tempLine.SetPosition(0,script.destination.transform.position);
+                    tempLine.SetPosition(1,nearStarScript.destination.transform.position);
 
-                    if (!relationships.Contains((script, nearStarScript, blankLine)) && !relationships.Contains((nearStarScript, script, blankLine)))
+                    if (!relationships.Contains((script, nearStarScript)) && !relationships.Contains((nearStarScript, script)))
                     {
-                        relationships.Add((script, nearStarScript, blankLine));
+                        relationships.Add((script, nearStarScript ));
+                        lines.Add(temp);
                         Debug.Log("HIT : if");
                     }
                     else 
                     {
+                        Destroy(temp);
                         Debug.Log("HIT : else");
                     }
                 }
@@ -63,10 +70,8 @@ namespace Constellation
 
             foreach (var pair in relationships)
             {
-                Instantiate(pair.line,new Vector3(0,0,0),Quaternion.Euler(0,0,0));
-                LineRenderer tempLine=pair.line.GetComponent<LineRenderer>();
-                tempLine.SetPosition(0,pair.starOne.destination.transform.position);
-                tempLine.SetPosition(1,pair.starTwo.destination.transform.position);
+                //GameObject tempInst=Instantiate(pair.line,new Vector3(0,0,0),Quaternion.Euler(0,0,0));
+                
                 Debug.Log("HIT : placed");
             }
         }
