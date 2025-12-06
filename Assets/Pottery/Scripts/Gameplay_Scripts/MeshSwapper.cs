@@ -1,12 +1,17 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class MeshSwapper : MonoBehaviour
 {
 
     Settings_Script settingsscript;
 
+    public float Progress = 0f;
+    public float MaxProgress = 40f;
+
+    public Slider slider;
     public int slidervalue = 0;
 
     [Header("Assign your 4 meshes here")]
@@ -57,8 +62,23 @@ public class MeshSwapper : MonoBehaviour
         updateMesh();
     }
 
+    public void ResetProgress()
+    {
+        Progress = 0;
+        slidervalue = 0;
+
+        if (slider != null)
+            slider.value = 0;
+
+        meshFilter.mesh = mesh01;   // reset to first mesh
+    }
+
+
     void updateMesh()
     {
+
+        slider.value = slidervalue;
+
 
         //If key is pressed, increase slidervalue by 1
         if (Input.GetKeyDown(KeyCode.Space))
