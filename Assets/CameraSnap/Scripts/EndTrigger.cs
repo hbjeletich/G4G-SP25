@@ -21,7 +21,7 @@ namespace CameraSnap
                 hasEnded = true;
                 cart.StopCart();
 
-                // Inline end summary behavior: populate end panel slots, reveal captured animals, show panel and pause.
+                // populate end panel slots, reveal captured animals, show panel and pause.
                 if (GameManager.Instance == null || UIManager.Instance == null) return;
 
                 var allAnimals = GameManager.Instance.GetAllAnimals();
@@ -41,7 +41,7 @@ namespace CameraSnap
                 Time.timeScale = 0f;
             }
         }
-        // end trigger handling inlined above
+        // end trigger handling above
 //If end has been triggered and player presses R, it resumes the time and reloads the same scene 
         private void Update()
         {

@@ -3068,7 +3068,7 @@ Transform:
   m_GameObject: {fileID: 147561204}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0.037349865, z: -0, w: 0.99930227}
-  m_LocalPosition: {x: 24.4, y: 2.5, z: 35.2}
+  m_LocalPosition: {x: 26.8, y: 2.5, z: 35.2}
   m_LocalScale: {x: 21.119947, y: 10.894775, z: 19.177765}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -11883,9 +11883,19 @@ PrefabInstance:
       objectReference: {fileID: 1644624866}
     - target: {fileID: 6928521840649202477, guid: a10633bfb0f04f34a806900d02c5ff19,
         type: 3}
+      propertyPath: detectionRange
+      value: 1000
+      objectReference: {fileID: 0}
+    - target: {fileID: 6928521840649202477, guid: a10633bfb0f04f34a806900d02c5ff19,
+        type: 3}
       propertyPath: cameraOverlayUI
       value: 
       objectReference: {fileID: 781081458}
+    - target: {fileID: 7860287785268200414, guid: a10633bfb0f04f34a806900d02c5ff19,
+        type: 3}
+      propertyPath: panSpeed
+      value: 30
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -19891,9 +19901,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: f241aa1dd03efa5459f531ec77101ac3, type: 2}
   - {fileID: 11400000, guid: 5fd2ba12446000b4f9b363e5257523b9, type: 2}
   - {fileID: 11400000, guid: 5896fb1578257554cb421a6e221adc44, type: 2}
-  - {fileID: 11400000, guid: ead52029e64849c46a5076a1bd8a012e, type: 2}
-  - {fileID: 11400000, guid: 45098e11dfc61214a9aa72978bc6b6a6, type: 2}
-  - {fileID: 11400000, guid: 61165de1618644a43b53a89d767461f2, type: 2}
 --- !u!4 &1197041991
 Transform:
   m_ObjectHideFlags: 0

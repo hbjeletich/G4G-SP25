@@ -130,13 +130,16 @@ private bool squatTriggered;
 
 private void Start()
 {
+    //calibrate pelvis position for the squatting to work better. Before, it would think the player was naturally squatting.
     if (pelvisPositionAction != null)
     {
         neutralPelvisY = pelvisPositionAction.ReadValue<Vector3>().y;
         Debug.Log($"[Squat] Calibrated neutral pelvis Y = {neutralPelvisY:F3}");
     }
    
-    // Calibrate neutral WeightShiftX at startup if available
+    // Calibrate neutral WeightShiftX at startup if available. To know what the player is like standing still.. 
+    //This helps make the camera stay still when the player is, but if it is calibrated wrong, it makes playing the game
+    //hard because the player is fighting with the camera. 
     if (weightShiftXAction != null && motionConfig != null && motionConfig.enableTorsoModule && motionConfig.isShiftTracked)
     {
         neutralWeightShiftOffset = weightShiftXAction.ReadValue<float>();
@@ -147,7 +150,8 @@ private void Start()
 }
 
 
-// Public method to recalibrate neutral WeightShiftX at runtime
+// Public method to recalibrate neutral WeightShiftX at runtime. Recalibration is to adjust to the players position standing still, this helps
+//make it move around less. Players naturally move around as they play, so the calibration at the start would not work throughout.
 public void RecalibrateWeightShiftNeutral()
 {
     if (weightShiftXAction == null)
@@ -279,6 +283,7 @@ private void HandleSquat()
                 if (stm != null)
                 {
                     stm.OnFootRaisedExternal();
+                    Debug.Log("FootRaiseDetected-MovingtoNextScene");
                 }
                 else
                 {

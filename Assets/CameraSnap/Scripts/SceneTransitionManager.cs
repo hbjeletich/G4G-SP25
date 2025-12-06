@@ -1,6 +1,6 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.InputSystem;
+// InputSystem removed: SceneTransitionManager is invoked externally from MainController
 
 namespace CameraSnap
 {
@@ -28,20 +28,14 @@ namespace CameraSnap
             if (!isLoading && Input.GetKeyDown(KeyCode.Space))
             {
                 StartGame();
+                Debug.Log("DebugKeyDetect-LoadingScene");
             }
         }
 
-        // Public handler so the main-menu input system can call this directly
-        // or subscribe to it as an event target.
-        public void OnFootRaised(InputAction.CallbackContext ctx)
-        {
-            if (ctx.performed && !isLoading)
-            {
-                StartGame();
-            }
-        }
-
-        
+        // Public handler for external triggers (e.g. MainController). Keep simple: call from
+        // other systems when a foot-raise is detected on the main menu.
+        // Note: InputSystem-specific handlers have been removed to avoid needing direct
+        // subscriptions in this class.
         public void OnFootRaisedExternal()
         {
             if (!isLoading) StartGame();
