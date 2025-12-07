@@ -26,6 +26,7 @@ namespace Constellation
         //the debug string to test interactions
         public string starName;
 
+        // the event to send out when players place a star
         public UnityEvent starPlaced;
         
         // Start is called before the first frame update
@@ -34,30 +35,15 @@ namespace Constellation
             // grab player
             player=GameObject.FindGameObjectWithTag("Player");
             playerCont = player.GetComponent<PlayerController>();
+            
             //adds interaction listener
             if (playerCont != null)
             {
                 playerCont.interact.AddListener(Interact);
             }
             //gets dest scritp
-            destScript = destination.GetComponent<DestinationScript>();
             
-            /*
-            foreach (var star in nearStars)
-            {
-                StarScript temp = star.GetComponent<StarScript>();
-                //Quaternion looking = 
-                //Quaternion final = Quaternion.Euler(looking.x,-90,-90);
-                //Quaternion.P
-                Vector3 midpoint = Vector3.Lerp(destination.transform.position, temp.destination.transform.position, .5f);
-                float arctanVal = Mathf.Atan(destination.transform.position.y / destination.transform.position.x);
-                arctanVal *= 180 / Mathf.PI;
-                Debug.Log("ArcTan" : "+arctanVal);
-                Instantiate(blankLine,midpoint,Quaternion.Euler(arctanVal,90,90));
-                blankLine.transform.LookAt(destination.transform);
-                //
-            }
-            */
+            destScript = destination.GetComponent<DestinationScript>();
             
         }
 
@@ -94,7 +80,7 @@ namespace Constellation
             //if player is over stars home and players grabbed star is me
             if (destScript.playerTouch && playerCont.grabedStar == gameObject)
             {
-                //set me home and drop star
+                //set me home, drop star, and tell star manager a star was placed
                 foundHome = true;
                 starPlaced.Invoke();
                 playerCont.grabedStar = null;
