@@ -1,6 +1,5 @@
 using UnityEngine;
 using System.Collections.Generic;
-using System.Text;
 
 namespace CameraSnap
 {
@@ -12,7 +11,7 @@ namespace CameraSnap
         private bool hasEnded = false;
 
 // When cart enters trigger, checks if it is the cart, ensures end isn't already triggered, 
-//stoped the cart from moving, shows the end summary
+//stoped the cart from moving, shows the end panel
         private void OnTriggerEnter(Collider other)
         {
             // Detect the cart reaching the end
@@ -21,31 +20,28 @@ namespace CameraSnap
             {
                 hasEnded = true;
                 cart.StopCart();
-                ShowEndSummary();
+
+                // populate end panel slots, reveal captured animals, show panel and pause.
+                if (GameManager.Instance == null || UIManager.Instance == null) return;
+
+                var allAnimals = GameManager.Instance.GetAllAnimals();
+                var captured = GameManager.Instance.GetCapturedAnimals();
+
+                UIManager.Instance.SetEndPanelAnimals(new System.Collections.Generic.List<AnimalData>(allAnimals));
+
+                if (captured != null)
+                {
+                    foreach (var name in captured)
+                    {
+                        UIManager.Instance.RevealEndPanelTarget(name);
+                    }
+                }
+
+                UIManager.Instance.ShowEndPanel();
+                Time.timeScale = 0f;
             }
         }
-//generates list of captured and missed animals. Gets set of animals that player captured, builds
-//UI summary using string formatting..
-        private void ShowEndSummary()
-        {
-            if (GameManager.Instance == null)
-            {
-                Debug.LogWarning("[EndGameTrigger] No GameManager found!");
-                return;
-            }
-
-            var allAnimals = GameManager.Instance.GetAllAnimals();
-            var captured = GameManager.Instance.GetCapturedAnimals();
-
-            if (UIManager.Instance == null)
-            {
-                Debug.LogError("[EndGameTrigger] UIManager not found in scene. Add a UIManager GameObject and assign UI references.");
-                return;
-            }
-
-            UIManager.Instance.ShowEndSummary(allAnimals, captured);
-            Debug.Log("[EndGameTrigger] End summary displayed via UIManager.");
-        }
+        // end trigger handling above
 //If end has been triggered and player presses R, it resumes the time and reloads the same scene 
         private void Update()
         {
