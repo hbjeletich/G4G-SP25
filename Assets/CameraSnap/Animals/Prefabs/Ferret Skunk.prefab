@@ -139,8 +139,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 3.8887296, y: 4.5893064, z: 1}
-  m_Center: {x: -0.29188943, y: 2.229019, z: 0}
+  m_Size: {x: 3.8887293, y: 5.7896013, z: 1}
+  m_Center: {x: -0.2918895, y: 1.6288688, z: 0}
 --- !u!114 &9158820192218078888
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -154,7 +154,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animalData: {fileID: 11400000, guid: 6c7adae3ea50a914c83b14eea51b43db, type: 2}
-  isCaptured: 0
   animator: {fileID: 0}
-  walkBool: isWalking
-  hideTrigger: Hide
+  isCaptured: 0

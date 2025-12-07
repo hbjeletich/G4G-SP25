@@ -35,11 +35,6 @@ namespace CameraSnap
                 if (!isStopped)
                 {
                     StopCart();
-                    Debug.Log("[Keyboard] Space pressed → Cart stopped (squat simulated)");
-                }
-                else
-                {
-                    Debug.Log("[Keyboard] Space pressed but cart already stopped. Waiting for zone completion to auto-resume.");
                 }
             }
 
@@ -98,11 +93,7 @@ namespace CameraSnap
             isMoving = false;
 
             // Rely on UIManager to control stop-cart UI
-            if (UIManager.Instance == null)
-            {
-                Debug.LogError("[CartController] UIManager not found; stop cart UI cannot be shown.");
-            }
-            else
+            if (UIManager.Instance != null)
             {
                 UIManager.Instance.SetStopCartVisible(true);
             }
@@ -110,7 +101,6 @@ namespace CameraSnap
             // If stopping inside a slowdown zone, advance the player guide to the next step
             if (currentZone != null && UIManager.Instance != null)
             {
-                Debug.Log("[CartController] Stopped in zone -> advancing guide to HipAbduction");
                 UIManager.Instance.SetGuideState(UIManager.GuideState.HipAbduction);
             }
 
@@ -124,11 +114,7 @@ namespace CameraSnap
             isMoving = true;
 
             // Rely on UIManager to control stop-cart UI
-            if (UIManager.Instance == null)
-            {
-                Debug.LogError("[CartController] UIManager not found; stop cart UI cannot be hidden.");
-            }
-            else
+            if (UIManager.Instance != null)
             {
                 UIManager.Instance.SetStopCartVisible(false);
             }
