@@ -6,17 +6,23 @@ using UnityEngine.InputSystem;
 
 namespace Constellation
 {
+    public enum ControlsScheme
+    {
+        Keyboard,Workout,Standard
+    }
+
     public class PlayerController : MonoBehaviour
     {
         //Declaration Area
 
-
+        // this is the Input actions of captury
         [SerializeField] private InputActionAsset inputActions;
-
+        
         private InputAction leftFootHeightAction;
         private InputAction rightFootHeightAction;
 
         //STATISTICS
+        
         //rotation mod gathered by input
         [SerializeField] private float rotationMod;
         //speed mod gathered by input
@@ -26,13 +32,14 @@ namespace Constellation
         //how fast guy rotates
         [SerializeField] private float rotateStat = 5.0f;
 
-        //
+        // These are stats for thresholds of foot height
         [SerializeField] private float turnFootThreshold = .2f;
 
         [SerializeField] private float walkFootThreshold = .06f;
 
         [SerializeField] private float jumpThreshold=.1f;
 
+        // these handle multiple interaction spam 
         [SerializeField] private float delayTime=.4f;
 
         private bool doingSomething=false;
@@ -49,10 +56,12 @@ namespace Constellation
         // The storage spot so that the player knows which star is currently held
         public GameObject grabedStar;
 
-        public bool debugControls = false;
+        // the control scheme being used currently
+        public ControlsScheme controls = ControlsScheme.Workout;
 
         void Awake()
         { 
+            // grabs input actions on awake
             var footMap= inputActions.FindActionMap("Foot");
             leftFootHeightAction = footMap.FindAction("LeftFootPosition");
             rightFootHeightAction = footMap.FindAction("RightFootPosition");
@@ -60,12 +69,14 @@ namespace Constellation
 
         void OnEnable()
         {
+            // turns on actions
             leftFootHeightAction.Enable();
             rightFootHeightAction.Enable();
         }
 
         void OnDisable()
         { 
+            //turns off actions
             leftFootHeightAction.Disable();
             rightFootHeightAction.Disable();
         }
@@ -84,7 +95,7 @@ namespace Constellation
             //take input should ne changed with movement aspects
 
             //this movement is used when the keyboard is wanted to test features
-            if (debugControls)
+            if (controls==ControlsScheme.Keyboard)
             {
                 speedMod = Input.GetAxis("Vertical");
                 rotationMod = Input.GetAxis("Horizontal");
@@ -95,7 +106,8 @@ namespace Constellation
                     interact.Invoke();
                 }
             }
-            else     //THis branch is used when caputry movemnt is used MUST BE TESTED IN LIM
+            // THis implements workout controls
+            else if (controls==ControlsScheme.Workout)
             {
 
                 float leftFootY = leftFootHeightAction.ReadValue<Vector3>().y;
@@ -153,11 +165,13 @@ namespace Constellation
 
         }
 
+        //this sends the interaction event to tell world the player wants to interact
         void Interact()
         {
             Invoke("delay",delayTime);
         }
 
+        // this function flips doing something after a certain amount of time.
         void delay()
         {
             doingSomething=false;

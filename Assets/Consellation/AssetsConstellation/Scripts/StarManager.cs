@@ -8,79 +8,80 @@ namespace Constellation
 {
     public class StarManager : MonoBehaviour
     {
-        public float setupDelay=0.1f;
-        
         //the line empty with no stars
         public GameObject blankLine;
         
         //the line once filled by stars
         public GameObject fullLine;
 
+        // the list of star gameobjects
         public List<GameObject> stars =new List<GameObject>();
 
-        private List<StarScript> starScripts =new List<StarScript>();
+        // the list of stars that are next to each other
+        private List<(StarScript starOne,StarScript starTwo)> relationships =new List<(StarScript starOne, StarScript starTwo)>();
 
-        private List<(StarScript starOne,StarScript starTwo,GameObject line)> relationships =new List<(StarScript starOne, StarScript starTwo,GameObject line)>();
-
-        //private List<(string nameOne, string nameTwo)> relationshipNames = new List<(string nameOne, string nameTwo)>();
+        // the list on instatiated lines SHOULD HAVE IDENTICAL INDEX TO RELATIONSHIPS IF RELATIONSHIPS CHANGES THIS MUST
+        private List<GameObject> lines = new List<GameObject>();
     
         // Start is called before the first frame update
         void Awake()
         {
             StarSetup();
-            //Invoke("StarSetup",setupDelay);
         }
 
         void StarSetup()
         {
-            Debug.Log("HIT : SETUP");
             foreach (var star in stars)
             {
-                starScripts.Add(star.GetComponent<StarScript>());
-            }
-
-            foreach (var script in starScripts)
-            {
+                // for each star grab star script and start listening to stars
+                StarScript script = star.GetComponent<StarScript>();
                 script.starPlaced.AddListener(StarPlaced);
-                Debug.Log("HIT : StarScfript");
 
                 foreach (var nearStar in script.nearStars)
                 {
-                    Debug.Log("HIT : if");
+                    // for each star thats near by grab its script
                     StarScript nearStarScript = nearStar.GetComponent<StarScript>();
+                    
+                    // build a line for it
+                    GameObject temp = Instantiate(blankLine);
+                    LineRenderer tempLine=temp.GetComponent<LineRenderer>();
+                    tempLine.SetPosition(0,script.destination.transform.position);
+                    tempLine.SetPosition(1,nearStarScript.destination.transform.position);
 
-                    if (!relationships.Contains((script, nearStarScript, blankLine)) && !relationships.Contains((nearStarScript, script, blankLine)))
+                    // if that relationship is unique
+                    if (!relationships.Contains((script, nearStarScript)) && !relationships.Contains((nearStarScript, script)))
                     {
-                        relationships.Add((script, nearStarScript, blankLine));
-                        Debug.Log("HIT : if");
+                        // add that relationship and line to list
+                        relationships.Add((script, nearStarScript ));
+                        lines.Add(temp);
                     }
                     else 
                     {
-                        Debug.Log("HIT : else");
+                        // else save some space
+                        Destroy(temp);
                     }
                 }
-            }
-
-            foreach (var pair in relationships)
-            {
-                Instantiate(pair.line,new Vector3(0,0,0),Quaternion.Euler(0,0,0));
-                LineRenderer tempLine=pair.line.GetComponent<LineRenderer>();
-                tempLine.SetPosition(0,pair.starOne.destination.transform.position);
-                tempLine.SetPosition(1,pair.starTwo.destination.transform.position);
-                Debug.Log("HIT : placed");
             }
         }
 
         void StarPlaced()
         {
-            foreach (var pair in relationships)
+            // when a stars placed check each relationship
+            for (int i = 0; i < relationships.Count; i++)
             {
-                if (pair.starOne.foundHome&&pair.starTwo.foundHome)
+                // if both stars in a relationship are home
+                if (relationships[i].starOne.foundHome && relationships[i].starTwo.foundHome)
                 {
+                    // build a full line
                     GameObject temp=Instantiate(fullLine,transform.position,transform.rotation);
                     LineRenderer tempLine=temp.GetComponent<LineRenderer>();
-                    tempLine.SetPosition(0,pair.starOne.destination.transform.position);
-                    tempLine.SetPosition(1,pair.starTwo.destination.transform.position);
+                    tempLine.SetPosition(0,relationships[i].starOne.destination.transform.position);
+                    tempLine.SetPosition(1,relationships[i].starTwo.destination.transform.position);
+
+                    // swap stored line with new completed line
+                    GameObject toDelete = lines[i];
+                    lines[i] = temp;
+                    Destroy(toDelete);
                 }
             }
         }
