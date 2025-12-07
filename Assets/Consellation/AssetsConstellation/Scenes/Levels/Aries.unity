@@ -1467,9 +1467,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: zoomTransition, Assembly-CSharp
-        m_MethodName: OnStartButtonClick
+      - m_Target: {fileID: 973812270}
+        m_TargetAssemblyTypeName: returnToLevels, Assembly-CSharp
+        m_MethodName: ExitLevel
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2230,6 +2230,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1427882949972846304, guid: 5c370bca92b058c4481f363d05dc706e,
         type: 3}
+      propertyPath: secondaryObject
+      value: 
+      objectReference: {fileID: 1148888160}
+    - target: {fileID: 1427882949972846304, guid: 5c370bca92b058c4481f363d05dc706e,
+        type: 3}
       propertyPath: slideInDuration
       value: 1.5
       objectReference: {fileID: 0}
@@ -2543,12 +2548,12 @@ PrefabInstance:
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 5923481343699020634, guid: 5c370bca92b058c4481f363d05dc706e,
         type: 3}
-      insertIndex: 3
-      addedObject: {fileID: 199042681}
+      insertIndex: 0
+      addedObject: {fileID: 1280780143}
     - targetCorrespondingSourceObject: {fileID: 5923481343699020634, guid: 5c370bca92b058c4481f363d05dc706e,
         type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1280780143}
+      insertIndex: 4
+      addedObject: {fileID: 199042681}
     - targetCorrespondingSourceObject: {fileID: 2430185737240572379, guid: 5c370bca92b058c4481f363d05dc706e,
         type: 3}
       insertIndex: -1
@@ -4147,6 +4152,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: LineLocked
+      objectReference: {fileID: 0}
+    - target: {fileID: 7860375280633954760, guid: 94ed5d1240efba8488a4d26f099473d3,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
