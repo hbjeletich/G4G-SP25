@@ -15,10 +15,14 @@ namespace Constellation
         [SerializeField] private Vector3 targetPosition = new Vector3(-3f, 1f, 5f);
         [SerializeField] private float slideUpDistance = 10f;
         [SerializeField] private float slideDuration = 0.8f;
+        [SerializeField] private AnimationCurve slideEaseCurve = AnimationCurve.EaseInOut(0, 0, 1, 1);
         
         [Header("UI Elements")]
         [SerializeField] private TextMeshProUGUI dialogueText;
         [SerializeField] private float dialogueHoldTime = 2f;
+        [SerializeField] private float dialogueStartScale = 0.5f;
+        
+        [SerializeField] private CanvasGroup secondaryObject;
         
         [SerializeField] private Image popupImage;
         [SerializeField] private Sprite imageSprite;
@@ -52,6 +56,11 @@ namespace Constellation
 
             if (finalText != null)
                 SetAlpha(finalText, 0);
+
+            if (secondaryObject != null)
+            {
+                secondaryObject.alpha = 0;
+            }
 
             stars = FindObjectsOfType<StarScript>(true);
             if (stars.Length == 0)
@@ -128,6 +137,7 @@ namespace Constellation
             {
                 dialogueText.gameObject.SetActive(true);
                 SetAlpha(dialogueText, 0);
+                dialogueText.transform.localScale = new Vector3(dialogueStartScale, dialogueStartScale, dialogueStartScale);
             }
 
             if (popupImage != null)
@@ -144,6 +154,12 @@ namespace Constellation
                 SetAlpha(finalText, 0);
             }
 
+            if (secondaryObject != null)
+            {
+                secondaryObject.gameObject.SetActive(true);
+                secondaryObject.alpha = 0;
+            }
+
             // 1. Character slides UP from below
             if (character3DModel != null)
             {
@@ -151,7 +167,7 @@ namespace Constellation
                 while (elapsed < slideDuration)
                 {
                     elapsed += Time.deltaTime;
-                    float t = elapsed / slideDuration;
+                    float t = slideEaseCurve.Evaluate(elapsed / slideDuration);
                     character3DModel.transform.position = Vector3.Lerp(startPos, targetPosition, t);
                     yield return null;
                 }
@@ -171,33 +187,44 @@ namespace Constellation
                 SetAlpha(popupImage, 0.5f);
             }
             
-            // 3. Dialogue fades in
+            // 3. Dialogue fades in + grows
             if (dialogueText != null)
             {
                 float elapsed = 0f;
                 while (elapsed < 0.5f)
                 {
                     elapsed += Time.deltaTime;
-                    SetAlpha(dialogueText, elapsed / 0.5f);
+                    float t = elapsed / 0.5f;
+                    SetAlpha(dialogueText, t);
+                    float scale = Mathf.Lerp(dialogueStartScale, 1f, t);
+                    dialogueText.transform.localScale = new Vector3(scale, scale, scale);
                     yield return null;
                 }
                 SetAlpha(dialogueText, 1);
+                dialogueText.transform.localScale = Vector3.one;
             }
             
             // 4. Hold dialogue
             yield return new WaitForSeconds(dialogueHoldTime);
             
-            // 5. Dialogue fades out
-            if (dialogueText != null)
+            // 5. Dialogue fades out + shrinks (secondary stays visible)
             {
                 float elapsed = 0f;
                 while (elapsed < 0.5f)
                 {
                     elapsed += Time.deltaTime;
-                    SetAlpha(dialogueText, 1 - (elapsed / 0.5f));
+                    float t = elapsed / 0.5f;
+                    float scale = Mathf.Lerp(1f, dialogueStartScale, t);
+                    
+                    if (dialogueText != null)
+                    {
+                        SetAlpha(dialogueText, 1 - t);
+                        dialogueText.transform.localScale = new Vector3(scale, scale, scale);
+                    }
                     yield return null;
                 }
-                SetAlpha(dialogueText, 0);
+                if (dialogueText != null)
+                    SetAlpha(dialogueText, 0);
             }
             
             // 6. Final text fades in
@@ -211,6 +238,19 @@ namespace Constellation
                     yield return null;
                 }
                 SetAlpha(finalText, 1);
+            }
+            
+            // 7. Secondary object fades in last
+            if (secondaryObject != null)
+            {
+                float elapsed = 0f;
+                while (elapsed < 0.5f)
+                {
+                    elapsed += Time.deltaTime;
+                    secondaryObject.alpha = elapsed / 0.5f;
+                    yield return null;
+                }
+                secondaryObject.alpha = 1;
             }
         }
 
