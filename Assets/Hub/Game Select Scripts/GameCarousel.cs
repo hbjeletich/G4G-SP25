@@ -43,6 +43,7 @@ public class GameCarousel : MonoBehaviour
         }
 
         UpdateButtonStates();
+        UpdateSelectedCard();
     }
 
     private void InitializeCarousel()
@@ -86,6 +87,8 @@ public class GameCarousel : MonoBehaviour
         PlayNavigateSound();
         currentIndex++;
         AnimateToCurrentIndex();
+
+        UpdateSelectedCard();
     }
 
     public void GoToPrevious()
@@ -95,6 +98,8 @@ public class GameCarousel : MonoBehaviour
         PlayNavigateSound();
         currentIndex--;
         AnimateToCurrentIndex();
+
+        UpdateSelectedCard();
     }
 
     public void PlayCurrentGame()
@@ -148,6 +153,17 @@ public class GameCarousel : MonoBehaviour
         if (GameSelect.Instance != null)
         {
             GameSelect.Instance.HoverButton(navigateSoundPitch);
+        }
+    }
+
+    private void UpdateSelectedCard()
+    {
+        for (int i = 0; i < gameCards.Length; i++)
+        {
+            if (gameCards[i] != null)
+            {
+                gameCards[i].SetSelected(i == currentIndex);
+            }
         }
     }
 
