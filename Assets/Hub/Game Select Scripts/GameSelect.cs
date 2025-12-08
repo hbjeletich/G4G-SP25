@@ -72,11 +72,6 @@ public class GameSelect : MonoBehaviour
         {
             StartCoroutine(ExitGameCoroutine());
         }
-
-        if(Input.GetKeyDown(KeyCode.R))
-        {
-            Recalibrate();
-        }
     }
 
     private IEnumerator ExitGameCoroutine()
@@ -96,7 +91,7 @@ public class GameSelect : MonoBehaviour
         }
 
         // go back to game select
-        yield return SceneManager.LoadSceneAsync("NewGameSelect", LoadSceneMode.Single);
+        yield return SceneManager.LoadSceneAsync("GameSelectScene", LoadSceneMode.Single);
         yield return null;
 
         // stop audio (existing GameSelect audio logic)
@@ -166,16 +161,6 @@ public class GameSelect : MonoBehaviour
         if (capturyNetworkPlugin != null)
         {
             capturyNetworkPlugin.host = host;
-        }
-    }
-
-    public void Recalibrate()
-    {
-        MotionTrackingManager motionTrackingManager = FindObjectOfType<MotionTrackingManager>();
-
-        if (motionTrackingManager != null)
-        {
-            motionTrackingManager.Recalibrate();
         }
     }
 }
