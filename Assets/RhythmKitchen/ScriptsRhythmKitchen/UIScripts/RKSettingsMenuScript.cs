@@ -4,30 +4,27 @@ using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.UI;
 
-// Worked on by: Leia Phillips
-// Commented by: Leia Phillips
 public class RKSettingsMenuScript : MonoBehaviour
 {
-    public AudioMixer audioMixer; // the audioMixer, set in Unity
-    public Slider volumeSlider; // the Slider for volume, set in Unity
+    public AudioMixer audioMixer;
+    public Slider volumeSlider;
 
     void Start()
     {
-        float volume; // the volume
+        float volume;
 
-        audioMixer.GetFloat("RKVolume", out volume); // sets variable volume to the current volume value of the audioMixer
-        volumeSlider.SetValueWithoutNotify(volume); // sets the slider value to volume, this makes the slider value always correct even after changing scenes
+        audioMixer.GetFloat("RKVolume", out volume);
+        volumeSlider.SetValueWithoutNotify(volume);
     }
 
-    // Sets the game volume
     public void SetVolume(float volume)
     {
-        audioMixer.SetFloat("RKVolume", volume); // sets audioMixer volume to variable volume
+        Debug.Log("volume: " + volume);
+        audioMixer.SetFloat("RKVolume", volume);
     }
 
     public void BackMainMenu()
     {
-        // Changing the scene happens in Unity
-        RKAudioManager.Instance.PlaySFX("ButtonPress"); // Plays the ButtonPress sfx
+        RKAudioManager.Instance.PlaySFX("ButtonPress");
     }
 }

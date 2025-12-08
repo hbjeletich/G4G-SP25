@@ -19,19 +19,14 @@ namespace CameraSnap
 
 
       
-        
+        /// <param name="assignedAnimals">Optional list of animals assigned to this zone.</param>
         public void SpawnAnimals(System.Collections.Generic.List<AnimalData> assignedAnimals = null)
         {
-            // If animals are already spawned by this spawner, do not clear or respawn them.
-            // This preserves animals in the scene so they don't vanish when the player
-            // leaves or the zone completes.
-            if (spawnedAnimals != null && spawnedAnimals.Count > 0)
-            {
-                return;
-            }
+            ClearPreviousAnimals();
 
             if (GameManager.Instance == null || GameManager.Instance.GetAllAnimals().Count == 0)
             {
+                Debug.LogWarning("[AnimalSpawner] No animals available to spawn!");
                 return;
             }
             // Build chosen list from assignedAnimals (if provided) then fill from pool
@@ -48,39 +43,15 @@ namespace CameraSnap
                 }
             }
 
-            // Fill remaining slots from GameManager pool using weighted rarity selection.
+            // Fill remaining slots from GameManager pool (randomized)
             var pool = GameManager.Instance.GetAllAnimals();
             List<AnimalData> poolCopy = new List<AnimalData>(pool);
             // remove any already chosen
             poolCopy.RemoveAll(x => chosen.Contains(x));
+            Shuffle(poolCopy);
             int need = maxAnimals - chosen.Count;
-            // Weighted random selection without replacement using AnimalData.spawnRarity
-            for (int pick = 0; pick < need && poolCopy.Count > 0; pick++)
-            {
-               
-                float totalWeight = 0f;
-                for (int w = 0; w < poolCopy.Count; w++)
-                    totalWeight += GetRarityWeight(poolCopy[w]);
-
-                if (totalWeight <= 0f)
-                {
-                   
-                    break;
-                }
-
-                float r = Random.Range(0f, totalWeight);
-                float acc = 0f;
-                for (int i = 0; i < poolCopy.Count; i++)
-                {
-                    acc += GetRarityWeight(poolCopy[i]);
-                    if (r <= acc)
-                    {
-                        chosen.Add(poolCopy[i]);
-                        poolCopy.RemoveAt(i);
-                        break;
-                    }
-                }
-            }
+            for (int i = 0; i < need && i < poolCopy.Count; i++)
+                chosen.Add(poolCopy[i]);
 
             int animalsSpawned = 0;
 
@@ -98,7 +69,7 @@ namespace CameraSnap
                 animalsSpawned++;
             }
 
-            
+            Debug.Log($"Spawning animals... Left:{leftSpawnPoints.Count}, Right:{rightSpawnPoints.Count}, Max:{maxAnimals}, PoolSize:{pool.Count}, Chosen:{chosen.Count}");
 
         }
 
@@ -125,7 +96,8 @@ namespace CameraSnap
                 behavior.SetStartDirection(shouldFaceLeft);
             }
 
-            
+            Debug.Log($"[AnimalSpawner] Spawned {animalData.animalName} at {spawnPoint.position}, facingLeft={shouldFaceLeft}");
+            Debug.Log($"Spawned {animalData.animalName} at {(spawnOnRightSide ? "RIGHT" : "LEFT")}");
 
         }
 //Destroy any old spawned animals so new ones don't overlap.
@@ -138,24 +110,15 @@ namespace CameraSnap
             }
 
             spawnedAnimals.Clear();
+            Debug.Log("[AnimalSpawner] Cleared previous animals");
         }
-        
-
-        // Map rarity tiers to selection weights. Adjust these values to tune odds.
-        // Common should be the largest number so it is most likely to be chosen.
-        private float GetRarityWeight(AnimalData data)
+//Randomizes the list of animals to ensure a different one spawns each time.
+        private void Shuffle<T>(List<T> list)
         {
-            if (data == null) return 0f;
-            switch (data.spawnRarity)
+            for (int i = list.Count - 1; i > 0; i--)
             {
-                case AnimalData.SpawnRarity.Rare:
-                    return 1f; // least likely
-                case AnimalData.SpawnRarity.Moderate:
-                    return 3f; // medium
-                case AnimalData.SpawnRarity.Common:
-                    return 6f; // most likely
-                default:
-                    return 1f;
+                int j = Random.Range(0, i + 1);
+                (list[i], list[j]) = (list[j], list[i]);
             }
         }
 //Lets other scripts access animals currently spawned in one zone. To be clear, it prevents one animal

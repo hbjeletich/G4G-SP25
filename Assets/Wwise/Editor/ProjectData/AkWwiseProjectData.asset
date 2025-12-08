@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: AkWwiseProjectData
   m_EditorClassIdentifier: 
   AcousticTextureWwu:
-  - PhysicalPath: Virtual Acoustics/Default Work Unit.wwu
+  - PhysicalPath: Virtual Acoustics\Default Work Unit.wwu
     PathAndIcons:
     - ElementName: Virtual Acoustics
       ObjectType: 5
@@ -21,13 +21,13 @@ MonoBehaviour:
     - ElementName: Default Work Unit
       ObjectType: 12
       guid: 1ed5829fb4928241ba94b342565c1443
-    ParentPath: Virtual Acoustics/Default Work Unit
+    ParentPath: Virtual Acoustics\Default Work Unit
     guid: 1ed5829fb4928241ba94b342565c1443
     GuidInternal: 
-    m_lastTime: -8584364686803106234
+    m_lastTime: -8584379832408013839
     List: []
   AuxBusWwu:
-  - PhysicalPath: Master-Mixer Hierarchy/Default Work Unit.wwu
+  - PhysicalPath: Master-Mixer Hierarchy\Default Work Unit.wwu
     PathAndIcons:
     - ElementName: Master-Mixer Hierarchy
       ObjectType: 5
@@ -35,10 +35,10 @@ MonoBehaviour:
     - ElementName: Default Work Unit
       ObjectType: 12
       guid: b50888342038ee4386be686f3a0236f6
-    ParentPath: Master-Mixer Hierarchy/Default Work Unit
+    ParentPath: Master-Mixer Hierarchy\Default Work Unit
     guid: b50888342038ee4386be686f3a0236f6
     GuidInternal: 
-    m_lastTime: -8584364686815430354
+    m_lastTime: -8584379832438012292
     List:
     - name: Master Audio Bus
       guid: d8a41415a61d2a41a17e75ca0c2149f3
@@ -53,9 +53,9 @@ MonoBehaviour:
       - ElementName: Master Audio Bus
         ObjectType: 2
         guid: d8a41415a61d2a41a17e75ca0c2149f3
-      Path: Master-Mixer Hierarchy/Default Work Unit/Master Audio Bus
+      Path: Master-Mixer Hierarchy\Default Work Unit\Master Audio Bus
   BankWwu:
-  - PhysicalPath: SoundBanks/Default Work Unit.wwu
+  - PhysicalPath: SoundBanks\Default Work Unit.wwu
     PathAndIcons:
     - ElementName: SoundBanks
       ObjectType: 5
@@ -63,10 +63,10 @@ MonoBehaviour:
     - ElementName: Default Work Unit
       ObjectType: 12
       guid: 521ef0cd2792934fb7da34fbe3d3bf92
-    ParentPath: SoundBanks/Default Work Unit
+    ParentPath: SoundBanks\Default Work Unit
     guid: 521ef0cd2792934fb7da34fbe3d3bf92
     GuidInternal: 
-    m_lastTime: -8584364686808802977
+    m_lastTime: -8584379832424779698
     List:
     - name: Main_Golf
       guid: a7da0b887244124db23cad433aa1c943
@@ -81,8 +81,8 @@ MonoBehaviour:
       - ElementName: Main_Golf
         ObjectType: 7
         guid: a7da0b887244124db23cad433aa1c943
-      Path: SoundBanks/Default Work Unit/Main_Golf
-  - PhysicalPath: SoundBanks/Swimming.wwu
+      Path: SoundBanks\Default Work Unit\Main_Golf
+  - PhysicalPath: SoundBanks\Swimming.wwu
     PathAndIcons:
     - ElementName: SoundBanks
       ObjectType: 5
@@ -90,10 +90,10 @@ MonoBehaviour:
     - ElementName: Swimming
       ObjectType: 12
       guid: ac1cd0609c7100459330a757281649e0
-    ParentPath: SoundBanks/Swimming
+    ParentPath: SoundBanks\Swimming
     guid: ac1cd0609c7100459330a757281649e0
     GuidInternal: 
-    m_lastTime: -8584364686806087639
+    m_lastTime: -8584379832416156951
     List:
     - name: Swimming_Main
       guid: 24acc4600f37ad4bbc5c435229a76dc9
@@ -108,9 +108,9 @@ MonoBehaviour:
       - ElementName: Swimming_Main
         ObjectType: 7
         guid: 24acc4600f37ad4bbc5c435229a76dc9
-      Path: SoundBanks/Swimming/Swimming_Main
+      Path: SoundBanks\Swimming\Swimming_Main
   EventWwu:
-  - PhysicalPath: Events/Default Work Unit.wwu
+  - PhysicalPath: Events\Default Work Unit.wwu
     PathAndIcons:
     - ElementName: Events
       ObjectType: 5
@@ -118,10 +118,10 @@ MonoBehaviour:
     - ElementName: Default Work Unit
       ObjectType: 12
       guid: df975fd9f3942b4c8d7932be6360789d
-    ParentPath: Events/Default Work Unit
+    ParentPath: Events\Default Work Unit
     guid: df975fd9f3942b4c8d7932be6360789d
     GuidInternal: 
-    m_lastTime: -8584364686815440152
+    m_lastTime: -8584379832438081422
     List:
     - name: Golf_BGM
       guid: 90dd6a3af49291438d863caab4f70a88
@@ -136,7 +136,7 @@ MonoBehaviour:
       - ElementName: Golf_BGM
         ObjectType: 3
         guid: 90dd6a3af49291438d863caab4f70a88
-      Path: Events/Default Work Unit/Golf_BGM
+      Path: Events\Default Work Unit\Golf_BGM
       maxAttenuation: 0
       maxDuration: 256
       minDuration: 256
@@ -153,7 +153,7 @@ MonoBehaviour:
       - ElementName: Golf_Environment
         ObjectType: 3
         guid: a27770f2e07f2d47a14d46cb6f197e9b
-      Path: Events/Default Work Unit/Golf_Environment
+      Path: Events\Default Work Unit\Golf_Environment
       maxAttenuation: 0
       maxDuration: 0
       minDuration: 0
@@ -170,7 +170,7 @@ MonoBehaviour:
       - ElementName: Golf_Environment_Impact
         ObjectType: 3
         guid: f7c2c195920c774f9976928528999aee
-      Path: Events/Default Work Unit/Golf_Environment_Impact
+      Path: Events\Default Work Unit\Golf_Environment_Impact
       maxAttenuation: 100
       maxDuration: 1.052585
       minDuration: 1.052585
@@ -187,7 +187,7 @@ MonoBehaviour:
       - ElementName: Golf_Impact
         ObjectType: 3
         guid: 6e1871ce80b94145a4a2874bfc0029d3
-      Path: Events/Default Work Unit/Golf_Impact
+      Path: Events\Default Work Unit\Golf_Impact
       maxAttenuation: 30
       maxDuration: 0.74106824
       minDuration: 0.74106824
@@ -204,7 +204,7 @@ MonoBehaviour:
       - ElementName: Golf_Score
         ObjectType: 3
         guid: 1d8042f6cea50e48ad7b4ae6a5af966c
-      Path: Events/Default Work Unit/Golf_Score
+      Path: Events\Default Work Unit\Golf_Score
       maxAttenuation: 0
       maxDuration: 3.9375057
       minDuration: 3.9375057
@@ -221,7 +221,7 @@ MonoBehaviour:
       - ElementName: Golf_Start
         ObjectType: 3
         guid: 3f3e010fc3a29049bb62f165e261c043
-      Path: Events/Default Work Unit/Golf_Start
+      Path: Events\Default Work Unit\Golf_Start
       maxAttenuation: 0
       maxDuration: 7.7087984
       minDuration: 7.7087984
@@ -238,7 +238,7 @@ MonoBehaviour:
       - ElementName: Golf_Swing
         ObjectType: 3
         guid: 0ab483d00ae9fd4b959fbb70be8c09cf
-      Path: Events/Default Work Unit/Golf_Swing
+      Path: Events\Default Work Unit\Golf_Swing
       maxAttenuation: 0
       maxDuration: 0.6459311
       minDuration: 0.54328316
@@ -255,7 +255,7 @@ MonoBehaviour:
       - ElementName: Golf_Swing_Tick
         ObjectType: 3
         guid: e507d12e33b608458a401ec94429d123
-      Path: Events/Default Work Unit/Golf_Swing_Tick
+      Path: Events\Default Work Unit\Golf_Swing_Tick
       maxAttenuation: 0
       maxDuration: 0
       minDuration: 0
@@ -272,7 +272,7 @@ MonoBehaviour:
       - ElementName: Golf_Transition
         ObjectType: 3
         guid: 6c16f03e013f784a9cd6426fef05fba5
-      Path: Events/Default Work Unit/Golf_Transition
+      Path: Events\Default Work Unit\Golf_Transition
       maxAttenuation: 0
       maxDuration: 3.0112472
       minDuration: 3.0112472
@@ -289,7 +289,7 @@ MonoBehaviour:
       - ElementName: Golf_Wind_Up
         ObjectType: 3
         guid: e3b0bbe4726cde4190833ea3e7884548
-      Path: Events/Default Work Unit/Golf_Wind_Up
+      Path: Events\Default Work Unit\Golf_Wind_Up
       maxAttenuation: 30
       maxDuration: 1.1875057
       minDuration: 1.1875057
@@ -306,11 +306,11 @@ MonoBehaviour:
       - ElementName: Wind_Noise
         ObjectType: 3
         guid: cfac0b4230e7564a87bd10c7774b5b9a
-      Path: Events/Default Work Unit/Wind_Noise
+      Path: Events\Default Work Unit\Wind_Noise
       maxAttenuation: 0
       maxDuration: 0
       minDuration: 0
-  - PhysicalPath: Events/Swimming.wwu
+  - PhysicalPath: Events\Swimming.wwu
     PathAndIcons:
     - ElementName: Events
       ObjectType: 5
@@ -318,10 +318,10 @@ MonoBehaviour:
     - ElementName: Swimming
       ObjectType: 12
       guid: f29f0c8ee24c8d4ea178a11e004ba89b
-    ParentPath: Events/Swimming
+    ParentPath: Events\Swimming
     guid: f29f0c8ee24c8d4ea178a11e004ba89b
     GuidInternal: 
-    m_lastTime: -8584364686815439561
+    m_lastTime: -8584379832438067765
     List:
     - name: Ambience_Play
       guid: 76c8d78466eb694885f62a457d5debcf
@@ -336,7 +336,7 @@ MonoBehaviour:
       - ElementName: Ambience_Play
         ObjectType: 3
         guid: 76c8d78466eb694885f62a457d5debcf
-      Path: Events/Swimming/Ambience_Play
+      Path: Events\Swimming\Ambience_Play
       maxAttenuation: 0
       maxDuration: 0
       minDuration: 0
@@ -353,7 +353,7 @@ MonoBehaviour:
       - ElementName: Collectable
         ObjectType: 3
         guid: 75e6519ab2491043a70447ab7e7b6068
-      Path: Events/Swimming/Collectable
+      Path: Events\Swimming\Collectable
       maxAttenuation: 0
       maxDuration: 2.0228333
       minDuration: 1.001875
@@ -370,12 +370,12 @@ MonoBehaviour:
       - ElementName: MUS_Play
         ObjectType: 3
         guid: 8677196fe703d841854e690e40a07d2d
-      Path: Events/Swimming/MUS_Play
+      Path: Events\Swimming\MUS_Play
       maxAttenuation: 0
       maxDuration: 0
       minDuration: 0
   RtpcWwu:
-  - PhysicalPath: Game Parameters/Default Work Unit.wwu
+  - PhysicalPath: Game Parameters\Default Work Unit.wwu
     PathAndIcons:
     - ElementName: Game Parameters
       ObjectType: 5
@@ -383,10 +383,10 @@ MonoBehaviour:
     - ElementName: Default Work Unit
       ObjectType: 12
       guid: 38bae30fba8397488a58d4c08bb9163f
-    ParentPath: Game Parameters/Default Work Unit
+    ParentPath: Game Parameters\Default Work Unit
     guid: 38bae30fba8397488a58d4c08bb9163f
     GuidInternal: 
-    m_lastTime: -8584364686815433655
+    m_lastTime: -8584379832438047552
     List:
     - name: Swing_Hold_Time
       guid: e7658f220c754e46945c671d35060a88
@@ -401,7 +401,7 @@ MonoBehaviour:
       - ElementName: Swing_Hold_Time
         ObjectType: 13
         guid: e7658f220c754e46945c671d35060a88
-      Path: Game Parameters/Default Work Unit/Swing_Hold_Time
+      Path: Game Parameters\Default Work Unit\Swing_Hold_Time
     - name: Wind_Volume
       guid: 8fd35841c2f4c1488550cc7a211448c8
       id: 4244623852
@@ -415,8 +415,8 @@ MonoBehaviour:
       - ElementName: Wind_Volume
         ObjectType: 13
         guid: 8fd35841c2f4c1488550cc7a211448c8
-      Path: Game Parameters/Default Work Unit/Wind_Volume
-  - PhysicalPath: Game Parameters/Swimming.wwu
+      Path: Game Parameters\Default Work Unit\Wind_Volume
+  - PhysicalPath: Game Parameters\Swimming.wwu
     PathAndIcons:
     - ElementName: Game Parameters
       ObjectType: 5
@@ -424,10 +424,10 @@ MonoBehaviour:
     - ElementName: Swimming
       ObjectType: 12
       guid: 0e75bce83267aa4fb2c181118d58a989
-    ParentPath: Game Parameters/Swimming
+    ParentPath: Game Parameters\Swimming
     guid: 0e75bce83267aa4fb2c181118d58a989
     GuidInternal: 
-    m_lastTime: -8584364686815433079
+    m_lastTime: -8584379832438037569
     List:
     - name: Diver_YPos
       guid: 0746cdc13fd6a8408f767dc36d29a70d
@@ -442,9 +442,9 @@ MonoBehaviour:
       - ElementName: Diver_YPos
         ObjectType: 13
         guid: 0746cdc13fd6a8408f767dc36d29a70d
-      Path: Game Parameters/Swimming/Diver_YPos
+      Path: Game Parameters\Swimming\Diver_YPos
   StateWwu:
-  - PhysicalPath: States/Default Work Unit.wwu
+  - PhysicalPath: States\Default Work Unit.wwu
     PathAndIcons:
     - ElementName: States
       ObjectType: 5
@@ -452,13 +452,13 @@ MonoBehaviour:
     - ElementName: Default Work Unit
       ObjectType: 12
       guid: c5e4d79bfd1a894c8701e62abc04c0d6
-    ParentPath: States/Default Work Unit
+    ParentPath: States\Default Work Unit
     guid: c5e4d79bfd1a894c8701e62abc04c0d6
     GuidInternal: 
-    m_lastTime: -8584364686803110245
+    m_lastTime: -8584379832408039371
     List: []
   SwitchWwu:
-  - PhysicalPath: Switches/Default Work Unit.wwu
+  - PhysicalPath: Switches\Default Work Unit.wwu
     PathAndIcons:
     - ElementName: Switches
       ObjectType: 5
@@ -466,13 +466,13 @@ MonoBehaviour:
     - ElementName: Default Work Unit
       ObjectType: 12
       guid: 57da200830cbe9469d707e832bb81d15
-    ParentPath: Switches/Default Work Unit
+    ParentPath: Switches\Default Work Unit
     guid: 57da200830cbe9469d707e832bb81d15
     GuidInternal: 
-    m_lastTime: -8584364686803109213
+    m_lastTime: -8584379832408024125
     List: []
   TriggerWwu:
-  - PhysicalPath: Triggers/Default Work Unit.wwu
+  - PhysicalPath: Triggers\Default Work Unit.wwu
     PathAndIcons:
     - ElementName: Triggers
       ObjectType: 5
@@ -480,12 +480,12 @@ MonoBehaviour:
     - ElementName: Default Work Unit
       ObjectType: 12
       guid: e77c04fd049e3a49a9a2b5cf9d12c2dc
-    ParentPath: Triggers/Default Work Unit
+    ParentPath: Triggers\Default Work Unit
     guid: e77c04fd049e3a49a9a2b5cf9d12c2dc
     GuidInternal: 
-    m_lastTime: -8584364686803108121
+    m_lastTime: -8584379832408013839
     List: []
-  ExpandedFileSystemItemIds: 020000000300000004000000
+  ExpandedFileSystemItemIds: 0100000002000000040000000f0000001700000018000000
   ExpandedWaapiItemIds: 02000000
   AutoSyncSelection: 0
   autoPopulateEnabled: 1
