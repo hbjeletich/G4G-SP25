@@ -329,7 +329,6 @@ namespace RhythmKitchen
         private void OnHit(RKNote note, string rating)
         {
             // NOTE: expand this to add score, UI, SFX
-
             switch (rating)
             {
                 case "PERFECT":
@@ -357,6 +356,16 @@ namespace RhythmKitchen
                     break;
             }
 
+            var am = RKAudioManager.Instance; // Current instance of the AudioManager
+
+            if (am != null) // Checks if an AudioManager AudioManager instance exists
+            {
+                am.PlaySFX("VO" + rating); // Plays the voice over for rating sound
+                am.PlaySFX("NoteDestroy"); // Plays the note destroy sound
+            }
+            else
+                Debug.LogWarning("[RKJudge] AudioManager missing: loading scene anyway."); // If the AudioManager instance does not exist it logs a warning
+
             UpdateUI();
 
             // play SFX here:
@@ -382,8 +391,17 @@ namespace RhythmKitchen
             {
                 Debug.Log("[Judge] MISS (pressed too far from target)");
             }
-            //play SFX here:
-            // RKAudioManager.Instance.PlaySFX("miss")...;
+
+            var am = RKAudioManager.Instance; // Current instance of the AudioManager
+
+            if (am != null) // Checks if an AudioManager AudioManager instance exists
+            {
+                am.PlaySFX("VOALMOST"); // Plays the voice over for rating sound
+                am.PlaySFX("NoteDestroy"); // Plays the note destroy sound
+            }
+            else
+                Debug.LogWarning("[RKJudge] AudioManager missing: loading scene anyway."); // If the AudioManager instance does not exist it logs a warning
+
         }
 
         public void starScore()

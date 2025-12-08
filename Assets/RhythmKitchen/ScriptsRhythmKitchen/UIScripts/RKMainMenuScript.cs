@@ -7,6 +7,10 @@ using UnityEngine.SceneManagement;
 // Commented by: Leia Phillips
 public class RKMainMenuScript : MonoBehaviour
 {
+    void Start()
+    {
+        RKAudioManager.Instance.PlayMusic("Ambience"); // Begins the Ambience background music
+    }
     // Loads the SongSelectMenu scene, on Play button press in Unity
     public void PlayGame()
     {
