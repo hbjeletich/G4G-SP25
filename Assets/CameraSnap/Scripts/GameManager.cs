@@ -1,8 +1,8 @@
 using UnityEngine;
 using System.Collections.Generic;
 
-//This is more like an animal manager and handles the list of all animals in the game, what has been captured etc.
-
+//Maybe change this script to an animal manager and then game manager is for main menu, tutorial or main stage, end screen or 
+//gallery!! note this..
 
 
 namespace CameraSnap
@@ -29,7 +29,7 @@ namespace CameraSnap
 
             DontDestroyOnLoad(gameObject);
 
-            
+            Debug.Log("[GameManager] Initialized with " + allAnimals.Count + " animals available.");
         }
 
        
@@ -38,25 +38,6 @@ namespace CameraSnap
         {
             // Defensive: ensure callers always get a valid list
             return allAnimals ?? new List<AnimalData>();
-        }
-
-       
-     
-        public List<AnimalData> GetRandomTargets(int count)
-        {
-            var pool = GetAllAnimals();
-            List<AnimalData> copy = new List<AnimalData>(pool);
-            List<AnimalData> result = new List<AnimalData>();
-
-            // Fisher-Yates shuffle-like selection: pick random unique entries
-            for (int i = 0; i < count && copy.Count > 0; i++)
-            {
-                int idx = Random.Range(0, copy.Count);
-                result.Add(copy[idx]);
-                copy.RemoveAt(idx);
-            }
-
-            return result;
         }
 
       
@@ -68,6 +49,7 @@ namespace CameraSnap
             var list = GetAllAnimals();
             if (list.Count == 0)
             {
+                Debug.LogWarning("[GameManager] No animals available!");
                 return null;
             }
 
@@ -83,6 +65,7 @@ private HashSet<string> capturedAnimals = new HashSet<string>();
         {
             if (string.IsNullOrEmpty(animalName)) return;
             capturedAnimals.Add(animalName);
+            Debug.Log($"[GameManager] Added captured animal: {animalName}");
         }
 
         // Checks if player has photographed the animal already

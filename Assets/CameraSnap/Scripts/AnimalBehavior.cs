@@ -1,7 +1,6 @@
 using UnityEngine;
 using System.Collections;
 
-
 namespace CameraSnap
 {
     // Simple animal behavior - walks back and forth, faces camera, plays animations
@@ -11,10 +10,8 @@ namespace CameraSnap
         public AnimalData animalData;
         public Animator animator;
 
-
-        [HideInInspector]
+        [HideInInspector] 
         public bool isCaptured = false;
-
 
         private Vector3 startPosition;
         private bool isWalking;
@@ -28,16 +25,12 @@ namespace CameraSnap
     // Track previous movement direction to detect changes
     private bool prevMovingLeft;
 
-
         void Start()
         {
             startPosition = transform.position;
 
 
-
-
             if (animator == null) animator = GetComponent<Animator>();
-
 
             // cache child sprite renderer/transform for flipping
             spriteRenderer = GetComponentInChildren<SpriteRenderer>();
@@ -47,20 +40,16 @@ namespace CameraSnap
                 spriteChildOriginalScale = spriteChildTransform.localScale;
             }
 
-
             if (!initialDirectionApplied)
             {
                 isMovingLeft = animalData != null && animalData.spriteFacesLeft;
                 ApplySpriteFlip();
             }
 
-
             prevMovingLeft = isMovingLeft;
-
 
             StartCoroutine(SimpleBehaviorLoop());
         }
-
 
         IEnumerator SimpleBehaviorLoop()
         {
@@ -69,7 +58,6 @@ namespace CameraSnap
                 animator?.SetBool("isWalking", false);
                 float idle = animalData?.idleTime ?? 2f;
                 yield return new WaitForSeconds(idle);
-
 
                 if (animalData?.canWalk ?? false)
                 {
@@ -81,23 +69,22 @@ namespace CameraSnap
                     animator?.SetBool("isWalking", false);
                 }
 
-
-                
-                
+                if (animalData?.canHideInBush ?? false)
+                {
+                    animator?.SetTrigger("Hide");
+                    yield return new WaitForSeconds(1f);
+                }
             }
         }
-
 
         void Update()
         {
             if (!isWalking) return;
 
-
             // Simple movement
             float direction = isMovingLeft ? -1f : 1f;
             float speed = animalData?.moveSpeed ?? 1f;
             transform.position += new Vector3(direction * speed * Time.deltaTime, 0, 0);
-
 
             // Turn around if too far
             float maxDistance = animalData?.patrolDistance ?? 2f;
@@ -105,7 +92,6 @@ namespace CameraSnap
             {
                 isMovingLeft = !isMovingLeft;
             }
-
 
             // If direction changed this frame, update visual flip
             if (isMovingLeft != prevMovingLeft)
@@ -115,7 +101,6 @@ namespace CameraSnap
             }
         }
 
-
         public void SetStartDirection(bool facingLeft)
         {
             isMovingLeft = facingLeft;
@@ -123,18 +108,15 @@ namespace CameraSnap
             ApplySpriteFlip();
         }
 
-
         private void ApplySpriteFlip()
         {
             bool desiredFacingLeft = isMovingLeft;
-
 
             if (spriteRenderer != null && animalData != null)
             {
                 spriteRenderer.flipX = (animalData.spriteFacesLeft != desiredFacingLeft);
                 return;
             }
-
 
             if (spriteChildTransform != null)
             {
@@ -145,12 +127,10 @@ namespace CameraSnap
                 return;
             }
 
-
             Vector3 scale = transform.localScale;
             scale.x = desiredFacingLeft ? -Mathf.Abs(scale.x) : Mathf.Abs(scale.x);
             transform.localScale = scale;
         }
-
 
         void LateUpdate()
         {
@@ -164,5 +144,3 @@ namespace CameraSnap
         }
     }
 }
-
-

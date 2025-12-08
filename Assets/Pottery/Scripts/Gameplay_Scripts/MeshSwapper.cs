@@ -1,17 +1,12 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class MeshSwapper : MonoBehaviour
 {
 
     Settings_Script settingsscript;
 
-    public float Progress = 0f;
-    public float MaxProgress = 40f;
-
-    public Slider slider;
     public int slidervalue = 0;
 
     [Header("Assign your 4 meshes here")]
@@ -19,13 +14,9 @@ public class MeshSwapper : MonoBehaviour
     public Mesh mesh02;
     public Mesh mesh03;
     public Mesh mesh04;
-    public Mesh mesh05;
-    public Mesh mesh06;
-
 
     private MeshFilter meshFilter;
     private int currentMeshIndex = 0;
-
 
     void Awake()
     {
@@ -62,23 +53,8 @@ public class MeshSwapper : MonoBehaviour
         updateMesh();
     }
 
-    public void ResetProgress()
-    {
-        Progress = 0;
-        slidervalue = 0;
-
-        if (slider != null)
-            slider.value = 0;
-
-        meshFilter.mesh = mesh01;   // reset to first mesh
-    }
-
-
     void updateMesh()
     {
-
-        slider.value = slidervalue;
-
 
         //If key is pressed, increase slidervalue by 1
         if (Input.GetKeyDown(KeyCode.Space))
@@ -97,24 +73,38 @@ public class MeshSwapper : MonoBehaviour
             case 0:
                 meshFilter.mesh = mesh01;
                 break;
-            case 7:
+            case 3:
                 meshFilter.mesh = mesh02;
                 break;
-            case 14:
+            case 6:
                 meshFilter.mesh = mesh03;
                 break;
-            case 21:
+            case 10:
                 meshFilter.mesh = mesh04;
-                break;
-            case 35:
-                meshFilter.mesh = mesh05;
-                break;
-            case 40:
-                meshFilter.mesh = mesh06;
                 break;
             default:
                 Debug.LogWarning("Invalid slidervalue: " + slidervalue);
                 break;
         }
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }

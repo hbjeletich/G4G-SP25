@@ -7,10 +7,10 @@ using UnityEngine;
 namespace CameraSnap
 {
     public class CameraPan : MonoBehaviour
-    
+    //How fast the camera rotates, how far it can rotate, tracks how far it currently rotated.
     {
         public float panSpeed = 50f;
-        public float maxYaw = 60f; 
+        public float maxYaw = 60f; // Max pan angle left/right, player cannot do 360 look
         private float currentYaw = 0f;
 //Hides and locks the mouse cursor so player can't freely move it.
         void Start()
@@ -18,7 +18,8 @@ namespace CameraSnap
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
         }
-
+//Detects arrow keys input, adjusts rotation based on that, stops rotation if player reaches max
+//allowed angle.
         void Update()
         {
             float horizontalInput = 0f;
