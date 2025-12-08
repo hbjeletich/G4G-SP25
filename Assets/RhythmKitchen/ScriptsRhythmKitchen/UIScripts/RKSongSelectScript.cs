@@ -3,24 +3,30 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+// Worked on by: Leia Phillips
+// Commented by: Leia Phillips
 public class RKSongSelectScript : MonoBehaviour
 {
+    // Loads the MainMenu scene, on Back button press
     public void BackMainMenu()
     {
-        var am = RKAudioManager.Instance;
+        var am = RKAudioManager.Instance; // Current instance of the AudioManager
 
-        if (am != null)
-            am.PlaySFX("ButtonPress");
+        if (am != null) // Checks if an AudioManager AudioManager instance exists
+            am.PlaySFX("ButtonPress"); // Plays the ButtonPress sound
         else
-            Debug.LogWarning("[RKSongSelectScript] AudioManager missing: loading scene anyway.");
-        SceneManager.LoadScene("RKMainMenu");
+            Debug.LogWarning("[RKSongSelectScript] AudioManager missing: loading scene anyway."); // If the AudioManager instance does not exist it logs a warning
+
+        SceneManager.LoadScene("RKMainMenu"); // Loads the MainMenu scene
     }
 
+    // Loads the song scene, on song button press in Unity
     public void SelectSong(string sceneName)
     {
-        var am = RKAudioManager.Instance;
+        if(SceneUtility.GetBuildIndexByScenePath(sceneName) >= 0) // Checks if sceneName is in build index
+        {
+            var am = RKAudioManager.Instance; // Current instance of the AudioManager
 
-<<<<<<< HEAD
             if (am != null) // Checks if an AudioManager AudioManager instance exists
             {
                 am.PlaySFX("SongStartSFX"); // Plays the ButtonPress sound
@@ -30,16 +36,8 @@ public class RKSongSelectScript : MonoBehaviour
                 Debug.LogWarning("[RKSongSelectScript] AudioManager missing: loading scene anyway."); // If the AudioManager instance does not exist it logs a warning
         
             SceneManager.LoadScene(sceneName); // Loads sceneName
-=======
-        if (am != null)
-        {
-            RKAudioManager.Instance.PlaySFX("RecordScratch");
-            RKAudioManager.Instance.StopMusic();
->>>>>>> 3430e29c05f0efb5e9595b287b669369c65a461a
         }
         else
-            Debug.LogWarning("[RKSongSelectScript] AudioManager missing: loading scene anyway.");
-
-        SceneManager.LoadScene(sceneName);
+            Debug.LogWarning("[RKSongSelectScript] " + sceneName + " does not exist."); // If sceneName does not exist it logs a warning
     }
 }

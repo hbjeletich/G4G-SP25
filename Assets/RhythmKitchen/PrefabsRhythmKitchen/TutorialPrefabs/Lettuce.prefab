@@ -73,7 +73,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1958687137
-  m_SortingLayer: 10
+  m_SortingLayer: 11
   m_SortingOrder: 0
   m_Sprite: {fileID: -1284725599, guid: 44e6bf012521f465db5699d65f46226b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -137,6 +137,8 @@ MonoBehaviour:
   targetY: 0
   travelTime: 0
   waitUntilDestroy: 2.5
+  hitEffectPrefab: {fileID: 2870214053219269886, guid: fb2816cd727e64660a6536c975d91d8f,
+    type: 3}
 --- !u!212 &-5285778906117267705
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -178,7 +180,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1958687137
-  m_SortingLayer: 10
+  m_SortingLayer: 11
   m_SortingOrder: 10
   m_Sprite: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}

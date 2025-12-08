@@ -3,77 +3,136 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Events;
+using TMPro;
 
 // Worked on by: Jovanna Molina and Leia Phillips
-// Commented by: Jovanna Molina
+// Commented by: Jovanna Molina and Leia Phillips
+
+// Script is ONLY attached to Input object under CAPTURY
 
 namespace RhythmKitchen
-{ public class RKJudge : MonoBehaviour
+{
+    public class RKJudge : MonoBehaviour
     {
-        [SerializeField] private bool debugOn;
+        [Header("Debug")]
+        [SerializeField] private bool debugOn; // Are we playing in Debug or not, set in Unity
 
-        [Header("Refs")]
+        [Header("Refs")] // References to other objects and classes, set in Unity
         [SerializeField] private RKConductor conductor;
+        [SerializeField] private RKCompletedDishScript completedDish;
         [SerializeField] private Transform notesRuntime; // parent object for spawned notes
 
-        [Header("Keys (A/W/S/D by lane)")]
+
+        [Header("Keys (A/W/S/D by lane)")] // KeyCodes for each of the Lanes
         public KeyCode keyLane1 = KeyCode.A;
         public KeyCode keyLane2 = KeyCode.W;
         public KeyCode keyLane3 = KeyCode.S;
         public KeyCode keyLane4 = KeyCode.D;
 
+
         [Header("Captury Inputs")]
         [SerializeField] private InputActionAsset inputActions;
-        
+        [SerializeField] private float footThreshold;
+
         private InputAction leftHipAction;
-        private InputAction leftFootRaised;
-        private InputAction rightFootRaised;
+        private InputAction leftFootPositionAction;
+        private InputAction rightFootPositionAction;
         private InputAction rightHipAction;
+        private InputAction footLoweredAction;
+        private InputAction footRaisedAction;
 
         private bool isLeftHipAbduct = false;
-        private bool isLeftLegLift = false;
-        private bool isRightLegLift = false;
         private bool isRightHipAbduct = false;
+        private bool isLeftFootRaised = false;
+        private bool isRightFootRaised = false;
+        private bool isFootLowered = true;
+        private bool isFootRaised = false;
+
+        private float initialLeftFootZPos = 0f;
+        private float initialRightFootZPos = 0f;
 
         [Header("Windows (seconds)")]
         public float missWindow;
         public float goodWindow;
         public float perfectWindow;
 
+        [Header("Score UI (assign TMP objects)")]
+        [SerializeField] private TMP_Text judgmentText;
+        [SerializeField] private TMP_Text perfectNum;
+        [SerializeField] private TMP_Text goodNum;
+        [SerializeField] private TMP_Text almostNum;
+        [SerializeField] private TMP_Text comboNum;
+        [SerializeField] private TMP_Text maxComboNum;
+        [SerializeField] private TMP_Text standstillText;
+        [SerializeField] private TMP_Text instructionText;
+
+        int perfectCount, goodCount, almostCount;
+        int comboCount, maxComboCount;
+
+        void UpdateUI()
+        {
+            if (perfectNum)
+            {
+                perfectNum.text = perfectCount.ToString();
+            }
+            if (goodNum)
+            {
+                goodNum.text = goodCount.ToString();
+            }
+            if (almostNum)
+            {
+                almostNum.text = almostCount.ToString();
+            }
+            if (comboNum)
+            {
+                comboNum.text = comboCount.ToString();
+            }
+            if (maxComboNum)
+            {
+                maxComboNum.text = maxComboCount.ToString();
+            }
+        }
+
         void Awake()
         {
             var actionMap = inputActions.FindActionMap("Foot");
             leftHipAction = actionMap.FindAction("LeftHipAbducted");
-            leftFootRaised = actionMap.FindAction("LeftStep");
-            rightFootRaised = actionMap.FindAction("RightStep");
+            leftFootPositionAction = actionMap.FindAction("LeftFootPosition");
+            rightFootPositionAction = actionMap.FindAction("RightFootPosition");
             rightHipAction = actionMap.FindAction("RightHipAbducted");
+            footLoweredAction = actionMap.FindAction("FootLowered");
+            footRaisedAction = actionMap.FindAction("FootRaised");
         }
 
         private void OnEnable()
         {
-            
+
             leftHipAction.Enable();
-            leftFootRaised.Enable();
-            rightFootRaised.Enable();
+            leftFootPositionAction.Enable();
+            rightFootPositionAction.Enable();
             rightHipAction.Enable();
+            footLoweredAction.Enable();
+            footRaisedAction.Enable();
 
             leftHipAction.performed += OnLeftHipAbduction;
-            leftFootRaised.performed += OnLeftFootRaised;
-            rightFootRaised.performed += OnRightFootRaised;
             rightHipAction.performed += OnRightHipAbduction;
+            footLoweredAction.performed += OnFootLowered;
+            footRaisedAction.performed += OnFootRaised;
         }
 
         private void OnDisable()
         {
             leftHipAction.Disable();
-            leftFootRaised.Disable();
-            rightFootRaised.Disable();
+            leftFootPositionAction.Disable();
+            rightFootPositionAction.Disable();
             rightHipAction.Disable();
+            footLoweredAction.Disable();
+            footRaisedAction.Disable();
 
             leftHipAction.performed -= OnLeftHipAbduction;
-            leftFootRaised.performed -= OnLeftFootRaised;
-            rightFootRaised.performed -= OnRightFootRaised;
             rightHipAction.performed -= OnRightHipAbduction;
+            footLoweredAction.performed -= OnFootLowered;
+            footRaisedAction.performed -= OnFootRaised;
         }
 
         private void OnLeftHipAbduction(InputAction.CallbackContext contex)
@@ -82,15 +141,15 @@ namespace RhythmKitchen
             Debug.Log("[Captury] OnLeftHipAbduction Called");
         }
 
-        private void OnLeftFootRaised(InputAction.CallbackContext contex)
+        private void OnLeftFootRaised()
         {
-            isLeftLegLift = true;
+            isLeftFootRaised = true;
             Debug.Log("[Captury] OnLeftFootRaised Called");
         }
-        
-        private void OnRightFootRaised(InputAction.CallbackContext contex)
+
+        private void OnRightFootRaised()
         {
-            isRightLegLift = true;
+            isRightFootRaised = true;
             Debug.Log("[Captury] OnRightFootRaised Called");
         }
 
@@ -98,6 +157,47 @@ namespace RhythmKitchen
         {
             isRightHipAbduct = true;
             Debug.Log("[Captury] OnRightHipAbduction Called");
+        }
+
+        private void OnFootLowered(InputAction.CallbackContext contex)
+        {
+            isFootLowered = true;
+            isFootRaised = false;
+            Debug.Log("[Captury] OnFootLowered Called");
+        }
+
+        private void OnFootRaised(InputAction.CallbackContext contex)
+        {
+            isFootRaised = true;
+            isFootLowered = false;
+            Debug.Log("[Captury] OnFootRaised Called");
+        }
+
+        public void initialFootPositionCallibration()
+        {
+            // Sets the initial foot positions to the current value
+            // The player should be prompted to stand still!
+            StartCoroutine(stepCallibration());
+        }
+
+        private IEnumerator stepCallibration()
+        {
+            float waitDuration = 2f; // Length in seconds the text will stay on screen
+            
+            standstillText.text = "Stand still"; // Change the text to the string score
+
+            yield return new WaitForSeconds(waitDuration); // wait (duration) seconds
+
+            initialLeftFootZPos = leftFootPositionAction.ReadValue<Vector3>().z;
+            initialRightFootZPos = rightFootPositionAction.ReadValue<Vector3>().z;
+
+            standstillText.text = "Done!";
+
+            yield return new WaitForSeconds(1f);
+
+            standstillText.text = "";
+
+            judgmentText.text = " "; // Empty the text field
         }
 
         void Update()
@@ -127,6 +227,29 @@ namespace RhythmKitchen
             }
             else
             {
+                // check for position input
+                float rightFootYPos = rightFootPositionAction.ReadValue<Vector3>().y;
+                float leftFootYPos = leftFootPositionAction.ReadValue<Vector3>().y;
+                float rightFootZPos = rightFootPositionAction.ReadValue<Vector3>().z;
+                float leftFootZPos = leftFootPositionAction.ReadValue<Vector3>().z;
+                // Debug.Log($"[Captury Foot] Left Foot Y: {leftFootYPos}, Right Foot Y: {rightFootYPos}");
+                Debug.Log($"[Captury Foot] Left Foot Z: {leftFootZPos}, Right Foot Z: {rightFootZPos}/ Initial Left : {initialLeftFootZPos}, Initial Right: {initialRightFootZPos} ");
+
+                // if (isFootLowered)
+                // {
+                //     isFootLowered = false;
+
+                //     initialLeftFootZPos = leftFootPositionAction.ReadValue<Vector3>().z;
+                //     initialRightFootZPos = rightFootPositionAction.ReadValue<Vector3>().z;
+                // }
+                if(isFootRaised)
+                {
+                    if(rightFootZPos-initialRightFootZPos > leftFootZPos-initialLeftFootZPos)
+                        OnRightFootRaised();
+                    else
+                        OnLeftFootRaised();
+                }
+
                 if (conductor == null || notesRuntime == null)
                 {
                     return;
@@ -137,17 +260,17 @@ namespace RhythmKitchen
                     isLeftHipAbduct = false;
                     Debug.Log("[Captury] Left hip abduction attempt");
                 }
-                if (isLeftLegLift)
+                if (isLeftFootRaised)
                 {
                     TryHit(RKNote.Type.Lane2);
-                    isLeftLegLift = false;
-                    Debug.Log("[Captury] Left leg abduct attempt");
+                    isLeftFootRaised = false;
+                    Debug.Log("[Captury] Left foot lift attempt");
                 }
-                if (isRightLegLift)
+                if (isRightFootRaised)
                 {
                     TryHit(RKNote.Type.Lane3);
-                    isRightLegLift = false;
-                    Debug.Log("[Captury] Right leg abduct attempt");
+                    isRightFootRaised = false;
+                    Debug.Log("[Captury] Right foot lift attempt");
                 }
                 if (isRightHipAbduct)
                 {
@@ -176,13 +299,9 @@ namespace RhythmKitchen
             {
                 OnHit(target, "GOOD");
             }
-            else if (delta <= missWindow)
-            {
-                OnHit(target, "ALMOST");
-            }
             else
             {
-                Debug.Log($"[Judge] Too Far Away");
+                OnHit(target, "ALMOST");
             }
         }
 
@@ -210,7 +329,6 @@ namespace RhythmKitchen
         private void OnHit(RKNote note, string rating)
         {
             // NOTE: expand this to add score, UI, SFX
-<<<<<<< HEAD
             switch (rating)
             {
                 case "PERFECT":
@@ -366,11 +484,4 @@ namespace RhythmKitchen
 }
 
  
-=======
-            Debug.Log($"[Judge] {rating} {note.noteType}");
-            Destroy(note.gameObject);
-        }
-    }
-}  
->>>>>>> 3430e29c05f0efb5e9595b287b669369c65a461a
 

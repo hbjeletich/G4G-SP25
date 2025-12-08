@@ -3,104 +3,97 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using System.IO;
 
+// Worked on by: Leia Phillips
+// Commented by: Leia Phillips
 namespace RhythmKitchen
 {
     public class RKGameplayUI : MonoBehaviour
     {
-        public GameObject completedDish;
-        public GameObject gameplayUI;
-        public GameObject judgementLine;
-        public GameObject notesRuntime;
-        public GameObject outlines;
+        [Header("Game Objects")]
+        public GameObject completedDish; // The completedDish panel, set in Unity
+        public GameObject gameplayUI; // The UI for the gameplay, set in Unity
+        public GameObject judgementLine; // The judgement line, set in Unity
+        public GameObject notesRuntime; // The ingredients when they spawn, set in Unity
+        public GameObject outlines; // A reference to the outlines of the ingredients, set in Unity
 
-        public RKConductor conductor;
+        [Header("Refs")]
+        public RKConductor conductor; // A reference to the conductor class, set in Unity
+        public RKJudge judge; // A reference to the judge class, set in Unity
+        public Slider slider; // A reference to the slider class, set in Unity
+        public RKSongData songData; // A reference to the class, set in Unity
 
-        public Slider slider;
-        public RKSongData songData;
-
-        private float songLength;
-
-        private float songTime;
-
-        private float fillSpeed;
-        private float targetProgress = 0;
-        private float _nextLog;
-        private float startTime;
+        [Header("Song Info")] // Comes from SongData
+        private float songLength; // the length of the song
+        private double startTime; // The dspTime for when the song starts
+        private double endTime; // The dspTime for when the song ends
 
         private bool dishComplete = false; // If the dish has been completed
 
         void Awake()
         {
-            songLength = songData.songLength;
-            slider.maxValue = songLength;
-            startTime = Time.time;
+            startTime = songData.songStartDspTime; // gets the songStartDspTime from songData
+            songLength = songData.songLength; // gets the songLength from songData
+            endTime = startTime + songLength; // calculates the endTime based on dspTime
+        
+            slider.minValue = (float) startTime; // sets the minValue of the progess bar to the startTime
+            slider.maxValue = (float) endTime; // sets the maxValue of the progess bar to the endTime
         }
 
         void Update()
         {
-<<<<<<< HEAD
             // If the dspTime is at the endTime complete the dish
             if (!dishComplete && endTime <= AudioSettings.dspTime)
             {
                 dishComplete = true; // So CompleteDish won't get called mulitple times
                 Invoke("CompleteDish", .25f); // calls CompleteDish after .25 seconds
                 Debug.Log("[RKGameplayUI] Dish Complete");
-=======
-            float time = Time.time - startTime;
-
-            if (time >= songLength)
-            {
-                Invoke("CompleteDish", .5f);
->>>>>>> 3430e29c05f0efb5e9595b287b669369c65a461a
             }
 
-            slider.value = time;
+            slider.value = (float)AudioSettings.dspTime; // Sets the slider value to the dspTime
         }
 
+        // Loads the CompletedDish panel
         public void CompleteDish()
         {
-            var am = RKAudioManager.Instance;
+            var am = RKAudioManager.Instance; // Current instance of the AudioManager
             {
-                if (am != null) // is not empty
+                if (am != null) // Checks if an AudioManager AudioManager instance exists
                 {
-                    am.PlaySFX("Shimmer");
+                    am.PlaySFX("Shimmer"); // Plays Shimmer sfx
                 }
                 else
                 {
-                    Debug.LogWarning("[RKGameplayUI] AudioManager missing: loading scene anyway.");
+                    Debug.LogWarning("[RKGameplayUI] AudioManager missing: loading scene anyway."); // If the AudioManager instance does not exist it logs a warning
                 }
             }
 
+            // Sets gameplay objects to inactive
             gameplayUI.SetActive(false);
             judgementLine.SetActive(false);
             notesRuntime.SetActive(false);
             outlines.SetActive(false);
+
+            // Sets CompletedDish assets to active
             completedDish.SetActive(true);
 
-            Time.timeScale = 0f;
-            conductor.musicSource.Stop();
+            judge.starScore(); // calculates the starScore for the playthrough
+
+            conductor.musicSource.Stop(); // Stops the music, so ambient music can be played latee
         }
 
+        // Pauses the game
         public void Pause()
         {
-            clickButton();
+            var am = RKAudioManager.Instance; // Current instance of the AudioManager
 
-            judgementLine.SetActive(false);
+            if (am != null) // Checks if an AudioManager AudioManager instance exists
+                am.PlaySFX("ButtonPress"); // Plays the ButtonPress sound
+            else
+                Debug.LogWarning("[RKGameplayUI] AudioManager missing: loading scene anyway."); // If the AudioManager instance does not exist it logs a warning
 
-            AudioListener.pause = true;
-            Time.timeScale = 0f;
+            AudioListener.pause = true;  // Pauses AudioListener, This is what actually pauses gameplay
         }
-
-        private void clickButton()
-    {
-        var am = RKAudioManager.Instance;
-
-        if (am != null)
-            am.PlaySFX("ButtonPress");
-        else
-            Debug.LogWarning("[RKCompletedDishScript] AudioManager missing: loading scene anyway.");
-    
-    }
     }
 }
