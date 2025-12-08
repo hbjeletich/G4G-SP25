@@ -368,6 +368,8 @@ namespace RhythmKitchen
 
             UpdateUI();
 
+            HideInstruction();
+
             // play SFX here:
             // RKAudioManager.Instance.PlaySFX(rating)...;
 
@@ -385,6 +387,8 @@ namespace RhythmKitchen
             almostCount++;
             comboCount = 0;
             StartCoroutine(judgementTextDisplay("Almost"));
+
+            HideInstruction();
 
             UpdateUI();
             if (debugOn)
@@ -464,7 +468,7 @@ namespace RhythmKitchen
 
         }
 
-        public void HideInstruction(RKNote.Type type)
+        public void HideInstruction()
         {
             instructionText.text = "";
         }
