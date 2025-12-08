@@ -4,17 +4,21 @@ using UnityEngine;
 
 namespace Pottery
 {
+    // Switches materials based on user input for colors and decals//
+    // Also manages saving, and resetting material selections//
+
     public class MaterialSwitcher_B : MonoBehaviour
     {
         public Renderer targetRenderer;
         public Material[] materials;
 
-        //Solid color materials variables//
+        //Assign MATS in inspector//
         public Material solidRed;
         public Material solidBlue;
         public Material solidYellow;
         public Material solidWhite;
 
+        // COLOR FLAGS //
         private bool isBaseDecal = false;
         private bool isDecalRed = false;
         private bool isDecalWhite = false;
@@ -23,6 +27,7 @@ namespace Pottery
 
         public Material ClayMaterial;
 
+        // DECAL MATERIALS // 
         public Material redDecalOMaterial;
         public Material redDecalSMaterial;
         public Material redDecalAMaterial;
@@ -42,6 +47,7 @@ namespace Pottery
         public static Material selectedMaterial;
         public static int selectedMaterialIndex = 0;
 
+        // DECAL SELECTED MATERIALS //
         public static Material selectedODecal;
         public static Material selectedSDecal;
         public static Material selectedADecal;
@@ -49,6 +55,8 @@ namespace Pottery
         private enum DecalType { None, O, S, A }
         private DecalType currentDecal = DecalType.None;
 
+
+        
         void Start()
         {
             if (targetRenderer != null)
@@ -65,7 +73,7 @@ namespace Pottery
             }
         }
 
-        // COLOR BUTTONS
+        // Color Triggers, if a color is selected, others are deselected//
         public void Redtrigger()
         {
             SetColorFlags(true, false, false, false);
@@ -98,7 +106,7 @@ namespace Pottery
             isDecalYellow = y;
         }
 
-        // DECAL BUTTONS
+        // Set Decal Materials depending on color trigger//
         public void SetRedODecals()
         {
             currentDecal = DecalType.O;
@@ -232,6 +240,38 @@ namespace Pottery
 
             selectedMaterial = matToApply;
             targetRenderer.material = matToApply;
+        }
+
+        // RESET MATERIAL TO DEFAULT MAT// 
+        public void ResetMaterial()
+        {
+            StartCoroutine(ResetMaterialDelayed());
+        }
+
+
+        private IEnumerator ResetMaterialDelayed()
+        {
+            // Wait exactly 3 frames//
+            //gives time for other processes, etc screenshot capture to complete//
+            yield return null;
+            yield return null;
+            yield return null;
+           
+
+            // Clear all color triggers//
+            isDecalRed = false;
+            isDecalWhite = false;
+            isDecalBlue = false;
+            isDecalYellow = false;
+
+            // Clear decal selection //
+            currentDecal = DecalType.None;
+
+            // Reset selected material //
+            selectedMaterial = ClayMaterial;
+
+            if (targetRenderer != null)
+                targetRenderer.material = ClayMaterial;
         }
     }
 }

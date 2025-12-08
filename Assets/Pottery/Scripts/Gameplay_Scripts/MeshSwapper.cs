@@ -10,7 +10,8 @@ namespace Pottery
     public class MeshSwapper : MonoBehaviour
     {
 
-        
+        // variables //
+
         Settings_Script settingsscript;
         private bool isResetting = false;
 
@@ -52,6 +53,7 @@ namespace Pottery
         //    }
         //}
 
+
         // get meshfilter component and set initial mesh//
         void Start()
         {
@@ -70,9 +72,8 @@ namespace Pottery
             updateMesh();
         }
 
-        // ----------------------------------------------------
-        // RESET PROGRESS WITH 5-FRAME DELAY
-        // ----------------------------------------------------
+
+        // reset progress to zero with delay to avoid conflicts//
         public void ResetProgress()
         {
             StartCoroutine(ResetProgressDelayed());
@@ -101,12 +102,10 @@ namespace Pottery
             isResetting = false; 
         }
 
-        // ----------------------------------------------------
-        // MESH PROGRESSION BASED ON SLIDER VALUE
-        // ----------------------------------------------------
+        // update mesh based on slider value and input//
         void updateMesh()
         {
-            if (isResetting) return;  // ⛔ do nothing if resetting
+            if (isResetting) return;  //If resetting in progress, skip update//
 
             slider.value = slidervalue;
 

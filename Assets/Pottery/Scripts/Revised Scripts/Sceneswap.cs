@@ -9,7 +9,7 @@ using UnityEngine.Events;
 namespace Pottery
 {
 
-    // Manages UI panels and transitions between them//
+    // Manages UI panels and transitions between them depending on player input//
 
     public class UIManager : MonoBehaviour
     {
