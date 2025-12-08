@@ -29,7 +29,6 @@ public class RKAudioManager : MonoBehaviour
 
     private void Start()
     {
-        PlayMusic("Ambience"); // Plays the ambience
         sfxSource.ignoreListenerPause = true; // Allows for SFX to play even when the game is paused
     }
 

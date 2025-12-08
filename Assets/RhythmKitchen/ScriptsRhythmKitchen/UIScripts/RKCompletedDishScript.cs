@@ -14,6 +14,7 @@ namespace RhythmKitchen
     {
         [Header("UI elements")] // Set in Unity
         public GameObject[] stars;
+        public GameObject[] greyStars;
         public TMP_Text dishNameText;
         public TMP_Text comboText;
         public TMP_Text perfectText;
@@ -62,10 +63,30 @@ namespace RhythmKitchen
         // changes the star images to black based on rating
         public void setStars(int rating)
         {
-            if (rating < 3)
+            stars[0].SetActive(true);
+            greyStars[0].SetActive(false);
+
+            if (rating == 3)
+            {
+                stars[1].SetActive(true);
+                stars[2].SetActive(true);
+                greyStars[1].SetActive(false);
+                greyStars[2].SetActive(false);
+            }
+            else if (rating == 2)
+            {
+                stars[1].SetActive(true);
                 stars[2].SetActive(false);
-            if (rating < 2)
+                greyStars[1].SetActive(false);
+                greyStars[2].SetActive(true);
+            }
+            else
+            {
                 stars[1].SetActive(false);
+                stars[2].SetActive(false);
+                greyStars[1].SetActive(true);
+                greyStars[2].SetActive(true);
+            }
         }
 
         // Loads the MainMenu scene, on MainMenu button press

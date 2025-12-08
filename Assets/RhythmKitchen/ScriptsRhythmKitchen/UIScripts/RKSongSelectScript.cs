@@ -29,7 +29,7 @@ public class RKSongSelectScript : MonoBehaviour
 
             if (am != null) // Checks if an AudioManager AudioManager instance exists
             {
-                am.PlaySFX("ButtonPress"); // Plays the ButtonPress sound
+                am.PlaySFX("SongStartSFX"); // Plays the ButtonPress sound
                 am.StopMusic(); // Stops the background music
             }
             else
