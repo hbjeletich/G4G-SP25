@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Audio;
 using System;
+using UnityEngine.SceneManagement;
 
 // Worked on by: Leia Phillips
 // Commented by: Leia Phillips
@@ -31,6 +32,40 @@ public class RKAudioManager : MonoBehaviour
     {
         sfxSource.ignoreListenerPause = true; // Allows for SFX to play even when the game is paused
     }
+
+/*
+
+This section was added by Helena to work with the Hub & the rest of the games!
+
+Destroys AudioManager & stops music when switching to NewGameSelect scene.
+
+*/
+
+    private void OnEnable()
+    {
+        UnityEngine.SceneManagement.SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    private void OnDisable()
+    {
+        UnityEngine.SceneManagement.SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        if (scene.name == "NewGameSelect")
+        {
+            musicSource.Stop();
+            sfxSource.Stop();
+            Destroy(gameObject);
+        }
+    }
+
+/*
+
+End of Helena's work.
+
+*/
 
     /*
      * Plays a sound based on it's name to musicSource.
