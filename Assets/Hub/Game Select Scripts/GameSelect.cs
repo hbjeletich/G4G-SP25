@@ -96,7 +96,7 @@ public class GameSelect : MonoBehaviour
         }
 
         // go back to game select
-        yield return SceneManager.LoadSceneAsync("GameSelectScene", LoadSceneMode.Single);
+        yield return SceneManager.LoadSceneAsync("NewGameSelect", LoadSceneMode.Single);
         yield return null;
 
         // stop audio (existing GameSelect audio logic)
