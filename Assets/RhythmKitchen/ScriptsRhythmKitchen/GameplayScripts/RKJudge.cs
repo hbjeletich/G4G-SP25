@@ -210,9 +210,167 @@ namespace RhythmKitchen
         private void OnHit(RKNote note, string rating)
         {
             // NOTE: expand this to add score, UI, SFX
+<<<<<<< HEAD
+            switch (rating)
+            {
+                case "PERFECT":
+                    perfectCount++;
+                    comboCount++;
+                    if (comboCount > maxComboCount)
+                    {
+                        maxComboCount = comboCount;
+                    }
+                    StartCoroutine(judgementTextDisplay("Perfect!"));
+                    break;
+                case "GOOD":
+                    goodCount++;
+                    comboCount++;
+                    if (comboCount > maxComboCount)
+                    {
+                        maxComboCount = comboCount;
+                    }
+                    StartCoroutine(judgementTextDisplay("Good"));
+                    break;
+                case "ALMOST":
+                    almostCount++;
+                    comboCount = 0; // this resets combo on almost. correct? ask Leia and Katie "want we ALMOST to NOT keep combo?"
+                    StartCoroutine(judgementTextDisplay("Almost"));
+                    break;
+            }
+
+            var am = RKAudioManager.Instance; // Current instance of the AudioManager
+
+            if (am != null) // Checks if an AudioManager AudioManager instance exists
+            {
+                am.PlaySFX("VO" + rating); // Plays the voice over for rating sound
+                am.PlaySFX("NoteDestroy"); // Plays the note destroy sound
+            }
+            else
+                Debug.LogWarning("[RKJudge] AudioManager missing: loading scene anyway."); // If the AudioManager instance does not exist it logs a warning
+
+            UpdateUI();
+
+            HideInstruction();
+
+            // play SFX here:
+            // RKAudioManager.Instance.PlaySFX(rating)...;
+
+            Debug.Log($"[Judge] {rating} {note.noteType}");
+            //Destroy(note.gameObject);
+            note.ExplodeAndDestroy(); // particle effect + destroy
+            if (debugOn)
+            {
+                Debug.Log($"[Judge] {rating} {note.noteType} (combo {comboCount})");
+            }
+        }
+
+        public void RegisterMiss()
+        {
+            almostCount++;
+            comboCount = 0;
+            StartCoroutine(judgementTextDisplay("Almost"));
+
+            HideInstruction();
+
+            UpdateUI();
+            if (debugOn)
+            {
+                Debug.Log("[Judge] MISS (pressed too far from target)");
+            }
+
+            var am = RKAudioManager.Instance; // Current instance of the AudioManager
+
+            if (am != null) // Checks if an AudioManager AudioManager instance exists
+            {
+                am.PlaySFX("VOALMOST"); // Plays the voice over for rating sound
+                am.PlaySFX("NoteDestroy"); // Plays the note destroy sound
+            }
+            else
+                Debug.LogWarning("[RKJudge] AudioManager missing: loading scene anyway."); // If the AudioManager instance does not exist it logs a warning
+
+        }
+
+        public void starScore()
+        {
+            int totalBeats = perfectCount + goodCount + almostCount;
+
+            int score = 1;
+
+            if (almostCount < 1 && totalBeats/4 <= goodCount)
+                score = 3;
+            else if (totalBeats/2 > almostCount)
+                score = 2;
+
+            completedDish.setStars(score);
+        }
+
+        public IEnumerator judgementTextDisplay(string score)
+        {
+            float duration = 2f; // Length in seconds the text will stay on screen
+            
+            judgmentText.text = score; // Change the text to the string score
+
+            yield return new WaitForSeconds(duration); // wait (duration) seconds
+
+            judgmentText.text = " "; // Empty the text field
+        }
+    
+
+        string GetInstructionForLane(RKNote.Type type)
+    {
+            switch (type) // assigned instructions based on lane type
+        {
+            case RKNote.Type.Lane1:
+                return "Left Hip Abduct";
+            case RKNote.Type.Lane2:
+                return "Left Foot Raise";
+            case RKNote.Type.Lane3:
+                return "Right Foot Raise";
+            case RKNote.Type.Lane4:
+                return "Right Hip Abduct";
+            default:
+                return "";
+        }
+    }
+
+        public void ShowInstruction(RKNote.Type type)
+        {
+            // string msg = GetInstructionForLane(type);
+            // if (string.IsNullOrEmpty(msg))
+            // {
+            //     return;
+            // }
+
+            // if (instructionRoutine != null) // if previous is still running, stop it
+            // {
+            //     StopCoroutine(instructionRoutine);
+            // }
+            // instructionRoutine = StartCoroutine(InstructionRoutine(msg));
+            instructionText.text = GetInstructionForLane(type);
+
+        }
+
+        public void HideInstruction()
+        {
+            instructionText.text = "";
+        }
+
+        // IEnumerator InstructionRoutine(string msg)
+        // {
+        //     float duration = 10.5f; 
+        //     instructionText.text = msg;
+        //     yield return new WaitForSeconds(duration);
+        //     instructionText.text = "";
+        // }
+    }
+}
+
+ 
+=======
             Debug.Log($"[Judge] {rating} {note.noteType}");
             Destroy(note.gameObject);
         }
     }
 }  
+>>>>>>> 3430e29c05f0efb5e9595b287b669369c65a461a
 

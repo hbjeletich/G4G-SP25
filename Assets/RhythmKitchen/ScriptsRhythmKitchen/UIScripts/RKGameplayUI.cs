@@ -28,6 +28,8 @@ namespace RhythmKitchen
         private float _nextLog;
         private float startTime;
 
+        private bool dishComplete = false; // If the dish has been completed
+
         void Awake()
         {
             songLength = songData.songLength;
@@ -37,11 +39,20 @@ namespace RhythmKitchen
 
         void Update()
         {
+<<<<<<< HEAD
+            // If the dspTime is at the endTime complete the dish
+            if (!dishComplete && endTime <= AudioSettings.dspTime)
+            {
+                dishComplete = true; // So CompleteDish won't get called mulitple times
+                Invoke("CompleteDish", .25f); // calls CompleteDish after .25 seconds
+                Debug.Log("[RKGameplayUI] Dish Complete");
+=======
             float time = Time.time - startTime;
 
             if (time >= songLength)
             {
                 Invoke("CompleteDish", .5f);
+>>>>>>> 3430e29c05f0efb5e9595b287b669369c65a461a
             }
 
             slider.value = time;

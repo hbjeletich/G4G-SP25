@@ -243,6 +243,8 @@ namespace Constellation
             // 7. Secondary object fades in last
             if (secondaryObject != null)
             {
+                secondaryObject.interactable = true;
+                secondaryObject.blocksRaycasts = true;
                 float elapsed = 0f;
                 while (elapsed < 0.5f)
                 {
