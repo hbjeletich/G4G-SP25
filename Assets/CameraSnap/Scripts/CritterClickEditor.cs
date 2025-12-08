@@ -10,8 +10,7 @@ namespace CameraSnap.EditorTools
         private RuntimeAnimatorController animatorController;
         private AudioClip captureSound;
 
-        private bool canWalk = true;
-        private bool canHide = false;
+    private bool canWalk = true;
         private float moveSpeed = 1f;
         private float patrolDistance = 2f;
 
@@ -33,7 +32,6 @@ namespace CameraSnap.EditorTools
             GUILayout.Space(10);
             GUILayout.Label("Behavior Settings", EditorStyles.boldLabel);
             canWalk = EditorGUILayout.Toggle("Can Walk", canWalk);
-            canHide = EditorGUILayout.Toggle("Can Hide in Bush", canHide);
             moveSpeed = EditorGUILayout.FloatField("Move Speed", moveSpeed);
             patrolDistance = EditorGUILayout.FloatField("Patrol Distance", patrolDistance);
 
@@ -54,7 +52,6 @@ namespace CameraSnap.EditorTools
             AnimalData data = ScriptableObject.CreateInstance<AnimalData>();
             data.animalName = animalName;
             data.canWalk = canWalk;
-            data.canHideInBush = canHide;
             data.moveSpeed = moveSpeed;
             data.patrolDistance = patrolDistance;
             data.captureSound = captureSound;
@@ -98,10 +95,6 @@ namespace CameraSnap.EditorTools
             {
                 root.layer = animalLayer;
             }
-            else
-            {
-                Debug.LogWarning("Layer 'Animal' not found. Add it in Project Settings → Tags & Layers.");
-            }
 
             // Save prefab
             string prefabPath = folderPath + animalName + ".prefab";
@@ -111,8 +104,6 @@ namespace CameraSnap.EditorTools
 
             AssetDatabase.SaveAssets();
             DestroyImmediate(root);
-
-            Debug.Log($"Created Animal '{animalName}' with 3D collider + proper alignment!");
         }
     }
 }

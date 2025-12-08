@@ -14,7 +14,7 @@ namespace CameraSnap
 
         [Header("Behavior Settings")]
         public bool canWalk = true;
-        public bool canHideInBush = false;
+        
 
         [Header("Walking Settings")]
         public float moveSpeed = 1f;
@@ -26,5 +26,16 @@ namespace CameraSnap
         public Sprite foundImage;
         public Sprite silhouetteImage;
         public AudioClip captureSound;
+    
+        [Header("Spawn Settings")]
+        [Tooltip("Select a rarity tier: 1 star = Common (most likely), 2 stars= Moderate, 3 stars = Rare (least likely).")]
+        public SpawnRarity spawnRarity = SpawnRarity.Moderate;
+
+        public enum SpawnRarity
+        {
+            Common = 1,
+            Moderate = 2,
+            Rare = 3
+        }
     }
 }

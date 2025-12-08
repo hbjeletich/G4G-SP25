@@ -12,7 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f89e257a34810b4c9b3a9522ad5dc82, type: 3}
   m_Name: Willow Deer
   m_EditorClassIdentifier: 
-  animalName: Willow Deer
-  animalPrefab: {fileID: 4105178540084458277, guid: 2cf5b2e18da964d4aa5c378f6b63740b,
+  animalName: Antlewisp
+  animalPrefab: {fileID: 1565459635567871064, guid: 3dc1870a503996e45bb23249d0f21995,
     type: 3}
   spriteFacesLeft: 0
+  canWalk: 1
+  moveSpeed: 2
+  patrolDistance: 2
+  idleTime: 2
+  walkTime: 3
+  foundImage: {fileID: 21300000, guid: ba32f8263f0b93a41be2fb1b823778e1, type: 3}
+  silhouetteImage: {fileID: 21300000, guid: 4663595d45aada643b34233ae5a929f0, type: 3}
+  captureSound: {fileID: 0}
+  spawnRarity: 2

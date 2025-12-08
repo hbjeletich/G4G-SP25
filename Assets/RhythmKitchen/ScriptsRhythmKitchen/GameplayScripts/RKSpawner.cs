@@ -2,8 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-// Worked on by: Jovanna Molina and Leia Phillips
-// Commented by: Jovanna Molina and Leia Phillips
+// Worked on by: Jovanna Molina
+// Commented by: Jovanna Molina
 namespace RhythmKitchen
 // this is the runtime spawner that instantiates notes and tells them when/where to land
 {public class RKSpawner : MonoBehaviour
@@ -16,6 +16,7 @@ namespace RhythmKitchen
         [SerializeField] private RKConductor conductor; // this is beat/time source 
         [SerializeField] private Transform hitLine; // this is target Y position
         [SerializeField] private RKSongData songData;
+        [SerializeField] private RKJudge judge;
 
         [Header("Travel")] // comes from SongData... usually
         [SerializeField] private float travelTime = 1.00f; // this is seconds it should take from spawn to hit
@@ -152,7 +153,12 @@ namespace RhythmKitchen
             var note = Instantiate(prefab, spawn.position, Quaternion.identity);
             note.transform.SetParent(notesParent, true); // grouping
 
-            note.Init(conductor, spawn.position, hitLine.position.y, targetTimeSongSec, travelTime);
+            note.Init(conductor, judge, spawn.position, hitLine.position.y, targetTimeSongSec, travelTime);
+
+            if (judge != null)
+            {
+                judge.ShowInstruction(noteType);
+            }
         }
     }
 }
