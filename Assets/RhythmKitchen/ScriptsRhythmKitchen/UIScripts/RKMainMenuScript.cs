@@ -29,7 +29,7 @@ public class RKMainMenuScript : MonoBehaviour
     public void QuitGame()
     {
         RKAudioManager.Instance.PlaySFX("ButtonPress"); // Plays ButtonPress sfx
-        Application.Quit(); // Quits the Application
+        // Application.Quit(); // Quits the Application
     }
 
     // Opens CreditsScene, on Credits button press in Unity
