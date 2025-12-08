@@ -1930,7 +1930,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 173958487}
-  - component: {fileID: 173958486}
   - component: {fileID: 173958488}
   m_Layer: 0
   m_Name: GameStage_1
@@ -1939,21 +1938,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 0
---- !u!114 &173958486
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 173958485}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0122df1351847c446badea2601e965e4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  progress: 0
-  slider: {fileID: 1860012945}
-  fillspeed: 0
 --- !u!4 &173958487
 Transform:
   m_ObjectHideFlags: 0
@@ -4272,7 +4256,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &406086791
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4336,7 +4320,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &433617492
 Transform:
   m_ObjectHideFlags: 0
@@ -8857,7 +8841,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1860012947}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: Settings_Script, Assembly-CSharp
         m_MethodName: UpdateSlider
         m_Mode: 1
@@ -9397,12 +9381,12 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1920962166}
-        m_TargetAssemblyTypeName: UIManager, Assembly-CSharp
-        m_MethodName: ShowGallery
-        m_Mode: 1
+        m_TargetAssemblyTypeName: Pottery.UIManager, Assembly-CSharp
+        m_MethodName: ShowWithDelay
+        m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_ObjectArgument: {fileID: 406086790}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -13216,7 +13200,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1371303419}
-  - component: {fileID: 1371303418}
   - component: {fileID: 1371303420}
   m_Layer: 0
   m_Name: SelectionMenu
@@ -13225,21 +13208,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 0
---- !u!114 &1371303418
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1371303417}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0122df1351847c446badea2601e965e4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  progress: 0
-  slider: {fileID: 0}
-  fillspeed: 0
 --- !u!4 &1371303419
 Transform:
   m_ObjectHideFlags: 0
@@ -15664,7 +15632,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1631616534}
-  - component: {fileID: 1631616533}
   m_Layer: 0
   m_Name: SettingsMenu
   m_TagString: Untagged
@@ -15672,21 +15639,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 0
---- !u!114 &1631616533
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1631616532}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0122df1351847c446badea2601e965e4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  progress: 0
-  slider: {fileID: 0}
-  fillspeed: 0
 --- !u!4 &1631616534
 Transform:
   m_ObjectHideFlags: 0
@@ -17192,7 +17144,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1860012946}
   - component: {fileID: 1860012945}
-  - component: {fileID: 1860012947}
   m_Layer: 5
   m_Name: Balance_slider
   m_TagString: Untagged
@@ -17251,7 +17202,7 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 173958486}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: Settings_Script, Assembly-CSharp
         m_MethodName: ButtonCheck
         m_Mode: 1
@@ -17285,21 +17236,6 @@ RectTransform:
   m_AnchoredPosition: {x: -25.999556, y: -39.999527}
   m_SizeDelta: {x: 160, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1860012947
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1860012944}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0122df1351847c446badea2601e965e4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  progress: 0
-  slider: {fileID: 1860012945}
-  fillspeed: 0
 --- !u!1 &1872384543
 GameObject:
   m_ObjectHideFlags: 0
@@ -19232,7 +19168,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2032963228}
-  - component: {fileID: 2032963227}
   - component: {fileID: 2032963229}
   - component: {fileID: 2032963230}
   m_Layer: 0
@@ -19242,21 +19177,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 0
---- !u!114 &2032963227
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2032963225}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0122df1351847c446badea2601e965e4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  progress: 0
-  slider: {fileID: 274013934}
-  fillspeed: 0
 --- !u!4 &2032963228
 Transform:
   m_ObjectHideFlags: 0
@@ -20253,7 +20173,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2098334173}
-  - component: {fileID: 2098334172}
   - component: {fileID: 2098334171}
   - component: {fileID: 2098334174}
   m_Layer: 0
@@ -20275,21 +20194,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 751c1c54d742b944d8ca0928366eb161, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &2098334172
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2098334170}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0122df1351847c446badea2601e965e4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  progress: 0
-  slider: {fileID: 0}
-  fillspeed: 0
 --- !u!4 &2098334173
 Transform:
   m_ObjectHideFlags: 0
@@ -20675,7 +20579,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2145119837}
-  - component: {fileID: 2145119836}
   - component: {fileID: 2145119838}
   m_Layer: 0
   m_Name: GalleryMenu
@@ -20684,21 +20587,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 0
---- !u!114 &2145119836
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2145119835}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0122df1351847c446badea2601e965e4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  progress: 0
-  slider: {fileID: 0}
-  fillspeed: 0
 --- !u!4 &2145119837
 Transform:
   m_ObjectHideFlags: 0
