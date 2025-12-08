@@ -12,12 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f89e257a34810b4c9b3a9522ad5dc82, type: 3}
   m_Name: Willow Deer
   m_EditorClassIdentifier: 
-  animalName: Antlewisp
+  animalName: Willow Deer
   animalPrefab: {fileID: 1565459635567871064, guid: 3dc1870a503996e45bb23249d0f21995,
     type: 3}
   spriteFacesLeft: 0
   canWalk: 1
-  moveSpeed: 2
+  canHideInBush: 0
+  moveSpeed: 1
   patrolDistance: 2
   idleTime: 2
   walkTime: 3

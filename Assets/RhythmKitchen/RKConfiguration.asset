@@ -19,7 +19,7 @@ MonoBehaviour:
   calibrationFrames: 30
   enableTorsoModule: 1
   torsoSensitivity: 1
-  torsoDebugMode: 0
+  torsoDebugMode: 1
   isShiftTracked: 1
   weightShiftThreshold: 0.15
   neutralZoneWidth: 0.05
@@ -28,14 +28,14 @@ MonoBehaviour:
   bentOverAngleThreshold: 30
   enableFootModule: 1
   footSensitivity: 1
-  footDebugMode: 0
+  footDebugMode: 1
   isFootRaiseTracked: 1
   footRaiseThreshold: 0.1
   isHipAbductionTracked: 1
   minAbductionDistance: 0.2
   minLiftHeight: 0.05
   isFootPositionTracked: 1
-  useRelativeFootPosition: 1
+  useRelativeFootPosition: 0
   enableWalkTracking: 0
   walkSpeedThreshold: 0.3
   minimumWalkDuration: 2

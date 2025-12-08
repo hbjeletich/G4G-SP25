@@ -16,13 +16,18 @@ namespace RhythmKitchen
 
         public float waitUntilDestroy = 2.5f;
 
+        [Header("FX")]
+        [SerializeField] private GameObject hitEffectPrefab; 
+
         private Vector2 spawnPos; // stores the initial spawn position
         private Vector2 targetPos; // stores where are falling TO
         private RKConductor conductor; // this gives us songTime to track progress
+        private RKJudge judge;  // allows us to count a note despawning as an almost
 
-        public void Init(RKConductor c, Vector2 spawn, float targetY, float targetTime, float travelTime)
+        public void Init(RKConductor c, RKJudge j, Vector2 spawn, float targetY, float targetTime, float travelTime)
         {
             conductor = c; // saves the Conductor ref
+            judge = j; // saves the Judge ref
             spawnPos = spawn; // stores where food items are spawned from
             this.targetY = targetY; // stores the Y target of the HitLine
             this.targetTime = targetTime; // stores when food item should arrive at the HitLine
@@ -45,8 +50,19 @@ namespace RhythmKitchen
             if (now > targetTime + waitUntilDestroy && gameObject != null) // if current time of song is > 250ms after targetTime
             {
                 Destroy(gameObject);
+                judge.RegisterMiss();
             }
         }
+
+        public void ExplodeAndDestroy()
+        {
+            if (hitEffectPrefab != null)
+            {
+                GameObject fx = Instantiate(hitEffectPrefab, transform.position, Quaternion.identity); // spawns hit effect at note position
+            }
+            Destroy(gameObject); // destroys the note
+        }
+
     }
 }
 

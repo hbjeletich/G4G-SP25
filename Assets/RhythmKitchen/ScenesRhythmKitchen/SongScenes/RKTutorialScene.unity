@@ -1046,9 +1046,15 @@ MonoBehaviour:
   bpm: 80
   travelTime: 8
   leadInSeconds: 2
+<<<<<<<< HEAD:Assets/RhythmKitchen/ScenesRhythmKitchen/SongScenes/RK0Template.unity
+  offsetMs: 0
+  songBeatString: 17, 32, 48, 64, 80, 104, 120, 136, 152, 168, 184
+  chartString: 
+========
   offsetMs: 6100
   songBeatString: 8,24,40,56,72,88,104,120,136,152,168
   chartString: a/w/s/d
+>>>>>>>> merge-test-constellation:Assets/RhythmKitchen/ScenesRhythmKitchen/SongScenes/RKTutorialScene.unity
   prefabLane1: {fileID: -3255067723890866071, guid: 350cddb93a3034aff882b22ab9596e88,
     type: 3}
   prefabLane2: {fileID: 4929244203717805733, guid: df8e7df64221f49018489b377ac61a2c,
@@ -3000,7 +3006,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &848629394
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4801,9 +4807,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stars:
+<<<<<<<< HEAD:Assets/RhythmKitchen/ScenesRhythmKitchen/SongScenes/RK0Template.unity
+  - {fileID: 883162386}
+  - {fileID: 100544925}
+  - {fileID: 1991131985}
+  greyStars:
+  - {fileID: 1341035128}
+  - {fileID: 773504899}
+  - {fileID: 1235904699}
+========
   - {fileID: 883162388}
   - {fileID: 100544927}
   - {fileID: 1991131987}
+>>>>>>>> merge-test-constellation:Assets/RhythmKitchen/ScenesRhythmKitchen/SongScenes/RKTutorialScene.unity
   dishNameText: {fileID: 501724371}
   comboText: {fileID: 1668471234}
   perfectText: {fileID: 793073163}
@@ -5812,7 +5828,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 71fd38872f4db4cfe9462687ee8b2618, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  debugOn: 1
+  debugOn: 0
   conductor: {fileID: 72580114}
   notesRuntime: {fileID: 959363155}
   keyLane1: 97
