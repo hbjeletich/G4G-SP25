@@ -7,8 +7,7 @@ using System.Linq;
 public class PotteryScreenshot : MonoBehaviour
 {
     private string screenshotsFolder;
-    private const int maxScreenshots = 6;
-    public Canvas Canvas;
+    private const int MaxScreenshots = 6;
 
     private void Awake()
     {
@@ -19,57 +18,45 @@ public class PotteryScreenshot : MonoBehaviour
 
     public void CaptureScreenshot()
     {
-        // Hide UI
-        if (Canvas != null) Canvas.enabled = false;
+        string fileName = "Pottery_" + System.DateTime.Now.ToString("yyyyMMdd_HHmmss") + ".png";
+        string filePath = Path.Combine(screenshotsFolder, fileName);
 
-        string timestamp = System.DateTime.Now.ToString("yyyyMMdd_HHmmss");
-        string filePath = Path.Combine(screenshotsFolder, $"Pottery_{timestamp}.png");
-
-        // Schedule screenshot at end of frame
         ScreenCapture.CaptureScreenshot(filePath);
-        Debug.Log($"Scheduled screenshot: {filePath}");
+        Debug.Log("Screenshot saved to: " + filePath);
 
-        // Re-enable UI after a short delay
-        if (Canvas != null) Invoke(nameof(ReenableUI), 0.1f);
-
-        CleanUpOldScreenshots();
+        // Clean up old screenshots after saving
+        DeleteOldScreenshots();
     }
 
-    // Helper to turn UI back on
-    private void ReenableUI()
+    private void DeleteOldScreenshots()
     {
-        if (Canvas != null) Canvas.enabled = true;
-    }
+        string[] files = Directory.GetFiles(screenshotsFolder, "*.png");
 
-    private void CleanUpOldScreenshots()
-    {
-        var files = new DirectoryInfo(screenshotsFolder)
-            .GetFiles("*.png")
-            .OrderByDescending(f => f.CreationTime)
-            .ToList();
+        // Sort files by creation time (newest first)
+        var orderedFiles = files.OrderByDescending(f => File.GetCreationTime(f)).ToList();
 
-        // If there are more than 6, delete the oldest ones
-        for (int i = maxScreenshots; i < files.Count; i++)
+        if (orderedFiles.Count > MaxScreenshots)
         {
-            try
+            // Skip the most recent 6 and delete the rest
+            var oldFiles = orderedFiles.Skip(MaxScreenshots);
+
+            foreach (var file in oldFiles)
             {
-                files[i].Delete();
-                Debug.Log($"Deleted old screenshot: {files[i].Name}");
-            }
-            catch (System.Exception ex)
-            {
-                Debug.LogWarning($"Failed to delete {files[i].Name}: {ex.Message}");
+                try
+                {
+                    File.Delete(file);
+                    Debug.Log("Deleted old screenshot: " + file);
+                }
+                catch (IOException ex)
+                {
+                    Debug.LogWarning("Could not delete file: " + file + " (" + ex.Message + ")");
+                }
             }
         }
     }
 
-    public string[] GetLatestScreenshots()
+    public string GetScreenshotsFolder()
     {
-        return new DirectoryInfo(screenshotsFolder)
-            .GetFiles("*.png")
-            .OrderByDescending(f => f.CreationTime)
-            .Take(maxScreenshots)
-            .Select(f => f.FullName)
-            .ToArray();
+        return screenshotsFolder;
     }
 }
