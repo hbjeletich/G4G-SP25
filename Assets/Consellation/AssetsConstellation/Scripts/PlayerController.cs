@@ -42,8 +42,6 @@ namespace Constellation
         // these handle multiple interaction spam 
         [SerializeField] private float delayTime=.4f;
 
-        private bool doingSomething=false;
-
         //The Event to try and grab
         public UnityEvent interact;
         
@@ -58,6 +56,8 @@ namespace Constellation
 
         // the control scheme being used currently
         public ControlsScheme controls = ControlsScheme.Workout;
+
+        private bool jumping=false;
 
         void Awake()
         { 
@@ -86,7 +86,7 @@ namespace Constellation
         {
             //Gather Body
             charBody = GetComponent<Rigidbody2D>();
-            interact.AddListener(Interact);
+            //interact.AddListener(Interact);
         }
 
         // Update is called once per frame
@@ -115,7 +115,7 @@ namespace Constellation
 
                 //refine the movement
                 //Handles Walking
-                if ((leftFootY>walkFootThreshold || rightFootY>walkFootThreshold) && !doingSomething)
+                if ((leftFootY>walkFootThreshold || rightFootY>walkFootThreshold))
                 {
                     Debug.Log("HIT : walking");
                     speedMod = 1;
@@ -129,28 +129,26 @@ namespace Constellation
                 if (leftFootY>rightFootY && leftFootY>turnFootThreshold)
                 {
                     Debug.Log("HIT : turn left?");
-                    doingSomething=true;
                     rotationMod = -1;
                 }
                 if (rightFootY > leftFootY && rightFootY > turnFootThreshold)
                 {
                     Debug.Log("HIT : turn right?");
-                    doingSomething=true;
                     rotationMod = 1;
                 }
                 //handles stop turning
                 if (leftFootY < turnFootThreshold && rightFootY < turnFootThreshold)
                 {
-                    doingSomething=false;
                     rotationMod = 0;
                 }
 
                 //handles jump
-                if (leftFootY > jumpThreshold && rightFootY > jumpThreshold&& !doingSomething)
+                if (leftFootY > jumpThreshold && rightFootY > jumpThreshold&&!jumping)
                 {
                     Debug.Log("HIT : interact");
-                    doingSomething=true;
                     interact.Invoke();
+                    jumping = true;
+                    Invoke("delay", delayTime);
                 }
             }
         }
@@ -165,16 +163,10 @@ namespace Constellation
 
         }
 
-        //this sends the interaction event to tell world the player wants to interact
-        void Interact()
-        {
-            Invoke("delay",delayTime);
-        }
-
         // this function flips doing something after a certain amount of time.
         void delay()
         {
-            doingSomething=false;
+            jumping=false;
         }
     }
 }
