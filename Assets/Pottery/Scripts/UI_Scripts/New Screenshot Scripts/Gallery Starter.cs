@@ -19,7 +19,7 @@ public class GalleryStarter : MonoBehaviour
         foreach (var img in galleryImages)
             img.texture = null; // Clear existing textures
 
-        string[] screenshots = screenshotManager.GetLatestScreenshots();
+        string[] screenshots = null;//screenshotManager.GetLatestScreenshots();
 
         for (int i = 0; i < screenshots.Length && i < galleryImages.Length; i++)
         {
