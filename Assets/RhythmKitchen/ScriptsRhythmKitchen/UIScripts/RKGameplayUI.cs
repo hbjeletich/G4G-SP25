@@ -29,6 +29,8 @@ namespace RhythmKitchen
         private double startTime; // The dspTime for when the song starts
         private double endTime; // The dspTime for when the song ends
 
+        private bool dishComplete = false; // If the dish has been completed
+
         void Awake()
         {
             startTime = songData.songStartDspTime; // gets the songStartDspTime from songData
@@ -42,8 +44,9 @@ namespace RhythmKitchen
         void Update()
         {
             // If the dspTime is at the endTime complete the dish
-            if (endTime <= AudioSettings.dspTime)
+            if (!dishComplete && endTime <= AudioSettings.dspTime)
             {
+                dishComplete = true; // So CompleteDish won't get called mulitple times
                 Invoke("CompleteDish", .25f); // calls CompleteDish after .25 seconds
                 Debug.Log("[RKGameplayUI] Dish Complete");
             }
