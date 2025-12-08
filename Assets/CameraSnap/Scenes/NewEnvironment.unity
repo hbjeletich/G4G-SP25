@@ -7256,12 +7256,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UiScaleMode: 0
+  m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
-  m_ReferenceResolution: {x: 800, y: 600}
+  m_ReferenceResolution: {x: 1000, y: 600}
   m_ScreenMatchMode: 0
-  m_MatchWidthOrHeight: 0
+  m_MatchWidthOrHeight: 0.3
   m_PhysicalUnit: 3
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
@@ -19902,6 +19902,9 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 5896fb1578257554cb421a6e221adc44, type: 2}
   - {fileID: 11400000, guid: 9cffd0c7e2b7f314e8becd92b875023b, type: 2}
   - {fileID: 11400000, guid: 5ce543ba80338ff458b8bc113bf782fc, type: 2}
+  - {fileID: 11400000, guid: 61165de1618644a43b53a89d767461f2, type: 2}
+  - {fileID: 11400000, guid: 45098e11dfc61214a9aa72978bc6b6a6, type: 2}
+  - {fileID: 11400000, guid: ead52029e64849c46a5076a1bd8a012e, type: 2}
 --- !u!4 &1197041991
 Transform:
   m_ObjectHideFlags: 0
@@ -26756,7 +26759,10 @@ MonoBehaviour:
   photoText: {fileID: 1644624866}
   defaultMessageDuration: 2
   stopCountdownText: {fileID: 661141271}
-  targetSlots: []
+  targetSlots:
+  - {fileID: 937921031}
+  - {fileID: 1424106698}
+  - {fileID: 1824682970}
   endPanelSlots: []
   stopCartObject: {fileID: 537670465}
   zoneIcon: {fileID: 1044501157}
