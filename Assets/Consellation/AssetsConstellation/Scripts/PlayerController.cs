@@ -8,7 +8,7 @@ namespace Constellation
 {
     public enum ControlsScheme
     {
-        Keyboard,Workout,Standard
+        Keyboard,Workout,Standard,DebugHead
     }
 
     public class PlayerController : MonoBehaviour
@@ -20,6 +20,8 @@ namespace Constellation
         
         private InputAction leftFootHeightAction;
         private InputAction rightFootHeightAction;
+
+        private InputAction headPositionAction;
 
         //STATISTICS
         
@@ -57,7 +59,9 @@ namespace Constellation
         // the control scheme being used currently
         public ControlsScheme controls = ControlsScheme.Workout;
 
-        private bool jumping=false;
+        private bool interacting=false;
+
+        [SerializeField] private GameObject debugHead;
 
         void Awake()
         { 
@@ -65,6 +69,9 @@ namespace Constellation
             var footMap= inputActions.FindActionMap("Foot");
             leftFootHeightAction = footMap.FindAction("LeftFootPosition");
             rightFootHeightAction = footMap.FindAction("RightFootPosition");
+
+            var headMap = inputActions.FindActionMap("Head");
+            headPositionAction = headMap.FindAction("HeadPosition");
         }
 
         void OnEnable()
@@ -72,6 +79,7 @@ namespace Constellation
             // turns on actions
             leftFootHeightAction.Enable();
             rightFootHeightAction.Enable();
+            headPositionAction.Enable();
         }
 
         void OnDisable()
@@ -79,6 +87,7 @@ namespace Constellation
             //turns off actions
             leftFootHeightAction.Disable();
             rightFootHeightAction.Disable();
+            headPositionAction.Disable();
         }
 
         // Start is called before the first frame update
@@ -95,7 +104,7 @@ namespace Constellation
             //take input should ne changed with movement aspects
 
             //this movement is used when the keyboard is wanted to test features
-            if (controls==ControlsScheme.Keyboard)
+            if (controls == ControlsScheme.Keyboard)
             {
                 speedMod = Input.GetAxis("Vertical");
                 rotationMod = Input.GetAxis("Horizontal");
@@ -107,7 +116,7 @@ namespace Constellation
                 }
             }
             // THis implements workout controls
-            else if (controls==ControlsScheme.Workout)
+            else if (controls == ControlsScheme.Workout)
             {
 
                 float leftFootY = leftFootHeightAction.ReadValue<Vector3>().y;
@@ -115,7 +124,7 @@ namespace Constellation
 
                 //refine the movement
                 //Handles Walking
-                if ((leftFootY>walkFootThreshold || rightFootY>walkFootThreshold))
+                if ((leftFootY > walkFootThreshold || rightFootY > walkFootThreshold))
                 {
                     Debug.Log("HIT : walking");
                     speedMod = 1;
@@ -124,18 +133,20 @@ namespace Constellation
                 {
                     speedMod = 0;
                 }
-                
+
                 //Handles Turning
-                if (leftFootY>rightFootY && leftFootY>turnFootThreshold)
+                if (leftFootY > rightFootY && leftFootY > turnFootThreshold)
                 {
                     Debug.Log("HIT : turn left?");
                     rotationMod = -1;
                 }
+
                 if (rightFootY > leftFootY && rightFootY > turnFootThreshold)
                 {
                     Debug.Log("HIT : turn right?");
                     rotationMod = 1;
                 }
+
                 //handles stop turning
                 if (leftFootY < turnFootThreshold && rightFootY < turnFootThreshold)
                 {
@@ -143,13 +154,34 @@ namespace Constellation
                 }
 
                 //handles jump
-                if (leftFootY > jumpThreshold && rightFootY > jumpThreshold&&!jumping)
+                if (leftFootY > jumpThreshold && rightFootY > jumpThreshold && !interacting)
                 {
                     Debug.Log("HIT : interact");
-                    interact.Invoke();
-                    jumping = true;
-                    Invoke("delay", delayTime);
+                    interactCaptureHandle();
                 }
+            }
+            // This implements standard Controls
+            else if (controls == ControlsScheme.Standard)
+            {
+                float leftFootY = leftFootHeightAction.ReadValue<Vector3>().y;
+                float rightFootY = rightFootHeightAction.ReadValue<Vector3>().y;
+             
+                // slap postion equal to head within room
+                // probably needs to be changed
+                Vector3 headPos = headPositionAction.ReadValue<Vector3>();
+                transform.position = headPos;
+
+                // handles interact
+                if ((leftFootY > walkFootThreshold || rightFootY > walkFootThreshold))
+                {
+                    interactCaptureHandle();
+                }
+
+            }
+            // this is to debug standard movement by moving an object
+            else if (controls == ControlsScheme.DebugHead)
+            {
+                transform.position = debugHead.transform.position;
             }
         }
 
@@ -166,7 +198,15 @@ namespace Constellation
         // this function flips doing something after a certain amount of time.
         void delay()
         {
-            jumping=false;
+            interacting=false;
+        }
+
+        // this is the interaction code that runs when a captury system wants to interact
+        void interactCaptureHandle()
+        {
+            interact.Invoke();
+            interacting = true;
+            Invoke("delay", delayTime);
         }
     }
 }
