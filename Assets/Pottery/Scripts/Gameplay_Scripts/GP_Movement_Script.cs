@@ -27,6 +27,12 @@ public class GP_Movement_Script : MonoBehaviour
 
     private Coroutine progressRoutine;
 
+
+    void Start()
+    {
+        UpdateMesh();
+    }
+
     void Awake()
     {
         // ❗ You forgot this
@@ -83,15 +89,20 @@ public class GP_Movement_Script : MonoBehaviour
     // ------------------------------------------
     void UpdateMesh()
     {
-        switch (slidervalue)
-        {
-            case 0:  meshFilter.mesh = mesh01; break;
-            case 7:  meshFilter.mesh = mesh02; break;
-            case 14: meshFilter.mesh = mesh03; break;
-            case 21: meshFilter.mesh = mesh04; break;
-            case 35: meshFilter.mesh = mesh05; break;
-            case 40: meshFilter.mesh = mesh06; break;
-        }
+        int v = slidervalue;
+
+        if (v >= 0 && v < 7)
+            meshFilter.mesh = mesh01;
+        else if (v >= 7 && v < 14)
+            meshFilter.mesh = mesh02;
+        else if (v >= 14 && v < 21)
+            meshFilter.mesh = mesh03;
+        else if (v >= 21 && v < 35)
+            meshFilter.mesh = mesh04;
+        else if (v >= 35 && v < 40)
+            meshFilter.mesh = mesh05;
+        else if (v >= 40)
+            meshFilter.mesh = mesh06;
     }
 
 
@@ -115,5 +126,31 @@ public class GP_Movement_Script : MonoBehaviour
         }
 
         progressRoutine = null;
+    }
+
+    public void ResetProgress()
+    {
+        StartCoroutine(ResetAfterFrames());
+    }
+
+    IEnumerator ResetAfterFrames()
+    {
+        // Wait 5 frames
+        for (int i = 0; i < 5; i++)
+            yield return null;
+
+        // Stop any running progress coroutine
+        if (progressRoutine != null)
+        {
+            StopCoroutine(progressRoutine);
+            progressRoutine = null;
+        }
+
+        // Reset values
+        Progress = 0;
+        slider.value = 0;
+        slidervalue = 0;
+
+        UpdateMesh();
     }
 }
