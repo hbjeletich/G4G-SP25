@@ -50,7 +50,7 @@ public class GalleryLoader : MonoBehaviour
 
         Debug.Log("Found " + files.Length + " screenshots.");
 
-        // This loop loads all the screenshot
+        // This loop loads all the screenshots into the raw image slots
         for (int i = 0; i < files.Length && i < gallerySlots.Length; i++)
         {
             string file = files[i];
@@ -59,15 +59,16 @@ public class GalleryLoader : MonoBehaviour
             if (slot == null) continue;
 
             byte[] bytes = File.ReadAllBytes(file);
-            Texture2D texture = new Texture2D(2, 2, TextureFormat.RGBA32, false);
-            if (!texture.LoadImage(bytes))
+            Texture2D texture = new Texture2D(2, 2, TextureFormat.RGBA32, false); // Reads the files and creates textures
+
+            if (!texture.LoadImage(bytes)) // Load PNG Data
             {
                 Debug.LogWarning("Could not load: " + file);
                 continue;
             }
 
-            texture.Apply();
-            slot.texture = texture;
+            texture.Apply(); //apply textures
+            slot.texture = texture; // show image
 
             Debug.Log("Loaded screenshot into slot " + i + ": " + Path.GetFileName(file));
         }
