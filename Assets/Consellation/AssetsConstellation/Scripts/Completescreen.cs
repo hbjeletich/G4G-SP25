@@ -7,24 +7,36 @@ namespace Constellation
 {
     public class StarPlacementManager : MonoBehaviour
     {
+        //Declaration Area
+
         [Header("UI")]
+        //the panel holding all celebration elements
         [SerializeField] private GameObject congratsPanel;
 
         [Header("3D Character - Slides from below into lower left")]
+        //character model that slides up on completion
         [SerializeField] private GameObject character3DModel;
+        //where character ends up after slide
         [SerializeField] private Vector3 targetPosition = new Vector3(-3f, 1f, 5f);
+        //how far below target to start
         [SerializeField] private float slideUpDistance = 10f;
         [SerializeField] private float slideDuration = 0.8f;
+        //controls the feel of the slide
         [SerializeField] private AnimationCurve slideEaseCurve = AnimationCurve.EaseInOut(0, 0, 1, 1);
         
         [Header("UI Elements")]
+        //main congratulations message
         [SerializeField] private TextMeshProUGUI dialogueText;
+        //how long dialogue shows before transitioning
         [SerializeField] private float dialogueHoldTime = 2f;
+        //dialogue pops from this scale to 1.0
         [SerializeField] private float dialogueStartScale = 0.5f;
         
+        //canvasgroup for batch alpha control + input blocking
         [SerializeField] private CanvasGroup secondaryObject;
         
         [SerializeField] private Image popupImage;
+        //assigned at runtime so levels can use different images
         [SerializeField] private Sprite imageSprite;
         
         [SerializeField] private TextMeshProUGUI finalText;
@@ -32,22 +44,25 @@ namespace Constellation
         [Header("Debug")]
         [SerializeField] private bool debugMode = true;
 
-        // ⭐ ADDED — just this
         [Header("Audio")]
         [SerializeField] private AudioSource completionSound;
 
+        //RUNTIME STATE
+
+        //cached array of all stars, polled each frame for completion
         private StarScript[] stars;
+        //prevents completion from firing multiple times
         private bool levelCompleted = false;
 
         void Start()
         {
+            //hide celebration UI until needed
             if (congratsPanel != null)
                 congratsPanel.SetActive(false);
 
             if (character3DModel != null)
                 character3DModel.SetActive(false);
 
-            // Hide UI elements initially
             if (dialogueText != null)
                 SetAlpha(dialogueText, 0);
 
@@ -62,6 +77,7 @@ namespace Constellation
                 secondaryObject.alpha = 0;
             }
 
+            //true = include inactive, designers might disable stars initially
             stars = FindObjectsOfType<StarScript>(true);
             if (stars.Length == 0)
             {
@@ -78,6 +94,7 @@ namespace Constellation
             if (levelCompleted || stars == null || stars.Length == 0)
                 return;
 
+            //count placed stars - each StarScript sets foundHome via player interaction
             int placedCount = 0;
 
             foreach (StarScript star in stars)
@@ -87,6 +104,7 @@ namespace Constellation
                     placedCount++;
             }
 
+            //press P to check progress
             if (debugMode && Input.GetKeyDown(KeyCode.P))
                 Debug.Log($"Progress: {placedCount}/{stars.Length} stars placed");
 
@@ -108,7 +126,6 @@ namespace Constellation
 
             levelCompleted = true;
 
-            // ⭐ ADDED — plays the sound
             if (completionSound != null)
                 completionSound.Play();
 
@@ -121,9 +138,10 @@ namespace Constellation
             }
         }
 
+        //handles the celebration animation sequence
         private IEnumerator PlaySequence()
         {
-            // Setup character - starts below, ends at target position
+            //character starts below target, slides up
             Vector3 startPos = targetPosition - new Vector3(0, slideUpDistance, 0);
             
             if (character3DModel != null)
@@ -132,7 +150,6 @@ namespace Constellation
                 character3DModel.SetActive(true);
             }
 
-            // Setup UI elements - make sure they're active and set alpha to 0
             if (dialogueText != null)
             {
                 dialogueText.gameObject.SetActive(true);
@@ -174,7 +191,7 @@ namespace Constellation
                 character3DModel.transform.position = targetPosition;
             }
             
-            // 2. Image fades in first (to 50% opacity)
+            // 2. Image fades to 50% (background accent, shouldnt overpower text)
             if (popupImage != null)
             {
                 float elapsed = 0f;
@@ -207,7 +224,7 @@ namespace Constellation
             // 4. Hold dialogue
             yield return new WaitForSeconds(dialogueHoldTime);
             
-            // 5. Dialogue fades out + shrinks (secondary stays visible)
+            // 5. Dialogue fades out + shrinks
             {
                 float elapsed = 0f;
                 while (elapsed < 0.5f)
@@ -240,7 +257,7 @@ namespace Constellation
                 SetAlpha(finalText, 1);
             }
             
-            // 7. Secondary object fades in last
+            // 7. Secondary fades in, enable input only now so player cant click invisible buttons
             if (secondaryObject != null)
             {
                 secondaryObject.interactable = true;
@@ -256,6 +273,7 @@ namespace Constellation
             }
         }
 
+        //sets transparency on any UI graphic
         private void SetAlpha(Graphic graphic, float alpha)
         {
             Color c = graphic.color;

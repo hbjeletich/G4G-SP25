@@ -7,10 +7,18 @@ namespace Constellation
 {
     public class StarCounterPositionBased : MonoBehaviour
     {
-        [SerializeField] private TMP_Text counterText; // optional UI
-        [SerializeField] private float checkInterval = 0.1f; // seconds between checks
-        [SerializeField] private float tolerance = 0.5f; // distance threshold to consider "home"
+        //Declaration Area
 
+        //optional - will auto-create if not assigned
+        [SerializeField] private TMP_Text counterText;
+        //how often to check star positions
+        [SerializeField] private float checkInterval = 0.1f;
+        //how close a star must be to destination to count as "home"
+        [SerializeField] private float tolerance = 0.5f;
+
+        //RUNTIME STATE
+
+        //cached references, assumes stars[i] pairs with destinations[i]
         private StarScript[] stars;
         private DestinationScript[] destinations;
         private int totalStars;
@@ -18,7 +26,6 @@ namespace Constellation
 
         void Start()
         {
-            // Find all stars and destinations
             stars = FindObjectsOfType<StarScript>();
             destinations = FindObjectsOfType<DestinationScript>();
             totalStars = stars.Length;
@@ -27,11 +34,13 @@ namespace Constellation
             if (totalStars == 0)
                 Debug.LogWarning("StarCounterPositionBased: No stars found in scene.");
 
-            // Auto-create TMP text if none assigned
+            //auto-create UI if designer didnt assign one
             if (counterText == null)
             {
                 GameObject textObj = new GameObject("StarCounterText");
                 Canvas canvas = FindObjectOfType<Canvas>();
+
+                //create canvas too if scene has none
                 if (canvas == null)
                 {
                     GameObject canvasGO = new GameObject("AutoCounterCanvas");
@@ -40,12 +49,14 @@ namespace Constellation
                     canvasGO.AddComponent<CanvasScaler>();
                     canvasGO.AddComponent<UnityEngine.UI.GraphicRaycaster>();
                 }
+
                 textObj.transform.SetParent(canvas.transform);
                 counterText = textObj.AddComponent<TextMeshProUGUI>();
                 counterText.fontSize = 36;
                 counterText.alignment = TextAlignmentOptions.TopRight;
                 counterText.color = Color.white;
 
+                //anchor to top-right corner with padding
                 RectTransform rt = counterText.GetComponent<RectTransform>();
                 rt.anchorMin = new Vector2(1, 1);
                 rt.anchorMax = new Vector2(1, 1);
@@ -57,6 +68,7 @@ namespace Constellation
             StartCoroutine(CheckStarsRoutine());
         }
 
+        //polls star positions on interval instead of every frame
         private IEnumerator CheckStarsRoutine()
         {
             while (true)
