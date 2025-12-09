@@ -5,21 +5,26 @@ using UnityEngine.UI;
 using System.IO;
 using System.Linq;
 
+// Loads up to 6 recent screenshot images from the PotteryScreenshots folder
+// and displays them in assigned RawImage slots in the gallery UI.
+
 public class GalleryLoader : MonoBehaviour
 {
     [Header("Assign up to 6 RawImages")]
-    public RawImage[] gallerySlots = new RawImage[6];
+    public RawImage[] gallerySlots = new RawImage[6]; // Gets the Raw Image slots
 
-    private string screenshotsFolder;
-    private const int MaxScreenshots = 6;
+    private string screenshotsFolder; // Path of the folder in explorer
+    private const int MaxScreenshots = 6; //Assigns maximum number of screenshots
 
+    // Function that sets and debugs for the folder that the screenshots reside in
     private void Start()
     {
         screenshotsFolder = Path.Combine(Application.persistentDataPath, "PotteryScreenshots");
         Debug.Log("Looking for screenshots in: " + screenshotsFolder);
-        //LoadGallery(screenshotsFolder);
     }
 
+
+    // Function that loads the gallery screen when called and updates it with new screenshots
     public void UpdateGallery()
     {
         LoadGallery(screenshotsFolder);
@@ -31,12 +36,13 @@ public class GalleryLoader : MonoBehaviour
         {
             Debug.LogWarning("Screenshot folder missing: " + folderPath);
             return;
-        }
+        } //Checks to see if the folder
 
-        // Clear existing textures
+        // Clears existing textures
         foreach (var slot in gallerySlots)
             if (slot) slot.texture = null;
 
+        // Gets the newest screenshots
         string[] files = Directory.GetFiles(folderPath, "*.png")
                                   .OrderByDescending(f => File.GetCreationTime(f))
                                   .Take(MaxScreenshots)
@@ -44,6 +50,7 @@ public class GalleryLoader : MonoBehaviour
 
         Debug.Log("Found " + files.Length + " screenshots.");
 
+        // This loop loads all the screenshot
         for (int i = 0; i < files.Length && i < gallerySlots.Length; i++)
         {
             string file = files[i];
