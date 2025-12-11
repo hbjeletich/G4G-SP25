@@ -199,7 +199,7 @@ RectTransform:
   m_GameObject: {fileID: 56110565}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1969205300}
@@ -208,7 +208,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: -255}
-  m_SizeDelta: {x: 300, y: 100}
+  m_SizeDelta: {x: 659, y: 269}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &56110567
 MonoBehaviour:
@@ -303,15 +303,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.509434, g: 0.509434, b: 0.509434, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10905, guid: 0000000000000000f000000000000000, type: 0}
-  m_Type: 1
+  m_Sprite: {fileID: 21300000, guid: 14094d77d11aece448d0b79dfcea628c, type: 3}
+  m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -2163,15 +2163,37 @@ MonoBehaviour:
   musicSounds:
   - name: Ambience
     clip: {fileID: 8300000, guid: acfad8a19fa569145b0e93b05247dfa6, type: 3}
-  - name: TutorialSong
-    clip: {fileID: 8300000, guid: 27d65b416eb824250b0b05d0264627e8, type: 3}
   sfxSounds:
   - name: ButtonPress
-    clip: {fileID: 8300000, guid: 89c22fa5b42c9f840a7a5ed4297489f3, type: 3}
-  - name: RecordScratch
-    clip: {fileID: 8300000, guid: e9cf13949b663264a9de0d439df0ea1a, type: 3}
+    clip: {fileID: 8300000, guid: dabddd831c898af41a709fd235b45f13, type: 3}
+  - name: SongStartSFX
+    clip: {fileID: 8300000, guid: 22a980843f028484ea21dcfadeb34ad6, type: 3}
   - name: Shimmer
-    clip: {fileID: 8300000, guid: d3acef85c6815254287f38afb3493b10, type: 3}
+    clip: {fileID: 8300000, guid: d4f42f3a606b7fe43a7c0c886edf8b5d, type: 3}
+  - name: CountDown3
+    clip: {fileID: 8300000, guid: a9a9d65914d8ca44a8834593d1b7a616, type: 3}
+  - name: CountDown2
+    clip: {fileID: 8300000, guid: 7cc85facdb3034844919885cf1f97c9a, type: 3}
+  - name: CountDown1
+    clip: {fileID: 8300000, guid: 2f1134efd85d39545821671fd9325e18, type: 3}
+  - name: CountDownGo
+    clip: {fileID: 8300000, guid: 4b2bc9eeb228bd243b6d03b52779f065, type: 3}
+  - name: CountVO3
+    clip: {fileID: 8300000, guid: 759623e4d5c8c1f4a8eadcecd3e60ce1, type: 3}
+  - name: CountVO2
+    clip: {fileID: 8300000, guid: 62347fcb1c4fca84ebaec9d090125c83, type: 3}
+  - name: CountVO1
+    clip: {fileID: 8300000, guid: e06f2b7689db6c445b392e6054987e97, type: 3}
+  - name: CountVOGo
+    clip: {fileID: 8300000, guid: 8afd3b5dafb33b446b0b95b459ef0896, type: 3}
+  - name: VOPERFECT
+    clip: {fileID: 8300000, guid: bc85dc1668a3c51428ba0045bf210008, type: 3}
+  - name: VOGOOD
+    clip: {fileID: 8300000, guid: c06839f60744c694aa83e0161dc9ff2e, type: 3}
+  - name: VOALMOST
+    clip: {fileID: 8300000, guid: 9e0e44d44023ad7489c2185e9c1676fa, type: 3}
+  - name: NoteDestroy
+    clip: {fileID: 8300000, guid: df6cacc34ec8c7d4fa22dfe5544d560c, type: 3}
   musicSource: {fileID: 1572434366}
   sfxSource: {fileID: 2017027803}
 --- !u!4 &1264299815
