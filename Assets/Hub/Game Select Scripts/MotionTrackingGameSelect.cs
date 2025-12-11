@@ -72,13 +72,13 @@ public class MotionTrackingGameSelect : MonoBehaviour
     {
         if (Time.time - lastSquatTime < squatCooldown) return;
 
-        if (squatValue > squatThreshold && !isSquatting)
+        if (squatValue < squatThreshold && !isSquatting)
         {
             isSquatting = true;
             lastSquatTime = Time.time;
             gameCarousel.PlayCurrentGame();
         }
-        else if (squatValue < squatThreshold * 0.5f)
+        else if (squatValue > squatThreshold)
         {
             isSquatting = false;
         }
