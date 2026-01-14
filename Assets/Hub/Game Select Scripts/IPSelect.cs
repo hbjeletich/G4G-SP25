@@ -17,17 +17,25 @@ public class IPSelect : MonoBehaviour
     void LIMIP()
     {
         GameSelect.Instance.host = "192.168.10.106";
+        GameSelect.Instance.CapturySetup();
         GoToNextScene();
     }
 
     void HomeIP()
     {
         GameSelect.Instance.host = "127.0.0.1";
+        GameSelect.Instance.CapturySetup();
         GoToNextScene();
     }
 
     void GoToNextScene()
     {
+        StartCoroutine(WaitAndGo());
+    }
+
+    private IEnumerator WaitAndGo()
+    {
+        yield return new WaitForSeconds(1f);
         UnityEngine.SceneManagement.SceneManager.LoadScene("NewGameSelect");
     }
 }

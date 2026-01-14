@@ -46,7 +46,7 @@ public class GameSelect : MonoBehaviour
         // singleton
         if (_instance != null && _instance != this)
         {
-            Destroy(gameObject);
+            Destroy(this);
             return;
         }
         _instance = this;
@@ -57,6 +57,8 @@ public class GameSelect : MonoBehaviour
         {
             localSource = gameObject.AddComponent<AudioSource>();
         }
+
+        SceneManager.sceneLoaded += OnSceneLoaded;
     }
 
     private void Start()
@@ -165,7 +167,7 @@ public class GameSelect : MonoBehaviour
         CapturyNetworkPlugin capturyNetworkPlugin = FindObjectOfType<CapturyNetworkPlugin>();
         if (capturyNetworkPlugin != null)
         {
-            capturyNetworkPlugin.host = host;
+            capturyNetworkPlugin.SetHost(host);
         }
     }
 
@@ -177,5 +179,10 @@ public class GameSelect : MonoBehaviour
         {
             motionTrackingManager.Recalibrate();
         }
+    }
+
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        CapturySetup();
     }
 }
