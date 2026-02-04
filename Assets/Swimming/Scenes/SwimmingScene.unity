@@ -1275,12 +1275,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 086a399939e6c094886da367ef9f81ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  host: 127.0.0.1
+  host: 192.168.10.106
   port: 2101
   scaleFactor: 0.001
   actorCheckTimeout: 500
   streamARTags: 1
-  usePoseCompression: 1
+  usePoseCompression: 0
   angles: 
   cameras: []
   arTags: []
@@ -2643,7 +2643,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 894272536}
-  - component: {fileID: 894272535}
+  - component: {fileID: 894272537}
   m_Layer: 0
   m_Name: Captury Input Manager
   m_TagString: Untagged
@@ -2651,18 +2651,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &894272535
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 894272534}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9947515110c00304199d3684425f235c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &894272536
 Transform:
   m_ObjectHideFlags: 0
@@ -2678,6 +2666,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &894272537
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 894272534}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b221c1e6f53b1648be7d2c7cf5a4bef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &910922724
 GameObject:
   m_ObjectHideFlags: 0
