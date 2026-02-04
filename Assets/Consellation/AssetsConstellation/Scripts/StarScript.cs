@@ -58,7 +58,9 @@ namespace Constellation
             // if home lock star to home
             if (foundHome)
             {
-                transform.position = destination.transform.position;
+                //transform.position = destination.transform.position;
+                transform.position = new Vector3(destination.transform.position.x, destination.transform.position.y, destination.transform.position.z - 1);
+                destination.SetActive(false);
             }
         }
 
