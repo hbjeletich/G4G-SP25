@@ -19,6 +19,9 @@ namespace Sewing {
         private bool movementAvailable = true;
         private InputAction leftHipAction;
         private InputAction rightHipAction;
+        private InputAction leftFootHeightAction;
+        private InputAction rightFootHeightAction;
+        private float defaultFootDistance;
         //private InputAction footRaiseAction;
 
         public float moveSpeed = 3f; // Speed of movement
@@ -32,11 +35,23 @@ namespace Sewing {
             var actionMap = inputActions.FindActionMap("Foot");
             leftHipAction = actionMap.FindAction("LeftHipAbducted");
             rightHipAction = actionMap.FindAction("RightHipAbducted");
+            leftFootHeightAction = actionMap.FindAction("LeftFootPosition");
+            rightFootHeightAction = actionMap.FindAction("RightFootPosition");
             //footRaiseAction = actionMap.FindAction("FootRaise");
 
             /*footRaiseAction.performed += OnFootRaise;
             leftHipAction.performed += OnLeftHip;
             rightHipAction.performed += OnRightHip;*/
+        }
+
+        void Start()
+        {
+            Vector3 leftPos = leftFootHeightAction.ReadValue<Vector3>();
+            Vector3 rightPos = rightHipAction.ReadValue<Vector3>();
+
+            Vector2 leftPos2D = new Vector2(leftPos.x, leftPos.z);
+            Vector2 rightPos2D = new Vector2(rightPos.x, rightPos.z);
+            defaultFootDistance = Vector2.Distance(leftPos2D, rightPos2D);
         }
     // Update is called once per frame
         public void ChangeScene(string sceneName)   
@@ -46,11 +61,11 @@ namespace Sewing {
     
         void Update()
         {
-             if (currentWaypointIndex == waypoints.Count) 
-             {
+            if (currentWaypointIndex == waypoints.Count) 
+            {
                 SoundManager.PlaySound(SoundType.REWARDONE);
                 StartCoroutine(SceneSwitch());
-             }
+            }
         }
 
         private IEnumerator SceneSwitch()
@@ -63,6 +78,8 @@ namespace Sewing {
         {
             leftHipAction.Enable();
             rightHipAction.Enable();
+            leftFootHeightAction.Enable();
+            rightFootHeightAction.Enable();
             //footRaiseAction.Enable();
 
             //footRaiseAction.performed += OnFootRaise;
@@ -74,6 +91,8 @@ namespace Sewing {
         {
             leftHipAction.Disable();
             rightHipAction.Disable();
+            leftFootHeightAction.Disable();
+            rightFootHeightAction.Disable();
             //footRaiseAction.Disable();
 
 
@@ -89,6 +108,9 @@ namespace Sewing {
         }*/
         private void OnLeftHip(InputAction.CallbackContext ctx)
         {
+            bool isLeft = true;
+            CalculateAbductionDistance(isLeft);
+            //DataLogger.Instance.LogInput("LeftHipAbducted", ctx.ReadValue<float>().ToString("F2"));
             if (movementAvailable == true && currentWaypointIndex < waypoints.Count)
             {
                 movementAvailable = false;
@@ -97,7 +119,10 @@ namespace Sewing {
                     StartCoroutine(MoveToWaypoint(waypoints[currentWaypointIndex])); // Start movement to waypoint
             }
         }
-        private void OnRightHip(InputAction.CallbackContext ctx){
+        private void OnRightHip(InputAction.CallbackContext ctx)
+        {
+            bool isLeft = false;
+            CalculateAbductionDistance(isLeft);
 
             if (movementAvailable == true && currentWaypointIndex < waypoints.Count)
             {
@@ -107,6 +132,7 @@ namespace Sewing {
                     StartCoroutine(MoveToWaypoint(waypoints[currentWaypointIndex])); // Start movement to waypoint
             }
         }
+
         private IEnumerator MoveToWaypoint(Transform targetWaypoint)
         {
             SoundManager.PlaySound(SoundType.SCISSORS);
@@ -156,6 +182,23 @@ namespace Sewing {
                 rightHipAction.performed -= OnRightHip;
                 rightHipAction.Disable();
             }
+        }
+
+        void CalculateAbductionDistance(bool isLeft)
+        {
+            Vector3 leftPos = leftFootHeightAction.ReadValue<Vector3>();
+            Vector3 rightPos = rightHipAction.ReadValue<Vector3>();
+
+            Vector2 leftPos2D = new Vector2(leftPos.x, leftPos.z);
+            Vector2 rightPos2D = new Vector2(rightPos.x, rightPos.z);
+            float currentDistance = Vector2.Distance(leftPos2D, rightPos2D);
+            float abductionDistance = currentDistance - defaultFootDistance;
+
+            // Log the abduction distance for analysis
+            string hipSide = isLeft ? "Left" : "Right";
+
+            string dataStr = $"Distance: {abductionDistance.ToString("F2")}; Side: {hipSide}";
+            DataLogger.Instance.LogData($"HipAbduction", dataStr);
         }
     }
 }
