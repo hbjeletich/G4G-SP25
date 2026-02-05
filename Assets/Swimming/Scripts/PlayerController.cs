@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -130,7 +131,8 @@ namespace Swimming
                 DoHorizontalMovement(horizontalInput);
 
                 float verticalInput = moveAction.ReadValue<Vector2>().y;
-                DoContinuousVerticalMovement(verticalInput);
+                float verticalForce = verticalInput * footHeightForce;  // or swimForce
+                DoContinuousVerticalMovement(verticalForce);
             }
             else
             {
@@ -160,6 +162,8 @@ namespace Swimming
             float rightFootY = rightFootHeightAction.ReadValue<Vector3>().y;
             float pelvisY = squatTrackingYAction.ReadValue<Vector3>().y;
 
+            Debug.Log($"Left Foot Height: {leftFootY}, Right Foot Height: {rightFootY}, Pelvis Y: {pelvisY}");
+
             float netVerticalForce = 0f;
 
             // use whichever is higher
@@ -171,10 +175,10 @@ namespace Swimming
                 netVerticalForce += footHeight * footHeightForce;
             }
 
-            // 0 = standing, 1 = deep squat
-            if (pelvisY > continuousMotionThreshold)
+            // 0 = standing, -1 = deep squat
+            if (-pelvisY > continuousMotionThreshold/2)
             {
-                netVerticalForce -= pelvisY * squatForce;
+                netVerticalForce = pelvisY * squatForce;
             }
 
             DoContinuousVerticalMovement(netVerticalForce);
