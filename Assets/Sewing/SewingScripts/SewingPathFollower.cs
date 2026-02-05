@@ -45,12 +45,16 @@ namespace Sewing{
         {
             footRaiseAction.Enable();
             footLowerAction.Enable();
+            leftFootHeightAction.Enable();
+            rightFootHeightAction.Enable();
         }
 
         private void OnDisable()
         {
             footRaiseAction.Disable();
             footLowerAction.Disable();
+            leftFootHeightAction.Disable();
+            rightFootHeightAction.Disable();
         }
         private void OnFootRaise(InputAction.CallbackContext ctx)
         {
