@@ -176,16 +176,29 @@ namespace Constellation
             // This implements standard Controls
             else if (controls == ControlsScheme.Standard)
             {
-                clamp();
+                //clamp();
 
                 float leftFootY = leftFootHeightAction.ReadValue<Vector3>().y;
                 float rightFootY = rightFootHeightAction.ReadValue<Vector3>().y;
+
+
              
                 // slap postion equal to head within room
                 // probably needs to be changed
                 Vector3 headPos = headPositionAction.ReadValue<Vector3>();
                 transform.position = headPos;
 
+                Debug.Log("Debug: "+headPos.x +" : "+ headPos.z);
+
+                //transform head x to game x and head z to game y. 
+
+                transform.position = mainCam.ViewportToWorldPoint(new Vector3(map(headPos.x, -4, 4, 0, 1), map(headPos.z, -3, 3, 0, 1), 0));
+                /*
+
+                Vector3 viewpoint = mainCam.WorldToViewportPoint(transform.position);
+                transform.position = new Vector3(Mathf.Lerp(0,1,), Mathf.Lerp(0,1), 0);
+
+                */
                 // handles interact
                 if ((leftFootY > walkFootThreshold || rightFootY > walkFootThreshold))
                 {
@@ -230,6 +243,12 @@ namespace Constellation
             viewpoint.x = Mathf.Clamp01(viewpoint.x);
             viewpoint.y = Mathf.Clamp01(viewpoint.y);
             transform.position = mainCam.ViewportToWorldPoint(viewpoint);
+            //Debug.Log(viewpoint);
+        }
+
+        float map(float val, float inMin, float inMax, float outMin, float outMax)
+        {
+            return (val - inMin) * (outMax - outMin) / (inMax - inMin) + outMin;    
         }
     }
 }
