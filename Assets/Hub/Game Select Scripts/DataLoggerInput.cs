@@ -30,6 +30,11 @@ public class DataLoggerInput : MonoBehaviour
         {
             startLoggingButton.onClick.AddListener(StartLogging);
         }
+
+        if(skipLoggingButton != null)
+        {
+            skipLoggingButton.onClick.AddListener(SkipLogging);
+        }
     }
 
     private void OnParticipantIDEntered(string input)
