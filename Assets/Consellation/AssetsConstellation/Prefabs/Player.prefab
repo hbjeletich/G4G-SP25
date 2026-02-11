@@ -370,7 +370,7 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 69cf8e9067aeecd40b5677190a124fa5,
         type: 3}
       insertIndex: -1
-      addedObject: {fileID: 6557710684364461888}
+      addedObject: {fileID: 4067895474906243708}
   m_SourcePrefab: {fileID: 100100000, guid: 69cf8e9067aeecd40b5677190a124fa5, type: 3}
 --- !u!4 &8112650119743260940 stripped
 Transform:
@@ -402,13 +402,17 @@ MonoBehaviour:
   speedMod: 0
   speedStat: 1
   rotateStat: 5
-  footThreshold: 0.1
+  turnFootThreshold: 0.2
+  walkFootThreshold: 0.06
+  jumpThreshold: 0.1
+  delayTime: 0.4
   interact:
     m_PersistentCalls:
       m_Calls: []
   tailSpot: {fileID: 1769547669995076596}
   grabedStar: {fileID: 0}
-  debugControls: 1
+  controls: 1
+  debugHead: {fileID: 0}
 --- !u!50 &4734150860756232093
 Rigidbody2D:
   serializedVersion: 4
@@ -436,8 +440,8 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!61 &6557710684364461888
-BoxCollider2D:
+--- !u!58 &4067895474906243708
+CircleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -470,15 +474,5 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: -0.000035753008, y: -0.00054794736}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0, y: 0}
-    oldSize: {x: 0, y: 0}
-    newSize: {x: 0, y: 0}
-    adaptiveTilingThreshold: 0
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  m_Size: {x: 0.028699137, y: 0.029017251}
-  m_EdgeRadius: 0
+  m_Offset: {x: 0.00014205642, y: -0.0003909429}
+  m_Radius: 0.013560377
