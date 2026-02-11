@@ -23,8 +23,8 @@ MonoBehaviour:
   isShiftTracked: 1
   weightShiftThreshold: 0.2
   neutralZoneWidth: 0.1
-  wholeBodyMovementThreshold: 4
-  isBendTracked: 1
+  wholeBodyMovementThreshold: 3
+  isBendTracked: 0
   bentOverAngleThreshold: 30
   enableFootModule: 1
   footSensitivity: 1
@@ -65,6 +65,15 @@ MonoBehaviour:
   headDownThreshold: 15
   headLeftThreshold: 20
   headRightThreshold: 20
+  enableBalanceModule: 0
+  balanceSensitivity: 1
+  balanceDebugMode: 0
+  isCoMTracked: 1
+  isSwayTracked: 1
+  isStabilityTracked: 1
+  swayThreshold: 0.1
+  stabilityThreshold: 0.05
+  comHistoryFrames: 180
   pelvisJointName: Hips
   spineJointName: Spine4
   headJointName: Head
@@ -73,5 +82,13 @@ MonoBehaviour:
   rightShoulderJointName: RightShoulder
   leftFootJointName: LeftFoot
   rightFootJointName: RightFoot
+  walkTrackingSpineJointName: Spine
   leftHandJointName: LeftHand
   rightHandJointName: RightHand
+  trunkJointName: Spine1
+  leftForeArmJointName: LeftForeArm
+  rightForeArmJointName: RightForeArm
+  leftLegJointName: LeftLeg
+  rightLegJointName: RightLeg
+  leftToeBaseJointName: LeftToeBase
+  rightToeBaseJointName: RightToeBase

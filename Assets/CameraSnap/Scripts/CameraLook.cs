@@ -21,28 +21,28 @@ namespace CameraSnap
 
         void Update()
         {
-            float horizontalInput = 0f;
+            // float horizontalInput = 0f;
 
-            if (Input.GetKey(KeyCode.RightArrow))
-            {
-                horizontalInput = 1f;
-            }
-            else if (Input.GetKey(KeyCode.LeftArrow))
-            {
-                horizontalInput = -1f;
-            }
+            // if (Input.GetKey(KeyCode.RightArrow))
+            // {
+            //     horizontalInput = 1f;
+            // }
+            // else if (Input.GetKey(KeyCode.LeftArrow))
+            // {
+            //     horizontalInput = -1f;
+            // }
 
-            currentYaw += horizontalInput * panSpeed * Time.deltaTime;
-            currentYaw = Mathf.Clamp(currentYaw, -maxYaw, maxYaw);
+            // currentYaw += horizontalInput * panSpeed * Time.deltaTime;
+            // currentYaw = Mathf.Clamp(currentYaw, -maxYaw, maxYaw);
 
-            // Apply yaw to camera (local Y rotation)
-            transform.localRotation = Quaternion.Euler(0f, currentYaw, 0f);
+            // // Apply yaw to camera (local Y rotation)
+            // transform.localRotation = Quaternion.Euler(0f, currentYaw, 0f);
         }
         //Public function that allows other scripts rotate the camera.
         public void ManualPan(float input)
 {
     currentYaw += input * panSpeed * Time.deltaTime;
-    currentYaw = Mathf.Clamp(currentYaw, -maxYaw, maxYaw);
+    //currentYaw = Mathf.Clamp(currentYaw, -maxYaw, maxYaw);
     transform.localRotation = Quaternion.Euler(0f, currentYaw, 0f);
 }
 

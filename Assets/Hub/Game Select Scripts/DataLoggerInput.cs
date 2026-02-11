@@ -61,6 +61,7 @@ public class DataLoggerInput : MonoBehaviour
     public void SkipLogging()
     {
         HideInputs();
+        ipSelect.ShowButtons();
     }
 
     public void HideInputs()
