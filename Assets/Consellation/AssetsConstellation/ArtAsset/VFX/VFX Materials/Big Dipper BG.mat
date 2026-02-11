@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-8617979361621202925
+--- !u!114 &-6533101916553334740
 MonoBehaviour:
   m_ObjectHideFlags: 11
   m_CorrespondingSourceObject: {fileID: 0}
@@ -20,30 +20,30 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: BigDipper_Saturn
-  m_Shader: {fileID: 4800000, guid: 933532a4fcc9baf4fa0491de14d08ed7, type: 3}
-  m_Parent: {fileID: 2100000, guid: 5df0a3f2ea8e66741b4f2c33b59de496, type: 2}
-  m_ModifiedSerializedProperties: 2
-  m_ValidKeywords:
-  - _EMISSION
+  m_Name: Big Dipper BG
+  m_Shader: {fileID: -6465566751694194690, guid: eb679314a5cf2b6449ea1f30add1b6d9,
+    type: 3}
+  m_Parent: {fileID: 2100000, guid: 0f1b55027beabd547959c91230c4de02, type: 2}
+  m_ModifiedSerializedProperties: 0
+  m_ValidKeywords: []
   m_InvalidKeywords: []
-  m_LightmapFlags: 2
+  m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
   m_CustomRenderQueue: -1
-  stringTagMap:
-    RenderType: Opaque
-  disabledShaderPasses:
-  - MOTIONVECTORS
+  stringTagMap: {}
+  disabledShaderPasses: []
   m_LockedProperties: 
   m_SavedProperties:
     serializedVersion: 3
-    m_TexEnvs: []
+    m_TexEnvs:
+    - _MainTex:
+        m_Texture: {fileID: 2800000, guid: 662c73fde579366459def2d2c2d927fa, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats: []
     m_Colors:
-    - _BaseColor: {r: 0.45911938, g: 0.26998526, b: 0.41681385, a: 1}
-    - _Color: {r: 0.45911932, g: 0.26998523, b: 0.41681382, a: 1}
-    - _EmissionColor: {r: 0.088050246, g: 0.06119215, b: 0.06119215, a: 1}
+    - _ColorA_3: {r: 0, g: 0, b: 0, a: 0}
   m_BuildTextureStacks: []
   m_AllowLocking: 1

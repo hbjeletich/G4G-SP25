@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: saturns ring
+  m_Name: Columba Saturn
   m_Shader: {fileID: -6465566751694194690, guid: 82d5b9777e9e1414fa317af1a4d0dc32,
     type: 3}
   m_Parent: {fileID: 0}
@@ -49,7 +49,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: d0164be612c69334297cf6d9c53ce0fe, type: 3}
+        m_Texture: {fileID: 2800000, guid: d88363eb4bb8a0642abe6fd65489a349, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:
@@ -101,6 +101,8 @@ Material:
     - _DetailNormalMapScale: 1
     - _DstBlend: 0
     - _DstBlendAlpha: 0
+    - _EmissionBase: 0
+    - _Emmision: 3
     - _EnvironmentReflections: 1
     - _GlossMapScale: 0
     - _Glossiness: 0
@@ -123,9 +125,9 @@ Material:
     m_Colors:
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
-    - _ColorA: {r: 0.3019608, g: 0.19607843, b: 0.27058825, a: 0}
-    - _ColorA_2: {r: 1, g: 1, b: 1, a: 0}
-    - _ColorA_3: {r: 1, g: 1, b: 1, a: 0}
+    - _ColorA: {r: 0, g: 0, b: 0, a: 1}
+    - _ColorA_2: {r: 0.71288705, g: 0.8490566, b: 0.7935801, a: 1}
+    - _ColorA_3: {r: 0, g: 0, b: 0, a: 0}
     - _ColorB: {r: 0, g: 0, b: 0, a: 0}
     - _ColorB_2: {r: 0, g: 0, b: 0, a: 0}
     - _ColorB_3: {r: 0, g: 0, b: 0, a: 0}
