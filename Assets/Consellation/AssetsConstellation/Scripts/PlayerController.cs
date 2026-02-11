@@ -15,13 +15,16 @@ namespace Constellation
     {
         //Declaration Area
 
+        // ACTIONS
+
         // this is the Input actions of captury
         [SerializeField] private InputActionAsset inputActions;
         
         private InputAction leftFootHeightAction;
         private InputAction rightFootHeightAction;
+        private InputAction walkingAction;
 
-        private InputAction headPositionAction;
+        private InputAction headPositionAction; 
 
         //STATISTICS
         
@@ -33,6 +36,10 @@ namespace Constellation
         [SerializeField] private float speedStat = 5.0f;
         //how fast guy rotates
         [SerializeField] private float rotateStat = 5.0f;
+        // these handle multiple interaction spam 
+        [SerializeField] private float delayTime = 1f;
+
+        // THRESHOLDS
 
         // These are stats for thresholds of foot height
         [SerializeField] private float turnFootThreshold = .2f;
@@ -41,8 +48,7 @@ namespace Constellation
 
         [SerializeField] private float jumpThreshold=.1f;
 
-        // these handle multiple interaction spam 
-        [SerializeField] private float delayTime=.4f;
+        //UNITY OBJECTS
 
         //The Event to try and grab
         public UnityEvent interact;
@@ -59,9 +65,11 @@ namespace Constellation
         // the control scheme being used currently
         public ControlsScheme controls = ControlsScheme.Workout;
 
+        public Camera mainCam; 
+
         private bool interacting=false;
 
-        [SerializeField] private GameObject debugHead;
+        [SerializeField] private GameObject fakeHead;
 
         void Awake()
         { 
@@ -69,6 +77,7 @@ namespace Constellation
             var footMap= inputActions.FindActionMap("Foot");
             leftFootHeightAction = footMap.FindAction("LeftFootPosition");
             rightFootHeightAction = footMap.FindAction("RightFootPosition");
+            walkingAction = footMap.FindAction("IsWalking");
 
             var headMap = inputActions.FindActionMap("Head");
             headPositionAction = headMap.FindAction("HeadPosition");
@@ -95,6 +104,7 @@ namespace Constellation
         {
             //Gather Body
             charBody = GetComponent<Rigidbody2D>();
+            mainCam = GameObject.FindObjectOfType<Camera>();
             //interact.AddListener(Interact);
         }
 
@@ -106,6 +116,8 @@ namespace Constellation
             //this movement is used when the keyboard is wanted to test features
             if (controls == ControlsScheme.Keyboard)
             {
+                clamp();
+
                 speedMod = Input.GetAxis("Vertical");
                 rotationMod = Input.GetAxis("Horizontal");
 
@@ -118,6 +130,7 @@ namespace Constellation
             // THis implements workout controls
             else if (controls == ControlsScheme.Workout)
             {
+                clamp();
 
                 float leftFootY = leftFootHeightAction.ReadValue<Vector3>().y;
                 float rightFootY = rightFootHeightAction.ReadValue<Vector3>().y;
@@ -163,6 +176,8 @@ namespace Constellation
             // This implements standard Controls
             else if (controls == ControlsScheme.Standard)
             {
+                clamp();
+
                 float leftFootY = leftFootHeightAction.ReadValue<Vector3>().y;
                 float rightFootY = rightFootHeightAction.ReadValue<Vector3>().y;
              
@@ -181,7 +196,7 @@ namespace Constellation
             // this is to debug standard movement by moving an object
             else if (controls == ControlsScheme.DebugHead)
             {
-                transform.position = debugHead.transform.position;
+                transform.position = fakeHead.transform.position;
             }
         }
 
@@ -207,6 +222,14 @@ namespace Constellation
             interact.Invoke();
             interacting = true;
             Invoke("delay", delayTime);
+        }
+    
+        void clamp()
+        {
+            Vector3 viewpoint = mainCam.WorldToViewportPoint(transform.position);
+            viewpoint.x = Mathf.Clamp01(viewpoint.x);
+            viewpoint.y = Mathf.Clamp01(viewpoint.y);
+            transform.position = mainCam.ViewportToWorldPoint(viewpoint);
         }
     }
 }
