@@ -209,7 +209,7 @@ namespace Constellation
             // this is to debug standard movement by moving an object
             else if (controls == ControlsScheme.DebugHead)
             {
-                transform.position = fakeHead.transform.position;
+                transform.position = mainCam.ViewportToWorldPoint(new Vector3(map(fakeHead.transform.position.x, -4, 4, 0, 1), map(fakeHead.transform.position.y, -3, 3, 0, 1), 0));
             }
         }
 
