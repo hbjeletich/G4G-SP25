@@ -22,7 +22,6 @@ namespace Constellation
         
         private InputAction leftFootHeightAction;
         private InputAction rightFootHeightAction;
-        private InputAction walkingAction;
 
         private InputAction headPositionAction; 
 
@@ -65,10 +64,13 @@ namespace Constellation
         // the control scheme being used currently
         public ControlsScheme controls = ControlsScheme.Workout;
 
-        public Camera mainCam; 
+        // the games camera
+        private Camera mainCam; 
 
+        // basically the bool to check the interact delay
         private bool interacting=false;
 
+        // a debug tool used to test map() and "HYPOTHETICALLY" test standard input
         [SerializeField] private GameObject fakeHead;
 
         void Awake()
@@ -77,7 +79,6 @@ namespace Constellation
             var footMap= inputActions.FindActionMap("Foot");
             leftFootHeightAction = footMap.FindAction("LeftFootPosition");
             rightFootHeightAction = footMap.FindAction("RightFootPosition");
-            walkingAction = footMap.FindAction("IsWalking");
 
             var headMap = inputActions.FindActionMap("Head");
             headPositionAction = headMap.FindAction("HeadPosition");
@@ -102,7 +103,7 @@ namespace Constellation
         // Start is called before the first frame update
         void Start()
         {
-            //Gather Body
+            //Gather Body and cam
             charBody = GetComponent<Rigidbody2D>();
             mainCam = GameObject.FindObjectOfType<Camera>();
             //interact.AddListener(Interact);
@@ -180,25 +181,19 @@ namespace Constellation
 
                 float leftFootY = leftFootHeightAction.ReadValue<Vector3>().y;
                 float rightFootY = rightFootHeightAction.ReadValue<Vector3>().y;
-
-
              
                 // slap postion equal to head within room
                 // probably needs to be changed
                 Vector3 headPos = headPositionAction.ReadValue<Vector3>();
-                transform.position = headPos;
 
-                Debug.Log("Debug: "+headPos.x +" : "+ headPos.z);
-
-                //transform head x to game x and head z to game y. 
-
+                // this hideous line is complicated
+                /// Basically its a double mapping
+                /// First it takes the head position of the player and converts it to the location in the camera, this is the new Vector3
+                //// basically headPosX->cameraPosX and headPosZ->cameraPosY
+                ///// Then it uses the build in camera function viewpoint to world point to convert that camera position to game position
+                ///// horriblly ineffecint? probably, is there a better solution out there? certainly, will i fix it? maybe
                 transform.position = mainCam.ViewportToWorldPoint(new Vector3(map(headPos.x, -4, 4, 0, 1), map(headPos.z, -3, 3, 0, 1), 0));
-                /*
-
-                Vector3 viewpoint = mainCam.WorldToViewportPoint(transform.position);
-                transform.position = new Vector3(Mathf.Lerp(0,1,), Mathf.Lerp(0,1), 0);
-
-                */
+                
                 // handles interact
                 if ((leftFootY > walkFootThreshold || rightFootY > walkFootThreshold))
                 {
@@ -237,6 +232,7 @@ namespace Constellation
             Invoke("delay", delayTime);
         }
     
+        // supposed to clamp player to camera view, might only work in keyboard mode, might test captury inputs to see if is neccesary.
         void clamp()
         {
             Vector3 viewpoint = mainCam.WorldToViewportPoint(transform.position);
@@ -246,6 +242,7 @@ namespace Constellation
             //Debug.Log(viewpoint);
         }
 
+        // basically a map method, takes in the value to change and its range and outs in new range
         float map(float val, float inMin, float inMax, float outMin, float outMax)
         {
             return (val - inMin) * (outMax - outMin) / (inMax - inMin) + outMin;    
