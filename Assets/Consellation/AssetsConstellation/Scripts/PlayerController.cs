@@ -186,6 +186,8 @@ namespace Constellation
                 // probably needs to be changed
                 Vector3 headPos = headPositionAction.ReadValue<Vector3>();
 
+                Debug.Log("HIT :" +headPos.x+" : "+headPos.z);
+
                 // this hideous line is complicated
                 /// Basically its a double mapping
                 /// First it takes the head position of the player and converts it to the location in the camera, this is the new Vector3
