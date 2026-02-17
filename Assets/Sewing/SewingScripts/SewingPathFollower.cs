@@ -6,13 +6,14 @@ using Sewing;
 using System.Diagnostics;
 using UnityEngine.SceneManagement;
 using UnityEngine.Events;
-using UnityEditor.ShaderGraph.Internal;
+using Unity.VisualScripting;
 
 namespace Sewing{
     
 
     public class SewingPathFollower : MonoBehaviour
     {
+        [Header("Movement & Animation Settings")]
         [SerializeField] private InputActionAsset inputActions;
         public List<Transform> waypoints = new List<Transform>();          // Waypoints set in the Inspector
         public float moveSpeed = 2f;               // Speed of movement
@@ -20,15 +21,13 @@ namespace Sewing{
         private bool isMoving = false;
         private InputAction footRaiseAction, footLowerAction, leftFootHeightAction, rightFootHeightAction;
         private bool isFootRaised = false;
-        public GameObject bobbinObject;
-        public string triggerName = "PlayAnimation";
-        public float waitTime = 3f;
+        public Animator machineAnimator;
+        public bool keyboardControl = false;
+        [Header("Path Completion Settings")]
+            public float waitTime = 3f;
 
-        public UnityEvent OnPathComplete;
-        public bool pathComplete = false;
-        private float totalFootHeight = 0f;
-        private int footHeightSamples = 0;
-        private float footTime = 0f;
+            public UnityEvent OnPathComplete;
+            private bool pathComplete = false;
 
         void Awake()
         {   
@@ -68,6 +67,7 @@ namespace Sewing{
             DataLogger.Instance.LogData("FootRaise", dataStr);
 
             isFootRaised = true;
+            machineAnimator.SetTrigger("Start");
             SoundManager.PlayLoopingSound(SoundType.SEWING);
         }
 
@@ -77,6 +77,7 @@ namespace Sewing{
             DataLogger.Instance.LogData("FootLower", $"AverageFootHeight: {averageFootHeight.ToString("F2")}; TimeRaised: {footTime.ToString("F2")}s");
             
             isFootRaised = false;
+            machineAnimator.SetTrigger("Stop");
             SoundManager.StopLoopingSound();
         }
 
@@ -111,8 +112,6 @@ namespace Sewing{
 
         System.Collections.IEnumerator MoveToWaypoint(Vector3 targetPos)
         {
-            Animator targetAnimator = bobbinObject.GetComponent<Animator>();
-            targetAnimator.SetTrigger(triggerName);
             isMoving = true;
             while (Vector3.Distance(transform.position, targetPos) > 0.01f)
             {
@@ -139,6 +138,19 @@ namespace Sewing{
             if(isFootRaised)
             {
                 NeedleMoving();
+            }
+
+            if(keyboardControl)
+            {
+                if(Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.D))
+                {
+                    OnFootRaise(new InputAction.CallbackContext());
+                }
+
+                if(Input.GetKeyUp(KeyCode.A) || Input.GetKeyUp(KeyCode.D))
+                {
+                    OnFootLower(new InputAction.CallbackContext());
+                }
             }
         }
         public void ChangeScene(string sceneName) 
