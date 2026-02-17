@@ -39,7 +39,7 @@ namespace Sewing
         private void OnFootRaise(InputAction.CallbackContext ctx)
         {
             SoundManager.StopBGM();
-            ChangeScene("GameSelectScene");
+            GameSelect.Instance.BackToHub();
         }
 
         public void ChangeScene(string sceneName) {
