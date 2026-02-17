@@ -23,6 +23,7 @@ public class RKSongSelectScript : MonoBehaviour
     // Loads the song scene, on song button press in Unity
     public void SelectSong(string sceneName)
     {
+        DataLogger.Instance.LogMinigameEvent("RhythmKitchen", "SongSelected", $"{sceneName}");
         if(SceneUtility.GetBuildIndexByScenePath(sceneName) >= 0) // Checks if sceneName is in build index
         {
             var am = RKAudioManager.Instance; // Current instance of the AudioManager
