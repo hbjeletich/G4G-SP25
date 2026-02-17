@@ -47,7 +47,7 @@ namespace Sewing {
         void Start()
         {
             Vector3 leftPos = leftFootHeightAction.ReadValue<Vector3>();
-            Vector3 rightPos = rightHipAction.ReadValue<Vector3>();
+            Vector3 rightPos = rightFootHeightAction.ReadValue<Vector3>();
 
             Vector2 leftPos2D = new Vector2(leftPos.x, leftPos.z);
             Vector2 rightPos2D = new Vector2(rightPos.x, rightPos.z);
@@ -187,7 +187,7 @@ namespace Sewing {
         void CalculateAbductionDistance(bool isLeft)
         {
             Vector3 leftPos = leftFootHeightAction.ReadValue<Vector3>();
-            Vector3 rightPos = rightHipAction.ReadValue<Vector3>();
+            Vector3 rightPos = rightFootHeightAction.ReadValue<Vector3>();
 
             Vector2 leftPos2D = new Vector2(leftPos.x, leftPos.z);
             Vector2 rightPos2D = new Vector2(rightPos.x, rightPos.z);
@@ -198,7 +198,7 @@ namespace Sewing {
             string hipSide = isLeft ? "Left" : "Right";
 
             string dataStr = $"Distance: {abductionDistance.ToString("F2")}; Side: {hipSide}";
-            DataLogger.Instance.LogData($"HipAbduction", dataStr);
+            DataLogger.Instance.LogInput($"HipAbduction", dataStr);
         }
     }
 }
