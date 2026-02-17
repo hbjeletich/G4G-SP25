@@ -94,13 +94,19 @@ namespace CameraSnap
             if (!Physics.Raycast(ray, out RaycastHit hit, detectionRange, animalLayer)) return;
 
             var animal = hit.collider.GetComponentInParent<AnimalBehavior>();
-            if (animal == null || animal.animalData == null) return;
+            if (animal == null || animal.animalData == null) 
+            {
+                DataLogger.Instance.LogMinigameEvent("CandidCritters", "PhotoFailed", "No animal detected");
+                return;
+            }
 
             // Capture the animal
             animal.isCaptured = true;
             audioSource?.Play();
 
             string name = animal.animalData.animalName;
+
+            DataLogger.Instance.LogMinigameEvent("CandidCritters", "PhotoTaken", name);
 
             // Update UI and game state
             ui?.ShowPhotoMessage(name, messageDuration);
