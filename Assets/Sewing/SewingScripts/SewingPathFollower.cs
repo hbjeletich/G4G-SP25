@@ -3,10 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using Sewing;
-using System.Diagnostics;
 using UnityEngine.SceneManagement;
 using UnityEngine.Events;
-using Unity.VisualScripting;
 
 namespace Sewing{
     
@@ -28,6 +26,10 @@ namespace Sewing{
 
             public UnityEvent OnPathComplete;
             private bool pathComplete = false;
+
+            private float totalFootHeight = 0f;
+            private int footHeightSamples = 0;
+            private float footTime = 0f;
 
         void Awake()
         {   
