@@ -137,14 +137,15 @@ private void Start()
         Debug.Log($"[Squat] Calibrated neutral pelvis Y = {neutralPelvisY:F3}");
     }
    
+   // UNNECESSARY -- TOOLKIT ALREADY DOES THIS
     // Calibrate neutral WeightShiftX at startup if available. To know what the player is like standing still.. 
     //This helps make the camera stay still when the player is, but if it is calibrated wrong, it makes playing the game
     //hard because the player is fighting with the camera. 
-    if (weightShiftXAction != null && motionConfig != null && motionConfig.enableTorsoModule && motionConfig.isShiftTracked)
-    {
-        neutralWeightShiftOffset = weightShiftXAction.ReadValue<float>();
-        Debug.Log($"[Calibration] WeightShift neutral offset = {neutralWeightShiftOffset:F3}");
-    }
+    // if (weightShiftXAction != null && motionConfig != null && motionConfig.enableTorsoModule && motionConfig.isShiftTracked)
+    // {
+    //     neutralWeightShiftOffset = weightShiftXAction.ReadValue<float>();
+    //     Debug.Log($"[Calibration] WeightShift neutral offset = {neutralWeightShiftOffset:F3}");
+    // }
 
 
 }

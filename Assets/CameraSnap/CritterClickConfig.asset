@@ -15,14 +15,14 @@ MonoBehaviour:
   configurationName: Critter Click Config
   description: Default motion tracking setup for basic foot and torso tracking with
     optional walk analysis.
-  calibrationDelay: 2
+  calibrationDelay: 0.2
   calibrationFrames: 30
   enableTorsoModule: 1
   torsoSensitivity: 1
   torsoDebugMode: 1
   isShiftTracked: 1
-  weightShiftThreshold: 0.2
-  neutralZoneWidth: 0.1
+  weightShiftThreshold: 0.1
+  neutralZoneWidth: 0.02
   wholeBodyMovementThreshold: 3
   isBendTracked: 0
   bentOverAngleThreshold: 30
