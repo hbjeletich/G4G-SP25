@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Playables;
 
 public enum GolfState { SWINGBACK, ASSESSSTRENGTH, SWING, HIT, FOLLOW, END }
 
@@ -26,6 +27,7 @@ public class GolfSystem : MonoBehaviour
     public float delayBeforeStarting = 1f;
 
     private float transitionAnimLen = 1.5f;
+    private float swingStartTime;
     
     // Start is called before the first frame update
     void Start()
@@ -66,6 +68,9 @@ public class GolfSystem : MonoBehaviour
     }
 
     IEnumerator swingBack(){
+        swingStartTime = Time.time;
+        DataLogger.Instance.LogMinigameEvent("Golf", "SwingStarted");
+
         yield return new WaitForSeconds(delayBeforeStarting);
         //show initial balance promp
         initialBalPromp.SetActive(true);
@@ -119,6 +124,8 @@ public class GolfSystem : MonoBehaviour
     }
 
     IEnumerator hitGolfBall(float swingStrength){
+        string dataStr = $"SwingTime: {(Time.time - swingStartTime).ToString("F2")}; SwingStrength: {swingStrength:F2}";
+        DataLogger.Instance.LogMinigameEvent("Golf", "BallHit", dataStr);
         golfBallController.hitGolfBall(swingStrength);
 
         yield return new WaitForSeconds(1f); //give a second to view the impact of the golf ball hit
@@ -135,6 +142,8 @@ public class GolfSystem : MonoBehaviour
         while(golfBallController.isMoving() == true){ //temp mouse controls before implementing balance controls. Simulates when the player stops holding an exercise
             yield return null;
         }
+
+        DataLogger.Instance.LogMinigameEvent("Golf", "BallStopped", $"FinalDistance: {GolfScoreManager.instance.score}");
 
         state = GolfState.END;
         stateUpdate = nullUpdate;

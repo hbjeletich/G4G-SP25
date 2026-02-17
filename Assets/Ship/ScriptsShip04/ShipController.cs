@@ -101,7 +101,6 @@ namespace Ship
 
         private void HandleMotionMovement()
         {
-
             float horizontalInput = 0f;
 
             horizontalInput = -weightShiftXAction.ReadValue<float>();
@@ -138,7 +137,7 @@ namespace Ship
             if (cameraScroll != null)
             {
                 Vector3 targetPosition = new Vector3(
-                    transform.position.x,
+                    rb.position.x + rb.velocity.x * Time.fixedDeltaTime,
                     cameraScroll.transform.position.y - 2f,
                     transform.position.z
                 );

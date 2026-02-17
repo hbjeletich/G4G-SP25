@@ -1,50 +1,33 @@
 using UnityEngine;
 
-//This is the script to allow the player to look left and right. The player is restricted to how much they can look left and right
-//so that they are not able to do a full 360, so they can use both feet to look left and right instead of one foot to go all the way
-//around
-
 namespace CameraSnap
 {
     public class CameraPan : MonoBehaviour
-    
     {
-        public float panSpeed = 50f;
-        public float maxYaw = 60f; 
+        public float maxYaw = 60f;
+        public float panSpeed = 30f;
+        public float deadzone = 0.05f;
+        public float decelerationSpeed = 5f;
+
         private float currentYaw = 0f;
-//Hides and locks the mouse cursor so player can't freely move it.
-        void Start()
-        {
-            Cursor.lockState = CursorLockMode.Locked;
-            Cursor.visible = false;
-        }
+        private float currentInput = 0f;
 
         void Update()
         {
-            float horizontalInput = 0f;
-
-            if (Input.GetKey(KeyCode.RightArrow))
+            if (Mathf.Abs(currentInput) <= deadzone)
             {
-                horizontalInput = 1f;
-            }
-            else if (Input.GetKey(KeyCode.LeftArrow))
-            {
-                horizontalInput = -1f;
+                currentInput = Mathf.Lerp(currentInput, 0f, decelerationSpeed * Time.deltaTime);
             }
 
-            currentYaw += horizontalInput * panSpeed * Time.deltaTime;
+            currentYaw += currentInput * panSpeed * Time.deltaTime;
             currentYaw = Mathf.Clamp(currentYaw, -maxYaw, maxYaw);
 
-            // Apply yaw to camera (local Y rotation)
             transform.localRotation = Quaternion.Euler(0f, currentYaw, 0f);
         }
-        //Public function that allows other scripts rotate the camera.
-        public void ManualPan(float input)
-{
-    currentYaw += input * panSpeed * Time.deltaTime;
-    currentYaw = Mathf.Clamp(currentYaw, -maxYaw, maxYaw);
-    transform.localRotation = Quaternion.Euler(0f, currentYaw, 0f);
-}
 
+        public void ManualPan(float weightShiftX)
+        {
+            currentInput = weightShiftX;
+        }
     }
 }

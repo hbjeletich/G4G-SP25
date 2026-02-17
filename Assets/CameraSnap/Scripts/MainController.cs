@@ -137,14 +137,15 @@ private void Start()
         Debug.Log($"[Squat] Calibrated neutral pelvis Y = {neutralPelvisY:F3}");
     }
    
+   // UNNECESSARY -- TOOLKIT ALREADY DOES THIS
     // Calibrate neutral WeightShiftX at startup if available. To know what the player is like standing still.. 
     //This helps make the camera stay still when the player is, but if it is calibrated wrong, it makes playing the game
     //hard because the player is fighting with the camera. 
-    if (weightShiftXAction != null && motionConfig != null && motionConfig.enableTorsoModule && motionConfig.isShiftTracked)
-    {
-        neutralWeightShiftOffset = weightShiftXAction.ReadValue<float>();
-        Debug.Log($"[Calibration] WeightShift neutral offset = {neutralWeightShiftOffset:F3}");
-    }
+    // if (weightShiftXAction != null && motionConfig != null && motionConfig.enableTorsoModule && motionConfig.isShiftTracked)
+    // {
+    //     neutralWeightShiftOffset = weightShiftXAction.ReadValue<float>();
+    //     Debug.Log($"[Calibration] WeightShift neutral offset = {neutralWeightShiftOffset:F3}");
+    // }
 
 
 }
@@ -175,6 +176,7 @@ public void RecalibrateWeightShiftNeutral()
             // Prefer continuous WeightShiftX if available
             if (weightShiftXAction != null)
             {
+                // Debug.Log($"[CartWeightShift] Continuous input value={weightShiftXAction.ReadValue<float>():F3}");
                 ApplyWeightShift(weightShiftXAction.ReadValue<float>());
                 return;
             }
@@ -187,7 +189,7 @@ public void RecalibrateWeightShiftNeutral()
         // as soon as the action produces a value (helps responsiveness).
         private void OnWeightShiftPerformed(InputAction.CallbackContext ctx)
         {
-            ApplyWeightShift(ctx.ReadValue<float>());
+            //ApplyWeightShift(ctx.ReadValue<float>());
         }
 
         
@@ -196,21 +198,22 @@ public void RecalibrateWeightShiftNeutral()
             if (motionConfig == null || cameraPan == null) return;
             if (!motionConfig.enableTorsoModule || !motionConfig.isShiftTracked) return;
 
-            float ws = rawWs - neutralWeightShiftOffset;
-            float normalizedDeadzone = motionConfig.neutralZoneWidth;
+            // float ws = rawWs;// - neutralWeightShiftOffset;
+            // float normalizedDeadzone = motionConfig.neutralZoneWidth;
 
-            // Debug: report normalized weight-shift and current lean state
-            string leanState = Mathf.Abs(ws) <= normalizedDeadzone ? "Neutral" : (ws < 0f ? "Left" : "Right");
-            Debug.Log($"[WeightShift] value={ws:F3}, state={leanState}, deadzone={normalizedDeadzone:F3}");
+            // // Debug: report normalized weight-shift and current lean state
+            // string leanState = Mathf.Abs(ws) <= normalizedDeadzone ? "Neutral" : (ws < 0f ? "Left" : "Right");
+            // Debug.Log($"[WeightShift] value={ws:F3}, state={leanState}, deadzone={normalizedDeadzone:F3}");
 
-            if (Mathf.Abs(ws) <= normalizedDeadzone)
-            {
-                cameraPan.ManualPan(0f);
-                return;
-            }
+            // if (Mathf.Abs(ws) <= normalizedDeadzone)
+            // {
+            //     cameraPan.ManualPan(0f);
+            //     return;
+            // }
 
-            float input = Mathf.Clamp(ws * motionConfig.torsoSensitivity, -1f, 1f);
-            cameraPan.ManualPan(input);
+            // float input = Mathf.Clamp(ws, -1f, 1f);
+            // cameraPan.ManualPan(input);
+            cameraPan?.ManualPan(rawWs);
         }
 
 

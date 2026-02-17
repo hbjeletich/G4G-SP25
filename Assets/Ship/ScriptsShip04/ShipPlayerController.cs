@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.ShaderGraph.Internal;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
@@ -163,6 +164,8 @@ public class ShipPlayerController : MonoBehaviour
 
             if (Mathf.Abs(horizontalInput) > 0.01f)
             {
+                string dataStr = $"WeightShiftX: {horizontalInput:F2}; Shifting: {((horizontalInput > 0) ? "Right" : "Left")}";
+                DataLogger.Instance.LogData("WeightShiftX", horizontalInput.ToString("F2"));
                 newSpeed = Mathf.Lerp(currentSpeed, targetSpeed, Time.fixedDeltaTime * acceleration);
             } else
             {

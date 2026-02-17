@@ -50,6 +50,7 @@ namespace Swimming
 
         public void CollectShell(int index)
         {
+            DataLogger.Instance.LogMinigameEvent("ScubaScavenge", $"Collected shell", $"{index} / {totalShells}");
             shellImages[index].color = Color.white;
             shellsCollected += 1;
             if(shellsCollected >= totalShells)
@@ -70,6 +71,8 @@ namespace Swimming
                 player.GetComponent<Rigidbody2D>().isKinematic = true;
                 player.GetComponent<Animator>().enabled = false;
             }
+
+            DataLogger.Instance.LogMinigameEvent("ScubaScavenge", "Game Over");
 
             StartCoroutine(BackToStart());
         }
