@@ -24,6 +24,7 @@ namespace Constellation
         private InputAction rightFootHeightAction;
 
         private InputAction headPositionAction; 
+        private InputAction squatAction;
 
         //STATISTICS
         
@@ -46,6 +47,7 @@ namespace Constellation
         [SerializeField] private float walkFootThreshold = .06f;
 
         [SerializeField] private float jumpThreshold=.1f;
+        [SerializeField] private float squatThreshold = .1f;
 
         //UNITY OBJECTS
 
@@ -73,6 +75,8 @@ namespace Constellation
         // a debug tool used to test map() and "HYPOTHETICALLY" test standard input
         [SerializeField] private GameObject fakeHead;
 
+        private Vector3 prevPosition;
+
         void Awake()
         { 
             // grabs input actions on awake
@@ -82,6 +86,10 @@ namespace Constellation
 
             var headMap = inputActions.FindActionMap("Head");
             headPositionAction = headMap.FindAction("HeadPosition");
+            //headRotationAction = headMap.FindAction("HeadRotation");
+
+            var squatMap = inputActions.FindActionMap("Torso");
+            squatAction = squatMap.FindAction("pelvisPosition");
         }
 
         void OnEnable()
@@ -90,6 +98,8 @@ namespace Constellation
             leftFootHeightAction.Enable();
             rightFootHeightAction.Enable();
             headPositionAction.Enable();
+            //headRotationAction.Enable();
+            squatAction.Enable();
         }
 
         void OnDisable()
@@ -98,6 +108,8 @@ namespace Constellation
             leftFootHeightAction.Disable();
             rightFootHeightAction.Disable();
             headPositionAction.Disable();
+            //headRotationAction.Disable();
+            squatAction.Disable();
         }
 
         // Start is called before the first frame update
@@ -206,12 +218,35 @@ namespace Constellation
             // this is to debug standard movement by moving an object
             else if (controls == ControlsScheme.DebugHead)
             {
-                transform.position = mainCam.ViewportToWorldPoint(new Vector3(map(fakeHead.transform.position.x, -4, 4, 0, 1), map(fakeHead.transform.position.y, -3, 3, 0, 1), 0));
+                Vector3 headPos = headPositionAction.ReadValue<Vector3>();
+                Vector3 newPosition = new Vector3(headPos.x, headPos.z, 0);
+
+                Vector3 velocity = newPosition - prevPosition;
+                prevPosition = newPosition;
+        
+                if(velocity.magnitude > 0.01f)
+                {
+                    float angle = Mathf.Atan2(velocity.x, velocity.y) * Mathf.Rad2Deg;
+                    transform.rotation = Quaternion.Euler(0f, 180f, angle);
+                }
+
+                // add smoothing later
+                
+                charBody.position = newPosition;
+
+                // handle interact
+                float pelvisY = squatAction.ReadValue<Vector3>().y;
+                if (-pelvisY > squatThreshold)
+                {         
+                    Debug.Log("HIT : squat interact");
+                    interactCaptureHandle();
+                }
             }
         }
 
         void FixedUpdate()
         {
+            if(controls == ControlsScheme.DebugHead) return;
             //applay input
             //actulaly spins character, by changing rotation by rotation mod& rotation speed stat, the -1 makes the character feel uninversed
             charBody.rotation = (-1 * rotationMod * rotateStat);
