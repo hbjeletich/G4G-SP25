@@ -51,6 +51,8 @@ namespace RhythmKitchen
         private float initialLeftFootZPos = 0f;
         private float initialRightFootZPos = 0f;
 
+        private float defaultFootDistance = 0f;
+
         [Header("Windows (seconds)")]
         public float missWindow;
         public float goodWindow;
@@ -138,6 +140,7 @@ namespace RhythmKitchen
         private void OnLeftHipAbduction(InputAction.CallbackContext contex)
         {
             isLeftHipAbduct = true;
+            LogHipAbduction("Left");
             Debug.Log("[Captury] OnLeftHipAbduction Called");
         }
 
@@ -156,6 +159,7 @@ namespace RhythmKitchen
         private void OnRightHipAbduction(InputAction.CallbackContext contex)
         {
             isRightHipAbduct = true;
+            LogHipAbduction("Right");
             Debug.Log("[Captury] OnRightHipAbduction Called");
         }
 
@@ -171,6 +175,18 @@ namespace RhythmKitchen
             isFootRaised = true;
             isFootLowered = false;
             Debug.Log("[Captury] OnFootRaised Called");
+        }
+
+        private void LogHipAbduction(string side)
+        {
+            Vector3 leftPos = leftFootPositionAction.ReadValue<Vector3>();
+            Vector3 rightPos = rightFootPositionAction.ReadValue<Vector3>();
+            Vector2 leftPos2D = new Vector2(leftPos.x, leftPos.z);
+            Vector2 rightPos2D = new Vector2(rightPos.x, rightPos.z);
+            float currentDistance = Vector2.Distance(leftPos2D, rightPos2D);
+            float abductionDistance = currentDistance - defaultFootDistance;
+            string dataStr = $"Distance: {abductionDistance:F2}; Side: {side}";
+            DataLogger.Instance.LogInput("HipAbduction", dataStr);
         }
 
         public void initialFootPositionCallibration()
@@ -190,6 +206,12 @@ namespace RhythmKitchen
 
             initialLeftFootZPos = leftFootPositionAction.ReadValue<Vector3>().z;
             initialRightFootZPos = rightFootPositionAction.ReadValue<Vector3>().z;
+
+            Vector3 leftPos = leftFootPositionAction.ReadValue<Vector3>();
+            Vector3 rightPos = rightFootPositionAction.ReadValue<Vector3>();
+            Vector2 leftPos2D = new Vector2(leftPos.x, leftPos.z);
+            Vector2 rightPos2D = new Vector2(rightPos.x, rightPos.z);
+            defaultFootDistance = Vector2.Distance(leftPos2D, rightPos2D);
 
             standstillText.text = "Done!";
 
@@ -242,8 +264,13 @@ namespace RhythmKitchen
                 //     initialLeftFootZPos = leftFootPositionAction.ReadValue<Vector3>().z;
                 //     initialRightFootZPos = rightFootPositionAction.ReadValue<Vector3>().z;
                 // }
+
                 if(isFootRaised)
                 {
+                    float footHeight = Mathf.Max(leftFootYPos, rightFootYPos);
+                    string dataSrt = $"FootHeight: {footHeight:F2}; Foot: {(leftFootYPos > rightFootYPos ? "Left" : "Right")}";
+                    DataLogger.Instance.LogInput("FootHeight", footHeight.ToString("F2"));
+
                     if(rightFootZPos-initialRightFootZPos > leftFootZPos-initialLeftFootZPos)
                         OnRightFootRaised();
                     else
@@ -286,6 +313,7 @@ namespace RhythmKitchen
             RKNote target = FindClosestNoteInLane(type);
             if (target == null)
             {
+                DataLogger.Instance.LogMinigameEvent("RhythmKitchen", "FailedHit", $"NoteType: {type}");
                 return;
             }
             float now = conductor.songTime;
@@ -328,6 +356,7 @@ namespace RhythmKitchen
         }
         private void OnHit(RKNote note, string rating)
         {
+            DataLogger.Instance.LogMinigameEvent("RhythmKitchen", "OnHit", $"Note: {note}, Rating: {rating}");
             // NOTE: expand this to add score, UI, SFX
             switch (rating)
             {
@@ -419,6 +448,8 @@ namespace RhythmKitchen
             else if (totalBeats/2 > almostCount)
                 score = 2;
 
+            DataLogger.Instance.LogMinigameEvent("RhythmKitchen", "StarScore", $"Score: {score}, Perfect: {perfectCount}, Good: {goodCount}, Almost: {almostCount}");
+
             completedDish.setStars(score);
         }
 
@@ -482,6 +513,3 @@ namespace RhythmKitchen
         // }
     }
 }
-
- 
-

@@ -57,6 +57,7 @@ namespace RhythmKitchen
         // Loads the CompletedDish panel
         public void CompleteDish()
         {
+            DataLogger.Instance.LogMinigameEvent("RhythmKitchen", "DishComplete");
             var am = RKAudioManager.Instance; // Current instance of the AudioManager
             {
                 if (am != null) // Checks if an AudioManager AudioManager instance exists
@@ -86,6 +87,7 @@ namespace RhythmKitchen
         // Pauses the game
         public void Pause()
         {
+            DataLogger.Instance.LogMinigameEvent("RhythmKitchen", "Pause");
             var am = RKAudioManager.Instance; // Current instance of the AudioManager
 
             if (am != null) // Checks if an AudioManager AudioManager instance exists

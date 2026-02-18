@@ -143,7 +143,7 @@ namespace Swimming
                 if(Mathf.Abs(weightShift) > 0.1f)
                 {
                     string dataStr = $"WeightShiftX: {weightShift:F2}; Shifting: {((weightShift > 0) ? "Right" : "Left")}";
-                    DataLogger.Instance.LogData("WeightShiftX", weightShift.ToString("F2"));
+                    DataLogger.Instance.LogInput("WeightShiftX", weightShift.ToString("F2"));
                 }
                 DoHorizontalMovement(weightShift);
 
@@ -180,14 +180,14 @@ namespace Swimming
             if (footHeight > continuousMotionThreshold)
             {
                 string dataSrt = $"FootHeight: {footHeight:F2}; Foot: {(leftFootY > rightFootY ? "Left" : "Right")}";
-                DataLogger.Instance.LogData("FootHeight", footHeight.ToString("F2"));
+                DataLogger.Instance.LogInput("FootHeight", footHeight.ToString("F2"));
                 netVerticalForce += footHeight * footHeightForce;
             }
 
             // 0 = standing, -1 = deep squat
             if (-pelvisY > continuousMotionThreshold/2)
             {
-                DataLogger.Instance.LogData("PelvisSquat", pelvisY.ToString("F2"));
+                DataLogger.Instance.LogInput("PelvisSquat", pelvisY.ToString("F2"));
                 netVerticalForce = pelvisY * squatForce;
             }
 
