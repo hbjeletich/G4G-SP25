@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-8608043661669862
+--- !u!114 &-8012405026567346047
 MonoBehaviour:
   m_ObjectHideFlags: 11
   m_CorrespondingSourceObject: {fileID: 0}
@@ -20,8 +20,8 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Big Dipper Saturn
-  m_Shader: {fileID: -6465566751694194690, guid: 11883275f79538f42b4aa363a2c90001,
+  m_Name: Cygnus Saturn Rings
+  m_Shader: {fileID: -6465566751694194690, guid: 61371661f858b874e9751a41503fde94,
     type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
@@ -62,7 +62,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: 662c73fde579366459def2d2c2d927fa, type: 3}
+        m_Texture: {fileID: 2800000, guid: 39c1872848fde434e84aef5aeb9642c4, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:
@@ -78,7 +78,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _SampleTexture2D_608ac6b94e6043039e30d77b592e3fc4_Texture_1_Texture2D:
-        m_Texture: {fileID: 2800000, guid: d0164be612c69334297cf6d9c53ce0fe, type: 3}
+        m_Texture: {fileID: 2800000, guid: 39c1872848fde434e84aef5aeb9642c4, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _SpecGlossMap:
@@ -104,7 +104,7 @@ Material:
     - _AlphaToMask: 0
     - _Blend: 0
     - _BlendModePreserveSpecular: 1
-    - _BlendTime: 10
+    - _BlendTime: 1
     - _BumpScale: 1
     - _ClearCoatMask: 0
     - _ClearCoatSmoothness: 0
@@ -114,8 +114,8 @@ Material:
     - _DetailNormalMapScale: 1
     - _DstBlend: 0
     - _DstBlendAlpha: 0
-    - _EmissionBase: 0
-    - _Emmision: 1
+    - _EmissionBase: 0.5
+    - _Emmision: 0.05
     - _EnvironmentReflections: 1
     - _GlossMapScale: 0
     - _Glossiness: 0
@@ -138,9 +138,12 @@ Material:
     m_Colors:
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
-    - _ColorA: {r: 0.45911938, g: 0.2728728, b: 0.2728728, a: 0}
-    - _ColorA_2: {r: 0.8679245, g: 0.72327036, b: 0.8139491, a: 0}
+    - _ColorA: {r: 0.3050313, g: 0.50711435, b: 1, a: 0}
+    - _ColorA_2: {r: 0.0699035, g: 0.059333082, b: 0.1509434, a: 1}
     - _ColorA_3: {r: 0, g: 0, b: 0, a: 0}
+    - _ColorB: {r: 0, g: 0, b: 0, a: 0}
+    - _ColorB_2: {r: 0, g: 0, b: 0, a: 0}
+    - _ColorB_3: {r: 0, g: 0, b: 0, a: 0}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
   m_BuildTextureStacks: []
