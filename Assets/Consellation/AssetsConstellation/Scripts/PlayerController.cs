@@ -8,7 +8,7 @@ namespace Constellation
 {
     public enum ControlsScheme
     {
-        Keyboard,Workout,Standard,DebugHead
+        Keyboard,Workout,StandardFR,StandardSQ,DebugHead
     }
 
     public class PlayerController : MonoBehaviour
@@ -44,7 +44,7 @@ namespace Constellation
         // These are stats for thresholds of foot height
         [SerializeField] private float turnFootThreshold = .2f;
 
-        [SerializeField] private float walkFootThreshold = .06f;
+        [SerializeField] private float walkFootThreshold = .2f;
 
         [SerializeField] private float jumpThreshold=.1f;
         [SerializeField] private float squatThreshold = .1f;
@@ -187,18 +187,18 @@ namespace Constellation
                 }
             }
             // This implements standard Controls
-            else if (controls == ControlsScheme.Standard)
+            else if (controls == ControlsScheme.StandardSQ||controls==ControlsScheme.StandardFR)
             {
                 //clamp();
 
                 float leftFootY = leftFootHeightAction.ReadValue<Vector3>().y;
                 float rightFootY = rightFootHeightAction.ReadValue<Vector3>().y;
-             
+
                 // slap postion equal to head within room
                 // probably needs to be changed
                 Vector3 headPos = headPositionAction.ReadValue<Vector3>();
 
-                Debug.Log("HIT :" +headPos.x+" : "+headPos.z);
+                //Debug.Log("HIT :" +headPos.x+" : "+headPos.z);
 
                 // this hideous line is complicated
                 /// Basically its a double mapping
@@ -206,10 +206,22 @@ namespace Constellation
                 //// basically headPosX->cameraPosX and headPosZ->cameraPosY
                 ///// Then it uses the build in camera function viewpoint to world point to convert that camera position to game position
                 ///// horriblly ineffecint? probably, is there a better solution out there? certainly, will i fix it? maybe
-                transform.position = mainCam.ViewportToWorldPoint(new Vector3(map(headPos.x, -4, 4, 0, 1), map(headPos.z, -3, 3, 0, 1), 0));
+                transform.position = mainCam.ViewportToWorldPoint(new Vector3(map(headPos.x, -4, 4, 0, 1), map(headPos.z, -3, 3, 0, 1), 10));
+
+
+                float pelvisY = squatAction.ReadValue<Vector3>().y;
+
+                //Debug.Log("Pelvis Y : " + pelvisY);
+
+                if (-pelvisY > squatThreshold && !interacting && controls == ControlsScheme.StandardSQ)
+                {
+                    //Debug.Log("HIT : squat interact");
+                    interactCaptureHandle();
+                }
+
                 
                 // handles interact
-                if ((leftFootY > walkFootThreshold || rightFootY > walkFootThreshold))
+                if ((leftFootY > walkFootThreshold || rightFootY > walkFootThreshold) && !interacting && controls==ControlsScheme.StandardFR)
                 {
                     interactCaptureHandle();
                 }
@@ -223,21 +235,21 @@ namespace Constellation
 
                 Vector3 velocity = newPosition - prevPosition;
                 prevPosition = newPosition;
-        
-                if(velocity.magnitude > 0.01f)
+
+                if (velocity.magnitude > 0.01f)
                 {
                     float angle = Mathf.Atan2(velocity.x, velocity.y) * Mathf.Rad2Deg;
                     transform.rotation = Quaternion.Euler(0f, 180f, angle);
                 }
 
                 // add smoothing later
-                
+
                 charBody.position = newPosition;
 
                 // handle interact
                 float pelvisY = squatAction.ReadValue<Vector3>().y;
                 if (-pelvisY > squatThreshold)
-                {         
+                {
                     Debug.Log("HIT : squat interact");
                     interactCaptureHandle();
                 }
@@ -259,6 +271,7 @@ namespace Constellation
         void delay()
         {
             interacting=false;
+            Debug.Log("Delay hit");
         }
 
         // this is the interaction code that runs when a captury system wants to interact
@@ -266,6 +279,7 @@ namespace Constellation
         {
             interact.Invoke();
             interacting = true;
+            
             Invoke("delay", delayTime);
         }
     
