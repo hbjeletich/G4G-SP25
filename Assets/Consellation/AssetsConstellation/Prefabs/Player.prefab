@@ -402,17 +402,18 @@ MonoBehaviour:
   speedMod: 0
   speedStat: 1
   rotateStat: 5
+  delayTime: 2
   turnFootThreshold: 0.2
-  walkFootThreshold: 0.06
+  walkFootThreshold: 0.2
   jumpThreshold: 0.1
-  delayTime: 0.4
+  squatThreshold: 0.1
   interact:
     m_PersistentCalls:
       m_Calls: []
   tailSpot: {fileID: 1769547669995076596}
   grabedStar: {fileID: 0}
   controls: 1
-  debugHead: {fileID: 0}
+  fakeHead: {fileID: 0}
 --- !u!50 &4734150860756232093
 Rigidbody2D:
   serializedVersion: 4
