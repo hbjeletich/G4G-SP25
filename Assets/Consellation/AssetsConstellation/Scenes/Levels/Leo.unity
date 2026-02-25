@@ -2372,7 +2372,7 @@ PrefabInstance:
     - target: {fileID: 1427882949972846304, guid: 5c370bca92b058c4481f363d05dc706e,
         type: 3}
       propertyPath: slideDuration
-      value: 1.5
+      value: 4.5
       objectReference: {fileID: 0}
     - target: {fileID: 1427882949972846304, guid: 5c370bca92b058c4481f363d05dc706e,
         type: 3}
@@ -2423,6 +2423,16 @@ PrefabInstance:
         type: 3}
       propertyPath: targetPosition.z
       value: -4.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1427882949972846304, guid: 5c370bca92b058c4481f363d05dc706e,
+        type: 3}
+      propertyPath: slideEaseCurve.m_Curve.Array.data[0].inSlope
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1427882949972846304, guid: 5c370bca92b058c4481f363d05dc706e,
+        type: 3}
+      propertyPath: slideEaseCurve.m_Curve.Array.data[0].outSlope
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 2159425439497979185, guid: 5c370bca92b058c4481f363d05dc706e,
         type: 3}
