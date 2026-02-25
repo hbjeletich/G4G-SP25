@@ -132,9 +132,18 @@ namespace Swimming
                 float horizontalInput = moveAction.ReadValue<Vector2>().x;
                 DoHorizontalMovement(horizontalInput);
 
-                float verticalInput = moveAction.ReadValue<Vector2>().y;
-                float verticalForce = verticalInput * footHeightForce;  // or swimForce
-                DoContinuousVerticalMovement(verticalForce);
+                if(isSwimming)
+                {
+                    DoContinuousVerticalMovement(swimForce);
+                }
+                else if(isSinking)
+                {
+                    DoContinuousVerticalMovement(-sinkForce);
+                }
+
+                // float verticalInput = moveAction.ReadValue<Vector2>().y;
+                // float verticalForce = verticalInput * footHeightForce;  // or swimForce
+                // DoContinuousVerticalMovement(verticalForce);
             }
             else
             {
