@@ -18,8 +18,8 @@ namespace CameraSnap
      
         private InputAction pelvisPositionAction;
         private InputAction weightShiftXAction;
-        private InputAction leftHipAbductedAction;
-        private InputAction rightHipAbductedAction;
+        // private InputAction leftHipAbductedAction;
+        // private InputAction rightHipAbductedAction;
         private InputAction footRaisedAction;
         private InputAction leftFootHeightAction;
         private InputAction rightFootHeightAction;
@@ -45,8 +45,8 @@ namespace CameraSnap
             // torso weight shift action (continuous)
             weightShiftXAction     = torsoMap?.FindAction("WeightShiftX");
 
-            leftHipAbductedAction  = footMap?.FindAction("LeftHipAbducted");
-            rightHipAbductedAction = footMap?.FindAction("RightHipAbducted");
+            // leftHipAbductedAction  = footMap?.FindAction("LeftHipAbducted");
+            // rightHipAbductedAction = footMap?.FindAction("RightHipAbducted");
             footRaisedAction       = footMap?.FindAction("FootRaised");
             leftFootHeightAction = footMap.FindAction("LeftFootPosition");
             rightFootHeightAction = footMap.FindAction("RightFootPosition");
@@ -68,8 +68,8 @@ namespace CameraSnap
             pelvisPositionAction?.Enable();
             weightShiftXAction?.Enable();
             
-            leftHipAbductedAction?.Enable();
-            rightHipAbductedAction?.Enable();
+            // leftHipAbductedAction?.Enable();
+            // rightHipAbductedAction?.Enable();
             footRaisedAction?.Enable();
             leftFootHeightAction.Enable();
             rightFootHeightAction.Enable();
@@ -81,8 +81,8 @@ namespace CameraSnap
             pelvisPositionAction?.Disable();
             weightShiftXAction.Disable();
            
-            leftHipAbductedAction?.Disable();
-            rightHipAbductedAction?.Disable();
+            // leftHipAbductedAction?.Disable();
+            // rightHipAbductedAction?.Disable();
             footRaisedAction?.Disable();
             leftFootHeightAction.Disable();
             rightFootHeightAction.Disable();
@@ -95,7 +95,7 @@ namespace CameraSnap
 
             HandleWeightShift();
             HandleSquat();
-            HandleHipAbduction();
+            //HandleHipAbduction();
             HandleFootRaise();
            
         }
@@ -128,6 +128,13 @@ namespace CameraSnap
                 cart.StopCart();
                 squatTriggered = true;
                 Debug.Log($"[Squat Detected] PelvisY=-{pelvisY:F3} (> {squatThreshold:F3})");
+
+                // then open camera
+                if (cameraMode != null && !cameraMode.IsInCameraMode())
+                {
+                    cameraMode.TryToggleCameraMode();
+                    Debug.Log("[Squat Detected] - Camera Mode toggled");
+                }
             }
 
             // Reset when returning above threshold
@@ -142,45 +149,45 @@ namespace CameraSnap
 
 
 
-        private void HandleHipAbduction()
-        {
-            if (!motionConfig.isHipAbductionTracked || cameraMode == null || cart == null) return;
+        // private void HandleHipAbduction()
+        // {
+        //     if (!motionConfig.isHipAbductionTracked || cameraMode == null || cart == null) return;
 
 
-            if (!cart.IsStopped()) return;        
-            if (cameraMode.IsInCameraMode()) return;
+        //     if (!cart.IsStopped()) return;        
+        //     if (cameraMode.IsInCameraMode()) return;
 
 
-            if (leftHipAbductedAction.WasPerformedThisFrame() ||
-                rightHipAbductedAction.WasPerformedThisFrame())
-            {
-                cameraMode.TryToggleCameraMode();
-                Debug.Log("[Hip Abduction] - Camera Mode toggled");
+        //     if (leftHipAbductedAction.WasPerformedThisFrame() ||
+        //         rightHipAbductedAction.WasPerformedThisFrame())
+        //     {
+        //         cameraMode.TryToggleCameraMode();
+        //         Debug.Log("[Hip Abduction] - Camera Mode toggled");
                  
-            }
+        //     }
 
-            // logger
-            Vector3 leftPos = leftFootHeightAction.ReadValue<Vector3>();
-            Vector3 rightPos = rightFootHeightAction.ReadValue<Vector3>();
+        //     // logger
+        //     Vector3 leftPos = leftFootHeightAction.ReadValue<Vector3>();
+        //     Vector3 rightPos = rightFootHeightAction.ReadValue<Vector3>();
 
-            Vector2 leftPos2D = new Vector2(leftPos.x, leftPos.z);
-            Vector2 rightPos2D = new Vector2(rightPos.x, rightPos.z);
-            float currentDistance = Vector2.Distance(leftPos2D, rightPos2D);
-            float abductionDistance = currentDistance - defaultFootDistance;
+        //     Vector2 leftPos2D = new Vector2(leftPos.x, leftPos.z);
+        //     Vector2 rightPos2D = new Vector2(rightPos.x, rightPos.z);
+        //     float currentDistance = Vector2.Distance(leftPos2D, rightPos2D);
+        //     float abductionDistance = currentDistance - defaultFootDistance;
 
-            string hipSide;
-            if(leftPos2D.magnitude > rightPos2D.magnitude)
-            {
-                hipSide = "Left";
-            } 
-            else
-            {
-                hipSide = "Right";
-            }
+        //     string hipSide;
+        //     if(leftPos2D.magnitude > rightPos2D.magnitude)
+        //     {
+        //         hipSide = "Left";
+        //     } 
+        //     else
+        //     {
+        //         hipSide = "Right";
+        //     }
 
-            string dataStr = $"Distance: {abductionDistance.ToString("F2")}; Side: {hipSide}";
-            DataLogger.Instance.LogInput($"HipAbduction", dataStr);
-        }
+        //     string dataStr = $"Distance: {abductionDistance.ToString("F2")}; Side: {hipSide}";
+        //     DataLogger.Instance.LogInput($"HipAbduction", dataStr);
+        // }
 
 
        
