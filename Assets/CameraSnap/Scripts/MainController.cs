@@ -20,7 +20,7 @@ namespace CameraSnap
         private InputAction weightShiftXAction;
         // private InputAction leftHipAbductedAction;
         // private InputAction rightHipAbductedAction;
-        private InputAction footRaisedAction;
+        private InputAction footRaisedAction, footLoweredAction;
         private InputAction leftFootHeightAction;
         private InputAction rightFootHeightAction;
 
@@ -48,6 +48,7 @@ namespace CameraSnap
             // leftHipAbductedAction  = footMap?.FindAction("LeftHipAbducted");
             // rightHipAbductedAction = footMap?.FindAction("RightHipAbducted");
             footRaisedAction       = footMap?.FindAction("FootRaised");
+            footLoweredAction      = footMap?.FindAction("FootLowered");
             leftFootHeightAction = footMap.FindAction("LeftFootPosition");
             rightFootHeightAction = footMap.FindAction("RightFootPosition");
         }
@@ -71,8 +72,12 @@ namespace CameraSnap
             // leftHipAbductedAction?.Enable();
             // rightHipAbductedAction?.Enable();
             footRaisedAction?.Enable();
+            footLoweredAction?.Enable();
             leftFootHeightAction.Enable();
             rightFootHeightAction.Enable();
+
+            footRaisedAction.performed += HandleFootRaiseAction;
+            footLoweredAction.performed += HandleFootLowerAction;
         }
 
 
@@ -84,8 +89,28 @@ namespace CameraSnap
             // leftHipAbductedAction?.Disable();
             // rightHipAbductedAction?.Disable();
             footRaisedAction?.Disable();
+            footLoweredAction?.Disable();
             leftFootHeightAction.Disable();
             rightFootHeightAction.Disable();
+
+            footRaisedAction.performed -= HandleFootRaiseAction;
+            footLoweredAction.performed -= HandleFootLowerAction;
+        }
+
+        private void HandleFootRaiseAction(InputAction.CallbackContext ctx)
+        {
+            cameraPan?.DoZoom();
+        }
+
+        private void HandleFootLowerAction(InputAction.CallbackContext ctx)
+        {
+            cameraMode?.TryTakePhoto();
+            Invoke("StopCameraZoom", 0.5f);
+        }
+
+        private void StopCameraZoom()
+        {
+            cameraPan?.StopZoom();
         }
 
 
@@ -242,11 +267,11 @@ namespace CameraSnap
            
             if (cameraMode != null && cameraMode.IsInCameraMode())
             {
-                cameraMode.TryTakePhoto();
-                Debug.Log("[Foot Raise] - Photo Taken");
+                // cameraMode.TryTakePhoto();
+                // Debug.Log("[Foot Raise] - Photo Taken");
+                
             }
         }
-
 
        
     }
