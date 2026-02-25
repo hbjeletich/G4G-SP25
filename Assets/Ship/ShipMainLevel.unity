@@ -3189,9 +3189,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1f877cdc02a7c304c82f20d979ee9838, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 10
-  acceleration: 5
-  deceleration: 5
+  moveSpeed: 7
+  acceleration: 0.5
+  deceleration: 0.5
   tilt: 10
   chestPickupClips:
   - {fileID: 8300000, guid: c4f13d6e69efe9940a96e163b50d46a2, type: 3}
@@ -4005,7 +4005,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   config: {fileID: 11400000, guid: 0145c9910685f764d9a4d8d7d0bf37fe, type: 2}
   dontDestroyOnLoad: 0
-  enableDebugLogging: 0
+  enableDebugLogging: 1
 --- !u!4 &1538125501
 Transform:
   m_ObjectHideFlags: 0
