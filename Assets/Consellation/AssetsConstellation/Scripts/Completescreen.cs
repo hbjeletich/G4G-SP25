@@ -26,6 +26,7 @@ namespace Constellation
         
         [SerializeField] private Image popupImage;
         [SerializeField] private Sprite imageSprite;
+        [SerializeField] private float popupFadeDuration = 0.5f; 
         
         [SerializeField] private TextMeshProUGUI finalText;
 
@@ -176,16 +177,16 @@ namespace Constellation
             
             // 2. Image fades in first (to 50% opacity)
             if (popupImage != null)
-            {
-                float elapsed = 0f;
-                while (elapsed < 0.5f)
-                {
-                    elapsed += Time.deltaTime;
-                    SetAlpha(popupImage, (elapsed / 0.5f) * 0.5f);
-                    yield return null;
-                }
-                SetAlpha(popupImage, 0.5f);
-            }
+{
+    float elapsed = 0f;
+    while (elapsed < popupFadeDuration)
+    {
+        elapsed += Time.deltaTime;
+        SetAlpha(popupImage, (elapsed / popupFadeDuration) * 0.5f);
+        yield return null;
+    }
+    SetAlpha(popupImage, 0.5f);
+}
             
             // 3. Dialogue fades in + grows
             if (dialogueText != null)
