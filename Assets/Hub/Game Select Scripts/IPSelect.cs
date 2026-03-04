@@ -12,6 +12,9 @@ public class IPSelect : MonoBehaviour
     {
         limButton.onClick.AddListener(() => LIMIP());
         homeButton.onClick.AddListener(() => HomeIP());
+
+        DataLogger.Instance.OnSessionStarted += ShowButtons;
+        HideButtons();
     }
 
     void LIMIP()
@@ -26,6 +29,18 @@ public class IPSelect : MonoBehaviour
         GameSelect.Instance.host = "127.0.0.1";
         GameSelect.Instance.CapturySetup();
         GoToNextScene();
+    }
+
+    public void HideButtons()
+    {
+        limButton.gameObject.SetActive(false);
+        homeButton.gameObject.SetActive(false);
+    }
+
+    public void ShowButtons()
+    {
+        limButton.gameObject.SetActive(true);
+        homeButton.gameObject.SetActive(true);
     }
 
     void GoToNextScene()

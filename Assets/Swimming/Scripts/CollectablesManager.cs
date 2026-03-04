@@ -10,6 +10,7 @@ namespace Swimming
     public class CollectablesManager : MonoBehaviour
     {
         private static CollectablesManager _instance;
+        [SerializeField] private string goToSceneName = "NewGameSelect";
         [SerializeField] private Image[] shellImages;
 
         public GameObject gameOverText;
@@ -50,6 +51,7 @@ namespace Swimming
 
         public void CollectShell(int index)
         {
+            DataLogger.Instance.LogMinigameEvent("ScubaScavenge", $"Collected shell", $"{index} / {totalShells}");
             shellImages[index].color = Color.white;
             shellsCollected += 1;
             if(shellsCollected >= totalShells)
@@ -71,6 +73,8 @@ namespace Swimming
                 player.GetComponent<Animator>().enabled = false;
             }
 
+            DataLogger.Instance.LogMinigameEvent("ScubaScavenge", "Game Over");
+
             StartCoroutine(BackToStart());
         }
 
@@ -78,7 +82,7 @@ namespace Swimming
         {
             yield return new WaitForSeconds(gameOverTimer);
 
-            SceneManager.LoadScene("GameSelectScene");
+            SceneManager.LoadScene(goToSceneName);
         }
     }
 }

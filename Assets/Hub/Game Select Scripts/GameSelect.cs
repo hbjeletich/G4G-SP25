@@ -72,13 +72,18 @@ public class GameSelect : MonoBehaviour
         // exit game logic
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            StartCoroutine(ExitGameCoroutine());
+            BackToHub();
         }
 
         if(Input.GetKeyDown(KeyCode.R))
         {
             Recalibrate();
         }
+    }
+
+    public void BackToHub()
+    {
+        StartCoroutine(ExitGameCoroutine());
     }
 
     private IEnumerator ExitGameCoroutine()

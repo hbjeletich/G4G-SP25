@@ -1,50 +1,110 @@
+using System;
+using System.Collections.Generic;
 using UnityEngine;
-
-//This is the script to allow the player to look left and right. The player is restricted to how much they can look left and right
-//so that they are not able to do a full 360, so they can use both feet to look left and right instead of one foot to go all the way
-//around
 
 namespace CameraSnap
 {
     public class CameraPan : MonoBehaviour
-    
     {
-        public float panSpeed = 50f;
-        public float maxYaw = 60f; 
+        public float maxYaw = 60f;
+        public float panSpeed = 30f;
+        public float deadzone = 0.05f;
+        public float decelerationSpeed = 5f;
+        public float lockOnSpeed = 5f;
+
+        [Header("FOV")]
+        public float defaultFOV = 60f;
+        public float zoomedFOV = 25f;
+        public float totalZoomDuration = 5f; 
+        private bool isZooming = false;
+        private float zoomTimer = 0f;
+
         private float currentYaw = 0f;
-//Hides and locks the mouse cursor so player can't freely move it.
+        private float currentInput = 0f;
+
+        private Transform lockTarget;
+        private List<Transform> completedTargets = new List<Transform>();
+        private Camera mainCamera;
+
         void Start()
         {
-            Cursor.lockState = CursorLockMode.Locked;
-            Cursor.visible = false;
+            mainCamera = Camera.main;
+            mainCamera.fieldOfView = defaultFOV;
         }
 
         void Update()
         {
-            float horizontalInput = 0f;
-
-            if (Input.GetKey(KeyCode.RightArrow))
+            if (lockTarget != null)
             {
-                horizontalInput = 1f;
-            }
-            else if (Input.GetKey(KeyCode.LeftArrow))
+                // Calculate the target yaw relative to our parent (the cart/player)
+                Vector3 direction = lockTarget.position - transform.parent.position;
+                direction.y = 0f;
+
+                if (direction.sqrMagnitude > 0.001f)
+                {
+                    // Get the target yaw in parent's local space
+                    float worldYaw = Quaternion.LookRotation(direction).eulerAngles.y;
+                    float parentYaw = transform.parent.eulerAngles.y;
+                    float targetYaw = Mathf.DeltaAngle(parentYaw, worldYaw);
+                    targetYaw = Mathf.Clamp(targetYaw, -maxYaw, maxYaw);
+
+                    currentYaw = Mathf.LerpAngle(currentYaw, targetYaw, lockOnSpeed * Time.deltaTime);
+                }
+
+                transform.localRotation = Quaternion.Euler(0f, currentYaw, 0f);
+
+                if (isZooming)
+                {
+                    zoomTimer += Time.deltaTime;
+                    float t = Mathf.Clamp01(zoomTimer / totalZoomDuration);
+                    mainCamera.fieldOfView = Mathf.Lerp(defaultFOV, zoomedFOV, t);
+                }
+            } 
+            else
             {
-                horizontalInput = -1f;
+                if (Mathf.Abs(currentInput) <= deadzone)
+                {
+                    currentInput = Mathf.Lerp(currentInput, 0f, decelerationSpeed * Time.deltaTime);
+                }
+
+                currentYaw += currentInput * panSpeed * Time.deltaTime;
+                currentYaw = Mathf.Clamp(currentYaw, -maxYaw, maxYaw);
+
+                transform.localRotation = Quaternion.Euler(0f, currentYaw, 0f);
             }
 
-            currentYaw += horizontalInput * panSpeed * Time.deltaTime;
-            currentYaw = Mathf.Clamp(currentYaw, -maxYaw, maxYaw);
-
-            // Apply yaw to camera (local Y rotation)
-            transform.localRotation = Quaternion.Euler(0f, currentYaw, 0f);
+            if(!isZooming && mainCamera.fieldOfView != defaultFOV)
+            {
+                mainCamera.fieldOfView = Mathf.Lerp(mainCamera.fieldOfView, defaultFOV, decelerationSpeed * Time.deltaTime);
+            }
         }
-        //Public function that allows other scripts rotate the camera.
-        public void ManualPan(float input)
-{
-    currentYaw += input * panSpeed * Time.deltaTime;
-    currentYaw = Mathf.Clamp(currentYaw, -maxYaw, maxYaw);
-    transform.localRotation = Quaternion.Euler(0f, currentYaw, 0f);
-}
 
+        public void ManualPan(float weightShiftX)
+        {
+            currentInput = weightShiftX;
+        }
+
+        public void SetLockTarget(Transform target)
+        {
+            if(target == null || completedTargets.Contains(target)) return;
+            lockTarget = target.transform;
+        }
+
+        public void ClearLockTarget()
+        {
+            completedTargets.Add(lockTarget);
+            lockTarget = null;
+        }   
+
+        public void DoZoom()
+        {
+            isZooming = true;
+            zoomTimer = 0f;
+        }
+
+        public void StopZoom()
+        {
+            isZooming = false;
+        }
     }
 }

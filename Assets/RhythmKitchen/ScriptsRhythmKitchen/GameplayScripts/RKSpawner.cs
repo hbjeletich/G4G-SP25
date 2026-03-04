@@ -143,6 +143,9 @@ namespace RhythmKitchen
         }
         public void SpawnAt(RKNote.Type noteType, float targetTimeSongSec)
         {
+            if(DataLogger.Instance != null)
+                DataLogger.Instance.LogMinigameEvent("RhythmKitchen", "NoteSpawned", $"NoteType: {noteType}");
+            
             var spawn = GetSpawnPoint(noteType);
             var prefab = GetPrefab(noteType);
             if (!spawn || !prefab)
