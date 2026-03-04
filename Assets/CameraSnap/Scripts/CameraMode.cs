@@ -18,15 +18,18 @@ namespace CameraSnap
         [SerializeField] private AudioSource audioSource;
         [SerializeField] private float messageDuration = 2f;
 
+
         private bool isActive;
         private Camera mainCamera;
         private CartController cart;
+        private CameraPan cameraPan;
         private UIManager ui => UIManager.Instance;
 
         void Start()
         {
             mainCamera = Camera.main;
             cart = FindObjectOfType<CartController>();
+            cameraPan = FindObjectOfType<CameraPan>();
         }
 
         void Update()
@@ -72,6 +75,7 @@ namespace CameraSnap
             isActive = false;
             playerAnimator?.SetBool("IsHoldingCamera", false);
             ui?.SetOverlayActive(false);
+            cameraPan?.ClearLockTarget();
         }
 
         private void DetectAnimalInView()
@@ -82,8 +86,25 @@ namespace CameraSnap
             bool foundAnimal = Physics.Raycast(ray, out RaycastHit hit, detectionRange, animalLayer) &&
                               hit.collider.GetComponentInParent<AnimalBehavior>() != null;
 
-            ui?.SetOverlayReady(foundAnimal);
-            ui?.SetGuideState(foundAnimal ? UIManager.GuideState.FootRaise : UIManager.GuideState.WeightShift);
+            // ui?.SetOverlayReady(foundAnimal);
+            // ui?.SetGuideState(foundAnimal ? UIManager.GuideState.FootRaise : UIManager.GuideState.WeightShift);
+            if(foundAnimal)
+            {
+                ui?.SetGuideState(UIManager.GuideState.FootRaise);
+                ui?.SetOverlayReady(true);
+
+                var animal = hit.collider.GetComponentInParent<AnimalBehavior>();
+                cameraPan?.SetLockTarget(animal.transform);
+            } 
+            else
+            {
+                ui?.SetGuideState(UIManager.GuideState.WeightShift);
+                ui?.SetOverlayReady(false);
+                cameraPan?.ClearLockTarget();
+            }
+
+
+            // lock onto animal?
         }
 
         public void TryTakePhoto()
@@ -114,6 +135,9 @@ namespace CameraSnap
             // Reveal the target in the UI if this animal was one of the session targets
             UIManager.Instance?.RevealTarget(name);
             cart.currentZone?.NotifyAnimalCaptured(name);
+
+            // reset camera look
+            cameraPan?.ClearLockTarget();
         }
 
         public bool IsInCameraMode() => isActive;
