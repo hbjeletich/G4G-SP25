@@ -76,6 +76,7 @@ namespace Constellation
         [SerializeField] private GameObject fakeHead;
 
         private Vector3 prevPosition;
+        private Vector3 velocity;
 
         void Awake()
         { 
@@ -133,6 +134,19 @@ namespace Constellation
 
                 speedMod = Input.GetAxis("Vertical");
                 rotationMod = Input.GetAxis("Horizontal");
+
+                velocity = (transform.position - prevPosition)/Time.deltaTime;
+                prevPosition = transform.position;
+
+                
+                if (velocity.magnitude > 0.005f)
+                {
+                    float angle = Mathf.Atan2(velocity.x, velocity.y) * Mathf.Rad2Deg;
+                    transform.rotation = Quaternion.Euler(0f, 180f, angle);
+                    //Quaternion target =Quaternion.LookRotation(velocity);
+                    //transform.rotation = Quaternion.Euler(0f, 180f, target.z);
+                    //transform.rotation = target;
+                }
 
 
                 if (Input.GetKeyDown("space"))
@@ -208,7 +222,15 @@ namespace Constellation
                 ///// horriblly ineffecint? probably, is there a better solution out there? certainly, will i fix it? maybe
                 transform.position = mainCam.ViewportToWorldPoint(new Vector3(map(headPos.x, -4, 4, 0, 1), map(headPos.z, -3, 3, 0, 1), 8));
 
-
+                
+                velocity = (transform.position - prevPosition)/Time.deltaTime;
+                prevPosition = transform.position;
+                if (velocity.magnitude > 0.005f)
+                {
+                    float angle = Mathf.Atan2(velocity.x, velocity.y) * Mathf.Rad2Deg;
+                    transform.rotation = Quaternion.Euler(0f, 180f, angle);
+                }
+                
                 float pelvisY = squatAction.ReadValue<Vector3>().y;
 
                 //Debug.Log("Pelvis Y : " + pelvisY);
@@ -263,8 +285,11 @@ namespace Constellation
             //actulaly spins character, by changing rotation by rotation mod& rotation speed stat, the -1 makes the character feel uninversed
             //charBody.rotation = (-1 * rotationMod * rotateStat);
             //This moves guy forward based on speedMod and Stat
-            charBody.AddForce(transform.up*speedMod*speedStat, ForceMode2D.Impulse);
-            charBody.AddForce(-transform.right * rotationMod * speedStat, ForceMode2D.Impulse);
+            
+            //charBody.AddForce(transform.up*speedMod*speedStat, ForceMode2D.Impulse);
+            //charBody.AddForce(-transform.right * rotationMod * speedStat, ForceMode2D.Impulse);
+            transform.position += Vector3.right*rotationMod*speedStat;
+            transform.position += Vector3.up *speedMod * speedStat;
 
         }
 
