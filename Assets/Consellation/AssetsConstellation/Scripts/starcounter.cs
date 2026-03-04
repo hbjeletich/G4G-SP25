@@ -61,16 +61,24 @@ namespace Constellation
         {
             while (true)
             {
+                Debug.Log("Checking star positions...");
                 starsAtHome = 0;
 
                 for (int i = 0; i < stars.Length; i++)
                 {
                     if (stars[i] == null || destinations[i] == null)
+                    {
+                        Debug.Log("Star or destination missing at index " + i);
                         continue;
-
-                    float distance = Vector3.Distance(stars[i].transform.position, destinations[i].transform.position);
-                    if (distance <= tolerance)
+                    }
+                    
+                    if(stars[i].foundHome)
+                    {
                         starsAtHome++;
+                    }
+                    // float distance = Vector3.Distance(stars[i].transform.position, destinations[i].transform.position);
+                    // if (distance <= tolerance)
+                    //     starsAtHome++;
                 }
 
                 UpdateCounter();
