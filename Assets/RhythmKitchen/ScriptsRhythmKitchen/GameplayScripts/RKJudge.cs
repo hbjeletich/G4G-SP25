@@ -224,6 +224,13 @@ namespace RhythmKitchen
 
         void Update()
         {
+
+#if UNITY_EDITOR
+            if(Input.GetKeyDown(KeyCode.Q))
+            {
+                debugOn = !debugOn;
+            }
+#endif
             if (debugOn)
             {
                 if (conductor == null || notesRuntime == null)
@@ -313,7 +320,8 @@ namespace RhythmKitchen
             RKNote target = FindClosestNoteInLane(type);
             if (target == null)
             {
-                DataLogger.Instance.LogMinigameEvent("RhythmKitchen", "FailedHit", $"NoteType: {type}");
+                if(DataLogger.Instance != null)
+                    DataLogger.Instance.LogMinigameEvent("RhythmKitchen", "FailedHit", $"NoteType: {type}");
                 return;
             }
             float now = conductor.songTime;
@@ -356,7 +364,8 @@ namespace RhythmKitchen
         }
         private void OnHit(RKNote note, string rating)
         {
-            DataLogger.Instance.LogMinigameEvent("RhythmKitchen", "OnHit", $"Note: {note}, Rating: {rating}");
+            if(DataLogger.Instance != null)
+                DataLogger.Instance.LogMinigameEvent("RhythmKitchen", "OnHit", $"Note: {note}, Rating: {rating}");
             // NOTE: expand this to add score, UI, SFX
             switch (rating)
             {
