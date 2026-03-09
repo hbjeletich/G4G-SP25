@@ -82,7 +82,11 @@ namespace Sewing
             }
 
             instance.currentlyPlaying.Add(actualSoundToPlay);
-            if(instance.audioSource != null) instance.audioSource.PlayOneShot(instance.soundlist[(int)actualSoundToPlay], volume);
+            if(instance.audioSource != null) 
+            {
+                Debug.Log($"Playing sound: {actualSoundToPlay}, sound list index: {(int)actualSoundToPlay}, sound list length {instance.soundlist.Length}");
+                instance.audioSource.PlayOneShot(instance.soundlist[(int)actualSoundToPlay], volume);
+            }
             instance.StartCoroutine(instance.RemoveSoundAfterDelay(actualSoundToPlay, instance.soundlist[(int)actualSoundToPlay].length));
         }
 
