@@ -136,7 +136,10 @@ namespace CameraSnap
             if(Mathf.Abs(weightShiftX) > 0.1f)
             {
                 string dataStr = $"WeightShiftX: {weightShiftX:F2}; Shifting: {((weightShiftX > 0) ? "Right" : "Left")}";
-                DataLogger.Instance.LogInput("WeightShiftX", weightShiftX.ToString("F2"));
+                if(DataLogger.Instance != null)
+                {
+                    DataLogger.Instance.LogInput("WeightShiftX", weightShiftX.ToString("F2"));
+                }
             }
 
             cameraPan?.ManualPan(weightShiftX);
@@ -165,7 +168,10 @@ namespace CameraSnap
             // Reset when returning above threshold
             if (squatTriggered && -pelvisY <= squatThreshold)
             {
-                DataLogger.Instance.LogInput("PelvisSquat", pelvisY.ToString("F2"));
+                if (DataLogger.Instance != null)
+                {
+                    DataLogger.Instance.LogInput("PelvisSquat", pelvisY.ToString("F2"));
+                }
                 squatTriggered = false;
                 Debug.Log("[Squat Reset] Standing again");
             }
@@ -231,7 +237,10 @@ namespace CameraSnap
             float footHeight = Mathf.Max(leftFootY, rightFootY);
 
             string dataSrt = $"FootHeight: {footHeight:F2}; Foot: {(leftFootY > rightFootY ? "Left" : "Right")}";
-            DataLogger.Instance.LogInput("FootHeight", footHeight.ToString("F2"));
+            if(DataLogger.Instance != null)
+            {
+                DataLogger.Instance.LogInput("FootHeight", footHeight.ToString("F2"));
+            }
 
             // If we're currently in the main menu scene, use the SceneTransitionManager
             //  to start the game. 

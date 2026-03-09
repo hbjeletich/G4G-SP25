@@ -55,7 +55,8 @@ namespace Swimming
 
         private void Awake()
         {
-            DataLogger.Instance.LogMinigameEvent("ScubaScavenge", "Player started", Time.time.ToString("F2"));
+            if(DataLogger.Instance != null)
+                DataLogger.Instance.LogMinigameEvent("ScubaScavenge", "Player started", Time.time.ToString("F2"));
 
             rigidbody2D = GetComponent<Rigidbody2D>();
             rigidbody2D.drag = waterDrag; // for underwater feel
@@ -152,7 +153,7 @@ namespace Swimming
                 if(Mathf.Abs(weightShift) > 0.1f)
                 {
                     string dataStr = $"WeightShiftX: {weightShift:F2}; Shifting: {((weightShift > 0) ? "Right" : "Left")}";
-                    DataLogger.Instance.LogInput("WeightShiftX", weightShift.ToString("F2"));
+                    if(DataLogger.Instance != null) DataLogger.Instance.LogInput("WeightShiftX", weightShift.ToString("F2"));
                 }
                 DoHorizontalMovement(weightShift);
 
@@ -189,14 +190,20 @@ namespace Swimming
             if (footHeight > continuousMotionThreshold)
             {
                 string dataSrt = $"FootHeight: {footHeight:F2}; Foot: {(leftFootY > rightFootY ? "Left" : "Right")}";
-                DataLogger.Instance.LogInput("FootHeight", footHeight.ToString("F2"));
+                if(DataLogger.Instance != null)
+                {
+                    DataLogger.Instance.LogInput("FootHeight", footHeight.ToString("F2"));
+                }
                 netVerticalForce += footHeight * footHeightForce;
             }
 
             // 0 = standing, -1 = deep squat
             if (-pelvisY > continuousMotionThreshold/2)
             {
-                DataLogger.Instance.LogInput("PelvisSquat", pelvisY.ToString("F2"));
+                if(DataLogger.Instance != null)
+                {
+                    DataLogger.Instance.LogInput("PelvisSquat", pelvisY.ToString("F2"));
+                }
                 netVerticalForce = pelvisY * squatForce;
             }
 

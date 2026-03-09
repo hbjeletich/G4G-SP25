@@ -186,7 +186,7 @@ namespace RhythmKitchen
             float currentDistance = Vector2.Distance(leftPos2D, rightPos2D);
             float abductionDistance = currentDistance - defaultFootDistance;
             string dataStr = $"Distance: {abductionDistance:F2}; Side: {side}";
-            DataLogger.Instance.LogInput("HipAbduction", dataStr);
+            if(DataLogger.Instance != null) DataLogger.Instance.LogInput("HipAbduction", dataStr);
         }
 
         public void initialFootPositionCallibration()
@@ -276,7 +276,10 @@ namespace RhythmKitchen
                 {
                     float footHeight = Mathf.Max(leftFootYPos, rightFootYPos);
                     string dataSrt = $"FootHeight: {footHeight:F2}; Foot: {(leftFootYPos > rightFootYPos ? "Left" : "Right")}";
-                    DataLogger.Instance.LogInput("FootHeight", footHeight.ToString("F2"));
+                    if(DataLogger.Instance != null)
+                    {
+                        DataLogger.Instance.LogInput("FootHeight", footHeight.ToString("F2"));
+                    }
 
                     if(rightFootZPos-initialRightFootZPos > leftFootZPos-initialLeftFootZPos)
                         OnRightFootRaised();
@@ -457,7 +460,10 @@ namespace RhythmKitchen
             else if (totalBeats/2 > almostCount)
                 score = 2;
 
-            DataLogger.Instance.LogMinigameEvent("RhythmKitchen", "StarScore", $"Score: {score}, Perfect: {perfectCount}, Good: {goodCount}, Almost: {almostCount}");
+            if(DataLogger.Instance != null)
+            {
+                DataLogger.Instance.LogMinigameEvent("RhythmKitchen", "StarScore", $"Score: {score}, Perfect: {perfectCount}, Good: {goodCount}, Almost: {almostCount}");
+            }
 
             completedDish.setStars(score);
         }
