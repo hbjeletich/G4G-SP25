@@ -14,7 +14,7 @@ namespace Constellation
         private PlayerController playerCont;
         private GameObject player;
         // is the player touching me
-        private bool playerTouch = false;
+        public bool playerTouch = false;
         //the stars that are adjacent to the star 
         public GameObject[] nearStars;
         // the attached destination
@@ -23,6 +23,8 @@ namespace Constellation
         private DestinationScript destScript;
         // has the star gotten home yet
         public bool foundHome = false;
+
+        public bool playerTouchingHomeStar=false;
         //the debug string to test interactions
         public string starName;
 
@@ -54,6 +56,14 @@ namespace Constellation
             if (playerCont.grabedStar==gameObject)
             {
                 transform.position = playerCont.tailSpot.transform.position;
+                if (destScript.playerTouch)
+                {
+                    playerTouchingHomeStar = true;
+                }
+                else
+                {
+                    playerTouchingHomeStar=false;
+                }
             }
             // if home lock star to home
             if (foundHome)
