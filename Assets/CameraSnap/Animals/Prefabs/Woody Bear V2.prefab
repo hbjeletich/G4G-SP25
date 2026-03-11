@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 865331911314640508}
   - component: {fileID: 8819407696621941482}
   - component: {fileID: 4095211193591676522}
+  - component: {fileID: 5153730961405923977}
   m_Layer: 9
   m_Name: Woody Bear V2
   m_TagString: Untagged
@@ -70,6 +71,28 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 15.3524685, y: 14.144539, z: 0.2}
   m_Center: {x: -0.18928964, y: 3.9597447, z: 0}
+--- !u!95 &5153730961405923977
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1590292643407195786}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: ac59d2a1c3243674fb9453c3cd5cd6fa, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &5053243272174447543
 GameObject:
   m_ObjectHideFlags: 0
@@ -167,7 +190,7 @@ Animator:
   m_GameObject: {fileID: 5053243272174447543}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: d0b7ff78defa9984b9f0c5565edea711, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0

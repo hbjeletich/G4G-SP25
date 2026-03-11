@@ -12,22 +12,45 @@ public class IPSelect : MonoBehaviour
     {
         limButton.onClick.AddListener(() => LIMIP());
         homeButton.onClick.AddListener(() => HomeIP());
+
+        DataLogger.Instance.OnSessionStarted += ShowButtons;
+        HideButtons();
     }
 
     void LIMIP()
     {
         GameSelect.Instance.host = "192.168.10.106";
+        GameSelect.Instance.CapturySetup();
         GoToNextScene();
     }
 
     void HomeIP()
     {
         GameSelect.Instance.host = "127.0.0.1";
+        GameSelect.Instance.CapturySetup();
         GoToNextScene();
+    }
+
+    public void HideButtons()
+    {
+        limButton.gameObject.SetActive(false);
+        homeButton.gameObject.SetActive(false);
+    }
+
+    public void ShowButtons()
+    {
+        limButton.gameObject.SetActive(true);
+        homeButton.gameObject.SetActive(true);
     }
 
     void GoToNextScene()
     {
+        StartCoroutine(WaitAndGo());
+    }
+
+    private IEnumerator WaitAndGo()
+    {
+        yield return new WaitForSeconds(1f);
         UnityEngine.SceneManagement.SceneManager.LoadScene("NewGameSelect");
     }
 }

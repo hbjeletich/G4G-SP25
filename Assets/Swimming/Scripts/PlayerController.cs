@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -54,6 +55,9 @@ namespace Swimming
 
         private void Awake()
         {
+            if(DataLogger.Instance != null)
+                DataLogger.Instance.LogMinigameEvent("ScubaScavenge", "Player started", Time.time.ToString("F2"));
+
             rigidbody2D = GetComponent<Rigidbody2D>();
             rigidbody2D.drag = waterDrag; // for underwater feel
             rigidbody2D.gravityScale = 0f;
@@ -129,13 +133,28 @@ namespace Swimming
                 float horizontalInput = moveAction.ReadValue<Vector2>().x;
                 DoHorizontalMovement(horizontalInput);
 
-                float verticalInput = moveAction.ReadValue<Vector2>().y;
-                DoContinuousVerticalMovement(verticalInput);
+                if(isSwimming)
+                {
+                    DoContinuousVerticalMovement(swimForce);
+                }
+                else if(isSinking)
+                {
+                    DoContinuousVerticalMovement(-sinkForce);
+                }
+
+                // float verticalInput = moveAction.ReadValue<Vector2>().y;
+                // float verticalForce = verticalInput * footHeightForce;  // or swimForce
+                // DoContinuousVerticalMovement(verticalForce);
             }
             else
             {
                 // motion tracking input when not in debug mode
                 float weightShift = weightShiftXAction.ReadValue<float>();
+                if(Mathf.Abs(weightShift) > 0.1f)
+                {
+                    string dataStr = $"WeightShiftX: {weightShift:F2}; Shifting: {((weightShift > 0) ? "Right" : "Left")}";
+                    if(DataLogger.Instance != null) DataLogger.Instance.LogInput("WeightShiftX", weightShift.ToString("F2"));
+                }
                 DoHorizontalMovement(weightShift);
 
                 HandleContinuousVerticalMovement();
@@ -160,6 +179,8 @@ namespace Swimming
             float rightFootY = rightFootHeightAction.ReadValue<Vector3>().y;
             float pelvisY = squatTrackingYAction.ReadValue<Vector3>().y;
 
+            Debug.Log($"Left Foot Height: {leftFootY}, Right Foot Height: {rightFootY}, Pelvis Y: {pelvisY}");
+
             float netVerticalForce = 0f;
 
             // use whichever is higher
@@ -168,13 +189,22 @@ namespace Swimming
             // 0 = no lift, 1 = maximum lift
             if (footHeight > continuousMotionThreshold)
             {
+                string dataSrt = $"FootHeight: {footHeight:F2}; Foot: {(leftFootY > rightFootY ? "Left" : "Right")}";
+                if(DataLogger.Instance != null)
+                {
+                    DataLogger.Instance.LogInput("FootHeight", footHeight.ToString("F2"));
+                }
                 netVerticalForce += footHeight * footHeightForce;
             }
 
-            // 0 = standing, 1 = deep squat
-            if (pelvisY > continuousMotionThreshold)
+            // 0 = standing, -1 = deep squat
+            if (-pelvisY > continuousMotionThreshold/2)
             {
-                netVerticalForce -= pelvisY * squatForce;
+                if(DataLogger.Instance != null)
+                {
+                    DataLogger.Instance.LogInput("PelvisSquat", pelvisY.ToString("F2"));
+                }
+                netVerticalForce = pelvisY * squatForce;
             }
 
             DoContinuousVerticalMovement(netVerticalForce);

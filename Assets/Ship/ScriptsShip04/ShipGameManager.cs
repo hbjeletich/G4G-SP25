@@ -85,7 +85,10 @@ namespace Ship
                 camScroll.scrollSpeed = savedSpeedInt;
             }
 
-            Debug.Log($"Initialized game with mode: {selectedMode}");
+            DataLogger.Instance.LogMinigameEvent("Ship", "Game mode initialized", $"Mode: {selectedMode.ToString()}");
+            DataLogger.Instance.LogMinigameEvent("Ship", "Game speed set", $"Speed: {savedSpeedInt}");
+            Debug.Log($"Game mode initialized and logged: {selectedMode.ToString()} with speed {savedSpeedInt}");
+            //Debug.Log($"Initialized game with mode: {selectedMode}");
         }
 
         public void TriggerGameOver()

@@ -1,6 +1,7 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-// InputSystem removed: SceneTransitionManager is invoked externally from MainController
+using UnityEngine.InputSystem;
 
 namespace CameraSnap
 {
@@ -10,6 +11,11 @@ namespace CameraSnap
     {
         [Tooltip("Name of the gameplay scene to load (must be in Build Settings)")]
         public string gameplaySceneName = "Gameplay";
+        [Tooltip("UI progress bar to update during loading")]
+        public UIProgressBar progressBar;
+        private float progress = 0f;
+
+        public float Progress => progress; // Expose progress for UI display
 
     
         private bool isLoading = false;
@@ -18,6 +24,10 @@ namespace CameraSnap
         {
             //  just ensure default values exist
 
+            if(progressBar == null)
+            {
+                Debug.Log("SceneTransitionManager: No progress bar assigned, progress will be logged to console.");
+            }
         }
 
        
@@ -41,6 +51,10 @@ namespace CameraSnap
             if (!isLoading) StartGame();
         }
 
+        private void OnFootRaised(InputValue value)
+        {
+            if (!isLoading) StartGame();
+        }
        
         public void StartGame()
         {
@@ -50,8 +64,44 @@ namespace CameraSnap
                 return;
             }
 
+            if(progressBar != null)
+            {
+                progressBar.Show();
+            }
+
             isLoading = true;
-            SceneManager.LoadScene(gameplaySceneName);
+            StartCoroutine(LoadSceneCoroutine());
         }
-    }
+
+        private IEnumerator LoadSceneCoroutine()
+        {
+            yield return null;
+            progress = 0f;
+
+            AsyncOperation asyncOperation = SceneManager.LoadSceneAsync(gameplaySceneName);
+            asyncOperation.allowSceneActivation = false;
+
+            float displayedProgress = 0f;
+
+            while (!asyncOperation.isDone)
+            {
+                float targetProgress = Mathf.Clamp01(asyncOperation.progress / 0.9f);
+
+                displayedProgress = Mathf.MoveTowards(displayedProgress, targetProgress, Time.deltaTime * 0.5f);
+
+                if (progressBar != null)
+                    progressBar.SetProgress(displayedProgress);
+
+                Debug.Log($"Loading progress: {displayedProgress * 100f:0}%");
+
+                // Only activate when the bar has visually caught up to 100%
+                if (asyncOperation.progress >= 0.9f && displayedProgress >= 0.99f)
+                {
+                    asyncOperation.allowSceneActivation = true;
+                }
+
+                yield return null;
+            }
+        }
+    }   
 }

@@ -9,37 +9,22 @@ namespace CameraSnap
         [Header("Motion Tracking Settings")]
         public MotionTrackingConfiguration motionConfig;
         [SerializeField] private InputActionAsset inputActions;
-
-
-    
-
-
-
-
+        
         private CartController cart;
         private CameraMode cameraMode;
         private CameraPan cameraPan;
 
-
-   
-   
-
-
     // Input Actions
      
-    private InputAction pelvisPositionAction;
-    private InputAction headPositionAction;
-    private InputAction weightShiftXAction;
-    // Neutral sampled offset for WeightShiftX to remove steady bias
-    private float neutralWeightShiftOffset = 0f;
-    private InputAction leftHipAbductedAction;
-    private InputAction rightHipAbductedAction;
-    private InputAction footRaisedAction;
+        private InputAction pelvisPositionAction;
+        private InputAction weightShiftXAction;
+        // private InputAction leftHipAbductedAction;
+        // private InputAction rightHipAbductedAction;
+        private InputAction footRaisedAction, footLoweredAction;
+        private InputAction leftFootHeightAction;
+        private InputAction rightFootHeightAction;
 
-
-       
-   
-
+        private float defaultFootDistance = 0f;
 
         private void Awake()
         {
@@ -56,49 +41,76 @@ namespace CameraSnap
             var torsoMap = inputActions.FindActionMap("Torso");
             var footMap = inputActions.FindActionMap("Foot");
 
-
-            headPositionAction     = headMap?.FindAction("HeadPosition");
             pelvisPositionAction   = torsoMap?.FindAction("PelvisPosition");
-
-
             // torso weight shift action (continuous)
             weightShiftXAction     = torsoMap?.FindAction("WeightShiftX");
 
-
-            leftHipAbductedAction  = footMap?.FindAction("LeftHipAbducted");
-            rightHipAbductedAction = footMap?.FindAction("RightHipAbducted");
+            // leftHipAbductedAction  = footMap?.FindAction("LeftHipAbducted");
+            // rightHipAbductedAction = footMap?.FindAction("RightHipAbducted");
             footRaisedAction       = footMap?.FindAction("FootRaised");
+            footLoweredAction      = footMap?.FindAction("FootLowered");
+            leftFootHeightAction = footMap.FindAction("LeftFootPosition");
+            rightFootHeightAction = footMap.FindAction("RightFootPosition");
+        }
+
+        void Start()
+        {
+            Vector3 leftPos = leftFootHeightAction.ReadValue<Vector3>();
+            Vector3 rightPos = rightFootHeightAction.ReadValue<Vector3>();
+
+            Vector2 leftPos2D = new Vector2(leftPos.x, leftPos.z);
+            Vector2 rightPos2D = new Vector2(rightPos.x, rightPos.z);
+            defaultFootDistance = Vector2.Distance(leftPos2D, rightPos2D);
         }
 
 
         private void OnEnable()
         {
             pelvisPositionAction?.Enable();
-            headPositionAction?.Enable();
             weightShiftXAction?.Enable();
-            // react immediately to weight-shift value changes when supported by the action
-            if (weightShiftXAction != null)
-                weightShiftXAction.performed += OnWeightShiftPerformed;
             
-            leftHipAbductedAction?.Enable();
-            rightHipAbductedAction?.Enable();
+            // leftHipAbductedAction?.Enable();
+            // rightHipAbductedAction?.Enable();
             footRaisedAction?.Enable();
+            footLoweredAction?.Enable();
+            leftFootHeightAction.Enable();
+            rightFootHeightAction.Enable();
+
+            footRaisedAction.performed += HandleFootRaiseAction;
+            footLoweredAction.performed += HandleFootLowerAction;
         }
 
 
         private void OnDisable()
         {
             pelvisPositionAction?.Disable();
-            headPositionAction?.Disable();
-            if (weightShiftXAction != null)
-            {
-                weightShiftXAction.performed -= OnWeightShiftPerformed;
-                weightShiftXAction.Disable();
-            }
+            weightShiftXAction.Disable();
            
-            leftHipAbductedAction?.Disable();
-            rightHipAbductedAction?.Disable();
+            // leftHipAbductedAction?.Disable();
+            // rightHipAbductedAction?.Disable();
             footRaisedAction?.Disable();
+            footLoweredAction?.Disable();
+            leftFootHeightAction.Disable();
+            rightFootHeightAction.Disable();
+
+            footRaisedAction.performed -= HandleFootRaiseAction;
+            footLoweredAction.performed -= HandleFootLowerAction;
+        }
+
+        private void HandleFootRaiseAction(InputAction.CallbackContext ctx)
+        {
+            cameraPan?.DoZoom();
+        }
+
+        private void HandleFootLowerAction(InputAction.CallbackContext ctx)
+        {
+            cameraMode?.TryTakePhoto();
+            Invoke("StopCameraZoom", 0.5f);
+        }
+
+        private void StopCameraZoom()
+        {
+            cameraPan?.StopZoom();
         }
 
 
@@ -106,161 +118,107 @@ namespace CameraSnap
         {
             if (motionConfig == null) return;
 
-
             HandleWeightShift();
             HandleSquat();
-            HandleHipAbduction();
+            //HandleHipAbduction();
             HandleFootRaise();
            
         }
 
-
-       
-
-
-
-
-[SerializeField, Tooltip("How far below neutral pelvis Y counts as a squat")]
-private float squatThreshold = 0.10f;
-
-
-private float neutralPelvisY;
-private bool squatTriggered;
-
-
-private void Start()
-{
-    //calibrate pelvis position for the squatting to work better. Before, it would think the player was naturally squatting.
-    if (pelvisPositionAction != null)
-    {
-        neutralPelvisY = pelvisPositionAction.ReadValue<Vector3>().y;
-        Debug.Log($"[Squat] Calibrated neutral pelvis Y = {neutralPelvisY:F3}");
-    }
-   
-    // Calibrate neutral WeightShiftX at startup if available. To know what the player is like standing still.. 
-    //This helps make the camera stay still when the player is, but if it is calibrated wrong, it makes playing the game
-    //hard because the player is fighting with the camera. 
-    if (weightShiftXAction != null && motionConfig != null && motionConfig.enableTorsoModule && motionConfig.isShiftTracked)
-    {
-        neutralWeightShiftOffset = weightShiftXAction.ReadValue<float>();
-        Debug.Log($"[Calibration] WeightShift neutral offset = {neutralWeightShiftOffset:F3}");
-    }
-
-
-}
-
-
-// Public method to recalibrate neutral WeightShiftX at runtime. Recalibration is to adjust to the players position standing still, this helps
-//make it move around less. Players naturally move around as they play, so the calibration at the start would not work throughout.
-public void RecalibrateWeightShiftNeutral()
-{
-    if (weightShiftXAction == null)
-    {
-        Debug.LogWarning("[Calibration] Cannot recalibrate WeightShift: action missing.");
-        return;
-    }
-
-
-    neutralWeightShiftOffset = weightShiftXAction.ReadValue<float>();
-    Debug.Log($"[Calibration] Recalibrated WeightShift neutral offset = {neutralWeightShiftOffset:F3}");
-}
-
+        //how far below neutral pelvis Y counts as a squat
+        private float squatThreshold = 0.05f;
+        private bool squatTriggered;
 
         private void HandleWeightShift()
         {
-            // Use torso module weight-shift to drive lateral camera panning
-            if (motionConfig == null) return;
-            if (!motionConfig.enableTorsoModule || !motionConfig.isShiftTracked) return;
+            float weightShiftX = weightShiftXAction.ReadValue<float>();
 
-            // Prefer continuous WeightShiftX if available
-            if (weightShiftXAction != null)
+            if(Mathf.Abs(weightShiftX) > 0.1f)
             {
-                ApplyWeightShift(weightShiftXAction.ReadValue<float>());
-                return;
+                string dataStr = $"WeightShiftX: {weightShiftX:F2}; Shifting: {((weightShiftX > 0) ? "Right" : "Left")}";
+                if(DataLogger.Instance != null)
+                {
+                    DataLogger.Instance.LogInput("WeightShiftX", weightShiftX.ToString("F2"));
+                }
             }
 
-            // If we reach here there is no continuous WeightShiftX
-            cameraPan?.ManualPan(0f);
+            cameraPan?.ManualPan(weightShiftX);
         }
 
-        // Immediate-performed callback for the weight-shift action so panning reacts
-        // as soon as the action produces a value (helps responsiveness).
-        private void OnWeightShiftPerformed(InputAction.CallbackContext ctx)
+
+        private void HandleSquat()
         {
-            ApplyWeightShift(ctx.ReadValue<float>());
-        }
+            float pelvisY = pelvisPositionAction.ReadValue<Vector3>().y;
 
-        
-        private void ApplyWeightShift(float rawWs)
-        {
-            if (motionConfig == null || cameraPan == null) return;
-            if (!motionConfig.enableTorsoModule || !motionConfig.isShiftTracked) return;
-
-            float ws = rawWs - neutralWeightShiftOffset;
-            float normalizedDeadzone = motionConfig.neutralZoneWidth;
-
-            // Debug: report normalized weight-shift and current lean state
-            string leanState = Mathf.Abs(ws) <= normalizedDeadzone ? "Neutral" : (ws < 0f ? "Left" : "Right");
-            Debug.Log($"[WeightShift] value={ws:F3}, state={leanState}, deadzone={normalizedDeadzone:F3}");
-
-            if (Mathf.Abs(ws) <= normalizedDeadzone)
+            // Detect squat (below threshold)
+            if (!squatTriggered && -pelvisY > squatThreshold && cart.CanStop())
             {
-                cameraPan.ManualPan(0f);
-                return;
+                cart.StopCart();
+                squatTriggered = true;
+                Debug.Log($"[Squat Detected] PelvisY=-{pelvisY:F3} (> {squatThreshold:F3})");
+
+                // then open camera
+                if (cameraMode != null && !cameraMode.IsInCameraMode())
+                {
+                    cameraMode.TryToggleCameraMode();
+                    Debug.Log("[Squat Detected] - Camera Mode toggled");
+                }
             }
 
-            float input = Mathf.Clamp(ws * motionConfig.torsoSensitivity, -1f, 1f);
-            cameraPan.ManualPan(input);
+            // Reset when returning above threshold
+            if (squatTriggered && -pelvisY <= squatThreshold)
+            {
+                if (DataLogger.Instance != null)
+                {
+                    DataLogger.Instance.LogInput("PelvisSquat", pelvisY.ToString("F2"));
+                }
+                squatTriggered = false;
+                Debug.Log("[Squat Reset] Standing again");
+            }
         }
 
 
-private void HandleSquat()
-{
-    if (!motionConfig.enableTorsoModule || cart == null || pelvisPositionAction == null)
-        return;
 
 
-    float pelvisY = pelvisPositionAction.ReadValue<Vector3>().y;
+        // private void HandleHipAbduction()
+        // {
+        //     if (!motionConfig.isHipAbductionTracked || cameraMode == null || cart == null) return;
 
 
-    // Detect squat (below neutral - threshold)
-    if (!squatTriggered && pelvisY < neutralPelvisY - squatThreshold && cart.CanStop())
-    {
-        cart.StopCart();
-        squatTriggered = true;
-        Debug.Log($"[Squat Detected] PelvisY={pelvisY:F3} (< {neutralPelvisY - squatThreshold:F3})");
-     
-    }
+        //     if (!cart.IsStopped()) return;        
+        //     if (cameraMode.IsInCameraMode()) return;
 
 
-    // Reset when returning above threshold
-    if (squatTriggered && pelvisY >= neutralPelvisY - squatThreshold * 0.5f)
-    {
-        squatTriggered = false;
-        Debug.Log("[Squat Reset] Standing again");
-    }
-}
-
-
-
-
-        private void HandleHipAbduction()
-        {
-            if (!motionConfig.isHipAbductionTracked || cameraMode == null || cart == null) return;
-
-
-            if (!cart.IsStopped()) return;        
-            if (cameraMode.IsInCameraMode()) return;
-
-
-            if (leftHipAbductedAction.WasPerformedThisFrame() ||
-                rightHipAbductedAction.WasPerformedThisFrame())
-            {
-                cameraMode.TryToggleCameraMode();
-                Debug.Log("[Hip Abduction] - Camera Mode toggled");
+        //     if (leftHipAbductedAction.WasPerformedThisFrame() ||
+        //         rightHipAbductedAction.WasPerformedThisFrame())
+        //     {
+        //         cameraMode.TryToggleCameraMode();
+        //         Debug.Log("[Hip Abduction] - Camera Mode toggled");
                  
-            }
-        }
+        //     }
+
+        //     // logger
+        //     Vector3 leftPos = leftFootHeightAction.ReadValue<Vector3>();
+        //     Vector3 rightPos = rightFootHeightAction.ReadValue<Vector3>();
+
+        //     Vector2 leftPos2D = new Vector2(leftPos.x, leftPos.z);
+        //     Vector2 rightPos2D = new Vector2(rightPos.x, rightPos.z);
+        //     float currentDistance = Vector2.Distance(leftPos2D, rightPos2D);
+        //     float abductionDistance = currentDistance - defaultFootDistance;
+
+        //     string hipSide;
+        //     if(leftPos2D.magnitude > rightPos2D.magnitude)
+        //     {
+        //         hipSide = "Left";
+        //     } 
+        //     else
+        //     {
+        //         hipSide = "Right";
+        //     }
+
+        //     string dataStr = $"Distance: {abductionDistance.ToString("F2")}; Side: {hipSide}";
+        //     DataLogger.Instance.LogInput($"HipAbduction", dataStr);
+        // }
 
 
        
@@ -273,6 +231,16 @@ private void HandleSquat()
 
 
             Debug.Log("[Foot Raise] Detected");
+
+            float leftFootY = leftFootHeightAction.ReadValue<Vector3>().y;
+            float rightFootY = rightFootHeightAction.ReadValue<Vector3>().y;
+            float footHeight = Mathf.Max(leftFootY, rightFootY);
+
+            string dataSrt = $"FootHeight: {footHeight:F2}; Foot: {(leftFootY > rightFootY ? "Left" : "Right")}";
+            if(DataLogger.Instance != null)
+            {
+                DataLogger.Instance.LogInput("FootHeight", footHeight.ToString("F2"));
+            }
 
             // If we're currently in the main menu scene, use the SceneTransitionManager
             //  to start the game. 
@@ -308,11 +276,11 @@ private void HandleSquat()
            
             if (cameraMode != null && cameraMode.IsInCameraMode())
             {
-                cameraMode.TryTakePhoto();
-                Debug.Log("[Foot Raise] - Photo Taken");
+                // cameraMode.TryTakePhoto();
+                // Debug.Log("[Foot Raise] - Photo Taken");
+                
             }
         }
-
 
        
     }

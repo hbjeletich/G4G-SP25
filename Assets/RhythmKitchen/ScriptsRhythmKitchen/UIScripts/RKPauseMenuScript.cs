@@ -49,6 +49,7 @@ public class RKPauseMenuScript : MonoBehaviour
     public void ResumeGameplay()
     {
         pausePanel.SetActive(false); // Makes the pausePanel inactive
+        if(DataLogger.Instance != null) DataLogger.Instance.LogMinigameEvent("RhythmKitchen", "Resume");
         
         StartCoroutine(countdownStart()); // starts the countdown to resuming the game
     }
