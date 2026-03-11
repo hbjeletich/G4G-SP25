@@ -6,14 +6,18 @@ using TMPro;
 public class levelDetails : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     public GameObject namePanel;      
-    public TMP_Text textObj;         
-    [TextArea]
+    public TMP_Text textObj;
+    public TMP_Text descriptionObj;
     public string nameText;
+    [TextArea]
+    public string descriptionText;
+
 
     // called when the mouse pointer hovers over the UI element
     public void OnPointerEnter(PointerEventData eventData)
     {
         textObj.text = nameText;
+        descriptionObj.text = descriptionText;
         namePanel.SetActive(true);
     }
 

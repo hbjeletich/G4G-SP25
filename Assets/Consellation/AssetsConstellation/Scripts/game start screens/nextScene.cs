@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -10,6 +8,9 @@ public class nextScene : MonoBehaviour
 
     public void LoadScene()
     {
-        SceneManager.LoadScene(sceneName);
+        // Save the next scene name before loading loading screen
+        PlayerPrefs.SetString("GameLevel", sceneName);
+
+        SceneManager.LoadScene("LoadingScene"); 
     }
 }
