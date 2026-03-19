@@ -224,7 +224,7 @@ namespace CameraSnap
        
         private void HandleFootRaise()
         {
-            if (!motionConfig.isFootRaiseTracked || footRaisedAction == null) return;
+            //if (!motionConfig.isFootRaiseTracked || footRaisedAction == null) return;
 
 
             if (!footRaisedAction.WasPerformedThisFrame()) return;
