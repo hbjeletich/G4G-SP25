@@ -3931,6 +3931,7 @@ GameObject:
   - component: {fileID: 1901329607}
   - component: {fileID: 1901329606}
   - component: {fileID: 1901329609}
+  - component: {fileID: 1901329610}
   m_Layer: 5
   m_Name: tutorial button
   m_TagString: Untagged
@@ -4002,25 +4003,13 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1408746072}
-        m_TargetAssemblyTypeName: UnityEngine.Video.VideoPlayer, UnityEngine
-        m_MethodName: Play
+      - m_Target: {fileID: 1901329609}
+        m_TargetAssemblyTypeName: nextScene, Assembly-CSharp
+        m_MethodName: LoadScene
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: UnityEngine.Video.VideoPlayer, UnityEngine
-        m_MethodName: 
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -4073,16 +4062,25 @@ MonoBehaviour:
   m_GameObject: {fileID: 1901329604}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 733ab8a1949c7b1448f688f8b8fe9726, type: 3}
+  m_Script: {fileID: 11500000, guid: 1780dd0f77416c844bc143179cc1c0d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  videoPlayer: {fileID: 1408746072}
-  menuElements:
-  - {fileID: 1129576756}
-  - {fileID: 1342973380}
-  - {fileID: 255157924}
-  - {fileID: 216700362}
-  videoDisplayObject: {fileID: 1408746071}
+  sceneName: Tutorial
+--- !u!114 &1901329610
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1901329604}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b96e13af8d5acc940a8449657c9d20cc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  normalScale: {x: 2, y: 2, z: 2}
+  hoverScale: {x: 2.2, y: 2.2, z: 2.2}
+  speed: 10
 --- !u!1 &2069875114
 GameObject:
   m_ObjectHideFlags: 0
