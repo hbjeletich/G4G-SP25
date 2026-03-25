@@ -376,7 +376,8 @@ namespace RhythmKitchen
             // NOTE: expand this to add score, UI, SFX
 
             //NEW CODE: controls idle --> cheer animations
-            animator.SetTrigger("Cheer");
+            if(animator != null)
+                animator.SetTrigger("Cheer");
      
             switch (rating)
             {

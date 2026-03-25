@@ -6,7 +6,10 @@ using TMPro;
 
 public class StarProgressBar : MonoBehaviour
 {
-    // Start is called before the first frame update
+    public Slider slider;
+    public TextMeshProUGUI resultText;
+    public Image[] starImages;
+    
     void Start()
     {
         
