@@ -36,7 +36,7 @@ namespace CameraSnap
 
 
 
-            if (animator == null) animator = GetComponent<Animator>();
+            //if (animator == null) animator = GetComponent<Animator>();
 
 
             // cache child sprite renderer/transform for flipping

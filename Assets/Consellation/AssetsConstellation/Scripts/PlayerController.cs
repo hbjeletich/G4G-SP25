@@ -8,18 +8,23 @@ namespace Constellation
 {
     public enum ControlsScheme
     {
-        Keyboard,Workout,Standard
+        Keyboard,Workout,StandardFR,StandardSQ,DebugHead
     }
 
     public class PlayerController : MonoBehaviour
     {
         //Declaration Area
 
+        // ACTIONS
+
         // this is the Input actions of captury
         [SerializeField] private InputActionAsset inputActions;
         
         private InputAction leftFootHeightAction;
         private InputAction rightFootHeightAction;
+
+        private InputAction headPositionAction; 
+        private InputAction squatAction;
 
         //STATISTICS
         
@@ -31,18 +36,20 @@ namespace Constellation
         [SerializeField] private float speedStat = 5.0f;
         //how fast guy rotates
         [SerializeField] private float rotateStat = 5.0f;
+        // these handle multiple interaction spam 
+        [SerializeField] private float delayTime = 1f;
+
+        // THRESHOLDS
 
         // These are stats for thresholds of foot height
         [SerializeField] private float turnFootThreshold = .2f;
 
-        [SerializeField] private float walkFootThreshold = .06f;
+        [SerializeField] private float walkFootThreshold = .2f;
 
         [SerializeField] private float jumpThreshold=.1f;
+        [SerializeField] private float squatThreshold = .1f;
 
-        // these handle multiple interaction spam 
-        [SerializeField] private float delayTime=.4f;
-
-        private bool doingSomething=false;
+        //UNITY OBJECTS
 
         //The Event to try and grab
         public UnityEvent interact;
@@ -59,12 +66,31 @@ namespace Constellation
         // the control scheme being used currently
         public ControlsScheme controls = ControlsScheme.Workout;
 
+        // the games camera
+        private Camera mainCam; 
+
+        // basically the bool to check the interact delay
+        private bool interacting=false;
+
+        // a debug tool used to test map() and "HYPOTHETICALLY" test standard input
+        [SerializeField] private GameObject fakeHead;
+
+        private Vector3 prevPosition;
+        private Vector3 velocity;
+
         void Awake()
         { 
             // grabs input actions on awake
             var footMap= inputActions.FindActionMap("Foot");
             leftFootHeightAction = footMap.FindAction("LeftFootPosition");
             rightFootHeightAction = footMap.FindAction("RightFootPosition");
+
+            var headMap = inputActions.FindActionMap("Head");
+            headPositionAction = headMap.FindAction("HeadPosition");
+            //headRotationAction = headMap.FindAction("HeadRotation");
+
+            var squatMap = inputActions.FindActionMap("Torso");
+            squatAction = squatMap.FindAction("pelvisPosition");
         }
 
         void OnEnable()
@@ -72,6 +98,9 @@ namespace Constellation
             // turns on actions
             leftFootHeightAction.Enable();
             rightFootHeightAction.Enable();
+            headPositionAction.Enable();
+            //headRotationAction.Enable();
+            squatAction.Enable();
         }
 
         void OnDisable()
@@ -79,14 +108,18 @@ namespace Constellation
             //turns off actions
             leftFootHeightAction.Disable();
             rightFootHeightAction.Disable();
+            headPositionAction.Disable();
+            //headRotationAction.Disable();
+            squatAction.Disable();
         }
 
         // Start is called before the first frame update
         void Start()
         {
-            //Gather Body
+            //Gather Body and cam
             charBody = GetComponent<Rigidbody2D>();
-            interact.AddListener(Interact);
+            mainCam = GameObject.FindObjectOfType<Camera>();
+            //interact.AddListener(Interact);
         }
 
         // Update is called once per frame
@@ -95,10 +128,25 @@ namespace Constellation
             //take input should ne changed with movement aspects
 
             //this movement is used when the keyboard is wanted to test features
-            if (controls==ControlsScheme.Keyboard)
+            if (controls == ControlsScheme.Keyboard)
             {
+                clamp();
+
                 speedMod = Input.GetAxis("Vertical");
                 rotationMod = Input.GetAxis("Horizontal");
+
+                velocity = (transform.position - prevPosition)/Time.deltaTime;
+                prevPosition = transform.position;
+
+                
+                if (velocity.magnitude > 0.005f)
+                {
+                    float angle = Mathf.Atan2(velocity.x, velocity.y) * Mathf.Rad2Deg;
+                    transform.rotation = Quaternion.Euler(0f, 180f, angle);
+                    //Quaternion target =Quaternion.LookRotation(velocity);
+                    //transform.rotation = Quaternion.Euler(0f, 180f, target.z);
+                    //transform.rotation = target;
+                }
 
 
                 if (Input.GetKeyDown("space"))
@@ -107,15 +155,16 @@ namespace Constellation
                 }
             }
             // THis implements workout controls
-            else if (controls==ControlsScheme.Workout)
+            else if (controls == ControlsScheme.Workout)
             {
+                clamp();
 
                 float leftFootY = leftFootHeightAction.ReadValue<Vector3>().y;
                 float rightFootY = rightFootHeightAction.ReadValue<Vector3>().y;
 
                 //refine the movement
                 //Handles Walking
-                if ((leftFootY>walkFootThreshold || rightFootY>walkFootThreshold) && !doingSomething)
+                if ((leftFootY > walkFootThreshold || rightFootY > walkFootThreshold))
                 {
                     Debug.Log("HIT : walking");
                     speedMod = 1;
@@ -124,57 +173,156 @@ namespace Constellation
                 {
                     speedMod = 0;
                 }
-                
+
                 //Handles Turning
-                if (leftFootY>rightFootY && leftFootY>turnFootThreshold)
+                if (leftFootY > rightFootY && leftFootY > turnFootThreshold)
                 {
                     Debug.Log("HIT : turn left?");
-                    doingSomething=true;
                     rotationMod = -1;
                 }
+
                 if (rightFootY > leftFootY && rightFootY > turnFootThreshold)
                 {
                     Debug.Log("HIT : turn right?");
-                    doingSomething=true;
                     rotationMod = 1;
                 }
+
                 //handles stop turning
                 if (leftFootY < turnFootThreshold && rightFootY < turnFootThreshold)
                 {
-                    doingSomething=false;
                     rotationMod = 0;
                 }
 
                 //handles jump
-                if (leftFootY > jumpThreshold && rightFootY > jumpThreshold&& !doingSomething)
+                if (leftFootY > jumpThreshold && rightFootY > jumpThreshold && !interacting)
                 {
                     Debug.Log("HIT : interact");
-                    doingSomething=true;
-                    interact.Invoke();
+                    interactCaptureHandle();
+                }
+            }
+            // This implements standard Controls
+            else if (controls == ControlsScheme.StandardSQ||controls==ControlsScheme.StandardFR)
+            {
+                //clamp();
+
+                float leftFootY = leftFootHeightAction.ReadValue<Vector3>().y;
+                float rightFootY = rightFootHeightAction.ReadValue<Vector3>().y;
+
+                // slap postion equal to head within room
+                // probably needs to be changed
+                Vector3 headPos = headPositionAction.ReadValue<Vector3>();
+
+                //Debug.Log("HIT :" +headPos.x+" : "+headPos.z);
+
+                // this hideous line is complicated
+                /// Basically its a double mapping
+                /// First it takes the head position of the player and converts it to the location in the camera, this is the new Vector3
+                //// basically headPosX->cameraPosX and headPosZ->cameraPosY
+                ///// Then it uses the build in camera function viewpoint to world point to convert that camera position to game position
+                ///// horriblly ineffecint? probably, is there a better solution out there? certainly, will i fix it? maybe
+                transform.position = mainCam.ViewportToWorldPoint(new Vector3(map(headPos.x, -4, 4, 0, 1), map(headPos.z, -3, 3, 0, 1), 8));
+
+                
+                velocity = (transform.position - prevPosition)/Time.deltaTime;
+                prevPosition = transform.position;
+                if (velocity.magnitude > 0.005f)
+                {
+                    float angle = Mathf.Atan2(velocity.x, velocity.y) * Mathf.Rad2Deg;
+                    transform.rotation = Quaternion.Euler(0f, 180f, angle);
+                }
+                
+                float pelvisY = squatAction.ReadValue<Vector3>().y;
+
+                //Debug.Log("Pelvis Y : " + pelvisY);
+
+                if (-pelvisY > squatThreshold && !interacting && controls == ControlsScheme.StandardSQ)
+                {
+                    //Debug.Log("HIT : squat interact");
+                    interactCaptureHandle();
+                }
+
+                
+                // handles interact
+                if ((leftFootY > walkFootThreshold || rightFootY > walkFootThreshold) && !interacting && controls==ControlsScheme.StandardFR)
+                {
+                    interactCaptureHandle();
+                }
+
+            }
+            // this is to debug standard movement by moving an object
+            else if (controls == ControlsScheme.DebugHead)
+            {
+                Vector3 headPos = headPositionAction.ReadValue<Vector3>();
+                Vector3 newPosition = new Vector3(headPos.x, headPos.z, 0);
+
+                Vector3 velocity = newPosition - prevPosition;
+                prevPosition = newPosition;
+
+                if (velocity.magnitude > 0.01f)
+                {
+                    float angle = Mathf.Atan2(velocity.x, velocity.y) * Mathf.Rad2Deg;
+                    transform.rotation = Quaternion.Euler(0f, 180f, angle);
+                }
+
+                // add smoothing later
+
+                charBody.position = newPosition;
+
+                // handle interact
+                float pelvisY = squatAction.ReadValue<Vector3>().y;
+                if (-pelvisY > squatThreshold)
+                {
+                    Debug.Log("HIT : squat interact");
+                    interactCaptureHandle();
                 }
             }
         }
 
         void FixedUpdate()
         {
+            if(controls == ControlsScheme.DebugHead) return;
             //applay input
             //actulaly spins character, by changing rotation by rotation mod& rotation speed stat, the -1 makes the character feel uninversed
-            charBody.rotation = (-1 * rotationMod * rotateStat);
+            //charBody.rotation = (-1 * rotationMod * rotateStat);
             //This moves guy forward based on speedMod and Stat
-            charBody.AddForce(transform.up*speedMod*speedStat, ForceMode2D.Impulse);
+            
+            //charBody.AddForce(transform.up*speedMod*speedStat, ForceMode2D.Impulse);
+            //charBody.AddForce(-transform.right * rotationMod * speedStat, ForceMode2D.Impulse);
+            transform.position += Vector3.right*rotationMod*speedStat;
+            transform.position += Vector3.up *speedMod * speedStat;
 
-        }
-
-        //this sends the interaction event to tell world the player wants to interact
-        void Interact()
-        {
-            Invoke("delay",delayTime);
         }
 
         // this function flips doing something after a certain amount of time.
         void delay()
         {
-            doingSomething=false;
+            interacting=false;
+            Debug.Log("Delay hit");
+        }
+
+        // this is the interaction code that runs when a captury system wants to interact
+        void interactCaptureHandle()
+        {
+            interact.Invoke();
+            interacting = true;
+            
+            Invoke("delay", delayTime);
+        }
+    
+        // supposed to clamp player to camera view, might only work in keyboard mode, might test captury inputs to see if is neccesary.
+        void clamp()
+        {
+            Vector3 viewpoint = mainCam.WorldToViewportPoint(transform.position);
+            viewpoint.x = Mathf.Clamp01(viewpoint.x);
+            viewpoint.y = Mathf.Clamp01(viewpoint.y);
+            transform.position = mainCam.ViewportToWorldPoint(viewpoint);
+            //Debug.Log(viewpoint);
+        }
+
+        // basically a map method, takes in the value to change and its range and outs in new range
+        float map(float val, float inMin, float inMax, float outMin, float outMax)
+        {
+            return (val - inMin) * (outMax - outMin) / (inMax - inMin) + outMin;    
         }
     }
 }

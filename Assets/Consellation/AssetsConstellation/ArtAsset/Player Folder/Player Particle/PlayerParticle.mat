@@ -23,8 +23,8 @@ Material:
   m_Name: PlayerParticle
   m_Shader: {fileID: -6465566751694194690, guid: b5727982168b62144814b8acb0a88046,
     type: 3}
-  m_Parent: {fileID: 2100000, guid: ff9b80ecd997f584782768460c5e1135, type: 2}
-  m_ModifiedSerializedProperties: 2
+  m_Parent: {fileID: 0}
+  m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
   m_InvalidKeywords: []
   m_LightmapFlags: 2
@@ -37,14 +37,43 @@ Material:
   m_LockedProperties: 
   m_SavedProperties:
     serializedVersion: 3
-    m_TexEnvs: []
+    m_TexEnvs:
+    - _MainTex:
+        m_Texture: {fileID: 2800000, guid: a004d3316f0ae874d828487b3f0aedc7, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _SampleTexture2D_608ac6b94e6043039e30d77b592e3fc4_Texture_1_Texture2D:
+        m_Texture: {fileID: 2800000, guid: c962d6659ead0814caa7fcccfc1f0a00, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_Lightmaps:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_LightmapsInd:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_ShadowMasks:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
+    - _BlendTime: 10
     - _DissolveScale: 10000
     - _QueueControl: 0
+    - _QueueOffset: 0
+    - _Transparency: 0
     m_Colors:
     - _Color01: {r: 3.0794997, g: 0.31871027, b: 0.080615155, a: 0}
     - _Color02: {r: 7.754771, g: 1.0479984, b: 0.5684123, a: 0}
+    - _ColorA: {r: 0.6666666, g: 0.09602625, b: 0.03983215, a: 0}
+    - _ColorA_2: {r: 0, g: 0.6174579, b: 1, a: 0}
+    - _ColorA_3: {r: 0.8235294, g: 0.01176468, b: 0.21979627, a: 0}
+    - _ColorB: {r: 0, g: 0, b: 0, a: 0}
+    - _ColorB_2: {r: 0, g: 0, b: 0, a: 0}
+    - _ColorB_3: {r: 0, g: 0, b: 0, a: 0}
     - _DissolveSpeed: {r: -100, g: 0, b: 0, a: 0}
     - _MainTexSpeed: {r: -0.9, g: 0, b: 0, a: 0}
     - _emmisioncolor: {r: 0.8666667, g: 0.37185487, b: 0.09019607, a: 0}

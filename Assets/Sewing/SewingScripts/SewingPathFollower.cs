@@ -66,7 +66,10 @@ namespace Sewing{
             float leftFootY = leftFootHeightAction.ReadValue<Vector3>().y;
             float rightFootY = rightFootHeightAction.ReadValue<Vector3>().y;
             string dataStr = $"Foot: {(leftFootY > rightFootY ? "Left" : "Right")}";
-            DataLogger.Instance.LogData("FootRaise", dataStr);
+            if(DataLogger.Instance != null)
+            {
+                DataLogger.Instance.LogData("FootRaise", dataStr);
+            }
 
             isFootRaised = true;
             machineAnimator.SetTrigger("Start");
@@ -76,7 +79,10 @@ namespace Sewing{
         private void OnFootLower(InputAction.CallbackContext ctx)
         {
             float averageFootHeight = footHeightSamples > 0 ? totalFootHeight / footHeightSamples : 0f;
-            DataLogger.Instance.LogData("FootLower", $"AverageFootHeight: {averageFootHeight.ToString("F2")}; TimeRaised: {footTime.ToString("F2")}s");
+            if(DataLogger.Instance != null)
+            {
+                DataLogger.Instance.LogData("FootLower", $"AverageFootHeight: {averageFootHeight.ToString("F2")}; TimeRaised: {footTime.ToString("F2")}s");
+            }
             
             isFootRaised = false;
             machineAnimator.SetTrigger("Stop");
@@ -171,6 +177,34 @@ namespace Sewing{
             {
                 footLowerAction.performed -= OnFootLower;
                 footLowerAction.Disable();
+            }
+        }
+
+        private void OnDrawGizmos()
+        {
+            if (waypoints == null || waypoints.Count < 2) return;
+
+            Gizmos.color = Color.cyan;
+
+            for (int i = 0; i < waypoints.Count; i++)
+            {
+                if (waypoints[i] == null) continue;
+
+                // Draw a sphere at each waypoint
+                Gizmos.DrawSphere(waypoints[i].position, 0.05f);
+
+                // Draw a line to the next waypoint
+                if (i < waypoints.Count - 1 && waypoints[i + 1] != null)
+                {
+                    Gizmos.DrawLine(waypoints[i].position, waypoints[i + 1].position);
+                }
+            }
+
+            // Highlight the current waypoint in play mode
+            if (Application.isPlaying && currentIndex < waypoints.Count && waypoints[currentIndex] != null)
+            {
+                Gizmos.color = Color.yellow;
+                Gizmos.DrawSphere(waypoints[currentIndex].position, 0.08f);
             }
         }
     }

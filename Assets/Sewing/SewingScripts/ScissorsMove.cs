@@ -198,7 +198,10 @@ namespace Sewing {
             string hipSide = isLeft ? "Left" : "Right";
 
             string dataStr = $"Distance: {abductionDistance.ToString("F2")}; Side: {hipSide}";
-            DataLogger.Instance.LogInput($"HipAbduction", dataStr);
+            if(DataLogger.Instance != null)
+            {
+                DataLogger.Instance.LogInput($"HipAbduction", dataStr);
+            }
         }
     }
 }

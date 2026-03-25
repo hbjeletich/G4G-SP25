@@ -62,8 +62,6 @@ namespace Constellation
                     }
                 }
             }
-
-            DataLogger.Instance.LogMinigameEvent("StarStepper", "StarsPlaced", $"Number of stars: {stars.Count}");
         }
 
         void StarPlaced()
