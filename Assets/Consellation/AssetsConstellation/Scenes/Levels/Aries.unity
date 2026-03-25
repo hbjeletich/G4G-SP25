@@ -4190,9 +4190,9 @@ MonoBehaviour:
   - {fileID: 1153632679}
   - {fileID: 294019735}
   nearDestRange: 0.9
-  cycleInterval: 1.3
+  cycleInterval: 1.8
   showDebug: 1
-  popDuration: 0.3
+  popDuration: 0.5
   squashMultiplier: {x: 1.2, y: 0.8}
   stretchMultiplier: {x: 0.85, y: 1}
 --- !u!4 &1122004074 stripped
@@ -5432,12 +5432,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Aries is located in the Northern Hemisphere
-
-    & contains several faint
-    galaxies!
-
-'
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 2f13db9efde583248894fe6ed9528952, type: 2}
   m_sharedMaterial: {fileID: 8550078852633665059, guid: 2f13db9efde583248894fe6ed9528952,
@@ -6336,8 +6331,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b96e13af8d5acc940a8449657c9d20cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  normalScale: {x: 3, y: 3, z: 3}
-  hoverScale: {x: 3.2, y: 3.2, z: 3.2}
+  normalScale: {x: 5.29, y: 5.29, z: 5.29}
+  hoverScale: {x: 5.69, y: 5.69, z: 5.69}
   speed: 10
 --- !u!114 &1721864462
 MonoBehaviour:
