@@ -7030,7 +7030,9 @@ MonoBehaviour:
   maxComboNum: {fileID: 1077476363}
   standstillText: {fileID: 2146083534}
   instructionText: {fileID: 308521038}
-  animator: {fileID: 1745268682}
+  animators:
+  - {fileID: 1745268682}
+  - {fileID: 1401266207}
 --- !u!1001 &1818304610
 PrefabInstance:
   m_ObjectHideFlags: 0

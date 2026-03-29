@@ -69,7 +69,8 @@ namespace RhythmKitchen
         [SerializeField] private TMP_Text instructionText;
 
         //NEW CODE: Animation
-        [SerializeField] private Animator animator;
+        [Header("Animation")]
+        [SerializeField] private Animator[] animators;
         //NEW CODE
 
         int perfectCount, goodCount, almostCount;
@@ -376,8 +377,13 @@ namespace RhythmKitchen
             // NOTE: expand this to add score, UI, SFX
 
             //NEW CODE: controls idle --> cheer animations
-            if(animator != null)
-                animator.SetTrigger("Cheer");
+            if(animators != null)
+            {
+                foreach(Animator animator in animators)
+                {
+                    animator.SetTrigger("Cheer");
+                }
+            }
      
             switch (rating)
             {
