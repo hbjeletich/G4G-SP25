@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Video;
 using TMPro;
 
 namespace Constellation
@@ -17,6 +18,11 @@ namespace Constellation
         [SerializeField] private float slideDuration = 0.8f;
         [SerializeField] private AnimationCurve slideEaseCurve = AnimationCurve.EaseInOut(0, 0, 1, 1);
         
+        [Header("Outline Video (Quad with Chromakey + VideoPlayer)")]
+        [SerializeField] private GameObject outlineQuad;
+        [SerializeField] private float outlineHoldTime = 6f;
+        [SerializeField] private float crossfadeDuration = 1f;
+
         [Header("UI Elements")]
         [SerializeField] private TextMeshProUGUI dialogueText;
         [SerializeField] private float dialogueHoldTime = 2f;
@@ -33,12 +39,12 @@ namespace Constellation
         [Header("Debug")]
         [SerializeField] private bool debugMode = true;
 
-        // ⭐ ADDED — just this
         [Header("Audio")]
         [SerializeField] private AudioSource completionSound;
 
         private StarScript[] stars;
         private bool levelCompleted = false;
+        private VideoPlayer outlineVideoPlayer;
 
         void Start()
         {
@@ -48,7 +54,19 @@ namespace Constellation
             if (character3DModel != null)
                 character3DModel.SetActive(false);
 
-            // Hide UI elements initially
+            // Grab the VideoPlayer from the quad and hide it
+            if (outlineQuad != null)
+            {
+                outlineVideoPlayer = outlineQuad.GetComponent<VideoPlayer>();
+                if (outlineVideoPlayer != null)
+                {
+                    outlineVideoPlayer.playOnAwake = false;
+                    outlineVideoPlayer.isLooping = false;
+                }
+                outlineQuad.SetActive(false);
+            }
+
+            // Hide UI elements initially — alpha only, don't touch scale
             if (dialogueText != null)
                 SetAlpha(dialogueText, 0);
 
@@ -109,7 +127,6 @@ namespace Constellation
 
             levelCompleted = true;
 
-            // ⭐ ADDED — plays the sound
             if (completionSound != null)
                 completionSound.Play();
 
@@ -133,7 +150,7 @@ namespace Constellation
                 character3DModel.SetActive(true);
             }
 
-            // Setup UI elements - make sure they're active and set alpha to 0
+            // Setup UI elements - active but invisible (alpha 0, normal scale)
             if (dialogueText != null)
             {
                 dialogueText.gameObject.SetActive(true);
@@ -175,20 +192,106 @@ namespace Constellation
                 character3DModel.transform.position = targetPosition;
             }
             
-            // 2. Image fades in first (to 50% opacity)
-            if (popupImage != null)
-{
-    float elapsed = 0f;
-    while (elapsed < popupFadeDuration)
-    {
-        elapsed += Time.deltaTime;
-        SetAlpha(popupImage, (elapsed / popupFadeDuration) * 0.5f);
-        yield return null;
-    }
-    SetAlpha(popupImage, 0.5f);
-}
+            // 2. Outline video: prepare, play, hold, then crossfade into constellation image
+            if (outlineQuad != null && outlineVideoPlayer != null)
+            {
+                var renderer = outlineQuad.GetComponent<MeshRenderer>();
+                if (renderer != null)
+                    renderer.enabled = false;
+
+                outlineQuad.SetActive(true);
+
+                Vector3 quadOriginalScale = outlineQuad.transform.localScale;
+
+                // Get the material and save original _TintColor
+                Material quadMat = renderer != null ? renderer.material : null;
+                Color originalTint = Color.white;
+                if (quadMat != null && quadMat.HasProperty("_TintColor"))
+                    originalTint = quadMat.GetColor("_TintColor");
+
+                // Prepare the video while invisible
+                outlineVideoPlayer.Prepare();
+                while (!outlineVideoPlayer.isPrepared)
+                    yield return null;
+
+                if (debugMode)
+                    Debug.Log("▶ Outline video prepared and playing");
+
+                // First frame is ready — show the renderer
+                if (renderer != null)
+                    renderer.enabled = true;
+
+                outlineVideoPlayer.Play();
+
+                // Hold for the specified time
+                yield return new WaitForSeconds(outlineHoldTime);
+
+                if (debugMode)
+                    Debug.Log("🔄 Starting crossfade");
+
+                // 3. Crossfade: quad fades + shrinks while image grows + fades in
+                Vector3 imageFullScale = popupImage != null ? popupImage.transform.localScale : Vector3.one;
+                if (popupImage != null)
+                    popupImage.transform.localScale = imageFullScale * 0.8f;
+
+                float elapsed = 0f;
+                while (elapsed < crossfadeDuration)
+                {
+                    elapsed += Time.deltaTime;
+                    float t = Mathf.Clamp01(elapsed / crossfadeDuration);
+                    float eased = t * t * (3f - 2f * t);
+
+                    // Quad: shrink from 100% to 70% and fade out via _TintColor alpha
+                    outlineQuad.transform.localScale = quadOriginalScale * Mathf.Lerp(1f, 0.7f, eased);
+                    if (quadMat != null && quadMat.HasProperty("_TintColor"))
+                    {
+                        Color tint = originalTint;
+                        tint.a = Mathf.Lerp(1f, 0f, eased);
+                        quadMat.SetColor("_TintColor", tint);
+                    }
+
+                    // Image: grow from 80% to 100% and fade in to 50%
+                    if (popupImage != null)
+                    {
+                        popupImage.transform.localScale = imageFullScale * Mathf.Lerp(0.8f, 1f, eased);
+                        SetAlpha(popupImage, eased * 0.5f);
+                    }
+
+                    yield return null;
+                }
+
+                // Finalize
+                if (popupImage != null)
+                {
+                    popupImage.transform.localScale = imageFullScale;
+                    SetAlpha(popupImage, 0.5f);
+                }
+
+                outlineVideoPlayer.Stop();
+
+                // Restore quad to original state
+                outlineQuad.transform.localScale = quadOriginalScale;
+                if (quadMat != null && quadMat.HasProperty("_TintColor"))
+                    quadMat.SetColor("_TintColor", originalTint);
+                outlineQuad.SetActive(false);
+            }
+            else
+            {
+                // Fallback if no outline video — just fade in the image normally
+                if (popupImage != null)
+                {
+                    float elapsed = 0f;
+                    while (elapsed < popupFadeDuration)
+                    {
+                        elapsed += Time.deltaTime;
+                        SetAlpha(popupImage, (elapsed / popupFadeDuration) * 0.5f);
+                        yield return null;
+                    }
+                    SetAlpha(popupImage, 0.5f);
+                }
+            }
             
-            // 3. Dialogue fades in + grows
+            // 4. Dialogue fades in + grows
             if (dialogueText != null)
             {
                 float elapsed = 0f;
@@ -205,10 +308,10 @@ namespace Constellation
                 dialogueText.transform.localScale = Vector3.one;
             }
             
-            // 4. Hold dialogue
+            // 5. Hold dialogue
             yield return new WaitForSeconds(dialogueHoldTime);
             
-            // 5. Dialogue fades out + shrinks (secondary stays visible)
+            // 6. Dialogue fades out + shrinks
             {
                 float elapsed = 0f;
                 while (elapsed < 0.5f)
@@ -228,7 +331,7 @@ namespace Constellation
                     SetAlpha(dialogueText, 0);
             }
             
-            // 6. Final text fades in
+            // 7. Final text fades in
             if (finalText != null)
             {
                 float elapsed = 0f;
@@ -241,7 +344,7 @@ namespace Constellation
                 SetAlpha(finalText, 1);
             }
             
-            // 7. Secondary object fades in last
+            // 8. Secondary object fades in last
             if (secondaryObject != null)
             {
                 secondaryObject.interactable = true;
