@@ -21,7 +21,7 @@ public class levelDetails : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
         namePanel.SetActive(true);
     }
 
-    //called when the mouse pointer stops hovering over the UI element
+    // called when the mouse pointer stops hovering over the UI element
     public void OnPointerExit(PointerEventData eventData)
     {
         namePanel.SetActive(false);

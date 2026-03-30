@@ -28,6 +28,8 @@ namespace Constellation
         //the debug string to test interactions
         public string starName;
 
+        public GameObject effect;
+
         // the event to send out when players place a star
         public UnityEvent starPlaced;
         
@@ -96,16 +98,19 @@ namespace Constellation
                 foundHome = true;
                 starPlaced.Invoke();
                 playerCont.grabedStar = null;
+                effect.SetActive(false);
             }
             else if (playerCont.grabedStar == gameObject && !foundHome)     // if player has star and not home
             {
                 //drop star
                 playerCont.grabedStar = null;
+                effect.SetActive(false);
             }
             else if (playerTouch&&playerCont.grabedStar==null&&!foundHome)     //if player doesn't have a star and is touching me
             {
                 //grab star
                 playerCont.grabedStar = gameObject;
+                effect.SetActive(true);
             }
         }
     }
