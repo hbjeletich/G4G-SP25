@@ -1,0 +1,81 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3c0ac5af9e504174082cd7401bffa208, type: 3}
+  m_Name: AllModulesCalibration
+  m_EditorClassIdentifier: 
+  configurationName: Default
+  description: Default motion tracking configuration.
+  calibrationDelay: 2
+  calibrationFrames: 30
+  modules:
+  - rid: 1669994377931391071
+  - rid: 1669994377931391072
+  - rid: 1669994377931391073
+  references:
+    version: 2
+    RefIds:
+    - rid: 1669994377931391071
+      type: {class: FootModuleConfiguration, ns: , asm: CapturyToolkit.Runtime}
+      data:
+        enabled: 1
+        sensitivity: 1
+        debugMode: 0
+        isFootRaiseTracked: 1
+        footRaiseThreshold: 0.1
+        isHipAbductionTracked: 1
+        minAbductionDistance: 0.2
+        minLiftHeight: 0.05
+        isFootPositionTracked: 1
+        useRelativeFootPosition: 1
+        enableWalkTracking: 1
+        walkSpeedThreshold: 0.3
+        minimumWalkDuration: 2
+        walkStopThreshold: 0.1
+        enableGaitAnalysis: 1
+        minimumCyclesForAnalysis: 3
+        maxReasonableStepTime: 2
+        minReasonableStepTime: 0.3
+        positionHistoryFrames: 300
+        eventHistoryCount: 20
+        leftFootJointName: LeftFoot
+        rightFootJointName: RightFoot
+        walkTrackingSpineJointName: Spine
+    - rid: 1669994377931391072
+      type: {class: HeadModuleConfiguration, ns: , asm: CapturyToolkit.Runtime}
+      data:
+        enabled: 1
+        sensitivity: 1
+        debugMode: 0
+        isHeadPositionTracked: 1
+        useRelativeHeadPosition: 1
+        isHeadRotationTracked: 1
+        isHeadDirectionEnabled: 1
+        headUpThreshold: 15
+        headDownThreshold: 15
+        headLeftThreshold: 20
+        headRightThreshold: 20
+        headJointName: Head
+        neckJointName: Neck
+    - rid: 1669994377931391073
+      type: {class: TorsoModuleConfiguration, ns: , asm: CapturyToolkit.Runtime}
+      data:
+        enabled: 1
+        sensitivity: 1
+        debugMode: 0
+        isShiftTracked: 1
+        weightShiftThreshold: 0.1
+        neutralZoneWidth: 0.05
+        wholeBodyMovementThreshold: 3
+        isBendTracked: 1
+        bentOverAngleThreshold: 30
+        pelvisJointName: Hips
+        spineJointName: Spine4

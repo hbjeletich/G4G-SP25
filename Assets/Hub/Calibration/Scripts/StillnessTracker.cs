@@ -6,20 +6,29 @@ public class StillnessTracker : MonoBehaviour
     [Header("Input")]
     [SerializeField] private InputActionAsset inputActions;
 
+    [Header("History")]
+    [Tooltip("How many samples to keep in the rolling window.")]
+    [SerializeField] private int historySize = 60;
+
     [Header("Thresholds")]
-    [Tooltip("Maximum weight shift X value to count as 'still'.")]
-    [SerializeField] private float weightShiftStillThreshold = 0.15f;
+    [Tooltip("If the range of recent weightShiftX values is below this, weight shift is 'still'.")]
+    [SerializeField] private float weightShiftRangeThreshold = 0.2f;
 
-    [Tooltip("Maximum pelvis Y movement from baseline to count as 'still'.")]
-    [SerializeField] private float pelvisStillThreshold = 0.1f;
+    [Tooltip("If the range of recent pelvisY values is below this, pelvis is 'still'.")]
+    [SerializeField] private float pelvisRangeThreshold = 0.15f;
 
-    [Header("Smoothing")]
-    [Tooltip("How quickly the stillness value responds to changes.")]
-    [SerializeField] private float smoothSpeed = 3.0f;
+    [Tooltip("Minimum stillness value to be considered 'still'.")]
+    [SerializeField] private float stillnesssThreshold = 0.7f;
 
     // Torso actions
     private InputAction weightShiftXAction;
     private InputAction pelvisPositionAction;
+
+    // rolling history
+    private float[] weightShiftHistory;
+    private float[] pelvisYHistory;
+    private int historyIndex = 0;
+    private int sampleCount = 0;
 
     // state
     private float currentStillness = 0f;
@@ -28,8 +37,9 @@ public class StillnessTracker : MonoBehaviour
 
     public float Stillness => currentStillness;
     public float StillDuration => stillDuration;
+    public bool IsStill => currentStillness > stillnesssThreshold;
 
-    public bool IsStill => currentStillness > 0.8f;
+    public float WeightShift => weightShiftXAction != null ? weightShiftXAction.ReadValue<float>() : 0f;
 
     private void Awake()
     {
@@ -45,6 +55,9 @@ public class StillnessTracker : MonoBehaviour
             weightShiftXAction = torsoMap.FindAction("WeightShiftX");
             pelvisPositionAction = torsoMap.FindAction("PelvisPosition");
         }
+
+        weightShiftHistory = new float[historySize];
+        pelvisYHistory = new float[historySize];
     }
 
     private void OnEnable()
@@ -63,19 +76,33 @@ public class StillnessTracker : MonoBehaviour
     {
         if (!isTracking) return;
 
-        // Read current values using ReadValue — same pattern as game select
-        float weightShiftX = weightShiftXAction != null ? Mathf.Abs(weightShiftXAction.ReadValue<float>()) : 0f;
-        float pelvisY = pelvisPositionAction != null ? Mathf.Abs(pelvisPositionAction.ReadValue<Vector3>().y) : 0f;
+        // Sample current values
+        float weightShiftX = weightShiftXAction != null ? weightShiftXAction.ReadValue<float>() : 0f;
+        float pelvisY = pelvisPositionAction != null ? pelvisPositionAction.ReadValue<Vector3>().y : 0f;
 
-        // Calculate raw stillness: 1 if both are below threshold, drops toward 0 as they exceed
-        float weightStillness = 1f - Mathf.Clamp01(weightShiftX / weightShiftStillThreshold);
-        float pelvisStillness = 1f - Mathf.Clamp01(pelvisY / pelvisStillThreshold);
+        // Store in rolling buffer
+        weightShiftHistory[historyIndex] = weightShiftX;
+        pelvisYHistory[historyIndex] = pelvisY;
+        historyIndex = (historyIndex + 1) % historySize;
+        sampleCount = Mathf.Min(sampleCount + 1, historySize);
+
+        // Need at least a few samples before we can judge
+        if (sampleCount < 5)
+        {
+            currentStillness = 0f;
+            return;
+        }
+
+        // Check how much values have varied over the window
+        float weightRange = GetRange(weightShiftHistory, sampleCount);
+        float pelvisRange = GetRange(pelvisYHistory, sampleCount);
+
+        // Convert ranges to 0-1 stillness (low range = high stillness)
+        float weightStillness = 1f - Mathf.Clamp01(weightRange / weightShiftRangeThreshold);
+        float pelvisStillness = 1f - Mathf.Clamp01(pelvisRange / pelvisRangeThreshold);
 
         // Use the worse of the two
-        float rawStillness = Mathf.Min(weightStillness, pelvisStillness);
-
-        // Smooth it
-        currentStillness = Mathf.Lerp(currentStillness, rawStillness, smoothSpeed * Time.deltaTime);
+        currentStillness = Mathf.Min(weightStillness, pelvisStillness);
 
         // Track consecutive still duration
         if (IsStill)
@@ -92,6 +119,8 @@ public class StillnessTracker : MonoBehaviour
     {
         currentStillness = 0f;
         stillDuration = 0f;
+        historyIndex = 0;
+        sampleCount = 0;
         isTracking = true;
     }
 
@@ -103,5 +132,19 @@ public class StillnessTracker : MonoBehaviour
     public bool HasBeenStillFor(float seconds)
     {
         return stillDuration >= seconds;
+    }
+
+    private float GetRange(float[] buffer, int count)
+    {
+        float min = float.MaxValue;
+        float max = float.MinValue;
+
+        for (int i = 0; i < count; i++)
+        {
+            if (buffer[i] < min) min = buffer[i];
+            if (buffer[i] > max) max = buffer[i];
+        }
+
+        return max - min;
     }
 }

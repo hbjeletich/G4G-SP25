@@ -10,6 +10,7 @@ public class CalibrationGuard : MonoBehaviour
 
     [Tooltip("Extra buffer (seconds) after calibration delay to wait before restoring.")]
     [SerializeField] private float restoreBuffer = 0.2f;
+    [SerializeField] private bool showDebug = false;
 
     // singleton
     private static CalibrationGuard instance;
@@ -193,4 +194,81 @@ public class CalibrationGuard : MonoBehaviour
             Debug.LogWarning($"CalibrationGuard: Module {key} not found in this scene's manager — skipping.");
         }
     }
+
+    public void VerifyCalibration()
+    {
+        var manager = MotionTrackingManager.Instance;
+        if (manager == null)
+        {
+            Debug.Log("CalibrationGuard Verify: No manager found");
+            return;
+        }
+
+        VerifyModule<TorsoTrackingModule>(manager);
+        VerifyModule<FootTrackingModule>(manager);
+        VerifyModule<ArmTrackingModule>(manager);
+        VerifyModule<HeadTrackingModule>(manager);
+        VerifyModule<BalanceTrackingModule>(manager);
+    }
+
+    private void VerifyModule<T>(MotionTrackingManager manager) where T : MotionTrackingModule
+    {
+        string key = typeof(T).Name;
+        var module = manager.GetModule<T>();
+
+        if (module == null)
+        {
+            Debug.Log($"CalibrationGuard Verify: {key} — not in scene");
+            return;
+        }
+
+        if (!savedSnapshots.ContainsKey(key))
+        {
+            Debug.Log($"CalibrationGuard Verify: {key} — no saved snapshot");
+            return;
+        }
+
+        bool hasCurrent = module.IsCalibrated;
+        float savedTime = savedSnapshots[key].timestamp;
+        float currentTime = module.CurrentCalibration?.timestamp ?? -1f;
+
+        // If timestamps match, the restore worked
+        bool match = Mathf.Approximately(savedTime, currentTime);
+
+        string color = match ? "green" : "red";
+        Debug.Log($"CalibrationGuard Verify: {key} — saved t={savedTime:F2}, current t={currentTime:F2}, match={match}");
+    }
+
+#if UNITY_EDITOR
+    private void OnGUI()
+    {
+        if (!showDebug || CalibrationGuard.Instance == null) return;
+
+        GUIStyle style = new GUIStyle(GUI.skin.box);
+        style.fontSize = 18;
+        style.alignment = TextAnchor.UpperLeft;
+        style.normal.textColor = Color.white;
+
+        string status = CalibrationGuard.Instance.HasGoodCalibration
+            ? "<color=green>HAS GOOD CALIBRATION</color>"
+            : "<color=red>NO CALIBRATION SAVED</color>";
+
+        string scene = UnityEngine.SceneManagement.SceneManager.GetActiveScene().name;
+
+        string managerStatus = "No Manager";
+        if (MotionTrackingManager.Instance != null)
+        {
+            var mgr = MotionTrackingManager.Instance;
+            managerStatus = $"Calibrated: {mgr.IsSystemCalibrated}, Calibrating: {mgr.IsCalibrating}, Modules: {mgr.ActiveModuleCount}";
+        }
+
+        string text = $"[CalibrationGuard]\n" +
+                      $"Scene: {scene}\n" +
+                      $"Status: {status}\n" +
+                      $"Next Scene: {CalibrationGuard.Instance.nextSceneName}\n" +
+                      $"Manager: {managerStatus}";
+
+        GUI.Box(new Rect(10, 10, 500, 130), text, style);
+    }
+    #endif
 }

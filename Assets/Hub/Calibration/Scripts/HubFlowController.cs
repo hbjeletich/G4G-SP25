@@ -42,6 +42,7 @@ public class HubFlowController : MonoBehaviour
     [SerializeField] private Image stillnessBar;
     [SerializeField] private GameObject progressRingContainer;
     [SerializeField] private GameObject stillnessBarContainer;
+    [SerializeField] private Slider weightShiftSlider;
 
     [Header("Audio")]
     [SerializeField] private AudioSource audioSource;
@@ -190,6 +191,10 @@ public class HubFlowController : MonoBehaviour
             // Wait for OnExerciseComplete to fire (checked via evaluator state)
             while (exerciseEvaluator.IsActive)
             {
+                if(weightShiftSlider != null && stillnessTracker != null)
+                {
+                    weightShiftSlider.value = stillnessTracker.WeightShift;
+                }
                 yield return null;
             }
 
