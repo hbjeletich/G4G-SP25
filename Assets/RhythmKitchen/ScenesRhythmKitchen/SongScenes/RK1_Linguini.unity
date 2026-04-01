@@ -1128,14 +1128,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6555267b5bf3e7a4faf493c056e97dd2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dishName: Herbvale Delight
-  audioClip: {fileID: 8300000, guid: 27d65b416eb824250b0b05d0264627e8, type: 3}
-  songLength: 147.33
-  bpm: 80
-  travelTime: 8
+  dishName: Lunar Linguine
+  audioClip: {fileID: 8300000, guid: 05ae1e2755fc4d8428f63d19b75e786e, type: 3}
+  songLength: 101
+  bpm: 86
+  travelTime: 6
   leadInSeconds: 2
-  offsetMs: 0
-  songBeatString: 17, 32, 48, 64, 80, 104, 120, 136, 152, 168, 184
+  offsetMs: -1
+  songBeatString: 17, 25, 33, 41, 49, 57, 65, 73, 81, 89, 97, 105, 113, 121. 129,
+    137
   chartString: 
   prefabLane1: {fileID: 1173823889380547401, guid: 2af071af11e8d5541b54800f29babb92,
     type: 3}
@@ -6779,7 +6780,7 @@ MonoBehaviour:
   maxComboNum: {fileID: 1077476363}
   standstillText: {fileID: 2146083534}
   instructionText: {fileID: 308521038}
-  animator: {fileID: 0}
+  animators: []
 --- !u!1001 &1818304610
 PrefabInstance:
   m_ObjectHideFlags: 0
