@@ -8,6 +8,7 @@ namespace Constellation
     {
         //bool that gives that info
         public bool playerTouch = false;
+
         
         //handles if player is touching destination
         void OnTriggerEnter2D(Collider2D other)

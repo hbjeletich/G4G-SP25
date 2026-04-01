@@ -68,6 +68,11 @@ namespace RhythmKitchen
         [SerializeField] private TMP_Text standstillText;
         [SerializeField] private TMP_Text instructionText;
 
+        //NEW CODE: Animation
+        [Header("Animation")]
+        [SerializeField] private Animator[] animators;
+        //NEW CODE
+
         int perfectCount, goodCount, almostCount;
         int comboCount, maxComboCount;
 
@@ -370,6 +375,16 @@ namespace RhythmKitchen
             if(DataLogger.Instance != null)
                 DataLogger.Instance.LogMinigameEvent("RhythmKitchen", "OnHit", $"Note: {note}, Rating: {rating}");
             // NOTE: expand this to add score, UI, SFX
+
+            //NEW CODE: controls idle --> cheer animations
+            if(animators != null)
+            {
+                foreach(Animator animator in animators)
+                {
+                    animator.SetTrigger("Cheer");
+                }
+            }
+     
             switch (rating)
             {
                 case "PERFECT":

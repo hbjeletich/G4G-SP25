@@ -36,6 +36,7 @@ namespace CameraSnap
         {
             if (lockTarget != null)
             {
+                UIManager.Instance?.ShowStarProgressBar();
                 // Calculate the target yaw relative to our parent (the cart/player)
                 Vector3 direction = lockTarget.position - transform.parent.position;
                 direction.y = 0f;
@@ -58,6 +59,7 @@ namespace CameraSnap
                     zoomTimer += Time.deltaTime;
                     float t = Mathf.Clamp01(zoomTimer / totalZoomDuration);
                     mainCamera.fieldOfView = Mathf.Lerp(defaultFOV, zoomedFOV, t);
+                    UIManager.Instance?.SetStarProgress(t);
                 }
             } 
             else
@@ -76,6 +78,7 @@ namespace CameraSnap
             if(!isZooming && mainCamera.fieldOfView != defaultFOV)
             {
                 mainCamera.fieldOfView = Mathf.Lerp(mainCamera.fieldOfView, defaultFOV, decelerationSpeed * Time.deltaTime);
+                UIManager.Instance?.HideStarProgressBar();
             }
         }
 

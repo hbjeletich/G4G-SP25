@@ -6,7 +6,7 @@ using static toLevelsFlag;
 public class zoomTransition : MonoBehaviour
 {
 
-    // declaring variables
+    // Declaring variables
     public Camera mainCam;
     public CanvasGroup startScreen;
     public CanvasGroup levelScreen;
@@ -20,9 +20,9 @@ public class zoomTransition : MonoBehaviour
 
     void Start()
     {
-        startFOV = mainCam.fieldOfView; // original camera field of view 
+        startFOV = mainCam.fieldOfView; // Original camera field of view 
 
-        //from a level, show level select directly 
+        // From a level, show level select directly 
         if (MenuReturnState.ReturnToLevelSelect)
         {
             OnlyLevelSelect();
@@ -30,7 +30,7 @@ public class zoomTransition : MonoBehaviour
             return;
         }
 
-        // level select screen is hidden
+        // Level select screen is hidden
         levelScreen.alpha = 0;
         levelScreen.interactable = false;
         levelScreen.blocksRaycasts = false;
@@ -41,12 +41,12 @@ public class zoomTransition : MonoBehaviour
     {
         if (!isZooming)
         {
-            // hide start screen, show level select screen
+            // Hide start screen, show level select screen
             startScreen.alpha = 0;
             startScreen.interactable = false;
             startScreen.blocksRaycasts = false;
 
-            // camera zooming
+            // Camera zooming
             StartCoroutine(ZoomIn());
         }
     }
@@ -64,7 +64,7 @@ public class zoomTransition : MonoBehaviour
             yield return null;
         }
 
-        //now show level select screen and character
+        // Now show level select screen and character
         levelScreen.alpha = 1;
         levelScreen.interactable = true;
         levelScreen.blocksRaycasts = true;

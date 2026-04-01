@@ -51,6 +51,7 @@ namespace CameraSnap
         [Header("Misc UI")]
         public GameObject stopCartObject;
         public GameObject zoneIcon;
+        public StarProgressBar starSlider;
 
         [Header("Player Guide")]
         [Tooltip("UI GameObject that contains the guide image and animator")]
@@ -311,6 +312,21 @@ namespace CameraSnap
             yield return new WaitForSeconds(duration);
             photoText.gameObject.SetActive(false);
             photoText.text = string.Empty;
+        }
+
+        public void ShowStarProgressBar()
+        {
+            starSlider.ShowProgressBar();
+        }
+
+        public void HideStarProgressBar()
+        {
+            starSlider.HideProgressBar();
+        }
+
+        public void SetStarProgress(float progress)
+        {
+            starSlider.UpdateProgress(progress);
         }
     }
 }
