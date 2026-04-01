@@ -51,6 +51,6 @@ public class IPSelect : MonoBehaviour
     private IEnumerator WaitAndGo()
     {
         yield return new WaitForSeconds(1f);
-        UnityEngine.SceneManagement.SceneManager.LoadScene("NewGameSelect");
+        UnityEngine.SceneManagement.SceneManager.LoadScene("CalibrationScene");
     }
 }
