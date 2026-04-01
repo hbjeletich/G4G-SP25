@@ -18,9 +18,36 @@ MonoBehaviour:
   calibrationFrames: 30
   modules:
   - rid: 5667218732359352326
+  - rid: 1669994371585933373
   references:
     version: 2
     RefIds:
+    - rid: 1669994371585933373
+      type: {class: FootModuleConfiguration, ns: , asm: CapturyToolkit.Runtime}
+      data:
+        enabled: 1
+        sensitivity: 1
+        debugMode: 0
+        isFootRaiseTracked: 1
+        footRaiseThreshold: 0.1
+        isHipAbductionTracked: 1
+        minAbductionDistance: 0.2
+        minLiftHeight: 0.05
+        isFootPositionTracked: 1
+        useRelativeFootPosition: 1
+        enableWalkTracking: 0
+        walkSpeedThreshold: 0.3
+        minimumWalkDuration: 2
+        walkStopThreshold: 0.1
+        enableGaitAnalysis: 0
+        minimumCyclesForAnalysis: 3
+        maxReasonableStepTime: 2
+        minReasonableStepTime: 0.3
+        positionHistoryFrames: 300
+        eventHistoryCount: 20
+        leftFootJointName: LeftFoot
+        rightFootJointName: RightFoot
+        walkTrackingSpineJointName: Spine
     - rid: 5667218732359352326
       type: {class: TorsoModuleConfiguration, ns: , asm: CapturyToolkit.Runtime}
       data:
