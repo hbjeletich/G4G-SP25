@@ -49,6 +49,12 @@ namespace Constellation
         [SerializeField] private float jumpThreshold=.1f;
         [SerializeField] private float squatThreshold = .1f;
 
+        [SerializeField] private float minLIMX =-4;
+        [SerializeField] private float maxLIMX =4;
+        [SerializeField] private float minLIMZ =-4;
+        [SerializeField] private float maxLIMZ =2;
+
+
         //UNITY OBJECTS
 
         //The Event to try and grab
@@ -212,7 +218,7 @@ namespace Constellation
                 // probably needs to be changed
                 Vector3 headPos = headPositionAction.ReadValue<Vector3>();
 
-                //Debug.Log("HIT :" +headPos.x+" : "+headPos.z);
+                Debug.Log("HIT :" +headPos.x+" : "+headPos.z);
 
                 // this hideous line is complicated
                 /// Basically its a double mapping
@@ -220,17 +226,21 @@ namespace Constellation
                 //// basically headPosX->cameraPosX and headPosZ->cameraPosY
                 ///// Then it uses the build in camera function viewpoint to world point to convert that camera position to game position
                 ///// horriblly ineffecint? probably, is there a better solution out there? certainly, will i fix it? maybe
-                transform.position = mainCam.ViewportToWorldPoint(new Vector3(map(headPos.x, -4, 4, 0, 1), map(headPos.z, -3, 3, 0, 1), 8));
+                transform.position = mainCam.ViewportToWorldPoint(new Vector3(map(headPos.x, minLIMX, maxLIMX, 0, 1), map(headPos.z, minLIMZ, maxLIMZ, 0, 1), 8));
+                //transform.position = mainCam.ViewportToWorldPoint(new Vector3(map(headPos.x, -4, 3.9f, 0, 1), map(headPos.z, -4, 2.5f, 0, 1), 8));
+                
+                //transform.position = mainCam.ViewportToWorldPoint(new Vector3(headPos.x, headPos.z, 8));
+                //transform.position = new Vector3(map(headPos.x, -4, 4, 0, 1), map(headPos.z, -3, 3, 0, 1), 8);
 
-                
-                velocity = (transform.position - prevPosition)/Time.deltaTime;
-                prevPosition = transform.position;
-                if (velocity.magnitude > 0.005f)
-                {
-                    float angle = Mathf.Atan2(velocity.x, velocity.y) * Mathf.Rad2Deg;
-                    transform.rotation = Quaternion.Euler(0f, 180f, angle);
-                }
-                
+
+                //velocity = (transform.position - prevPosition)/Time.deltaTime;
+                //prevPosition = transform.position;
+                //if (velocity.magnitude > 0.005f)
+                //{
+                //    float angle = Mathf.Atan2(velocity.x, velocity.y) * Mathf.Rad2Deg;
+                //    transform.rotation = Quaternion.Euler(0f, 180f, angle);
+                //}
+
                 float pelvisY = squatAction.ReadValue<Vector3>().y;
 
                 //Debug.Log("Pelvis Y : " + pelvisY);
