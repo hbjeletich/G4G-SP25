@@ -74,6 +74,15 @@ namespace Ship
             {
                 return; // UI manager not found, do nothing
             }
+
+            G4G.ExerciseIndicatorManager.Instance?.Show(ExerciseType.WeightShift);
+            StartCoroutine(HideIndicatorAfterDelay(5f));
+        }
+
+        private IEnumerator HideIndicatorAfterDelay(float delay)
+        {
+            yield return new WaitForSeconds(delay);
+            G4G.ExerciseIndicatorManager.Instance?.Hide();
         }
 
 

@@ -24,6 +24,7 @@ public class GolfStartingScreenManager : MonoBehaviour
 
         //footRaiseAction.performed += startGolfGame;
         TitleBGM.Post(gameObject);
+        G4G.ExerciseIndicatorManager.Instance?.Show(ExerciseType.LegLift);
     }
 
     void Update(){
@@ -56,6 +57,7 @@ public class GolfStartingScreenManager : MonoBehaviour
     }
 
     IEnumerator transitionToGolfGame(){
+        G4G.ExerciseIndicatorManager.Instance?.Hide();
         screenTransitionAnimator.CrossFadeInFixedTime("TransitionToGame", 0);
         TitleBGM.Stop(gameObject);
         Debug.Log("Title BGM stopped.");

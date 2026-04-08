@@ -80,6 +80,7 @@ namespace Sewing
             if (movementComplete == true)
             {
                 Debug.Log("Changing scene to Scissors");
+                G4G.ExerciseIndicatorManager.Instance?.HideImmediate();
                 ChangeScene("3. Scissors");
             } else
             {
@@ -148,6 +149,7 @@ namespace Sewing
                 time += Time.deltaTime;
             }
             movementComplete = true;
+            G4G.ExerciseIndicatorManager.Instance?.Show(ExerciseType.LegLift);
             isFading = false; // Set to false after the fade is complete
         }
 

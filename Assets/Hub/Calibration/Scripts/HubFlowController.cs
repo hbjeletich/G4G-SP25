@@ -145,21 +145,19 @@ public class HubFlowController : MonoBehaviour
 
         ShowStillnessBar(false);
 
-        // Save the calibration
+        // calibrate from this good pose
+        if (MotionTrackingManager.Instance != null)
+        {
+            MotionTrackingManager.Instance.Recalibrate();
+
+            float calDelay = MotionTrackingManager.Instance.Config != null
+                ? MotionTrackingManager.Instance.Config.calibrationDelay
+                : 2f;
+            yield return new WaitForSeconds(calDelay + 0.5f);
+        }
+
         if (CalibrationGuard.Instance != null)
         {
-            // Trigger a recalibration at this exact moment (person is still)
-            if (MotionTrackingManager.Instance != null)
-            {
-                MotionTrackingManager.Instance.Recalibrate();
-
-                // Wait for it to finish
-                float calDelay = MotionTrackingManager.Instance.Config != null
-                    ? MotionTrackingManager.Instance.Config.calibrationDelay
-                    : 2f;
-                yield return new WaitForSeconds(calDelay + 0.5f);
-            }
-
             CalibrationGuard.Instance.SaveCalibration();
         }
 
@@ -181,6 +179,7 @@ public class HubFlowController : MonoBehaviour
             PlayPrerecordedAnimation(exercise.animIndex);
             ShowProgressRing(true);
             SetProgressRing(0f);
+            G4G.ExerciseIndicatorManager.Instance?.Show(exercise.exerciseType);
             yield return new WaitForSeconds(phasePauseTime);
 
             // Active — evaluate until 3 good reps
@@ -201,6 +200,7 @@ public class HubFlowController : MonoBehaviour
             // Exercise complete
             currentState = HubState.ExerciseComplete;
             exerciseEvaluator.StopExercise();
+            G4G.ExerciseIndicatorManager.Instance?.Hide();
             PlayAudio(exerciseCompleteChime);
             SetInstructionText($"{exercise.exerciseName}\nGreat job!");
             SetProgressRing(1f);
@@ -211,6 +211,7 @@ public class HubFlowController : MonoBehaviour
 
         // ── Phase 5: All done ──
         currentState = HubState.AllComplete;
+        G4G.ExerciseIndicatorManager.Instance?.HideImmediate();
         SetInstructionText("You're all set! Loading game...");
         yield return new WaitForSeconds(phasePauseTime);
 

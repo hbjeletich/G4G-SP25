@@ -40,6 +40,8 @@ namespace Sewing{
             rightFootHeightAction = actionMap.FindAction("RightFootPosition");
             footRaiseAction.performed += OnFootRaise;
             footLowerAction.performed += OnFootLower;
+
+            G4G.ExerciseIndicatorManager.Instance?.Show(ExerciseType.LegLift);
         }
 
         private void OnEnable()
@@ -133,6 +135,7 @@ namespace Sewing{
             if(currentIndex == waypoints.Count - 1)
             {
                 pathComplete = true;
+                G4G.ExerciseIndicatorManager.Instance?.HideImmediate();
                 UnityEngine.Debug.Log("path complete");
                 OnPathComplete.Invoke();
                 SoundManager.PlaySound(SoundType.REWARDONE);

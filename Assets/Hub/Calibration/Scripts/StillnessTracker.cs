@@ -11,22 +11,19 @@ public class StillnessTracker : MonoBehaviour
     [SerializeField] private int historySize = 60;
 
     [Header("Thresholds")]
-    [Tooltip("If the range of recent weightShiftX values is below this, weight shift is 'still'.")]
-    [SerializeField] private float weightShiftRangeThreshold = 0.2f;
-
-    [Tooltip("If the range of recent pelvisY values is below this, pelvis is 'still'.")]
-    [SerializeField] private float pelvisRangeThreshold = 0.15f;
+    [Tooltip("If the range of recent pelvis position on any axis is below this, considered still.")]
+    [SerializeField] private float positionRangeThreshold = 0.2f;
 
     [Tooltip("Minimum stillness value to be considered 'still'.")]
     [SerializeField] private float stillnesssThreshold = 0.7f;
 
-    // Torso actions
-    private InputAction weightShiftXAction;
+    // Raw pelvis position action
     private InputAction pelvisPositionAction;
 
-    // rolling history
-    private float[] weightShiftHistory;
+    // Rolling history for each axis of raw position
+    private float[] pelvisXHistory;
     private float[] pelvisYHistory;
+    private float[] pelvisZHistory;
     private int historyIndex = 0;
     private int sampleCount = 0;
 
@@ -39,7 +36,8 @@ public class StillnessTracker : MonoBehaviour
     public float StillDuration => stillDuration;
     public bool IsStill => currentStillness > stillnesssThreshold;
 
-    public float WeightShift => weightShiftXAction != null ? weightShiftXAction.ReadValue<float>() : 0f;
+    // Expose current raw pelvis X for UI compatibility
+    public float WeightShift => pelvisPositionAction != null ? pelvisPositionAction.ReadValue<Vector3>().x : 0f;
 
     private void Awake()
     {
@@ -52,23 +50,21 @@ public class StillnessTracker : MonoBehaviour
         var torsoMap = inputActions.FindActionMap("Torso");
         if (torsoMap != null)
         {
-            weightShiftXAction = torsoMap.FindAction("WeightShiftX");
             pelvisPositionAction = torsoMap.FindAction("PelvisPosition");
         }
 
-        weightShiftHistory = new float[historySize];
+        pelvisXHistory = new float[historySize];
         pelvisYHistory = new float[historySize];
+        pelvisZHistory = new float[historySize];
     }
 
     private void OnEnable()
     {
-        weightShiftXAction?.Enable();
         pelvisPositionAction?.Enable();
     }
 
     private void OnDisable()
     {
-        weightShiftXAction?.Disable();
         pelvisPositionAction?.Disable();
     }
 
@@ -76,35 +72,34 @@ public class StillnessTracker : MonoBehaviour
     {
         if (!isTracking) return;
 
-        // Sample current values
-        float weightShiftX = weightShiftXAction != null ? weightShiftXAction.ReadValue<float>() : 0f;
-        float pelvisY = pelvisPositionAction != null ? pelvisPositionAction.ReadValue<Vector3>().y : 0f;
+        // Sample raw pelvis position — not calibration-relative
+        Vector3 pelvisPos = pelvisPositionAction != null
+            ? pelvisPositionAction.ReadValue<Vector3>()
+            : Vector3.zero;
 
-        // Store in rolling buffer
-        weightShiftHistory[historyIndex] = weightShiftX;
-        pelvisYHistory[historyIndex] = pelvisY;
+        pelvisXHistory[historyIndex] = pelvisPos.x;
+        pelvisYHistory[historyIndex] = pelvisPos.y;
+        pelvisZHistory[historyIndex] = pelvisPos.z;
         historyIndex = (historyIndex + 1) % historySize;
         sampleCount = Mathf.Min(sampleCount + 1, historySize);
 
-        // Need at least a few samples before we can judge
         if (sampleCount < 5)
         {
             currentStillness = 0f;
             return;
         }
 
-        // Check how much values have varied over the window
-        float weightRange = GetRange(weightShiftHistory, sampleCount);
-        float pelvisRange = GetRange(pelvisYHistory, sampleCount);
+        // Check how much raw position varied over the rolling window
+        float rangeX = GetRange(pelvisXHistory, sampleCount);
+        float rangeY = GetRange(pelvisYHistory, sampleCount);
+        float rangeZ = GetRange(pelvisZHistory, sampleCount);
 
-        // Convert ranges to 0-1 stillness (low range = high stillness)
-        float weightStillness = 1f - Mathf.Clamp01(weightRange / weightShiftRangeThreshold);
-        float pelvisStillness = 1f - Mathf.Clamp01(pelvisRange / pelvisRangeThreshold);
+        // Use the worst axis
+        float worstRange = Mathf.Max(rangeX, Mathf.Max(rangeY, rangeZ));
 
-        // Use the worse of the two
-        currentStillness = Mathf.Min(weightStillness, pelvisStillness);
+        // Low range = high stillness
+        currentStillness = 1f - Mathf.Clamp01(worstRange / positionRangeThreshold);
 
-        // Track consecutive still duration
         if (IsStill)
         {
             stillDuration += Time.deltaTime;

@@ -514,24 +514,30 @@ namespace RhythmKitchen
 
         public void ShowInstruction(RKNote.Type type)
         {
-            // string msg = GetInstructionForLane(type);
-            // if (string.IsNullOrEmpty(msg))
-            // {
-            //     return;
-            // }
-
-            // if (instructionRoutine != null) // if previous is still running, stop it
-            // {
-            //     StopCoroutine(instructionRoutine);
-            // }
-            // instructionRoutine = StartCoroutine(InstructionRoutine(msg));
             instructionText.text = GetInstructionForLane(type);
 
+            // Show the centralized exercise indicator alongside the text
+            ExerciseType? exercise = GetExerciseForLane(type);
+            if (exercise.HasValue)
+                G4G.ExerciseIndicatorManager.Instance?.Show(exercise.Value);
         }
 
         public void HideInstruction()
         {
             instructionText.text = "";
+            G4G.ExerciseIndicatorManager.Instance?.Hide();
+        }
+
+        private ExerciseType? GetExerciseForLane(RKNote.Type type)
+        {
+            switch (type)
+            {
+                case RKNote.Type.Lane1: return ExerciseType.HipAbduction;
+                case RKNote.Type.Lane2: return ExerciseType.LegLift;
+                case RKNote.Type.Lane3: return ExerciseType.LegLift;
+                case RKNote.Type.Lane4: return ExerciseType.HipAbduction;
+                default: return null;
+            }
         }
 
         // IEnumerator InstructionRoutine(string msg)

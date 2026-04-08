@@ -24,6 +24,7 @@ namespace Sewing
         private void Start()
         {
             SoundManager.PlaySound(SoundType.REWARDTWO);
+            G4G.ExerciseIndicatorManager.Instance?.Show(ExerciseType.LegLift);
         }
 
         private void OnEnable()
@@ -38,6 +39,7 @@ namespace Sewing
 
         private void OnFootRaise(InputAction.CallbackContext ctx)
         {
+            G4G.ExerciseIndicatorManager.Instance?.HideImmediate();
             SoundManager.StopBGM();
             GameSelect.Instance.BackToHub();
         }
