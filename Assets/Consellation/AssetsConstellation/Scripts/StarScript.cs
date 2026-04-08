@@ -51,6 +51,8 @@ namespace Constellation
             
         }
 
+        private bool wasNearDestination = false;
+
         // Update is called once per frame
         void Update()
         {
@@ -61,11 +63,25 @@ namespace Constellation
                 if (destScript.playerTouch)
                 {
                     playerTouchingHomeStar = true;
+                    if (!wasNearDestination)
+                    {
+                        G4G.ExerciseIndicatorManager.Instance?.Show(ExerciseType.LegLift);
+                        wasNearDestination = true;
+                    }
                 }
                 else
                 {
                     playerTouchingHomeStar=false;
+                    if (wasNearDestination)
+                    {
+                        G4G.ExerciseIndicatorManager.Instance?.Hide();
+                        wasNearDestination = false;
+                    }
                 }
+            }
+            else
+            {
+                wasNearDestination = false;
             }
             // if home lock star to home
             if (foundHome)
@@ -80,12 +96,22 @@ namespace Constellation
         void OnTriggerEnter2D(Collider2D other)
         {
             if (other.CompareTag("Player"))
+            {
                 playerTouch = true;
+                // Show indicator if player can pick up this star
+                if (playerCont.grabedStar == null && !foundHome)
+                    G4G.ExerciseIndicatorManager.Instance?.Show(ExerciseType.LegLift);
+            }
         }
         void OnTriggerExit2D(Collider2D other)
         {
             if (other.CompareTag("Player"))
+            {
                 playerTouch = false;
+                // Hide if player was near this star
+                if (playerCont.grabedStar == null)
+                    G4G.ExerciseIndicatorManager.Instance?.Hide();
+            }
         }
 
         //handles the the stars reaction to player interact button press
@@ -99,18 +125,21 @@ namespace Constellation
                 starPlaced.Invoke();
                 playerCont.grabedStar = null;
                 effect.SetActive(false);
+                G4G.ExerciseIndicatorManager.Instance?.Hide();
             }
             else if (playerCont.grabedStar == gameObject && !foundHome)     // if player has star and not home
             {
                 //drop star
                 playerCont.grabedStar = null;
                 effect.SetActive(false);
+                G4G.ExerciseIndicatorManager.Instance?.Hide();
             }
             else if (playerTouch&&playerCont.grabedStar==null&&!foundHome)     //if player doesn't have a star and is touching me
             {
                 //grab star
                 playerCont.grabedStar = gameObject;
                 effect.SetActive(true);
+                G4G.ExerciseIndicatorManager.Instance?.Hide();
             }
         }
     }
