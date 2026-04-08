@@ -76,8 +76,14 @@ namespace CameraSnap
                 if (ui != null)
                 {
                     ui.SetZoneIconVisible(true);
-                    ui.SetGuideState(UIManager.GuideState.Squat);
                 }
+
+                cart.StopCart();
+
+                // Automatically enter camera mode
+                var cameraMode = FindObjectOfType<CameraMode>();
+                if (cameraMode != null && !cameraMode.IsInCameraMode())
+                    cameraMode.TryToggleCameraMode();
 
                 if (animalSpawner != null)
                     animalSpawner.SpawnAnimals(assignedAnimals);
@@ -118,7 +124,7 @@ private void OnTriggerExit(Collider other)
 
     foreach (var a in animals)
     {
-        if (a == null) continue;
+        if (a == null) { capturedCount++; continue; }
         var behavior = a.GetComponent<AnimalBehavior>();
 if (behavior != null && GameManager.Instance.HasCaptured(behavior.animalData.animalName))
     capturedCount++;

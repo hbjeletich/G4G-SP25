@@ -61,6 +61,8 @@ public class StarProgressBar : MonoBehaviour
         if(isActive) return;
         isActive = true;
 
+        ResetProgressBar();
+
         Vector3 targetPos;
         if(progressBarContainer.transform.localPosition == offscreenPosition)
             targetPos = onscreenPosition;

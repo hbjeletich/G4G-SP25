@@ -11,6 +11,12 @@ namespace CameraSnap
         public AnimalData animalData;
         public Animator animator;
 
+        [Header("Flee Effect")]
+        [Tooltip("Particle prefab spawned at the animal's feet when captured.")]
+        public GameObject fleeParticlePrefab;
+        [Tooltip("Seconds to wait after spawning particles before destroying the animal.")]
+        public float fleeDestroyDelay = 0.5f;
+
 
         [HideInInspector]
         public bool isCaptured = false;
@@ -152,6 +158,29 @@ namespace CameraSnap
         }
 
 
+        public void Flee()
+        {
+            isCaptured = true;
+            StopAllCoroutines();
+            isWalking = false;
+
+            // Spawn particle effect at the animal's base position
+            if (fleeParticlePrefab != null)
+            {
+                GameObject fx = Instantiate(fleeParticlePrefab, transform.position, Quaternion.identity);
+                // Orient speed lines in the direction the animal was facing
+                if (isMovingLeft)
+                    fx.transform.rotation = Quaternion.LookRotation(Vector3.left);
+                else
+                    fx.transform.rotation = Quaternion.LookRotation(Vector3.right);
+            }
+
+            // Hide immediately, destroy after delay so particles aren't parented to a dead object
+            if (spriteRenderer != null) spriteRenderer.enabled = false;
+            Destroy(gameObject, fleeDestroyDelay);
+        }
+
+
         void LateUpdate()
         {
             // Billboard effect - make sprite always face the camera
@@ -164,5 +193,3 @@ namespace CameraSnap
         }
     }
 }
-
-

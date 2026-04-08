@@ -28,16 +28,6 @@ namespace CameraSnap
 
         void Update()
         {
-            // Simulate squat stop using keyboard (matches motion capture behavior)
-            if (Input.GetKeyDown(KeyCode.Space) && canStop)
-            {
-                // Only allow stopping, not resuming
-                if (!isStopped)
-                {
-                    StopCart();
-                }
-            }
-
             //Allows movement if:
             if (!isMoving || isStopped)
                 return;
@@ -96,12 +86,6 @@ namespace CameraSnap
             if (UIManager.Instance != null)
             {
                 UIManager.Instance.SetStopCartVisible(true);
-            }
-
-            // If stopping inside a slowdown zone, advance the player guide to the next step
-            if (currentZone != null && UIManager.Instance != null)
-            {
-                UIManager.Instance.SetGuideState(UIManager.GuideState.HipAbduction);
             }
 
             if (audioSource != null)

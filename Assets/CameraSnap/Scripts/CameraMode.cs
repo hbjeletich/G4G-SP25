@@ -12,7 +12,7 @@ namespace CameraSnap
         [Header("Camera Controls")]
         [SerializeField] private Animator playerAnimator;
         [SerializeField] private KeyCode toggleKey = KeyCode.C;
-        [SerializeField] private KeyCode photoKey = KeyCode.Mouse0;
+        [SerializeField] private KeyCode photoKey = KeyCode.Space;
         [SerializeField] private float detectionRange = 100f;
         [SerializeField] private LayerMask animalLayer;
         [SerializeField] private AudioSource audioSource;
@@ -36,6 +36,7 @@ namespace CameraSnap
         {
             if (Input.GetKeyDown(toggleKey))
                 TryToggleCameraMode();
+            HandleKeyboardPan();
 
             if (!isActive) return;
 
@@ -48,8 +49,19 @@ namespace CameraSnap
 
             DetectAnimalInView();
 
-            if (Input.GetKeyDown(photoKey))
+            if (Input.GetKey(photoKey))
                 TryTakePhoto();
+        }
+
+        private void HandleKeyboardPan()
+        {
+            float panInput = 0f;
+            if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
+                panInput -= 1f;
+            if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow))
+                panInput += 1f;
+
+            cameraPan?.ManualPan(panInput);
         }
 
         public void TryToggleCameraMode()
@@ -68,6 +80,9 @@ namespace CameraSnap
             playerAnimator?.SetBool("IsHoldingCamera", true);
             ui?.SetOverlayActive(true);
             ui?.SetGuideState(UIManager.GuideState.WeightShift);
+
+            // Detect immediately so an animal already in view gets picked up
+            DetectAnimalInView();
         }
 
         private void ExitCameraMode()
@@ -109,7 +124,11 @@ namespace CameraSnap
 
         public void TryTakePhoto()
         {
-            if (cart == null || !cart.IsStopped()) return;
+            if (cart == null || !cart.IsStopped()) 
+            {
+                Debug.LogError("Cart is null or not stopped!");
+                return;
+            }
 
             Ray ray = mainCamera.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0f));
             if (!Physics.Raycast(ray, out RaycastHit hit, detectionRange, animalLayer)) return;
@@ -123,6 +142,7 @@ namespace CameraSnap
 
             // Capture the animal
             animal.isCaptured = true;
+            animal.Flee();
             audioSource?.Play();
 
             string name = animal.animalData.animalName;

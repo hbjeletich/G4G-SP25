@@ -52,6 +52,8 @@ namespace CameraSnap
         public GameObject stopCartObject;
         public GameObject zoneIcon;
         public StarProgressBar starSlider;
+        [Tooltip("Large text that appears when the player should hold to capture.")]
+        public TMP_Text holdText;
 
         [Header("Player Guide")]
         [Tooltip("UI GameObject that contains the guide image and animator")]
@@ -327,6 +329,21 @@ namespace CameraSnap
         public void SetStarProgress(float progress)
         {
             starSlider.UpdateProgress(progress);
+        }
+
+        public void ShowHoldText()
+        {
+            if (holdText != null)
+            {
+                holdText.text = "HOLD";
+                holdText.gameObject.SetActive(true);
+            }
+        }
+
+        public void HideHoldText()
+        {
+            if (holdText != null)
+                holdText.gameObject.SetActive(false);
         }
     }
 }

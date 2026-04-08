@@ -97,17 +97,21 @@ namespace CameraSnap
         {
             completedTargets.Add(lockTarget);
             lockTarget = null;
+            UIManager.Instance?.HideStarProgressBar();
+            UIManager.Instance?.HideHoldText();
         }   
 
         public void DoZoom()
         {
             isZooming = true;
             zoomTimer = 0f;
+            UIManager.Instance?.ShowHoldText();
         }
 
         public void StopZoom()
         {
             isZooming = false;
+            UIManager.Instance?.HideHoldText();
         }
     }
 }

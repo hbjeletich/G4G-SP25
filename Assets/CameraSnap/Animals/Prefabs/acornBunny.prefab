@@ -48,6 +48,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   animalData: {fileID: 11400000, guid: 854baf750fd69864a8c5daf53fc20489, type: 2}
   animator: {fileID: 2528126847066151520}
+  fleeParticlePrefab: {fileID: 1173455691383352536, guid: 88dffde15e27d904dbf08ef3b6151ee9,
+    type: 3}
+  fleeDestroyDelay: 0.5
   isCaptured: 0
 --- !u!65 &2916933651420057740
 BoxCollider:
