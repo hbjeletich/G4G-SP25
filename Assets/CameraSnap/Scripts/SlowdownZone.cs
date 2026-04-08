@@ -176,7 +176,7 @@ if (behavior != null && GameManager.Instance.HasCaptured(behavior.animalData.ani
                     {
                         if (ui == null) return;
                         ui.SetZoneIconVisible(false);
-                        ui.HideGuide();
+                        G4G.ExerciseIndicatorManager.Instance?.Hide();
                         ui.HideStopCountdown();
                     }
 

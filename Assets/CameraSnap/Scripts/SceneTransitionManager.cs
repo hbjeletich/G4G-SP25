@@ -32,6 +32,12 @@ namespace CameraSnap
 
        
 
+        private void Start()
+        {
+            // Prompt the player to raise their leg to begin
+            G4G.ExerciseIndicatorManager.Instance?.Show(ExerciseType.LegLift);
+        }
+
         private void Update()
         {
             // Fallback key press
@@ -63,6 +69,8 @@ namespace CameraSnap
             {
                 return;
             }
+
+            G4G.ExerciseIndicatorManager.Instance?.Hide();
 
             if(progressBar != null)
             {

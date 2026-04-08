@@ -18,6 +18,7 @@ namespace Sewing
             footRaiseAction = actionMap.FindAction("FootRaised");
             footRaiseAction.performed += OnFootRaise;
             SoundManager.StartBGM();
+            G4G.ExerciseIndicatorManager.Instance?.Show(ExerciseType.LegLift);
         }
 
         private void OnEnable()
@@ -32,6 +33,7 @@ namespace Sewing
 
         private void OnFootRaise(InputAction.CallbackContext ctx)
         {
+            G4G.ExerciseIndicatorManager.Instance?.HideImmediate();
             ChangeScene("2. Customer");
         }
 

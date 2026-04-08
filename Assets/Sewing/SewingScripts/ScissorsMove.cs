@@ -52,6 +52,8 @@ namespace Sewing {
             Vector2 leftPos2D = new Vector2(leftPos.x, leftPos.z);
             Vector2 rightPos2D = new Vector2(rightPos.x, rightPos.z);
             defaultFootDistance = Vector2.Distance(leftPos2D, rightPos2D);
+
+            G4G.ExerciseIndicatorManager.Instance?.Show(ExerciseType.HipAbduction);
         }
     // Update is called once per frame
         public void ChangeScene(string sceneName)   
@@ -165,6 +167,7 @@ namespace Sewing {
             movementAvailable = true;
             if (currentWaypointIndex == waypoints.Count) 
             {
+                G4G.ExerciseIndicatorManager.Instance?.HideImmediate();
                 OnLastWaypoint.Invoke();
             }
         }

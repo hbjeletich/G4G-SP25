@@ -3660,6 +3660,74 @@ CapsuleCollider2D:
   m_Offset: {x: 1.246088, y: 7.004833}
   m_Size: {x: 2.1334565, y: 16.319065}
   m_Direction: 0
+--- !u!1001 &1030603864
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1719446872813970062, guid: b86cd666ecc2b8d45967a88c1540a779,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 1163.3838
+      objectReference: {fileID: 0}
+    - target: {fileID: 1719446872813970062, guid: b86cd666ecc2b8d45967a88c1540a779,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 477.85495
+      objectReference: {fileID: 0}
+    - target: {fileID: 1719446872813970062, guid: b86cd666ecc2b8d45967a88c1540a779,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1719446872813970062, guid: b86cd666ecc2b8d45967a88c1540a779,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1719446872813970062, guid: b86cd666ecc2b8d45967a88c1540a779,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1719446872813970062, guid: b86cd666ecc2b8d45967a88c1540a779,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1719446872813970062, guid: b86cd666ecc2b8d45967a88c1540a779,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1719446872813970062, guid: b86cd666ecc2b8d45967a88c1540a779,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1719446872813970062, guid: b86cd666ecc2b8d45967a88c1540a779,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1719446872813970062, guid: b86cd666ecc2b8d45967a88c1540a779,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8608592685012522374, guid: b86cd666ecc2b8d45967a88c1540a779,
+        type: 3}
+      propertyPath: m_Name
+      value: Exercise Indicator Manager
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: b86cd666ecc2b8d45967a88c1540a779, type: 3}
 --- !u!1 &1063620762
 GameObject:
   m_ObjectHideFlags: 0
@@ -6291,3 +6359,4 @@ SceneRoots:
   - {fileID: 6758509}
   - {fileID: 894272536}
   - {fileID: 1063620764}
+  - {fileID: 1030603864}

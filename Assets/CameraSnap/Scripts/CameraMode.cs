@@ -36,7 +36,6 @@ namespace CameraSnap
         {
             if (Input.GetKeyDown(toggleKey))
                 TryToggleCameraMode();
-            HandleKeyboardPan();
 
             if (!isActive) return;
 
@@ -48,6 +47,7 @@ namespace CameraSnap
             }
 
             DetectAnimalInView();
+            HandleKeyboardPan();
 
             if (Input.GetKey(photoKey))
                 TryTakePhoto();
@@ -79,7 +79,7 @@ namespace CameraSnap
             isActive = true;
             playerAnimator?.SetBool("IsHoldingCamera", true);
             ui?.SetOverlayActive(true);
-            ui?.SetGuideState(UIManager.GuideState.WeightShift);
+            G4G.ExerciseIndicatorManager.Instance?.Show(ExerciseType.WeightShift);
 
             // Detect immediately so an animal already in view gets picked up
             DetectAnimalInView();
@@ -91,6 +91,7 @@ namespace CameraSnap
             playerAnimator?.SetBool("IsHoldingCamera", false);
             ui?.SetOverlayActive(false);
             cameraPan?.ClearLockTarget();
+            G4G.ExerciseIndicatorManager.Instance?.Hide();
         }
 
         private void DetectAnimalInView()
@@ -105,7 +106,7 @@ namespace CameraSnap
             // ui?.SetGuideState(foundAnimal ? UIManager.GuideState.FootRaise : UIManager.GuideState.WeightShift);
             if(foundAnimal)
             {
-                ui?.SetGuideState(UIManager.GuideState.FootRaise);
+                G4G.ExerciseIndicatorManager.Instance?.Show(ExerciseType.LegLift);
                 ui?.SetOverlayReady(true);
 
                 var animal = hit.collider.GetComponentInParent<AnimalBehavior>();
@@ -113,7 +114,7 @@ namespace CameraSnap
             } 
             else
             {
-                ui?.SetGuideState(UIManager.GuideState.WeightShift);
+                G4G.ExerciseIndicatorManager.Instance?.Show(ExerciseType.WeightShift);
                 ui?.SetOverlayReady(false);
                 cameraPan?.ClearLockTarget();
             }
@@ -124,11 +125,7 @@ namespace CameraSnap
 
         public void TryTakePhoto()
         {
-            if (cart == null || !cart.IsStopped()) 
-            {
-                Debug.LogError("Cart is null or not stopped!");
-                return;
-            }
+            if (cart == null || !cart.IsStopped()) return;
 
             Ray ray = mainCamera.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0f));
             if (!Physics.Raycast(ray, out RaycastHit hit, detectionRange, animalLayer)) return;

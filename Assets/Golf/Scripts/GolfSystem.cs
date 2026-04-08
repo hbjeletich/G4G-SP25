@@ -74,6 +74,7 @@ public class GolfSystem : MonoBehaviour
         yield return new WaitForSeconds(delayBeforeStarting);
         //show initial balance promp
         initialBalPromp.SetActive(true);
+        G4G.ExerciseIndicatorManager.Instance?.Show(ExerciseType.LegLift);
 
         //activate golf controls
         golfControls.gameObject.SetActive(true);
@@ -85,6 +86,7 @@ public class GolfSystem : MonoBehaviour
         yield return new WaitForSeconds(.5f); //delay before switching to next state
         //disable intial balance prompt
         initialBalPromp.SetActive(false);
+        G4G.ExerciseIndicatorManager.Instance?.Hide();
 
         //swing the golf club back to its starting position. Awaiting to be releases
         clubController.swingBack();
@@ -98,6 +100,7 @@ public class GolfSystem : MonoBehaviour
         //promp the player to hold an exercise for an amount of time in order to increase the strength of their golf hit
         SwingStrengthController.instance.gameObject.SetActive(true);
         balancePrompt.SetActive(true);
+        G4G.ExerciseIndicatorManager.Instance?.Show(ExerciseType.LegLift);
 
         while(golfControls.simulatedLegLower() != true && golfControls.hasFootRaise == true){ //wait for foot to fall before stopping golf power assesment. Mouse controls for testing
             yield return null;
@@ -107,6 +110,7 @@ public class GolfSystem : MonoBehaviour
         golfControls.gameObject.SetActive(false);
 
         balancePrompt.SetActive(false);
+        G4G.ExerciseIndicatorManager.Instance?.Hide();
         state = GolfState.SWING;
         StartCoroutine(swing());
     }
