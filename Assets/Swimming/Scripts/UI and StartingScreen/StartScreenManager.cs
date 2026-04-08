@@ -50,6 +50,7 @@ namespace Swimming
             if (timer > liftLegDelay && liftLegText != null)
             {
                 liftLegText.SetActive(true);
+                G4G.ExerciseIndicatorManager.Instance?.Show(ExerciseType.LegLift);
             }
 
             if(debugMode)
@@ -71,6 +72,7 @@ namespace Swimming
             if (!gameStarted)
             {
                 gameStarted = true;
+                G4G.ExerciseIndicatorManager.Instance?.HideImmediate();
                 raiseFootAction.performed -= OnFootRaised;
                 SceneManager.LoadScene("SwimmingScene");
             }

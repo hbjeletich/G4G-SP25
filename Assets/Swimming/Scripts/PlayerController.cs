@@ -53,6 +53,11 @@ namespace Swimming
         [SerializeField] private Transform deepSeaCutoff;
         private float deepSeaYLevel;
 
+        [Header("Tutorial")]
+        [SerializeField] private float tutorialInputThreshold = 0.3f;
+
+        private bool tutorialComplete = false;
+
         private void Awake()
         {
             if(DataLogger.Instance != null)
@@ -105,6 +110,8 @@ namespace Swimming
             jumpAction.canceled += _ => StopSwimming();
             crouchAction.started += _ => StartSinking();
             crouchAction.canceled += _ => StopSinking();
+
+            StartCoroutine(RunMovementTutorial());
         }
 
         private void OnDisable()
@@ -275,6 +282,55 @@ namespace Swimming
         private void ChangeToRegularSea()
         {
             animator.runtimeAnimatorController = regularAnimator;
+        }
+
+        private IEnumerator RunMovementTutorial()
+        {
+            // Brief pause before tutorial starts
+            yield return new WaitForSeconds(1f);
+
+            // Step 1: Weight Shift (left/right)
+            G4G.ExerciseIndicatorManager.Instance?.Show(ExerciseType.WeightShift);
+            yield return WaitForInput(() =>
+            {
+                float ws = weightShiftXAction.ReadValue<float>();
+                float kb = debugMode ? moveAction.ReadValue<Vector2>().x : 0f;
+                return Mathf.Abs(ws) > tutorialInputThreshold || Mathf.Abs(kb) > 0.1f;
+            });
+
+            // Step 2: Leg Lift (swim up)
+            G4G.ExerciseIndicatorManager.Instance?.Show(ExerciseType.LegLift);
+            yield return WaitForInput(() =>
+            {
+                float leftY = leftFootHeightAction.ReadValue<Vector3>().y;
+                float rightY = rightFootHeightAction.ReadValue<Vector3>().y;
+                float foot = Mathf.Max(leftY, rightY);
+                return foot > tutorialInputThreshold || (debugMode && isSwimming);
+            });
+
+            // Step 3: Squat (sink down)
+            G4G.ExerciseIndicatorManager.Instance?.Show(ExerciseType.Squat);
+            yield return WaitForInput(() =>
+            {
+                float pelvisY = squatTrackingYAction.ReadValue<Vector3>().y;
+                return -pelvisY > tutorialInputThreshold / 2f || (debugMode && isSinking);
+            });
+
+            // Tutorial complete
+            tutorialComplete = true;
+            G4G.ExerciseIndicatorManager.Instance?.Hide();
+        }
+
+        private IEnumerator WaitForInput(System.Func<bool> condition)
+        {
+            // Small grace period so they see the indicator before we start checking
+            yield return new WaitForSeconds(0.5f);
+            while (!condition())
+            {
+                yield return null;
+            }
+            // Brief pause after success so it doesn't feel instant
+            yield return new WaitForSeconds(0.8f);
         }
     }
 }
