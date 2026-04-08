@@ -37,8 +37,6 @@ namespace CameraSnap
             if (Input.GetKeyDown(toggleKey))
                 TryToggleCameraMode();
 
-            if (!isActive) return;
-
             // Auto-exit if cart moves
             if (cart != null && !cart.IsStopped())
             {
@@ -47,7 +45,7 @@ namespace CameraSnap
             }
 
             DetectAnimalInView();
-            HandleKeyboardPan();
+            //HandleKeyboardPan();
 
             if (Input.GetKey(photoKey))
                 TryTakePhoto();

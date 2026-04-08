@@ -119,7 +119,7 @@ namespace CameraSnap
             if (motionConfig == null) return;
 
             HandleWeightShift();
-            HandleSquat();
+            //HandleSquat();
             //HandleHipAbduction();
             HandleFootRaise();
            
@@ -132,6 +132,7 @@ namespace CameraSnap
         private void HandleWeightShift()
         {
             float weightShiftX = weightShiftXAction.ReadValue<float>();
+            Debug.Log($"WeightShiftX: {weightShiftX:F2}");
 
             if(Mathf.Abs(weightShiftX) > 0.1f)
             {

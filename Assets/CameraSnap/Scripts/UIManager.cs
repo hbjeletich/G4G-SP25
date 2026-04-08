@@ -94,9 +94,14 @@ namespace CameraSnap
             // Initialize session targets from GameManager if available
             if (GameManager.Instance != null)
             {
-                var targets = GameManager.Instance.GetRandomTargets(targetSlots.Count);
-                SetSessionTargets(targets);
+                Invoke(nameof(SetSessionTargetsInternal), 0.5f);
             }
+        }
+
+        private void SetSessionTargetsInternal()
+        {
+            var targets = GameManager.Instance != null ? GameManager.Instance.GetRandomTargets(targetSlots.Count) : null;
+            SetSessionTargets(targets);
         }
 
         

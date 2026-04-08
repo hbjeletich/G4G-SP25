@@ -32,7 +32,7 @@ namespace CameraSnap
             mainCamera.fieldOfView = defaultFOV;
         }
 
-        void Update()
+        void LateUpdate()
         {
             if (lockTarget != null)
             {
@@ -64,6 +64,7 @@ namespace CameraSnap
             } 
             else
             {
+                Debug.Log($"CURRENT INPUT: {currentInput}");
                 if (Mathf.Abs(currentInput) <= deadzone)
                 {
                     currentInput = Mathf.Lerp(currentInput, 0f, decelerationSpeed * Time.deltaTime);
