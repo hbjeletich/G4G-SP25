@@ -113,6 +113,7 @@ public class HubFlowController : MonoBehaviour
         SetInstructionText("Waiting for skeleton...");
         ShowStillnessBar(false);
         ShowProgressRing(false);
+        ShowWeightShiftSlider(false);
         SetProgressRing(0f);
 
         // Start panels off-screen
@@ -230,6 +231,7 @@ public class HubFlowController : MonoBehaviour
         for (currentExerciseIndex = 0; currentExerciseIndex < exercises.Count; currentExerciseIndex++)
         {
             var exercise = exercises[currentExerciseIndex];
+            bool isWeightShift = exercise.exerciseType == ExerciseType.WeightShift;
 
             // Intro — set text then slide in
             currentState = HubState.ExerciseIntro;
@@ -238,6 +240,7 @@ public class HubFlowController : MonoBehaviour
             debugAnimIndex = exercise.animIndex;
             ShowProgressRing(true);
             SetProgressRing(0f);
+            ShowWeightShiftSlider(isWeightShift);
             G4G.ExerciseIndicatorManager.Instance?.Show(exercise.exerciseType);
 
             yield return SlidePanel(exercisePanel, exerciseOffScreen, exerciseOnScreen);
@@ -266,7 +269,7 @@ public class HubFlowController : MonoBehaviour
 
                 while (exerciseEvaluator.IsActive)
                 {
-                    if (weightShiftSlider != null && stillnessTracker != null)
+                    if (isWeightShift && weightShiftSlider != null && stillnessTracker != null)
                     {
                         weightShiftSlider.value = stillnessTracker.WeightShift;
                         UpdateWeightShiftHandleColor(stillnessTracker.WeightShift);
@@ -279,6 +282,7 @@ public class HubFlowController : MonoBehaviour
             currentState = HubState.ExerciseComplete;
             if (!debugMode) exerciseEvaluator.StopExercise();
             G4G.ExerciseIndicatorManager.Instance?.Hide();
+            ShowWeightShiftSlider(false);
             PlayAudio(exerciseCompleteChime);
             SetExerciseText(exercise.exerciseName, "Great job!");
             SetProgressRing(1f);
@@ -590,7 +594,6 @@ public class HubFlowController : MonoBehaviour
     {
         if (calibrationText != null)
             calibrationText.text = text;
-        // Also update legacy instruction text as fallback
         SetInstructionText(text);
     }
 
@@ -600,7 +603,6 @@ public class HubFlowController : MonoBehaviour
             exerciseLabel.text = label;
         if (exerciseDescription != null)
             exerciseDescription.text = description;
-        // Also update legacy instruction text as fallback
         SetInstructionText($"{label}\n{description}");
     }
 
@@ -620,6 +622,12 @@ public class HubFlowController : MonoBehaviour
         }
 
         panel.anchoredPosition = to;
+    }
+
+    private void ShowWeightShiftSlider(bool show)
+    {
+        if (weightShiftSlider != null)
+            weightShiftSlider.gameObject.SetActive(show);
     }
 
     private void UpdateWeightShiftHandleColor(float value)
