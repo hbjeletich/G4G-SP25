@@ -160,10 +160,16 @@ namespace RhythmKitchen
 
             if (judge != null)
             {
-                judge.ShowInstruction(noteType);
+                float delay = Mathf.Max(0f, travelTime - 2f);
+                StartCoroutine(DelayedInstruction(noteType, delay));
             }
+        }
+
+        private IEnumerator DelayedInstruction(RKNote.Type noteType, float delay)
+        {
+            yield return new WaitForSeconds(delay);
+            if (judge != null)
+                judge.ShowInstruction(noteType);
         }
     }
 }
-
-

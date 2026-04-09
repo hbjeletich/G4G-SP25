@@ -38,10 +38,18 @@ namespace G4G
         public Vector2 onScreenPosition = new Vector2(-120f, 120f);
         public Vector2 offScreenPosition = new Vector2(300f, -300f);
         public float slideDuration = 0.3f;
+
+        [Tooltip("Ease curve for the slide.")]
         public AnimationCurve slideCurve = AnimationCurve.EaseInOut(0f, 0f, 1f, 1f);
 
         private Coroutine slideCoroutine;
+        private Coroutine tutorialCoroutine;
         private bool isVisible = false;
+        private bool hasShownGameSelectTutorial = false;
+
+        [Header("Game Select Tutorial")]
+        public float gameSelectWeightShiftDuration = 4f;
+        public float gameSelectSquatDuration = 4f;
 
         void Awake()
         {
@@ -87,6 +95,8 @@ namespace G4G
         {
             if (slideCoroutine != null)
                 StopCoroutine(slideCoroutine);
+            if (tutorialCoroutine != null)
+                StopCoroutine(tutorialCoroutine);
 
             isVisible = false;
             if (exerciseAnimator != null)
@@ -94,6 +104,25 @@ namespace G4G
 
             if (indicatorPanel != null)
                 indicatorPanel.anchoredPosition = offScreenPosition;
+        }
+
+        public void ShowGameSelectTutorial()
+        {
+            if (hasShownGameSelectTutorial) return;
+            hasShownGameSelectTutorial = true;
+            tutorialCoroutine = StartCoroutine(GameSelectTutorialRoutine());
+        }
+
+        private IEnumerator GameSelectTutorialRoutine()
+        {
+            Show(ExerciseType.WeightShift);
+            yield return new WaitForSecondsRealtime(gameSelectWeightShiftDuration);
+
+            Show(ExerciseType.Squat);
+            yield return new WaitForSecondsRealtime(gameSelectSquatDuration);
+
+            Hide();
+            tutorialCoroutine = null;
         }
 
         private void SetAnimatorState(ExerciseType type)

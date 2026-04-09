@@ -82,10 +82,10 @@ public class GameCarousel : MonoBehaviour
 
     public void GoToNext()
     {
-        if (isAnimating || currentIndex >= totalCards - 1) return;
+        if (isAnimating || totalCards == 0) return;
 
         PlayNavigateSound();
-        currentIndex++;
+        currentIndex = (currentIndex + 1) % totalCards;
         AnimateToCurrentIndex();
 
         UpdateSelectedCard();
@@ -93,10 +93,10 @@ public class GameCarousel : MonoBehaviour
 
     public void GoToPrevious()
     {
-        if (isAnimating || currentIndex <= 0) return;
+        if (isAnimating || totalCards == 0) return;
 
         PlayNavigateSound();
-        currentIndex--;
+        currentIndex = (currentIndex - 1 + totalCards) % totalCards;
         AnimateToCurrentIndex();
 
         UpdateSelectedCard();
@@ -144,8 +144,8 @@ public class GameCarousel : MonoBehaviour
 
     private void UpdateButtonStates()
     {
-        leftButton.interactable = !isAnimating && currentIndex > 0;
-        rightButton.interactable = !isAnimating && currentIndex < totalCards - 1;
+        leftButton.interactable = !isAnimating;
+        rightButton.interactable = !isAnimating;
     }
 
     private void PlayNavigateSound()

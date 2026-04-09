@@ -31,6 +31,11 @@ public class MotionTrackingGameSelect : MonoBehaviour
         squatTrackingYAction = torsoMap.FindAction("PelvisPosition");
     }
 
+    private void Start()
+    {
+        G4G.ExerciseIndicatorManager.Instance?.ShowGameSelectTutorial();
+    }
+
     private void OnEnable()
     {
         weightShiftXAction.Enable();
@@ -76,6 +81,7 @@ public class MotionTrackingGameSelect : MonoBehaviour
         {
             isSquatting = true;
             lastSquatTime = Time.time;
+            G4G.ExerciseIndicatorManager.Instance?.HideImmediate();
             gameCarousel.PlayCurrentGame();
         }
         else if (squatValue > squatThreshold)
