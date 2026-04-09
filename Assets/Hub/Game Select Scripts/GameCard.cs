@@ -39,23 +39,12 @@ public class GameCard : MonoBehaviour
             titleText.text = data.gameTitle;
         }
 
-        // start at deselected scale
-        transform.localScale = originalScale * deselectedScaleMultiplier;
+        // Scale is now managed by GameCarousel
     }
 
     public void SetSelected(bool selected)
     {
-        if (isSelected == selected) return;
-
         isSelected = selected;
-        float targetMultiplier = selected ? selectedScaleMultiplier : deselectedScaleMultiplier;
-        Vector3 targetScale = originalScale * targetMultiplier;
-
-        if (scaleCoroutine != null)
-        {
-            StopCoroutine(scaleCoroutine);
-        }
-        scaleCoroutine = StartCoroutine(AnimateScale(targetScale));
     }
 
     private IEnumerator AnimateScale(Vector3 targetScale)
