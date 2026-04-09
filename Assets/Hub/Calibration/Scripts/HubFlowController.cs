@@ -43,12 +43,41 @@ public class HubFlowController : MonoBehaviour
     [SerializeField] private GameObject progressRingContainer;
     [SerializeField] private GameObject stillnessBarContainer;
     [SerializeField] private Slider weightShiftSlider;
+    [SerializeField] private Image weightShiftHandle;
+    [SerializeField] private float weightShiftGreenMin = 0.15f;
+    [SerializeField] private float weightShiftGreenMax = 0.45f;
+    [SerializeField] private float weightShiftRedMin = 0.7f;
+
+    [Header("Text Panels")]
+    [Tooltip("Panel containing calibration instructions. Slides on/off screen.")]
+    [SerializeField] private RectTransform calibrationPanel;
+    [SerializeField] private TextMeshProUGUI calibrationText;
+    [SerializeField] private Vector2 calibrationOnScreen = Vector2.zero;
+    [SerializeField] private Vector2 calibrationOffScreen = new Vector2(0f, -400f);
+
+    [Tooltip("Panel containing exercise label and description. Slides on/off screen.")]
+    [SerializeField] private RectTransform exercisePanel;
+    [SerializeField] private TextMeshProUGUI exerciseLabel;
+    [SerializeField] private TextMeshProUGUI exerciseDescription;
+    [SerializeField] private Vector2 exerciseOnScreen = Vector2.zero;
+    [SerializeField] private Vector2 exerciseOffScreen = new Vector2(0f, -400f);
+
+    [SerializeField] private float panelSlideDuration = 0.4f;
+    [SerializeField] private AnimationCurve panelSlideCurve = AnimationCurve.EaseInOut(0f, 0f, 1f, 1f);
 
     [Header("Audio")]
     [SerializeField] private AudioSource audioSource;
     [SerializeField] private AudioClip repChime;
     [SerializeField] private AudioClip exerciseCompleteChime;
     [SerializeField] private AudioClip calibrationCompleteChime;
+
+    [Header("Debug")]
+    [SerializeField] private bool debugMode = false;
+    [SerializeField] private KeyCode debugAdvanceKey = KeyCode.Space;
+    [SerializeField] private KeyCode debugSkipCalibrationKey = KeyCode.S;
+    [SerializeField] private KeyCode debugCompleteExerciseKey = KeyCode.Return;
+    [SerializeField] private KeyCode debugPrevAnimKey = KeyCode.LeftArrow;
+    [SerializeField] private KeyCode debugNextAnimKey = KeyCode.RightArrow;
 
     #endregion
 
@@ -70,29 +99,37 @@ public class HubFlowController : MonoBehaviour
     private bool skeletonReady = false;
     private Coroutine flowCoroutine;
 
+    // Debug
+    private bool debugAdvancePressed = false;
+    private int debugAnimIndex = 0;
+    private int currentAnimIndex = -1;
+
     #endregion
 
     #region Lifecycle
 
     private void Start()
     {
-        // Initial UI state
         SetInstructionText("Waiting for skeleton...");
         ShowStillnessBar(false);
         ShowProgressRing(false);
         SetProgressRing(0f);
 
-        // Start with captury cam full width, prerecorded hidden
-        SetCameraMode(fullWidthCaptury: true);
+        // Start panels off-screen
+        if (calibrationPanel != null)
+            calibrationPanel.anchoredPosition = calibrationOffScreen;
+        if (exercisePanel != null)
+            exercisePanel.anchoredPosition = exerciseOffScreen;
 
-        // Hook into exercise evaluator events
+        // Always split view — prerecorded skeleton always visible next to player
+        SetCameraMode(fullWidthCaptury: false);
+
         if (exerciseEvaluator != null)
         {
             exerciseEvaluator.OnRepCompleted += OnRepCompleted;
             exerciseEvaluator.OnExerciseComplete += OnExerciseComplete;
         }
 
-        // Start the main flow
         flowCoroutine = StartCoroutine(MainFlow());
     }
 
@@ -107,10 +144,14 @@ public class HubFlowController : MonoBehaviour
 
     private void Update()
     {
-        // Update stillness bar UI during extended calibration
         if (currentState == HubState.ExtendedCalibration && stillnessTracker != null)
         {
             UpdateStillnessBarUI();
+        }
+
+        if (debugMode)
+        {
+            HandleDebugInput();
         }
     }
 
@@ -122,31 +163,48 @@ public class HubFlowController : MonoBehaviour
     {
         // ── Phase 1: Wait for skeleton ──
         currentState = HubState.WaitingForSkeleton;
-        SetInstructionText("Waiting for skeleton...");
 
-        // Wait until the MotionTrackingManager exists and is calibrated (quick cal)
-        yield return WaitForQuickCalibration();
+        if (debugMode)
+        {
+            SetCalibrationText("[DEBUG] Press SPACE to skip skeleton wait");
+            yield return SlidePanel(calibrationPanel, calibrationOffScreen, calibrationOnScreen);
+            yield return WaitForDebugAdvance();
+            skeletonReady = true;
+        }
+        else
+        {
+            SetCalibrationText("Waiting for skeleton...");
+            yield return SlidePanel(calibrationPanel, calibrationOffScreen, calibrationOnScreen);
+            yield return WaitForQuickCalibration();
+        }
 
         // ── Phase 2: Quick calibration complete ──
         currentState = HubState.QuickCalibration;
-        SetInstructionText("Connected! Preparing calibration...");
+        SetCalibrationText("Connected! Preparing calibration...");
         yield return new WaitForSeconds(phasePauseTime);
 
         // ── Phase 3: Extended calibration ──
         currentState = HubState.ExtendedCalibration;
-        SetInstructionText(
-            "Stand still for calibration.\n" +
-            "Feet shoulder-width apart.\n" +
-            "Shoulders back, arms at your sides."
-        );
         ShowStillnessBar(true);
 
-        yield return RunExtendedCalibration();
+        if (debugMode)
+        {
+            SetCalibrationText("[DEBUG] Press S to skip calibration");
+            yield return RunExtendedCalibrationDebug();
+        }
+        else
+        {
+            SetCalibrationText(
+                "Stand still for calibration.\n" +
+                "Feet shoulder-width apart.\n" +
+                "Shoulders back, arms at your sides."
+            );
+            yield return RunExtendedCalibration();
+        }
 
         ShowStillnessBar(false);
 
-        // calibrate from this good pose
-        if (MotionTrackingManager.Instance != null)
+        if (!debugMode && MotionTrackingManager.Instance != null)
         {
             MotionTrackingManager.Instance.Recalibrate();
 
@@ -156,66 +214,98 @@ public class HubFlowController : MonoBehaviour
             yield return new WaitForSeconds(calDelay + 0.5f);
         }
 
-        if (CalibrationGuard.Instance != null)
+        if (!debugMode && CalibrationGuard.Instance != null)
         {
             CalibrationGuard.Instance.SaveCalibration();
         }
 
         PlayAudio(calibrationCompleteChime);
-        SetInstructionText("Calibration saved!");
+        SetCalibrationText("Calibration saved!");
         yield return new WaitForSeconds(phasePauseTime);
 
-        // ── Phase 4: Exercises ──
-        // Switch to split view
-        SetCameraMode(fullWidthCaptury: false);
+        // ── Transition: slide calibration out, exercise in ──
+        yield return SlidePanel(calibrationPanel, calibrationOnScreen, calibrationOffScreen);
 
+        // ── Phase 4: Exercises ──
         for (currentExerciseIndex = 0; currentExerciseIndex < exercises.Count; currentExerciseIndex++)
         {
             var exercise = exercises[currentExerciseIndex];
 
-            // Intro
+            // Intro — set text then slide in
             currentState = HubState.ExerciseIntro;
-            SetInstructionText($"{exercise.exerciseName}\n{exercise.instructionText}");
+            SetExerciseText(exercise.exerciseName, exercise.instructionText);
             PlayPrerecordedAnimation(exercise.animIndex);
+            debugAnimIndex = exercise.animIndex;
             ShowProgressRing(true);
             SetProgressRing(0f);
             G4G.ExerciseIndicatorManager.Instance?.Show(exercise.exerciseType);
-            yield return new WaitForSeconds(phasePauseTime);
 
-            // Active — evaluate until 3 good reps
-            currentState = HubState.ExerciseActive;
-            SetInstructionText($"{exercise.exerciseName}\nTry it! ({0}/{requiredReps})");
-            exerciseEvaluator.StartExercise(exercise.exerciseType);
+            yield return SlidePanel(exercisePanel, exerciseOffScreen, exerciseOnScreen);
 
-            // Wait for OnExerciseComplete to fire (checked via evaluator state)
-            while (exerciseEvaluator.IsActive)
+            if (debugMode)
             {
-                if(weightShiftSlider != null && stillnessTracker != null)
+                yield return WaitForDebugAdvance();
+            }
+            else
+            {
+                yield return new WaitForSeconds(phasePauseTime);
+            }
+
+            // Active
+            currentState = HubState.ExerciseActive;
+
+            if (debugMode)
+            {
+                SetExerciseText($"[DEBUG] {exercise.exerciseName}", "ENTER=complete  ←/→=change anim");
+                yield return WaitForDebugExerciseComplete();
+            }
+            else
+            {
+                SetExerciseText(exercise.exerciseName, $"Try it! ({0}/{requiredReps})");
+                exerciseEvaluator.StartExercise(exercise.exerciseType);
+
+                while (exerciseEvaluator.IsActive)
                 {
-                    weightShiftSlider.value = stillnessTracker.WeightShift;
+                    if (weightShiftSlider != null && stillnessTracker != null)
+                    {
+                        weightShiftSlider.value = stillnessTracker.WeightShift;
+                        UpdateWeightShiftHandleColor(stillnessTracker.WeightShift);
+                    }
+                    yield return null;
                 }
-                yield return null;
             }
 
             // Exercise complete
             currentState = HubState.ExerciseComplete;
-            exerciseEvaluator.StopExercise();
+            if (!debugMode) exerciseEvaluator.StopExercise();
             G4G.ExerciseIndicatorManager.Instance?.Hide();
             PlayAudio(exerciseCompleteChime);
-            SetInstructionText($"{exercise.exerciseName}\nGreat job!");
+            SetExerciseText(exercise.exerciseName, "Great job!");
             SetProgressRing(1f);
             yield return new WaitForSeconds(phasePauseTime);
 
+            // Slide exercise panel out before next exercise or end
+            yield return SlidePanel(exercisePanel, exerciseOnScreen, exerciseOffScreen);
             ShowProgressRing(false);
         }
 
         // ── Phase 5: All done ──
         currentState = HubState.AllComplete;
         G4G.ExerciseIndicatorManager.Instance?.HideImmediate();
-        SetInstructionText("You're all set! Loading game...");
-        yield return new WaitForSeconds(phasePauseTime);
 
-        // Load the game scene
+        if (debugMode)
+        {
+            SetCalibrationText("[DEBUG] All done! Press SPACE to load scene");
+            yield return SlidePanel(calibrationPanel, calibrationOffScreen, calibrationOnScreen);
+            yield return WaitForDebugAdvance();
+        }
+        else
+        {
+            SetCalibrationText("You're all set! Loading game...");
+            yield return SlidePanel(calibrationPanel, calibrationOffScreen, calibrationOnScreen);
+            yield return new WaitForSeconds(phasePauseTime);
+        }
+
         string sceneName = CalibrationGuard.Instance != null
             ? CalibrationGuard.Instance.nextSceneName
             : "NewGameSelect";
@@ -229,7 +319,6 @@ public class HubFlowController : MonoBehaviour
 
     private IEnumerator WaitForQuickCalibration()
     {
-        // Wait for the manager to exist
         while (MotionTrackingManager.Instance == null)
         {
             yield return null;
@@ -241,7 +330,6 @@ public class HubFlowController : MonoBehaviour
             "Calibrating..."
         );
 
-        // Wait for the system to calibrate
         while (!MotionTrackingManager.Instance.IsSystemCalibrated)
         {
             yield return null;
@@ -260,13 +348,145 @@ public class HubFlowController : MonoBehaviour
 
         stillnessTracker.StartTracking();
 
-        // Wait until the user has been still for the required hold time
         while (!stillnessTracker.HasBeenStillFor(calibrationHoldTime))
         {
             yield return null;
         }
 
         stillnessTracker.StopTracking();
+    }
+
+    private IEnumerator RunExtendedCalibrationDebug()
+    {
+        if (stillnessTracker != null)
+            stillnessTracker.StartTracking();
+
+        while (true)
+        {
+            if (Input.GetKeyDown(debugSkipCalibrationKey))
+            {
+                Debug.Log("[Debug] Skipping calibration");
+                break;
+            }
+
+            if (stillnessTracker != null && stillnessTracker.HasBeenStillFor(calibrationHoldTime))
+                break;
+
+            yield return null;
+        }
+
+        if (stillnessTracker != null)
+            stillnessTracker.StopTracking();
+    }
+
+    #endregion
+
+    #region Debug
+
+    private void HandleDebugInput()
+    {
+        if (Input.GetKeyDown(debugAdvanceKey))
+        {
+            debugAdvancePressed = true;
+        }
+
+        if (currentState == HubState.ExerciseActive || currentState == HubState.ExerciseIntro)
+        {
+            if (Input.GetKeyDown(debugPrevAnimKey))
+            {
+                debugAnimIndex = Mathf.Max(0, debugAnimIndex - 1);
+                PlayPrerecordedAnimation(debugAnimIndex);
+                Debug.Log($"[Debug] Animation index: {debugAnimIndex}");
+            }
+            if (Input.GetKeyDown(debugNextAnimKey))
+            {
+                debugAnimIndex++;
+                PlayPrerecordedAnimation(debugAnimIndex);
+                Debug.Log($"[Debug] Animation index: {debugAnimIndex}");
+            }
+        }
+    }
+
+    private IEnumerator WaitForDebugAdvance()
+    {
+        debugAdvancePressed = false;
+        while (!debugAdvancePressed)
+        {
+            yield return null;
+        }
+        debugAdvancePressed = false;
+    }
+
+    private IEnumerator WaitForDebugExerciseComplete()
+    {
+        while (!Input.GetKeyDown(debugCompleteExerciseKey))
+        {
+            yield return null;
+        }
+    }
+
+    private void OnGUI()
+    {
+        if (!debugMode) return;
+
+        float w = 320f;
+        float h = 300f;
+        float x = Screen.width - w - 10f;
+        float y = 10f;
+
+        GUI.Box(new Rect(x, y, w, h), "");
+
+        GUILayout.BeginArea(new Rect(x + 10, y + 5, w - 20, h - 10));
+
+        GUIStyle titleStyle = new GUIStyle(GUI.skin.label);
+        titleStyle.fontStyle = FontStyle.Bold;
+        titleStyle.fontSize = 14;
+        GUILayout.Label("Calibration Debug", titleStyle);
+
+        GUILayout.Space(5);
+        GUILayout.Label($"State: {currentState}");
+        GUILayout.Label($"Exercise: {currentExerciseIndex}/{exercises.Count}");
+
+        if (currentExerciseIndex < exercises.Count)
+        {
+            var ex = exercises[currentExerciseIndex];
+            GUILayout.Label($"  Name: {ex.exerciseName}");
+            GUILayout.Label($"  Type: {ex.exerciseType}");
+        }
+
+        GUILayout.Label($"Anim Index: {debugAnimIndex}");
+
+        GUILayout.Space(8);
+        GUILayout.Label("Keys:", titleStyle);
+
+        GUIStyle ctrlStyle = new GUIStyle(GUI.skin.label);
+        ctrlStyle.fontSize = 11;
+        GUILayout.Label($"  [{debugAdvanceKey}] Advance / Skip", ctrlStyle);
+        GUILayout.Label($"  [{debugSkipCalibrationKey}] Skip Calibration", ctrlStyle);
+        GUILayout.Label($"  [{debugCompleteExerciseKey}] Complete Exercise", ctrlStyle);
+        GUILayout.Label($"  [←/→] Change Animation", ctrlStyle);
+
+        GUILayout.Space(8);
+
+        GUILayout.BeginHorizontal();
+        if (GUILayout.Button("◀ Prev Anim"))
+        {
+            debugAnimIndex = Mathf.Max(0, debugAnimIndex - 1);
+            PlayPrerecordedAnimation(debugAnimIndex);
+        }
+        if (GUILayout.Button("Next Anim ▶"))
+        {
+            debugAnimIndex++;
+            PlayPrerecordedAnimation(debugAnimIndex);
+        }
+        GUILayout.EndHorizontal();
+
+        if (GUILayout.Button("Advance"))
+        {
+            debugAdvancePressed = true;
+        }
+
+        GUILayout.EndArea();
     }
 
     #endregion
@@ -279,7 +499,7 @@ public class HubFlowController : MonoBehaviour
         SetProgressRing((float)current / required);
 
         var exercise = exercises[currentExerciseIndex];
-        SetInstructionText($"{exercise.exerciseName}\nKeep going! ({current}/{required})");
+        SetExerciseText(exercise.exerciseName, $"Keep going! ({current}/{required})");
     }
 
     private void OnExerciseComplete()
@@ -297,30 +517,25 @@ public class HubFlowController : MonoBehaviour
         {
             capturyCam.gameObject.SetActive(true);
             capturyCam.GetComponent<Camera>().enabled = true;
-
             capturyCam.SwapRenderTexture(fullWidthCaptury);
         }
 
         if (prerecordedCam != null)
         {
-            // Disable the camera component so it stops rendering to screen
             prerecordedCam.GetComponent<Camera>().enabled = !fullWidthCaptury;
             prerecordedCam.gameObject.SetActive(!fullWidthCaptury);
         }
 
-        // Show/hide the prerecorded raw image
         if (prerecordedRawImage != null)
         {
             prerecordedRawImage.gameObject.SetActive(!fullWidthCaptury);
         }
 
-        // Resize the captury raw image
         if (capturedRawImage != null && fullRawImage != null)
         {
             var rect = capturedRawImage.rectTransform;
             if (fullWidthCaptury)
             {
-                // Full width
                 fullRawImage.gameObject.SetActive(true);
                 capturedRawImage.gameObject.SetActive(false);
                 rect.anchorMin = new Vector2(0, 0);
@@ -328,7 +543,6 @@ public class HubFlowController : MonoBehaviour
             }
             else
             {
-                // Left half
                 fullRawImage.gameObject.SetActive(false);
                 capturedRawImage.gameObject.SetActive(true);
                 rect.anchorMin = new Vector2(0, 0);
@@ -341,7 +555,6 @@ public class HubFlowController : MonoBehaviour
         if (prerecordedRawImage != null)
         {
             var rect = prerecordedRawImage.rectTransform;
-            // Right half
             rect.anchorMin = new Vector2(0.5f, 0);
             rect.anchorMax = new Vector2(1, 1);
             rect.offsetMin = Vector2.zero;
@@ -356,9 +569,10 @@ public class HubFlowController : MonoBehaviour
     private void PlayPrerecordedAnimation(int animIndex)
     {
         if (prerecordedAnimator == null) return;
+        if (animIndex == currentAnimIndex) return;
 
+        currentAnimIndex = animIndex;
         prerecordedAnimator.SetInteger("AnimIndex", animIndex);
-        prerecordedAnimator.Play("", 0, 0f);
         Debug.Log($"HubFlowController: Playing animation index {animIndex}");
     }
 
@@ -370,6 +584,72 @@ public class HubFlowController : MonoBehaviour
     {
         if (instructionText != null)
             instructionText.text = text;
+    }
+
+    private void SetCalibrationText(string text)
+    {
+        if (calibrationText != null)
+            calibrationText.text = text;
+        // Also update legacy instruction text as fallback
+        SetInstructionText(text);
+    }
+
+    private void SetExerciseText(string label, string description)
+    {
+        if (exerciseLabel != null)
+            exerciseLabel.text = label;
+        if (exerciseDescription != null)
+            exerciseDescription.text = description;
+        // Also update legacy instruction text as fallback
+        SetInstructionText($"{label}\n{description}");
+    }
+
+    private IEnumerator SlidePanel(RectTransform panel, Vector2 from, Vector2 to)
+    {
+        if (panel == null) yield break;
+
+        panel.anchoredPosition = from;
+        float elapsed = 0f;
+
+        while (elapsed < panelSlideDuration)
+        {
+            elapsed += Time.deltaTime;
+            float t = panelSlideCurve.Evaluate(Mathf.Clamp01(elapsed / panelSlideDuration));
+            panel.anchoredPosition = Vector2.Lerp(from, to, t);
+            yield return null;
+        }
+
+        panel.anchoredPosition = to;
+    }
+
+    private void UpdateWeightShiftHandleColor(float value)
+    {
+        if (weightShiftHandle == null) return;
+
+        float abs = Mathf.Abs(value);
+
+        if (abs < weightShiftGreenMin)
+        {
+            // Dead zone — grey
+            weightShiftHandle.color = Color.gray;
+        }
+        else if (abs <= weightShiftGreenMax)
+        {
+            // Sweet spot — grey to green
+            float t = Mathf.InverseLerp(weightShiftGreenMin, weightShiftGreenMax, abs);
+            weightShiftHandle.color = Color.Lerp(Color.gray, Color.green, t);
+        }
+        else if (abs < weightShiftRedMin)
+        {
+            // Transition — green to red
+            float t = Mathf.InverseLerp(weightShiftGreenMax, weightShiftRedMin, abs);
+            weightShiftHandle.color = Color.Lerp(Color.green, Color.red, t);
+        }
+        else
+        {
+            // Too far — red
+            weightShiftHandle.color = Color.red;
+        }
     }
 
     private void SetProgressRing(float fillAmount)
@@ -411,11 +691,8 @@ public class HubFlowController : MonoBehaviour
     {
         if (stillnessBar != null && stillnessTracker != null)
         {
-            // Fill based on how long they've been still relative to the required hold time
             float fill = Mathf.Clamp01(stillnessTracker.StillDuration / calibrationHoldTime);
             stillnessBar.fillAmount = fill;
-
-            // Color: green when still, yellow when close, red when moving
             stillnessBar.color = Color.Lerp(Color.red, Color.green, stillnessTracker.Stillness);
         }
     }

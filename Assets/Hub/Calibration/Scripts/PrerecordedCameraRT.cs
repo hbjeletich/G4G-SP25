@@ -53,6 +53,12 @@ public class PrerecordedCameraRT : MonoBehaviour
             initialized = true;
         }
 
+        // Lock the skeleton's X/Z to prevent root motion drift
+        Vector3 lockedPos = hips.position;
+        lockedPos.x = initialHipsXZ.x;
+        lockedPos.z = initialHipsXZ.z;
+        hips.position = lockedPos;
+
         float scale = hips.lossyScale.y;
         Vector3 forward = cameraForward.normalized;
 
