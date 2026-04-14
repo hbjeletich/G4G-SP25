@@ -26,6 +26,9 @@ namespace CameraSnap
 
         private float defaultFootDistance = 0f;
 
+        private bool debugMode = false;
+        private bool debugSpaceHeld = false;
+
         private void Awake()
         {
             cart = FindObjectOfType<CartController>();
@@ -116,6 +119,20 @@ namespace CameraSnap
 
         private void Update()
         {
+#if UNITY_EDITOR
+            if (Input.GetKeyDown(KeyCode.Q))
+            {
+                debugMode = !debugMode;
+                Debug.Log($"[Debug Mode] {(debugMode ? "ON" : "OFF")}");
+            }
+#endif
+
+            if (debugMode)
+            {
+                HandleDebugInput();
+                return;
+            }
+
             if (motionConfig == null) return;
 
             HandleWeightShift();
@@ -123,6 +140,29 @@ namespace CameraSnap
             //HandleHipAbduction();
             HandleFootRaise();
            
+        }
+
+        private void HandleDebugInput()
+        {
+            float panInput = 0f;
+            if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
+                panInput -= 1f;
+            if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow))
+                panInput += 1f;
+            cameraPan?.ManualPan(panInput);
+
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                debugSpaceHeld = true;
+                cameraPan?.DoZoom();
+            }
+
+            if (Input.GetKeyUp(KeyCode.Space) && debugSpaceHeld)
+            {
+                debugSpaceHeld = false;
+                cameraMode?.TryTakePhoto();
+                Invoke("StopCameraZoom", 0.5f);
+            }
         }
 
         //how far below neutral pelvis Y counts as a squat
@@ -286,6 +326,3 @@ namespace CameraSnap
        
     }
 }
-
-
-

@@ -46,11 +46,16 @@ public class StarProgressBar : MonoBehaviour
     private int currentStarIndex = 0;
     private float duration = 0.6f;
 
-    private bool isMoving = false;
     private bool isActive = false;
+    private Vector3 textBaseScale;
+    private Coroutine pulseCoroutine;
+
+    // Track the running move coroutine so we can cancel it on rapid show/hide
+    private Coroutine moveCoroutine;
 
     void Start()
     {
+        textBaseScale = resultText.transform.localScale;
         resultText.text = "";
         progressBarContainer.transform.localPosition = offscreenPosition;
         ResetProgressBar();
@@ -63,20 +68,16 @@ public class StarProgressBar : MonoBehaviour
 
         ResetProgressBar();
 
-        Vector3 targetPos;
-        if(progressBarContainer.transform.localPosition == offscreenPosition)
-            targetPos = onscreenPosition;
-        else
-            targetPos = offscreenPosition;
-
-        StartCoroutine(MoveProgressBar(targetPos));
+        if (moveCoroutine != null) StopCoroutine(moveCoroutine);
+        moveCoroutine = StartCoroutine(MoveProgressBar(onscreenPosition));
     }
 
     public void HideProgressBar()
     {
         if(!isActive) return;
         isActive = false;
-        StartCoroutine(MoveProgressBar(offscreenPosition));
+        if (moveCoroutine != null) StopCoroutine(moveCoroutine);
+        moveCoroutine = StartCoroutine(MoveProgressBar(offscreenPosition));
         Invoke(nameof(ResetProgressBar), moveDuration);
     }
 
@@ -85,6 +86,10 @@ public class StarProgressBar : MonoBehaviour
         slider.value = 0f;
         resultText.text = "";
         currentStarIndex = 0;
+
+        if (pulseCoroutine != null) StopCoroutine(pulseCoroutine);
+        pulseCoroutine = null;
+        resultText.transform.localScale = textBaseScale;
 
         foreach(Star star in stars)
         {
@@ -111,7 +116,9 @@ public class StarProgressBar : MonoBehaviour
         if (progress >= 1f && currentStarIndex >= stars.Length && starTexts.Length > stars.Length)
         {
             resultText.text = starTexts[stars.Length];
-            StartCoroutine(PulseText());
+            if (pulseCoroutine != null) StopCoroutine(pulseCoroutine);
+            resultText.transform.localScale = textBaseScale;
+            pulseCoroutine = StartCoroutine(PulseText());
         }
     }
 
@@ -139,12 +146,13 @@ public class StarProgressBar : MonoBehaviour
             resultText.text = starTexts[index];
         }
 
-        StartCoroutine(PulseText());
+        if (pulseCoroutine != null) StopCoroutine(pulseCoroutine);
+        resultText.transform.localScale = textBaseScale;
+        pulseCoroutine = StartCoroutine(PulseText());
     }
 
     private IEnumerator PulseText()
     {
-        Vector3 originalScale = resultText.transform.localScale;
         float pulseDuration = 0.3f;
         float elapsed = 0f;
 
@@ -153,11 +161,12 @@ public class StarProgressBar : MonoBehaviour
             elapsed += Time.deltaTime;
             float t = Mathf.Clamp01(elapsed / pulseDuration);
             float scaleFactor = 1f + 0.5f * Mathf.Sin(t * Mathf.PI);
-            resultText.transform.localScale = originalScale * scaleFactor;
+            resultText.transform.localScale = textBaseScale * scaleFactor;
             yield return null;
         }
 
-        resultText.transform.localScale = originalScale;
+        resultText.transform.localScale = textBaseScale;
+        pulseCoroutine = null;
     }
 
     private IEnumerator MoveProgressBar(Vector3 targetPos)
@@ -174,6 +183,7 @@ public class StarProgressBar : MonoBehaviour
         }
 
         progressBarContainer.transform.localPosition = targetPos;
+        moveCoroutine = null;
     }
 
     private IEnumerator AnimateStar(RectTransform starTransform)
