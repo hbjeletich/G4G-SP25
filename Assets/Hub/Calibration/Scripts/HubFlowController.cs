@@ -264,7 +264,8 @@ public class HubFlowController : MonoBehaviour
             }
             else
             {
-                SetExerciseText(exercise.exerciseName, $"Try it! ({0}/{requiredReps})");
+                // Keep the instruction text visible until the first successful rep,
+                // so the player knows what to do. OnRepCompleted will swap in progress text.
                 exerciseEvaluator.StartExercise(exercise.exerciseType);
 
                 while (exerciseEvaluator.IsActive)
