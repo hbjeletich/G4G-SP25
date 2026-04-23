@@ -407,12 +407,16 @@ MonoBehaviour:
   walkFootThreshold: 0.2
   jumpThreshold: 0.1
   squatThreshold: 0.1
+  minLIMX: -4
+  maxLIMX: 4
+  minLIMZ: -4
+  maxLIMZ: 2
   interact:
     m_PersistentCalls:
       m_Calls: []
   tailSpot: {fileID: 1769547669995076596}
   grabedStar: {fileID: 0}
-  controls: 2
+  controls: 3
   fakeHead: {fileID: 0}
 --- !u!50 &4734150860756232093
 Rigidbody2D:
